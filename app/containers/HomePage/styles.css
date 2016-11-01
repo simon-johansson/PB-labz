@@ -49,6 +49,7 @@ label {
 .tagsWrapper {
   background: white;
   border: 1px solid gray;
+  padding: 0 5px 0 5px;
   width: 100%;
   height: auto;
   border-radius: 5px;
@@ -65,7 +66,7 @@ label {
 .tag {
   display: inline-block;
   background: #B5D8E9;
-  margin: 5px;
+  margin: 5px 5px 0 0;
   height: 25px;
   line-height: 25px;
   padding: 0 8px;
