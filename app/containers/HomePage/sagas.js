@@ -20,18 +20,24 @@ import request from 'utils/request';
 import {
   selectUsername,
   selectOccupations,
-  selectLocation,
+  selectLocations,
 } from 'containers/HomePage/selectors';
 
 export function* getJobs() {
 
   const occupation = yield select(selectOccupations());
-  const location = yield select(selectLocation());
-  const payload = occupation.map((item) => {
-    console.log(item);
+  const locations = yield select(selectLocations());
+  const occupationPayload = occupation.map((item) => {
     const typ = item.typ === 'YRKESOMRADE' ? 'YRKESOMRADE_ROLL' : 'YRKESROLL';
     return {
       'typ': typ,
+      'varde': item.id,
+    }
+  });
+  const locationPayload = locations.map((item) => {
+    // console.log(item);
+    return {
+      'typ': item.typ,
       'varde': item.id,
     }
   });
@@ -47,7 +53,7 @@ export function* getJobs() {
     },
     body: JSON.stringify({
       'matchningsprofil': {
-        'profilkriterier': payload,
+        'profilkriterier': [...occupationPayload, ...locationPayload],
         'hasChanged': true
       },'maxAntal': 100,
       'startrad': 0,
@@ -59,8 +65,8 @@ export function* getJobs() {
   const jobs = yield call(request, requestURL, options);
 
   if (!jobs.err) {
-    // console.log(jobs.data.rekryteringsbehov);
-    yield put(jobsLoaded(jobs.data.rekryteringsbehov));
+    console.log(jobs.data);
+    yield put(jobsLoaded(jobs.data));
   } else {
     // yield put(jobsLoadingError(jobs.err));
   }

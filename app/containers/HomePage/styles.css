@@ -76,6 +76,11 @@ label {
   color: #333333;
 }
 
+.amount {
+  margin: 5px 15px;
+  display: block;
+}
+
 :global(.glyphicon-remove-sign) {
   cursor: pointer;
   color: #8E8E93;

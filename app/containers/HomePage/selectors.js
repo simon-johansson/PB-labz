@@ -18,14 +18,14 @@ const selectOccupations = () => createSelector(
   }
 );
 
-const selectLocation = () => createSelector(
+const selectLocations = () => createSelector(
   selectHome(),
-  (homeState) => homeState.get('location')
+  (homeState) => homeState.get('locations')
 );
 
 export {
   selectHome,
   selectUsername,
   selectOccupations,
-  selectLocation,
+  selectLocations,
 };

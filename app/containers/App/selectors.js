@@ -31,6 +31,16 @@ const selectJobs = () => createSelector(
   (globalState) => globalState.getIn(['afData', 'jobs'])
 );
 
+const selectAmount = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['afData', 'amount'])
+);
+
+const selectRelated = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['afData', 'related'])
+);
+
 const selectLocationState = () => {
   let prevRoutingState;
   let prevRoutingStateJS;
@@ -54,5 +64,7 @@ export {
   selectError,
   selectRepos,
   selectJobs,
+  selectAmount,
+  selectRelated,
   selectLocationState,
 };

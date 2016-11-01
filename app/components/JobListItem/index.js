@@ -24,7 +24,7 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
       sameElse: 'DD MMM',
     };
     const item = this.props.item;
-    console.log(item);
+    // console.log(item);
 
     const content = (
       <div className={styles.linkWrapper}>

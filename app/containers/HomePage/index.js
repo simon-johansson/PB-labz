@@ -17,12 +17,14 @@ import {
   selectLoading,
   selectError,
   selectJobs,
+  selectAmount,
+  selectRelated,
 } from 'containers/App/selectors';
 
 import {
   selectUsername,
   selectOccupations,
-  selectLocation,
+  selectLocations,
 } from './selectors';
 
 import {
@@ -76,8 +78,26 @@ export class HomePage extends React.Component {
     this.openRoute('/occupation');
   };
 
-  createTags() {
+  addLocationPage = () => {
+    this.openRoute('/location');
+  };
+
+  createOccupationTags() {
     return this.props.occupations.map(item => {
+      return (
+        <div className={styles.tag}>
+          <span className={styles.tagText}>
+            {item.namn}
+            <span className="glyphicon glyphicon-remove-sign" />
+          </span>
+        </div>
+      );
+    });
+  }
+
+  createLocationTags() {
+    return this.props.locations.map(item => {
+      console.log(item);
       return (
         <div className={styles.tag}>
           <span className={styles.tagText}>
@@ -105,7 +125,12 @@ export class HomePage extends React.Component {
 
     // If we're not loading, don't have an error and there are repos, show the repos
     } else if (this.props.jobs !== false) {
-      mainContent = (<List items={this.props.jobs} component={JobListItem} />);
+      mainContent = (
+        <div>
+          <span className={styles.amount}>Hittade {this.props.amount} jobb</span>
+          <List items={this.props.jobs} component={JobListItem} />
+        </div>
+      );
     }
 
     return (
@@ -118,7 +143,7 @@ export class HomePage extends React.Component {
                 <div className="form-group">
                   {/*<label htmlFor="occupation">Yrke</label>*/}
                   <div className={styles.tagsWrapper} onClick={this.addOccupationPage}>
-                    {this.createTags()}
+                    {this.createOccupationTags()}
                     <span className={styles.inputPlaceholder}>
                       Lägg till yrke/fritext...
                     </span>
@@ -134,14 +159,20 @@ export class HomePage extends React.Component {
                 </div>
                 <div className="form-group">
                   {/*<label htmlFor="location">Ort</label>*/}
-                  <input
+                  <div className={styles.tagsWrapper} onClick={this.addLocationPage}>
+                    {this.createLocationTags()}
+                    <span className={styles.inputPlaceholder}>
+                      Lägg till ort...
+                    </span>
+                  </div>
+                  {/*<input
                     type="test"
                     className="form-control"
                     id="location"
                     placeholder="Lägg till ort..."
                     value={this.props.jobLocation}
                     onChange={this.props.onChangeLocation}
-                  />
+                  />*/}
                 </div>
                 <button type="submit" style={{display: 'none'}} className="btn btn-default">Submit</button>
               </form>
@@ -192,6 +223,7 @@ HomePage.propTypes = {
   onSubmitForm: React.PropTypes.func,
   username: React.PropTypes.string,
   occupations: React.PropTypes.array,
+  locations: React.PropTypes.array,
   jobLocation: React.PropTypes.string,
   onChangeUsername: React.PropTypes.func,
   onChangeOccupation: React.PropTypes.func,
@@ -220,9 +252,11 @@ export function mapDispatchToProps(dispatch) {
 const mapStateToProps = createStructuredSelector({
   repos: selectRepos(),
   jobs: selectJobs(),
+  amount: selectAmount(),
+  related: selectRelated(),
   username: selectUsername(),
   occupations: selectOccupations(),
-  jobLocation: selectLocation(),
+  locations: selectLocations(),
   loading: selectLoading(),
   error: selectError(),
 });

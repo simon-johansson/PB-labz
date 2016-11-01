@@ -19,13 +19,18 @@ import {
 import {
   ADD_OCCUPATION,
 } from '../AddOccupation/constants';
+
+import {
+  ADD_LOCATION,
+} from '../AddLocation/constants';
+
 import { fromJS } from 'immutable';
 
 // The initial state of the App
 const initialState = fromJS({
   username: '',
   occupations: fromJS([]),
-  location: '',
+  locations: fromJS([]),
 });
 
 function homeReducer(state = initialState, action) {
@@ -35,11 +40,11 @@ function homeReducer(state = initialState, action) {
       return state
         .set('username', action.name.replace(/@/gi, ''));
     case ADD_OCCUPATION:
-      // console.log(action.occupation);
-      // const newState = state.updateIn(['occupations'], arr => arr.push(action.occupation));
-      // return newState;
       return state
         .updateIn(['occupations'], (arr) => arr.push(action.occupation));
+    case ADD_LOCATION:
+      return state
+        .updateIn(['locations'], (arr) => arr.push(action.location));
     case CHANGE_LOCATION:
       return state
         .set('location', action.location);

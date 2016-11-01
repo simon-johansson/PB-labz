@@ -71,10 +71,12 @@ export function loadJobs() {
   };
 }
 
-export function jobsLoaded(jobs) {
+export function jobsLoaded(jobsData) {
   return {
     type: LOAD_JOBS_SUCCESS,
-    jobs,
+    jobs: jobsData.rekryteringsbehov,
+    amount: jobsData.antalRekryteringsbehov,
+    related: jobsData.relateradeKriterier,
   };
 }
 

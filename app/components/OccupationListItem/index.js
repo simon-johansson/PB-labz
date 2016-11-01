@@ -26,7 +26,7 @@ export class OccupationListItem extends React.Component { // eslint-disable-line
 
   render() {
     const item = this.props.item;
-    console.log(item);
+    // console.log(item);
 
     const content = (
       <div className={styles.linkWrapper} onClick={this.onItemClick.bind(this)}>
