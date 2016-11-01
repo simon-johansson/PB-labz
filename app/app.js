@@ -75,7 +75,8 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
-import 'react-fastclick';
+const FastClick = require('fastclick');
+FastClick.attach(document.body);
 
 const render = (messages) => {
   ReactDOM.render(
