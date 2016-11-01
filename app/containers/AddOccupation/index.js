@@ -72,6 +72,7 @@ export class AddOccupation extends React.Component {
       varde: `"${this.props.query}"`,
       namn: `"${this.props.query}"`,
     });
+    document.activeElement.blur();
     this.openRoute('/');
   }
 
