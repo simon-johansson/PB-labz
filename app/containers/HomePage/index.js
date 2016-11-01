@@ -88,7 +88,7 @@ export class HomePage extends React.Component {
         <div className={styles.tag}>
           <span className={styles.tagText}>
             {item.namn}
-            <span className="glyphicon glyphicon-remove-sign" />
+            <span className="glyphicon glyphicon-remove" />
           </span>
         </div>
       );
@@ -97,7 +97,7 @@ export class HomePage extends React.Component {
 
   createLocationTags() {
     return this.props.locations.map(item => {
-      console.log(item);
+      // console.log(item);
       return (
         <div className={styles.tag}>
           <span className={styles.tagText}>
@@ -125,6 +125,7 @@ export class HomePage extends React.Component {
 
     // If we're not loading, don't have an error and there are repos, show the repos
     } else if (this.props.jobs !== false) {
+      console.log(this.props.jobs);
       mainContent = (
         <div>
           <span className={styles.amount}>Hittade {this.props.amount} jobb</span>

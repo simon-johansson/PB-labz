@@ -19,6 +19,10 @@ import {
 } from './selectors';
 
 import {
+  selectRelated,
+} from 'containers/App/selectors';
+
+import {
   changeQuery,
   addOccupation,
   occupationsLoaded
@@ -35,6 +39,12 @@ import LoadingIndicator from 'components/LoadingIndicator';
 import styles from './styles.css';
 
 export class AddOccupation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      related: 4,
+    };
+  }
 
   componentDidMount() {
     this.props.onChangeQuery({target: { value: '' }});
@@ -54,8 +64,26 @@ export class AddOccupation extends React.Component {
     this.openRoute('/');
   }
 
+  createRelatedTags() {
+    if (this.props.related.length > 0) {
+      // console.log(this.props.related);
+      return this.props.related.map((item, index) => {
+        // console.log(this.state.related, index);
+        if (index < this.state.related) {
+          return (
+            <div className={styles.tag}>
+              <span className={styles.tagText}>
+                {item.matchningskriterium.namn} ({item.antal})
+              </span>
+            </div>
+          );
+        }
+      });
+    }
+  }
+
   render() {
-    // console.log(this.props.occupations);
+    console.log(this.props.related);
 
     let mainContent = null;
 
@@ -94,7 +122,7 @@ export class AddOccupation extends React.Component {
         <div>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
-              <h1>Mina sökningar</h1>
+              <h1>Lägg till yrke/fritext</h1>
               <span className={styles.cancel} onClick={this.openHomePage}>
                 Avbryt
               </span>
@@ -112,6 +140,19 @@ export class AddOccupation extends React.Component {
                   />
                 </div>
                 <button type="submit" style={{display: 'none'}} className="btn btn-default">Submit</button>
+
+                {!!this.props.related.length &&
+                  <div className={styles.tagWrapper}>
+                      <span className={styles.smallText}>Relaterade yrken:</span>
+                    {this.createRelatedTags()}
+                    <div className={styles.tag}>
+                      <span className={styles.tagText}>
+                        {this.props.related.length - this.state.related}
+                        <span className="glyphicon glyphicon-plus" />
+                      </span>
+                    </div>
+                  </div>
+                }
               </form>
             </div>
 
@@ -153,6 +194,10 @@ AddOccupation.propTypes = {
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
+  related: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.bool,
+  ]),
   onSubmitForm: React.PropTypes.func,
   onChangeQuery: React.PropTypes.func,
   onAddOccupation: React.PropTypes.func,
@@ -176,6 +221,7 @@ export function mapDispatchToProps(dispatch) {
 const mapStateToProps = createStructuredSelector({
   query: selectQuery(),
   occupations: selectOccupations(),
+  related: selectRelated(),
 });
 
 // Wrap the component to inject dispatch and state into it

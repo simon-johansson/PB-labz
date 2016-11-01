@@ -81,9 +81,9 @@ label {
   display: block;
 }
 
-:global(.glyphicon-remove-sign) {
+:global(.glyphicon) {
   cursor: pointer;
   color: #8E8E93;
-  margin-left: 8px;
-  top: 3px;
+  margin-left: 5px;
+  top: 2px;
 }

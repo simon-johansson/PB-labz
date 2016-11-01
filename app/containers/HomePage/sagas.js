@@ -44,7 +44,7 @@ export function* getJobs() {
 
   // console.log(selectOccupation().map(item => console.log(item)));
 
-  const requestURL = 'https://www.arbetsformedlingen.se/rest/matchning/rest/matchning/v1/matchandeRekryteringsbehov';
+  const requestURL = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/matchning/v1/matchandeRekryteringsbehov';
   const options = {
     method: 'POST',
     headers: {

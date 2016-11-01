@@ -42,3 +42,26 @@ label {
   left: 12px;
   top: 17px;
 }
+
+.tagWrapper {
+  margin-bottom: 5px;
+}
+
+.smallText {
+  display: block;
+  font-size: 12px;
+}
+
+.tag {
+  display: inline-block;
+  background: #B5D8E9;
+  margin: 5px;
+  height: 25px;
+  line-height: 25px;
+  padding: 0 8px;
+  border-radius: 2px;
+}
+
+.tagText {
+  color: #333333;
+}

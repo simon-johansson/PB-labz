@@ -94,7 +94,7 @@ export class AddLocation extends React.Component {
         <div>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
-              <h1>Mina sökningar</h1>
+              <h1>Lägg till ort</h1>
               <span className={styles.cancel} onClick={this.openHomePage}>
                 Avbryt
               </span>
