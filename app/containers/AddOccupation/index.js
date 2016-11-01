@@ -64,6 +64,17 @@ export class AddOccupation extends React.Component {
     this.openRoute('/');
   }
 
+  onSubmitForm(e) {
+    if (e !== undefined && e.preventDefault) e.preventDefault();
+
+    this.props.onAddOccupation({
+      typ: 'FRITEXT',
+      varde: `"${this.props.query}"`,
+      namn: `"${this.props.query}"`,
+    });
+    this.openRoute('/');
+  }
+
   createRelatedTags() {
     if (this.props.related.length > 0) {
       // console.log(this.props.related);
@@ -129,7 +140,7 @@ export class AddOccupation extends React.Component {
               <span className={styles.cancel} onClick={this.openHomePage}>
                 Avbryt
               </span>
-              <form onSubmit={this.props.onSubmitForm} autoComplete="off">
+              <form onSubmit={this.onSubmitForm.bind(this)} autoComplete="off">
                 <div className="form-group">
                   <input
                     type="text"
@@ -201,23 +212,23 @@ AddOccupation.propTypes = {
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
-  onSubmitForm: React.PropTypes.func,
+  // onSubmitForm: React.PropTypes.func,
   onChangeQuery: React.PropTypes.func,
   onAddOccupation: React.PropTypes.func,
   query: React.PropTypes.string,
 };
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch, props) {
   return {
     onChangeQuery: (evt) => dispatch(changeQuery(evt.target.value)),
     onAddOccupation: (occupation) => dispatch(addOccupation(occupation)),
     changeRoute: (url) => dispatch(push(url)),
-    onSubmitForm: (evt) => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadJobs());
-    },
-
-    dispatch,
+    // onSubmitForm: (evt) => {
+    //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+    //   console.log(props);
+    //   dispatch(addOccupation());
+    // },
+    // dispatch,
   };
 }
 

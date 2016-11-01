@@ -24,7 +24,7 @@
 
 p,
 label {
-  font-family: Georgia, Times, 'Times New Roman', serif;
+  // font-family: Georgia, Times, 'Times New Roman', serif;
   line-height: 1.5em;
 }
 
@@ -81,7 +81,14 @@ label {
   display: block;
 }
 
-:global(.glyphicon) {
+:global(.glyphicon-remove) {
+  cursor: pointer;
+  color: #8E8E93;
+  margin-left: 5px;
+  top: 2px;
+}
+
+:global(.glyphicon-plus) {
   cursor: pointer;
   color: #8E8E93;
   margin-left: 5px;

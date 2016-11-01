@@ -32,18 +32,17 @@ export function* getJobs() {
   const occupation = yield select(selectOccupations());
   const locations = yield select(selectLocations());
   const occupationPayload = occupation.map((item) => {
-    const typ = item.typ === 'YRKESOMRADE' ? 'YRKESOMRADE_ROLL' : 'YRKESROLL';
+    const typ = item.typ === 'YRKESOMRADE' ? 'YRKESOMRADE_ROLL' : item.typ;
     return {
-      'typ': typ,
-      'varde': item.id,
-    }
+      typ,
+      varde: item.id || item.varde,
+    };
   });
   const locationPayload = locations.map((item) => {
-    // console.log(item);
     return {
-      'typ': item.typ,
-      'varde': item.id,
-    }
+      typ: item.typ,
+      varde: item.id,
+    };
   });
 
   // console.log(selectOccupation().map(item => console.log(item)));
@@ -56,12 +55,13 @@ export function* getJobs() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      'matchningsprofil': {
-        'profilkriterier': [...occupationPayload, ...locationPayload],
-        'hasChanged': true
-      },'maxAntal': 100,
-      'startrad': 0,
-      'sorteringsordning': 'RELEVANS'
+      matchningsprofil: {
+        profilkriterier: [...occupationPayload, ...locationPayload],
+        hasChanged: true,
+      },
+      maxAntal: 100,
+      startrad: 0,
+      sorteringsordning: 'RELEVANS',
     }),
   };
 

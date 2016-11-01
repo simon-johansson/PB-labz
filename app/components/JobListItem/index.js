@@ -6,7 +6,8 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
+import { push } from 'react-router-redux';
+import { createStructuredSelector } from 'reselect';
 import moment from 'moment';
 moment.locale('sv');
 
@@ -19,6 +20,16 @@ import A from 'components/A';
 import styles from './styles.css';
 
 export class JobListItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  openRoute = (route) => {
+    this.props.changeRoute(route);
+  };
+
+  addLocationPage = (id) => {
+    // console.log(id);
+    this.openRoute(`/advert/${id}`);
+  };
+
   render() {
     const momentOptions = {
       sameElse: 'DD MMM',
@@ -27,17 +38,11 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
     // console.log(item);
 
     const content = (
-      <div className={styles.linkWrapper}>
+      <div className={styles.linkWrapper} onClick={this.addLocationPage.bind(this, item.id)}>
         <div>
           <span>{item.arbetsgivarenamn}, {item.erbjudenArbetsplats.kommun && item.erbjudenArbetsplats.kommun.namn}</span>
           <br />
-          <A
-            className={styles.linkJob}
-            href={`https://www.arbetsformedlingen.se/Tjanster/Arbetssokande/Platsbanken#/annonser/${item.id}`}
-            target="_blank"
-          >
-            {item.rubrik}
-          </A>
+          <b>{item.rubrik}</b>
           <br />
           <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
           <br />
@@ -54,7 +59,17 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
 }
 
 JobListItem.propTypes = {
-  item: React.PropTypes.object
+  item: React.PropTypes.object,
+  changeRoute: React.PropTypes.func,
 };
 
-export default JobListItem;
+export function mapDispatchToProps(dispatch) {
+  return {
+    changeRoute: (url) => dispatch(push(url)),
+  }
+}
+
+const mapStateToProps = createStructuredSelector({});
+
+// Wrap the component to inject dispatch and state into it
+export default connect(mapStateToProps, mapDispatchToProps)(JobListItem);

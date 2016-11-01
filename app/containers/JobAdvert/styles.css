@@ -1,0 +1,46 @@
+.header {
+  padding: 2px 10px;
+  background: #345468;
+  color: white;
+}
+
+.header h1 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.backArrow {
+  float: left;
+}
+
+.advertWrapper {
+  padding-top: 10px;
+  display: block;
+  width: 90%;
+  margin: auto;
+}
+
+.advertWrapper p {
+  white-space: pre-wrap;
+}
+
+.competenceWrapper {
+  background: #F2F2F2;
+  height: auto;
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  padding: 10px 12px;
+}
+
+.competenceWrapper b {
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+:global(.glyphicon-chevron-left) {
+  position: absolute;
+  top: 15px;
+  font-size: 18px;
+  color: white;
+}

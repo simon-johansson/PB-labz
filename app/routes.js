@@ -47,6 +47,27 @@ export default function createRoutes(store) {
           .catch(errorLoading);
       },
     }, {
+      path: '/advert/:id',
+      name: 'advert',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/JobAdvert/reducer'),
+          System.import('containers/JobAdvert/sagas'),
+          System.import('containers/JobAdvert'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('advert', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '/occupation',
       name: 'occupation',
       getComponent(nextState, cb) {
