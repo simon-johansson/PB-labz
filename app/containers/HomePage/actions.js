@@ -17,8 +17,8 @@
 
 import {
   CHANGE_USERNAME,
-  CHANGE_OCCUPATION,
-  CHANGE_LOCATION,
+  REMOVE_OCCUPATION,
+  REMOVE_LOCATION,
 } from './constants';
 
 /**
@@ -35,16 +35,16 @@ export function changeUsername(name) {
   };
 }
 
-export function changeOccupation(occupation) {
+export function removeOccupation(occupationIndex) {
   return {
-    type: CHANGE_OCCUPATION,
-    occupation,
+    type: REMOVE_OCCUPATION,
+    index: occupationIndex,
   };
 }
 
-export function changeLocation(location) {
+export function removeLocation(locationIndex) {
   return {
-    type: CHANGE_LOCATION,
-    location,
+    type: REMOVE_LOCATION,
+    index: locationIndex,
   };
 }

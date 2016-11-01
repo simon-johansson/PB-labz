@@ -18,6 +18,10 @@ import {
   LOAD_JOBS_SUCCESS,
   LOAD_JOBS_ERROR,
 } from './constants';
+import {
+  REMOVE_OCCUPATION,
+  REMOVE_LOCATION,
+} from 'containers/HomePage/constants';
 import { fromJS } from 'immutable';
 
 // The initial state of the App
@@ -53,6 +57,12 @@ function appReducer(state = initialState, action) {
         .set('loading', false);
 
     case LOAD_JOBS:
+      return state
+        .set('loading', true)
+        .set('error', false)
+        .setIn(['afData', 'jobs'], false);
+    case REMOVE_OCCUPATION:
+    case REMOVE_LOCATION:
       return state
         .set('loading', true)
         .set('error', false)

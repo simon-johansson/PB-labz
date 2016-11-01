@@ -50,6 +50,7 @@ export class AddLocation extends React.Component {
   };
 
   onListItemClick(item) {
+    // console.log(item);
     this.props.onAddLocation(item);
     this.openRoute('/');
   }

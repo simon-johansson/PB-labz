@@ -68,10 +68,10 @@ export class AddOccupation extends React.Component {
     if (this.props.related.length > 0) {
       // console.log(this.props.related);
       return this.props.related.map((item, index) => {
-        // console.log(this.state.related, index);
+        // console.log(item);
         if (index < this.state.related) {
           return (
-            <div className={styles.tag}>
+            <div className={styles.tag} onClick={this.onListItemClick.bind(this, item.matchningskriterium)}>
               <span className={styles.tagText}>
                 {item.matchningskriterium.namn} ({item.antal})
               </span>
@@ -83,7 +83,7 @@ export class AddOccupation extends React.Component {
   }
 
   render() {
-    console.log(this.props.related);
+    // console.log(this.props.related);
 
     let mainContent = null;
 
@@ -116,6 +116,9 @@ export class AddOccupation extends React.Component {
         />
       );
     }
+
+    // console.log(this.props.occupations);
+    // console.log(this.props.related);
 
     return (
       <article>

@@ -10,5 +10,5 @@
  */
 
 export const CHANGE_USERNAME = 'boilerplate/Home/CHANGE_USERNAME';
-export const CHANGE_OCCUPATION = 'boilerplate/Home/CHANGE_OCCUPATION';
-export const CHANGE_LOCATION = 'boilerplate/Home/CHANGE_LOCATION';
+export const REMOVE_OCCUPATION = 'boilerplate/Home/REMOVE_OCCUPATION';
+export const REMOVE_LOCATION = 'boilerplate/Home/REMOVE_LOCATION';

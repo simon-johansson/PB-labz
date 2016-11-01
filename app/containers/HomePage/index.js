@@ -29,8 +29,8 @@ import {
 
 import {
   changeUsername,
-  changeOccupation,
-  changeLocation,
+  removeOccupation,
+  removeLocation,
 } from './actions';
 import {
   loadRepos,
@@ -83,9 +83,9 @@ export class HomePage extends React.Component {
   };
 
   createOccupationTags() {
-    return this.props.occupations.map(item => {
+    return this.props.occupations.map((item, index) => {
       return (
-        <div className={styles.tag}>
+        <div className={styles.tag} onClick={this.removeOccupationTag.bind(this, index)}>
           <span className={styles.tagText}>
             {item.namn}
             <span className="glyphicon glyphicon-remove" />
@@ -96,17 +96,27 @@ export class HomePage extends React.Component {
   }
 
   createLocationTags() {
-    return this.props.locations.map(item => {
+    return this.props.locations.map((item, index) => {
       // console.log(item);
       return (
-        <div className={styles.tag}>
+        <div className={styles.tag} onClick={this.removeLocationTag.bind(this, index)}>
           <span className={styles.tagText}>
             {item.namn}
-            <span className="glyphicon glyphicon-remove-sign" />
+            <span className="glyphicon glyphicon-remove" />
           </span>
         </div>
       );
     });
+  }
+
+  removeOccupationTag(index, e) {
+    e.stopPropagation();
+    this.props.onRemoveOccupation(index);
+  }
+
+  removeLocationTag(index, e) {
+    e.stopPropagation();
+    this.props.onRemoveLocation(index);
   }
 
   render() {
@@ -125,7 +135,7 @@ export class HomePage extends React.Component {
 
     // If we're not loading, don't have an error and there are repos, show the repos
     } else if (this.props.jobs !== false) {
-      console.log(this.props.jobs);
+      // console.log(this.props.jobs);
       mainContent = (
         <div>
           <span className={styles.amount}>Hittade {this.props.amount} jobb</span>
@@ -227,15 +237,15 @@ HomePage.propTypes = {
   locations: React.PropTypes.array,
   jobLocation: React.PropTypes.string,
   onChangeUsername: React.PropTypes.func,
-  onChangeOccupation: React.PropTypes.func,
-  onChangeLocation: React.PropTypes.func,
+  onRemoveOccupation: React.PropTypes.func,
+  onRemoveLocation: React.PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
-    onChangeOccupation: (evt) => dispatch(changeOccupation(evt.target.value)),
-    onChangeLocation: (evt) => dispatch(changeLocation(evt.target.value)),
+    onRemoveOccupation: (index) => dispatch(removeOccupation(index)),
+    onRemoveLocation: (index) => dispatch(removeLocation(index)),
     changeRoute: (url) => dispatch(push(url)),
     // onSubmitForm: (evt) => {
     //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();

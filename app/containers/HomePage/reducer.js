@@ -12,8 +12,8 @@
 
 import {
   CHANGE_USERNAME,
-  CHANGE_OCCUPATION,
-  CHANGE_LOCATION,
+  REMOVE_OCCUPATION,
+  REMOVE_LOCATION,
 } from './constants';
 
 import {
@@ -42,12 +42,17 @@ function homeReducer(state = initialState, action) {
     case ADD_OCCUPATION:
       return state
         .updateIn(['occupations'], (arr) => arr.push(action.occupation));
+    case REMOVE_OCCUPATION:
+      const occupations = state.get('occupations').filter((item, index) => action.index !== index);
+      return state
+        .set('occupations', occupations);
     case ADD_LOCATION:
       return state
         .updateIn(['locations'], (arr) => arr.push(action.location));
-    case CHANGE_LOCATION:
+    case REMOVE_LOCATION:
+      const locations = state.get('locations').filter((item, index) => action.index !== index);
       return state
-        .set('location', action.location);
+        .set('locations', locations);
     default:
       return state;
   }

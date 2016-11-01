@@ -10,6 +10,10 @@ import {
   LOAD_JOBS,
 } from 'containers/App/constants';
 import {
+  REMOVE_OCCUPATION,
+  REMOVE_LOCATION,
+} from 'containers/HomePage/constants';
+import {
   reposLoaded,
   repoLoadingError,
   jobsLoaded,
@@ -65,7 +69,7 @@ export function* getJobs() {
   const jobs = yield call(request, requestURL, options);
 
   if (!jobs.err) {
-    console.log(jobs.data);
+    // console.log(jobs.data);
     yield put(jobsLoaded(jobs.data));
   } else {
     // yield put(jobsLoadingError(jobs.err));
@@ -73,7 +77,12 @@ export function* getJobs() {
 }
 
 export function* getJobsWatcher() {
-  yield fork(takeLatest, LOAD_JOBS, getJobs);
+  yield [
+    fork(takeLatest, LOAD_JOBS, getJobs),
+    fork(takeLatest, REMOVE_OCCUPATION, getJobs),
+    fork(takeLatest, REMOVE_LOCATION, getJobs),
+  ];
+  // yield fork(takeLatest, LOAD_JOBS, getJobs);
 }
 
 export function* afData() {
