@@ -1,0 +1,84 @@
+.textSection {
+  // margin: 3em auto;
+  // padding-top: 20px;
+}
+
+.textSection:first-child {
+  margin-top: 0;
+}
+
+.searchForm {
+  padding: 2px 10px;
+  background: #345468;
+  color: white;
+}
+
+.searchForm h1 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.centered {
+  text-align: center;
+}
+
+p,
+label {
+  font-family: Georgia, Times, 'Times New Roman', serif;
+  line-height: 1.5em;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.usernameForm {
+  margin-bottom: 1em;
+}
+
+.input {
+  outline: none;
+  border-bottom: 1px dotted #999;
+}
+
+.atPrefix {
+  color: black;
+  margin-left: 0.4em;
+}
+
+.tagsWrapper {
+  background: white;
+  border: 1px solid gray;
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.inputPlaceholder {
+  color: lightgray;
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+.tag {
+  display: inline-block;
+  background: #B5D8E9;
+  margin: 5px;
+  height: 25px;
+  line-height: 25px;
+  padding: 0 8px;
+  border-radius: 2px;
+}
+
+.tagText {
+  color: #333333;
+}
+
+:global(.glyphicon-remove-sign) {
+  cursor: pointer;
+  color: #8E8E93;
+  margin-left: 8px;
+  top: 3px;
+}
