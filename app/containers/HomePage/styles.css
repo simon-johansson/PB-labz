@@ -95,3 +95,7 @@ label {
   margin-left: 5px;
   top: 2px;
 }
+
+:global(input.form-control) {
+  height: 40px;
+}
