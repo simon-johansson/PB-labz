@@ -20,6 +20,7 @@ import {
   advertLoaded
 } from './actions';
 
+import IosMenu from 'components/IosMenu';
 // import RepoListItem from 'containers/RepoListItem';
 // import OccupationListItem from 'components/OccupationListItem';
 // import Button from 'components/Button';
@@ -67,8 +68,8 @@ export class JobAdvert extends React.Component {
 
     return (
       <article>
-        <header className={styles.header}>
-          <span className='glyphicon glyphicon-chevron-left' onClick={this.openHomePage} />
+        <header className={styles.header} onClick={this.openHomePage}>
+          <span className='glyphicon glyphicon-chevron-left' />
           <h1>Annons</h1>
         </header>
 
@@ -88,6 +89,7 @@ export class JobAdvert extends React.Component {
             <p dangerouslySetInnerHTML={{__html: this.props.advert.annonstext}}></p>
           </div>
         }
+      <IosMenu />
       </article>
     );
   }

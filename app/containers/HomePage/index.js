@@ -40,6 +40,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import RepoListItem from 'containers/RepoListItem';
 import JobListItem from 'components/JobListItem';
+import IosMenu from 'components/IosMenu';
 import Button from 'components/Button';
 import H2 from 'components/H2';
 import List from 'components/List';
@@ -211,6 +212,7 @@ export class HomePage extends React.Component {
             <FormattedMessage {...messages.featuresButton} />
           </Button>*/}
         </div>
+        <IosMenu />
       </article>
     );
   }
