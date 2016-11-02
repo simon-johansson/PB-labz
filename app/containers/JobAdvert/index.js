@@ -68,28 +68,30 @@ export class JobAdvert extends React.Component {
 
     return (
       <article>
-        <header className={styles.header} onClick={this.openHomePage}>
-          <span className='glyphicon glyphicon-chevron-left' />
-          <h1>Annons</h1>
-        </header>
+        <div className={styles.contentWrapper}>
+          <header className={styles.header} onClick={this.openHomePage}>
+            <span className='glyphicon glyphicon-chevron-left' />
+            <h1>Annons</h1>
+          </header>
 
-        {this.props.advert &&
-          <div className={styles.advertWrapper}>
-            <b>{this.props.advert.arbetsgivarenamn}</b>
-            <h3>{this.props.advert.rubrik}</h3>
-            <p>{this.props.advert.yrkesroll.namn}</p>
+          {this.props.advert &&
+            <div className={styles.advertWrapper}>
+              <b>{this.props.advert.arbetsgivarenamn}</b>
+              <h3>{this.props.advert.rubrik}</h3>
+              <p>{this.props.advert.yrkesroll.namn}</p>
 
-            {!!this.props.advert.kompetenser.length &&
-              <div className={styles.competenceWrapper}>
-                <b>Eterfrågade kompetenser:</b>
-                <br />
-                {this.createCompetences()}
-              </div>
-            }
-            <p dangerouslySetInnerHTML={{__html: this.props.advert.annonstext}}></p>
-          </div>
-        }
-      <IosMenu />
+              {!!this.props.advert.kompetenser.length &&
+                <div className={styles.competenceWrapper}>
+                  <b>Eterfrågade kompetenser:</b>
+                  <br />
+                  {this.createCompetences()}
+                </div>
+              }
+              <p dangerouslySetInnerHTML={{__html: this.props.advert.annonstext}}></p>
+            </div>
+          }
+        </div>
+        <IosMenu />
       </article>
     );
   }

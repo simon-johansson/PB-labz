@@ -147,7 +147,7 @@ export class HomePage extends React.Component {
 
     return (
       <article>
-        <div>
+        <div className={styles.contentWrapper}>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
               <h1>Mina sökningar</h1>
