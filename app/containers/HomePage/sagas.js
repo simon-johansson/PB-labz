@@ -32,11 +32,22 @@ export function* getJobs() {
   const occupation = yield select(selectOccupations());
   const locations = yield select(selectLocations());
   const occupationPayload = occupation.map((item) => {
-    const typ = item.typ === 'YRKESOMRADE' ? 'YRKESOMRADE_ROLL' : item.typ;
+    let typ;
+    switch (item.typ) {
+      case 'YRKESOMRADE':
+        typ = 'YRKESOMRADE_ROLL';
+        break;
+      case 'YRKE':
+        typ = 'YRKESROLL';
+        break;
+      default:
+        typ = item.typ;
+    }
+
     return {
-      typ,
+      typ: typ,
       varde: item.id || item.varde,
-      egenskaper: [{typ: 'YRKE_ERFARENHET', varde: '4'}],
+      // egenskaper: [],
     };
   });
   const locationPayload = locations.map((item) => {
