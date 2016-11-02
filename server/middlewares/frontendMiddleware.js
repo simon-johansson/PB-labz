@@ -1,7 +1,5 @@
 /* eslint-disable global-require */
 const express = require('express');
-const bodyParser = require('body-parser');
-const request = require('request');
 const path = require('path');
 const compression = require('compression');
 const pkg = require(path.resolve(process.cwd(), 'package.json'));
@@ -19,10 +17,6 @@ const addDevMiddlewares = (app, webpackConfig) => {
     stats: 'errors-only',
   });
 
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
-    extended: true,
-  }));
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
 
@@ -36,40 +30,6 @@ const addDevMiddlewares = (app, webpackConfig) => {
       res.sendFile(path.join(process.cwd(), pkg.dllPlugin.path, filename));
     });
   }
-
-  app.post('/matchandeRekryteringsbehov', (req, res) => {
-    const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/matchning/v1/matchandeRekryteringsbehov';
-    // console.log(req.body);
-    request.post(url, {json: req.body}, (error, response, body) => {
-      if (!error) {
-        // console.log(body);
-        res.json(body);
-      }
-    });
-  });
-
-  app.post('/matchandeRekryteringsbehov/:id', (req, res) => {
-    const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/matchning/v1/matchandeRekryteringsbehov/' + req.params.id;
-    // console.log(req.body);
-    request.post(url, {json: req.body}, (error, response, body) => {
-      if (!error) {
-        // console.log(body);
-        res.json(body);
-      }
-    });
-  });
-
-  app.get('/matchningskriterier', (req, res) => {
-    // console.log(req);
-    const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/af/v1/matchning' + req.originalUrl;
-    // console.log(req.body);
-    request(url, (error, response, body) => {
-      if (!error) {
-        console.log(body);
-        res.json(body);
-      }
-    });
-  });
 
   app.get('*', (req, res) => {
     fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
@@ -92,28 +52,6 @@ const addProdMiddlewares = (app, options) => {
   // and other good practices on official Express.js docs http://mxs.is/googmy
   app.use(compression());
   app.use(publicPath, express.static(outputPath));
-
-  app.post('/matchandeRekryteringsbehov', (req, res) => {
-    const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/matchning/v1/matchandeRekryteringsbehov';
-    // console.log(req.body);
-    request.post(url, {json: req.body}, (error, response, body) => {
-      if (!error) {
-        // console.log(body);
-        res.json(body);
-      }
-    });
-  });
-
-  app.post('/matchandeRekryteringsbehov/:id', (req, res) => {
-    const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/matchning/v1/matchandeRekryteringsbehov/' + req.params.id;
-    // console.log(req.body);
-    request.post(url, {json: req.body}, (error, response, body) => {
-      if (!error) {
-        // console.log(body);
-        res.json(body);
-      }
-    });
-  });
 
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
 };
