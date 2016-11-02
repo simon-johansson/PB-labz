@@ -45,7 +45,7 @@ export function* getJobs() {
     }
 
     return {
-      typ: typ,
+      typ,
       varde: item.id || item.varde,
       // egenskaper: [],
     };

@@ -19,6 +19,7 @@ import {
   selectJobs,
   selectAmount,
   selectRelated,
+  selectCompetences,
 } from 'containers/App/selectors';
 
 import {
@@ -40,6 +41,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import RepoListItem from 'containers/RepoListItem';
 import JobListItem from 'components/JobListItem';
+import CompetenceListItem from 'components/CompetenceListItem';
 import IosMenu from 'components/IosMenu';
 import Button from 'components/Button';
 import H2 from 'components/H2';
@@ -50,6 +52,12 @@ import LoadingIndicator from 'components/LoadingIndicator';
 import styles from './styles.css';
 
 export class HomePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tab: 'all',
+    };
+  }
   /**
    * when initial state username is not null, submit the form to load repos
    */
@@ -110,6 +118,29 @@ export class HomePage extends React.Component {
     });
   }
 
+  createCompetencesCloud() {
+    // if (this.props.competences.length) {
+    //   return this.props.competences.map((item) => {
+    //     return (
+    //       <div>
+    //         <span>{item.efterfragat}</span>
+    //         <br />
+    //       </div>
+    //     );
+    //   });
+    // }
+
+    return (
+      <div>
+        <div className={styles.matchDescription}>
+          <h3>Vad kan du?</h3>
+          <p>Ange dina kompetenser för att se de mest relevanta annonserna först</p>
+        </div>
+        <List items={this.props.competences} component={CompetenceListItem} />
+      </div>
+    );
+  }
+
   removeOccupationTag(index, e) {
     e.stopPropagation();
     this.props.onRemoveOccupation(index);
@@ -121,6 +152,7 @@ export class HomePage extends React.Component {
   }
 
   render() {
+
     let mainContent = null;
 
     // Show a loading indicator when we're loading
@@ -206,7 +238,25 @@ export class HomePage extends React.Component {
                 />
               </label>
             </form>*/}
-            {mainContent}
+            <div className={styles.toggleButtons}>
+              <button
+                className={this.state.tab === 'all' ? styles.activeButton : ''}
+                onClick={() => this.setState({tab: 'all'})}
+              >
+                Alla jobb ({this.props.amount})
+              </button>
+              <button
+                className={this.state.tab === 'match' ? styles.activeButton : ''}
+                onClick={() => this.setState({tab: 'match'})}
+              >
+                Matchande
+              </button>
+            </div>
+            {
+              this.state.tab === 'all' ?
+                mainContent :
+                this.createCompetencesCloud()
+            }
           </section>
           {/*<Button handleRoute={this.openFeaturesPage}>
             <FormattedMessage {...messages.featuresButton} />
@@ -267,6 +317,7 @@ const mapStateToProps = createStructuredSelector({
   jobs: selectJobs(),
   amount: selectAmount(),
   related: selectRelated(),
+  competences: selectCompetences(),
   username: selectUsername(),
   occupations: selectOccupations(),
   locations: selectLocations(),

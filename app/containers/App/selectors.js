@@ -41,6 +41,11 @@ const selectRelated = () => createSelector(
   (globalState) => globalState.getIn(['afData', 'related'])
 );
 
+const selectCompetences = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['afData', 'competences'])
+);
+
 const selectLocationState = () => {
   let prevRoutingState;
   let prevRoutingStateJS;
@@ -66,5 +71,6 @@ export {
   selectJobs,
   selectAmount,
   selectRelated,
+  selectCompetences,
   selectLocationState,
 };

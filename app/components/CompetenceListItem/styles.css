@@ -1,0 +1,16 @@
+.linkWrapper {
+  width: 100%;
+  // height: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  // display: flex;
+  // align-items: space-between;
+}
+
+:global(.glyphicon-ok) {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  color: green;
+}

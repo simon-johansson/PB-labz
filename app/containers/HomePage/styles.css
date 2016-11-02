@@ -86,6 +86,29 @@ label {
   display: block;
 }
 
+.toggleButtons {
+
+}
+
+.toggleButtons button {
+  width: 50%;
+  display: inline-block;
+  color: white;
+  height: 40px;
+  background: #345468;
+}
+
+.activeButton {
+  background: #32749D !important;
+}
+
+.matchDescription {
+  display: block;
+  margin: auto;
+  width: 90%;
+  text-align: center;
+}
+
 :global(.glyphicon-remove) {
   cursor: pointer;
   color: #8E8E93;

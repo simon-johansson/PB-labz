@@ -15,6 +15,7 @@
  *    }
  */
 
+import _ from 'lodash';
 import {
   LOAD_REPOS,
   LOAD_REPOS_SUCCESS,
@@ -72,11 +73,21 @@ export function loadJobs() {
 }
 
 export function jobsLoaded(jobsData) {
+  const arr = [];
+  jobsData.rekryteringsbehov.forEach(job => {
+    job.matchningsresultat.efterfragat.forEach(merit => {
+      if (merit.typ === 'KOMPETENS') {
+        arr.push(merit);
+      }
+    });
+  });
+  const competences = _.sortBy(_.uniqBy(arr, 'varde'), ['efterfragat']);
   return {
     type: LOAD_JOBS_SUCCESS,
     jobs: jobsData.rekryteringsbehov,
     amount: jobsData.antalRekryteringsbehov,
     related: jobsData.relateradeKriterier,
+    competences,
   };
 }
 
