@@ -16,3 +16,6 @@ export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
 export const LOAD_JOBS = 'boilerplate/App/LOAD_JOBS';
 export const LOAD_JOBS_SUCCESS = 'boilerplate/App/LOAD_JOBS_SUCCESS';
 export const LOAD_JOBS_ERROR = 'boilerplate/App/LOAD_JOBS_ERROR';
+
+export const SET_COMPETENCE = 'boilerplate/Home/SET_COMPETENCE';
+export const REMOVE_COMPETENCE = 'boilerplate/Home/REMOVE_COMPETENCE';

@@ -17,6 +17,8 @@ import {
   LOAD_JOBS,
   LOAD_JOBS_SUCCESS,
   LOAD_JOBS_ERROR,
+  SET_COMPETENCE,
+  REMOVE_COMPETENCE,
 } from './constants';
 import {
   REMOVE_OCCUPATION,
@@ -29,6 +31,7 @@ const initialState = fromJS({
   loading: false,
   error: false,
   currentUser: false,
+  knownCompetences: [],
   userData: fromJS({
     repositories: false,
   }),
@@ -79,6 +82,13 @@ function appReducer(state = initialState, action) {
       return state
         .set('error', action.error)
         .set('loading', false);
+
+    case SET_COMPETENCE:
+      return state.updateIn(['knownCompetences'], (arr) => arr.push(action.id));
+    case REMOVE_COMPETENCE:
+      const competences = state.get('knownCompetences').filter((item) => action.id !== item);
+      return state.set('knownCompetences', competences);
+
     default:
       return state;
   }

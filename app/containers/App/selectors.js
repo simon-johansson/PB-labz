@@ -46,6 +46,11 @@ const selectCompetences = () => createSelector(
   (globalState) => globalState.getIn(['afData', 'competences'])
 );
 
+const selectKnownCompetences = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.get('knownCompetences')
+);
+
 const selectLocationState = () => {
   let prevRoutingState;
   let prevRoutingStateJS;
@@ -72,5 +77,6 @@ export {
   selectAmount,
   selectRelated,
   selectCompetences,
+  selectKnownCompetences,
   selectLocationState,
 };

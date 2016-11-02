@@ -131,12 +131,13 @@ export class HomePage extends React.Component {
     // }
 
     return (
-      <div>
+      <div className={styles.matchWrapper}>
         <div className={styles.matchDescription}>
           <h3>Vad kan du?</h3>
-          <p>Ange dina kompetenser för att se de mest relevanta annonserna först</p>
+          <p>Ange dina kompetenser för att se jobben som passar dig bäst</p>
         </div>
         <List items={this.props.competences} component={CompetenceListItem} />
+        <button className={styles.showMatchingButton + ' btn btn-default'}>Visa matchande jobb</button>
       </div>
     );
   }

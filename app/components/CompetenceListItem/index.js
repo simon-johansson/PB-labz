@@ -9,6 +9,12 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { selectKnownCompetences } from 'containers/App/selectors';
+import {
+  setCompetence,
+  removeCompetence,
+} from 'containers/App/actions';
+
 import ListItem from 'components/ListItem';
 import styles from './styles.css';
 
@@ -16,31 +22,42 @@ export class CompetenceListItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      picked: false,
+      isKnown: false,
     };
   }
 
   componentDidMount() {
+    let isKnown = false;
+    this.props.knownCompetences.forEach(id => {
+      if (this.props.item.varde === id) isKnown = true;
+    });
+    this.setState({isKnown});
   }
 
   onCompetenceClick() {
-    const isPicked = !this.state.picked;
-    this.setState({picked: isPicked});
+    const isKnown = !this.state.isKnown;
+    this.setState({isKnown: isKnown});
+    if (isKnown) {
+      this.props.onSetCompetence(this.props.item.varde);
+    } else {
+      this.props.onRemoveCompetence(this.props.item.varde);
+    }
   }
 
   render() {
+    // console.log(this.props.knownCompetences);
     const item = this.props.item;
     const content = (
       <div className={styles.linkWrapper} onClick={this.onCompetenceClick.bind(this)}>
         <span>{item.efterfragat}</span>
-        {this.state.picked &&
+        {this.state.isKnown &&
           <span className='glyphicon glyphicon-ok' />
         }
       </div>
     );
 
     return (
-      <ListItem key={`repo-list-item-${item.varde}`} item={content} />
+      <ListItem key={`competence-list-item-${item.varde}`} item={content} />
     );
   }
 }
@@ -52,11 +69,14 @@ CompetenceListItem.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    changeRoute: (url) => dispatch(push(url)),
+    onSetCompetence: (id) => dispatch(setCompetence(id)),
+    onRemoveCompetence: (id) => dispatch(removeCompetence(id)),
   };
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  knownCompetences: selectKnownCompetences(),
+});
 
 // Wrap the component to inject dispatch and state into it
 export default connect(mapStateToProps, mapDispatchToProps)(CompetenceListItem);

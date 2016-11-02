@@ -23,6 +23,8 @@ import {
   LOAD_JOBS,
   LOAD_JOBS_SUCCESS,
   LOAD_JOBS_ERROR,
+  SET_COMPETENCE,
+  REMOVE_COMPETENCE,
 } from './constants';
 
 /**
@@ -97,3 +99,17 @@ export function jobsLoadingError(error) {
     error,
   };
 }
+
+export function setCompetence(id) {
+  return {
+    type: SET_COMPETENCE,
+    id,
+  };
+};
+
+export function removeCompetence(id) {
+  return {
+    type: REMOVE_COMPETENCE,
+    id,
+  };
+};
