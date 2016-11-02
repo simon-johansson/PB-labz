@@ -22,7 +22,7 @@ export function* getLocations() {
   const query = yield select(selectQuery());
   // console.log(query);
 
-  const requestURL = `http://pilot.arbetsformedlingen.se:80/pbv3api/rest/af/v1/matchning/matchningskriterier?namnfilter=${query}&typer=kommuner&typer=lan&typer=land`;
+  const requestURL = `https://www.arbetsformedlingen.se/rest/matchning/rest/af/v1/matchning/matchningskriterier?namnfilter=${query}&typer=kommuner&typer=lan&typer=land`;
   const locations = yield call(request, requestURL);
 
   if (!locations.err) {

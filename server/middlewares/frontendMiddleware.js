@@ -59,6 +59,18 @@ const addDevMiddlewares = (app, webpackConfig) => {
     });
   });
 
+  app.get('/matchningskriterier', (req, res) => {
+    // console.log(req);
+    const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/af/v1/matchning' + req.originalUrl;
+    // console.log(req.body);
+    request(url, (error, response, body) => {
+      if (!error) {
+        console.log(body);
+        res.json(body);
+      }
+    });
+  });
+
   app.get('*', (req, res) => {
     fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
       if (err) {

@@ -36,6 +36,7 @@ export function* getJobs() {
     return {
       typ,
       varde: item.id || item.varde,
+      egenskaper: [{typ: 'YRKE_ERFARENHET', varde: '4'}],
     };
   });
   const locationPayload = locations.map((item) => {
