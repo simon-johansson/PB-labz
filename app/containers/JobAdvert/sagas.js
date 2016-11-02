@@ -17,7 +17,7 @@ export function* getAdvert() {
   const id = yield select(selectId());
   // console.log(query);
 
-  const requestURL = `http://pilot.arbetsformedlingen.se:80/pbv3api/rest/matchning/v1/matchandeRekryteringsbehov/${id}`;
+  const requestURL = `/matchandeRekryteringsbehov/${id}`;
   const options = {
     method: 'POST',
     headers: {
