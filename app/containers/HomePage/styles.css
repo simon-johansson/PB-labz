@@ -103,7 +103,7 @@ label {
 }
 
 .matchWrapper {
-  padding-bottom: 2px;
+  padding-bottom: 40px;
 }
 
 .matchDescription {
@@ -114,11 +114,18 @@ label {
 }
 
 .showMatchingButton {
-  background: #06769F;
-  margin: 15px auto;
+  // background: #06769F;
+  background: #5E8404;
+  /* margin: 15px auto; */
   display: block;
   color: white;
   border: none;
+  width: 100%;
+  position: fixed;
+  bottom: 50px;
+  display: block;
+  z-index: 999;
+  height: 40px;
 }
 
 :global(.glyphicon-remove) {

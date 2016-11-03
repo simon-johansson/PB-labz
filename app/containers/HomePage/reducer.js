@@ -14,6 +14,7 @@ import {
   CHANGE_USERNAME,
   REMOVE_OCCUPATION,
   REMOVE_LOCATION,
+  SET_UI_STATE,
 } from './constants';
 
 import {
@@ -31,6 +32,12 @@ const initialState = fromJS({
   username: '',
   occupations: fromJS([]),
   locations: fromJS([]),
+  uiState: fromJS({
+    tab: 'all',
+    showMatchingJobs: false,
+    allScrollPosition: 0,
+    tabScrollPosition: 0,
+  }),
 });
 
 function homeReducer(state = initialState, action) {
@@ -41,18 +48,26 @@ function homeReducer(state = initialState, action) {
         .set('username', action.name.replace(/@/gi, ''));
     case ADD_OCCUPATION:
       return state
-        .updateIn(['occupations'], (arr) => arr.push(action.occupation));
+        .updateIn(['occupations'], (arr) => arr.push(action.occupation))
+        .setIn(['uiState', 'showMatchingJobs'], false);
     case REMOVE_OCCUPATION:
       const occupations = state.get('occupations').filter((item, index) => action.index !== index);
       return state
-        .set('occupations', occupations);
+        .set('occupations', occupations)
+        .setIn(['uiState', 'showMatchingJobs'], false);
     case ADD_LOCATION:
       return state
-        .updateIn(['locations'], (arr) => arr.push(action.location));
+        .updateIn(['locations'], (arr) => arr.push(action.location))
+        .setIn(['uiState', 'showMatchingJobs'], false);
     case REMOVE_LOCATION:
       const locations = state.get('locations').filter((item, index) => action.index !== index);
       return state
-        .set('locations', locations);
+        .set('locations', locations)
+        .setIn(['uiState', 'showMatchingJobs'], false);
+    case SET_UI_STATE:
+      return state
+        .setIn(['uiState', 'tab'], action.tab)
+        .setIn(['uiState', 'showMatchingJobs'], action.showMatchingJobs);
     default:
       return state;
   }

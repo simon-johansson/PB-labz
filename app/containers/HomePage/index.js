@@ -27,12 +27,16 @@ import {
   selectUsername,
   selectOccupations,
   selectLocations,
+  selectUiState,
+  selectCurrentTab,
+  selectShowMatchingJobs,
 } from './selectors';
 
 import {
   changeUsername,
   removeOccupation,
   removeLocation,
+  setUiState,
 } from './actions';
 import {
   loadRepos,
@@ -57,7 +61,7 @@ export class HomePage extends React.Component {
     super(props);
     this.state = {
       tab: 'all',
-      showMatchingJobs: false,
+      showMatchingJobs: props.showMatchingJobs,
       allScrollPosition: 0,
       tabScrollPosition: 0,
     };
@@ -122,7 +126,7 @@ export class HomePage extends React.Component {
     });
   }
 
-  createCompetencesCloud() {
+  createCompetencesCloud(matchingJobs) {
     // if (this.props.competences.length) {
     //   return this.props.competences.map((item) => {
     //     return (
@@ -133,24 +137,39 @@ export class HomePage extends React.Component {
     //     );
     //   });
     // }
-
-    return (
-      <div className={styles.matchWrapper}>
-        <div className={styles.matchDescription}>
-          <h3>Vad kan du?</h3>
-          <p>Ange dina kompetenser för att se jobben som passar dig bäst</p>
+    if (this.props.loading) {
+      return <List component={LoadingIndicator} />
+    } else {
+      return (
+        <div className={styles.matchWrapper}>
+          <div className={styles.matchDescription}>
+            <h3>Vad kan du?</h3>
+            <p>Ange dina kompetenser för att se jobben som passar dig bäst</p>
+          </div>
+          <List items={this.props.competences} component={CompetenceListItem} />
+          { !!this.props.knownCompetences.size &&
+            <button
+              className={styles.showMatchingButton + ' btn btn-default'}
+              onClick={this.showMatchingJobs.bind(this)}
+            >
+              Visa matchande jobb
+              { !!matchingJobs &&
+                ` (${matchingJobs})`
+              }
+            </button>
+          }
         </div>
-        <List items={this.props.competences} component={CompetenceListItem} />
-        <button
-          className={styles.showMatchingButton + ' btn btn-default'}
-          onClick={this.showMatchingJobs.bind(this)}
-        >Visa matchande jobb</button>
-      </div>
-    );
+      );
+    }
+
   }
 
   showMatchingJobs() {
     this.setState({ showMatchingJobs: true });
+    this.props.setUiState({
+     showMatchingJobs: true,
+     tab: this.state.tab,
+   });
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
@@ -164,14 +183,25 @@ export class HomePage extends React.Component {
     this.props.onRemoveLocation(index);
   }
 
-  render() {
+  setTabState(tabState) {
+    // console.log(state);
+    this.setState({tab: tabState});
+    this.props.setUiState({
+      tab: tabState,
+      showMatchingJobs: this.state.showMatchingJobs,
+    });
+  }
 
+  render() {
+    // console.log(this.props.knownCompetences);
     let mainContent = null;
+    let matchingContent = null;
     const matchingJobs = [];
 
     // Show a loading indicator when we're loading
     if (this.props.loading) {
       mainContent = (<List component={LoadingIndicator} />);
+      matchingContent = (<List component={LoadingIndicator} />);
 
     // Show an error if there is one
     } else if (this.props.error !== false) {
@@ -198,7 +228,7 @@ export class HomePage extends React.Component {
         });
         if (match) matchingJobs.push(job);
       });
-      var matchingContent = (
+      matchingContent = (
         <div>
           <span className={styles.amount}>Hittade {matchingJobs.length} matchande jobb</span>
           <List items={matchingJobs} component={JobListItem} />
@@ -269,28 +299,32 @@ export class HomePage extends React.Component {
             </form>*/}
             <div className={styles.toggleButtons}>
               <button
-                className={this.state.tab === 'all' ? styles.activeButton : ''}
-                onClick={() => this.setState({tab: 'all'})}
+                className={this.props.currentTab === 'all' ? styles.activeButton : ''}
+                onClick={this.setTabState.bind(this, 'all')}
               >
-                Alla jobb ({this.props.amount})
+                Alla jobb
+                {
+                  !this.props.loading && this.props.amount &&
+                  ` (${this.props.amount})`
+                }
               </button>
               <button
-                className={this.state.tab === 'match' ? styles.activeButton : ''}
-                onClick={() => this.setState({tab: 'match'})}
+                className={this.props.currentTab === 'match' ? styles.activeButton : ''}
+                onClick={this.setTabState.bind(this, 'match')}
               >
                 Matchande
-                { !!matchingJobs.length &&
+                { !!matchingJobs.length && !this.props.loading &&
                   ` (${matchingJobs.length})`
                 }
               </button>
             </div>
-            { this.state.tab === 'all' &&
+            { this.props.currentTab === 'all' &&
                 mainContent
             }
-            { this.state.tab === 'match' &&
-              (this.state.showMatchingJobs ?
+            { this.props.currentTab === 'match' &&
+              (this.props.showMatchingJobs ?
                 matchingContent :
-                this.createCompetencesCloud()
+                this.createCompetencesCloud(matchingJobs.length)
               )
             }
           </section>
@@ -327,6 +361,7 @@ HomePage.propTypes = {
   onChangeUsername: React.PropTypes.func,
   onRemoveOccupation: React.PropTypes.func,
   onRemoveLocation: React.PropTypes.func,
+  setUiState: React.PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -334,6 +369,7 @@ export function mapDispatchToProps(dispatch) {
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     onRemoveOccupation: (index) => dispatch(removeOccupation(index)),
     onRemoveLocation: (index) => dispatch(removeLocation(index)),
+    setUiState: (state) => dispatch(setUiState(state)),
     changeRoute: (url) => dispatch(push(url)),
     // onSubmitForm: (evt) => {
     //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
@@ -353,6 +389,9 @@ const mapStateToProps = createStructuredSelector({
   jobs: selectJobs(),
   amount: selectAmount(),
   related: selectRelated(),
+  uiState: selectUiState(),
+  currentTab: selectCurrentTab(),
+  showMatchingJobs: selectShowMatchingJobs(),
   competences: selectCompetences(),
   knownCompetences: selectKnownCompetences(),
   username: selectUsername(),

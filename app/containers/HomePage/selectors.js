@@ -23,9 +23,27 @@ const selectLocations = () => createSelector(
   (homeState) => homeState.get('locations')
 );
 
+const selectUiState = () => createSelector(
+  selectHome(),
+  (homeState) => homeState.get('uiState')
+);
+
+const selectCurrentTab = () => createSelector(
+  selectHome(),
+  (homeState) => homeState.getIn(['uiState', 'tab'])
+);
+
+const selectShowMatchingJobs = () => createSelector(
+  selectHome(),
+  (homeState) => homeState.getIn(['uiState', 'showMatchingJobs'])
+);
+
 export {
   selectHome,
   selectUsername,
   selectOccupations,
   selectLocations,
+  selectUiState,
+  selectCurrentTab,
+  selectShowMatchingJobs,
 };

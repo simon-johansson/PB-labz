@@ -19,6 +19,7 @@ import {
   CHANGE_USERNAME,
   REMOVE_OCCUPATION,
   REMOVE_LOCATION,
+  SET_UI_STATE,
 } from './constants';
 
 /**
@@ -46,5 +47,13 @@ export function removeLocation(locationIndex) {
   return {
     type: REMOVE_LOCATION,
     index: locationIndex,
+  };
+}
+
+export function setUiState(uiState) {
+  return {
+    type: SET_UI_STATE,
+    tab: uiState.tab,
+    showMatchingJobs: uiState.showMatchingJobs,
   };
 }
