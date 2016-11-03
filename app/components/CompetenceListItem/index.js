@@ -34,6 +34,10 @@ export class CompetenceListItem extends React.Component {
     this.setState({isKnown});
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.knownCompetences.includes(this.props.item.varde) || this.state.isKnown;
+  }
+
   onCompetenceClick() {
     const isKnown = !this.state.isKnown;
     this.setState({isKnown: isKnown});
@@ -45,7 +49,7 @@ export class CompetenceListItem extends React.Component {
   }
 
   render() {
-    // console.log(this.props.knownCompetences);
+    console.log(this.props.knownCompetences);
     const item = this.props.item;
     const content = (
       <div className={styles.linkWrapper} onClick={this.onCompetenceClick.bind(this)}>

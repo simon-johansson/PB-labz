@@ -20,6 +20,7 @@ import {
   selectAmount,
   selectRelated,
   selectCompetences,
+  selectKnownCompetences,
 } from 'containers/App/selectors';
 
 import {
@@ -56,6 +57,9 @@ export class HomePage extends React.Component {
     super(props);
     this.state = {
       tab: 'all',
+      showMatchingJobs: false,
+      allScrollPosition: 0,
+      tabScrollPosition: 0,
     };
   }
   /**
@@ -137,9 +141,17 @@ export class HomePage extends React.Component {
           <p>Ange dina kompetenser för att se jobben som passar dig bäst</p>
         </div>
         <List items={this.props.competences} component={CompetenceListItem} />
-        <button className={styles.showMatchingButton + ' btn btn-default'}>Visa matchande jobb</button>
+        <button
+          className={styles.showMatchingButton + ' btn btn-default'}
+          onClick={this.showMatchingJobs.bind(this)}
+        >Visa matchande jobb</button>
       </div>
     );
+  }
+
+  showMatchingJobs() {
+    this.setState({ showMatchingJobs: true });
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
   removeOccupationTag(index, e) {
@@ -155,6 +167,7 @@ export class HomePage extends React.Component {
   render() {
 
     let mainContent = null;
+    const matchingJobs = [];
 
     // Show a loading indicator when we're loading
     if (this.props.loading) {
@@ -176,10 +189,25 @@ export class HomePage extends React.Component {
           <List items={this.props.jobs} component={JobListItem} />
         </div>
       );
+      this.props.jobs.forEach(job => {
+        let match = false;
+        job.matchningsresultat.efterfragat.forEach(requirement => {
+          if (this.props.knownCompetences.includes(requirement.varde)) {
+            match = true;
+          }
+        });
+        if (match) matchingJobs.push(job);
+      });
+      var matchingContent = (
+        <div>
+          <span className={styles.amount}>Hittade {matchingJobs.length} matchande jobb</span>
+          <List items={matchingJobs} component={JobListItem} />
+        </div>
+      );
     }
 
     return (
-      <article>
+      <article ref='list'>
         <div className={styles.contentWrapper}>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
@@ -251,12 +279,19 @@ export class HomePage extends React.Component {
                 onClick={() => this.setState({tab: 'match'})}
               >
                 Matchande
+                { !!matchingJobs.length &&
+                  ` (${matchingJobs.length})`
+                }
               </button>
             </div>
-            {
-              this.state.tab === 'all' ?
-                mainContent :
+            { this.state.tab === 'all' &&
+                mainContent
+            }
+            { this.state.tab === 'match' &&
+              (this.state.showMatchingJobs ?
+                matchingContent :
                 this.createCompetencesCloud()
+              )
             }
           </section>
           {/*<Button handleRoute={this.openFeaturesPage}>
@@ -319,6 +354,7 @@ const mapStateToProps = createStructuredSelector({
   amount: selectAmount(),
   related: selectRelated(),
   competences: selectCompetences(),
+  knownCompetences: selectKnownCompetences(),
   username: selectUsername(),
   occupations: selectOccupations(),
   locations: selectLocations(),
