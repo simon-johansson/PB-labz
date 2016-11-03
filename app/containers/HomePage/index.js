@@ -103,7 +103,11 @@ export class HomePage extends React.Component {
   createOccupationTags() {
     return this.props.occupations.map((item, index) => {
       return (
-        <div className={styles.tag} onClick={this.removeOccupationTag.bind(this, index)}>
+        <div
+          className={styles.tag}
+          onClick={this.removeOccupationTag.bind(this, index)}
+          key={`occupations-${index}`}
+        >
           <span className={styles.tagText}>
             {item.namn}
             <span className="glyphicon glyphicon-remove" />
@@ -117,7 +121,11 @@ export class HomePage extends React.Component {
     return this.props.locations.map((item, index) => {
       // console.log(item);
       return (
-        <div className={styles.tag} onClick={this.removeLocationTag.bind(this, index)}>
+        <div
+          className={styles.tag}
+          onClick={this.removeLocationTag.bind(this, index)}
+          key={`locations-${index}`}
+        >
           <span className={styles.tagText}>
             {item.namn}
             <span className="glyphicon glyphicon-remove" />

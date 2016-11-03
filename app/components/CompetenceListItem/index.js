@@ -27,15 +27,13 @@ export class CompetenceListItem extends React.Component {
   }
 
   componentDidMount() {
-    let isKnown = false;
-    this.props.knownCompetences.forEach(id => {
-      if (this.props.item.varde === id) isKnown = true;
-    });
+    let isKnown = this.props.knownCompetences.includes(this.props.item.varde);
     this.setState({isKnown});
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.knownCompetences.includes(this.props.item.varde) || this.state.isKnown;
+    // console.log(nextState.isKnown, this.state.isKnown);
+    return nextState.isKnown !== this.state.isKnown;
   }
 
   onCompetenceClick() {
@@ -49,7 +47,7 @@ export class CompetenceListItem extends React.Component {
   }
 
   render() {
-    // console.log(this.props.knownCompetences);
+    console.log('render');
     const item = this.props.item;
     const content = (
       <div className={styles.linkWrapper} onClick={this.onCompetenceClick.bind(this)}>
@@ -61,7 +59,7 @@ export class CompetenceListItem extends React.Component {
     );
 
     return (
-      <ListItem key={`competence-list-item-${item.varde}`} item={content} />
+      <ListItem item={content} />
     );
   }
 }

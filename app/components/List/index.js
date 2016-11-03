@@ -1,5 +1,5 @@
 import React from 'react';
-
+import uuid from 'uuid';
 import styles from './styles.css';
 
 function List(props) {
@@ -9,7 +9,7 @@ function List(props) {
   // If we have items, render them
   if (props.items) {
     content = props.items.map((item, index) => (
-      <ComponentToRender key={`item-${index}`} item={item} click={props.click}/>
+      <ComponentToRender key={`list-item-${index}`} item={item} click={props.click}/>
     ));
   } else {
     // Otherwise render a single component
