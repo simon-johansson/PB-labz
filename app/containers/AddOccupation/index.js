@@ -120,9 +120,10 @@ export class AddOccupation extends React.Component {
     // // If we're not loading, don't have an error and there are repos, show the repos
     // }
     else if (this.props.occupations !== false) {
+      const freetext = {id: `"${this.props.query}"`, namn: `"${this.props.query}"`, typ: 'FRITEXT'};
       mainContent = (
         <List
-          items={this.props.occupations}
+          items={[...this.props.occupations, freetext]}
           component={OccupationListItem}
           click={this.onListItemClick.bind(this)}
         />

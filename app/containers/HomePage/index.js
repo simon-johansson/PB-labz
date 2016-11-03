@@ -8,6 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
+import _ from 'lodash';
 
 import messages from './messages';
 import { createStructuredSelector } from 'reselect';
@@ -139,6 +140,13 @@ export class HomePage extends React.Component {
     // }
     if (this.props.loading) {
       return <List component={LoadingIndicator} />
+    } else if (!this.props.jobs.length) {
+      return (
+        <div>
+          <span className={styles.amount}>Hittade 0 matchande jobb</span>
+          <List items={[]} component={JobListItem} />
+        </div>
+      )
     } else {
       return (
         <div className={styles.matchWrapper}>
@@ -168,7 +176,7 @@ export class HomePage extends React.Component {
     this.setState({ showMatchingJobs: true });
     this.props.setUiState({
      showMatchingJobs: true,
-     tab: this.state.tab,
+     tab: this.props.currentTab,
    });
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
@@ -177,7 +185,7 @@ export class HomePage extends React.Component {
     this.setState({ showMatchingJobs: false });
     this.props.setUiState({
      showMatchingJobs: false,
-     tab: this.state.tab,
+     tab: this.props.currentTab,
    });
   }
 
@@ -227,23 +235,31 @@ export class HomePage extends React.Component {
           <List items={this.props.jobs} component={JobListItem} />
         </div>
       );
+
       this.props.jobs.forEach(job => {
+        const jobCopy = JSON.parse(JSON.stringify(job));
+        const matchingCompetences = [];
         let match = false;
-        job.matchningsresultat.efterfragat.forEach(requirement => {
+        jobCopy.matchningsresultat.efterfragat.forEach(requirement => {
           if (this.props.knownCompetences.includes(requirement.varde)) {
+            matchingCompetences.push(requirement);
             match = true;
           }
         });
-        if (match) matchingJobs.push(job);
+        if (match) {
+          jobCopy.matchingCompetences = matchingCompetences;
+          matchingJobs.push(jobCopy);
+        }
       });
+      const sortedMatchingJobs = _.orderBy(matchingJobs, 'matchingCompetences', 'desc');
       matchingContent = (
         <div>
           <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
             Matchningskriterier
             <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
           </div>
-          <span className={styles.amount}>Hittade {matchingJobs.length} matchande jobb</span>
-          <List items={matchingJobs} component={JobListItem} />
+          <span className={styles.amount}>Hittade {sortedMatchingJobs.length} matchande jobb</span>
+          <List items={sortedMatchingJobs} component={JobListItem} />
         </div>
       );
     }

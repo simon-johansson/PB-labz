@@ -30,6 +30,17 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
     this.openRoute(`/advert/${id}`);
   };
 
+  knownCompetences(item) {
+    if (item.matchingCompetences) {
+      return item.matchingCompetences.map(competence => {
+        // console.log(competence);
+        return (
+          <span className={styles.competence}>{competence.efterfragat}</span>
+        );
+      });
+    };
+  }
+
   render() {
     const momentOptions = {
       sameElse: 'DD MMM',
@@ -38,7 +49,7 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
     // console.log(item);
 
     const content = (
-      <div className={styles.linkWrapper} onClick={this.addLocationPage.bind(this, item.id)}>
+      <div className={item.matchingCompetences ? styles.bigLinkWrapper : styles.linkWrapper} onClick={this.addLocationPage.bind(this, item.id)}>
         <div>
           <span>{item.arbetsgivarenamn}, {item.erbjudenArbetsplats.kommun && item.erbjudenArbetsplats.kommun.namn}</span>
           <br />
@@ -47,6 +58,9 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
           <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
           <br />
           <span className={styles.smallText}>Publicerad: {moment(item.publiceringsdatum).calendar(null, momentOptions)}</span>
+          <div className={styles.knownCompetences}>
+            {this.knownCompetences(item)}
+          </div>
         </div>
       </div>
     );

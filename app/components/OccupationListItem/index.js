@@ -38,14 +38,14 @@ export class OccupationListItem extends React.Component { // eslint-disable-line
         <span>{item.namn}</span>
         { item.typ === 'GPS' ?
           <span className={styles.right + ' glyphicon glyphicon-map-marker'}></span> :
-          <span className={styles.right}>{item.typ}</span>
+          <span className={styles.right}>{item.typ.toLowerCase()}</span>
         }
       </div>
     );
 
     // Render the content into a list item
     return (
-      <ListItem key={`repo-list-item-${item.full_name}`} item={content} />
+      <ListItem key={`list-item-${item.id}`} item={content} />
     );
   }
 }
