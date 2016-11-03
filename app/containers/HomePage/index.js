@@ -265,7 +265,7 @@ export class HomePage extends React.Component {
     }
 
     return (
-      <article ref='list'>
+      <article ref='list' className='noselect'>
         <div className={styles.contentWrapper}>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
