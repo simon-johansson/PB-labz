@@ -68,7 +68,10 @@ export class AddLocation extends React.Component {
     }
     else if (!this.props.query) {
       const EmptyComponent = () => (
-        <ListItem item={''} />
+        <OccupationListItem
+          item={{namn: 'Aktuell ort', typ: 'GPS'}}
+          click={this.onListItemClick.bind(this)}
+        />
       );
       mainContent = (<List component={EmptyComponent} />);
     }

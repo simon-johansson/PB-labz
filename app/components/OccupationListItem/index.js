@@ -21,6 +21,11 @@ import styles from './styles.css';
 export class OccupationListItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   onItemClick() {
+    if (this.props.item.typ === 'GPS') {
+      return this.props.click({
+        id: '01', namn: 'Stockholms län', typ: 'LAN'
+      });
+    }
     this.props.click(this.props.item);
   }
 
@@ -31,7 +36,10 @@ export class OccupationListItem extends React.Component { // eslint-disable-line
     const content = (
       <div className={styles.linkWrapper} onClick={this.onItemClick.bind(this)}>
         <span>{item.namn}</span>
-        <span className={styles.right}>{item.typ}</span>
+        { item.typ === 'GPS' ?
+          <span className={styles.right + ' glyphicon glyphicon-map-marker'}></span> :
+          <span className={styles.right}>{item.typ}</span>
+        }
       </div>
     );
 

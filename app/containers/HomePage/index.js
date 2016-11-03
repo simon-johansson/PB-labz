@@ -173,6 +173,14 @@ export class HomePage extends React.Component {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
+  hideMatchingJobs() {
+    this.setState({ showMatchingJobs: false });
+    this.props.setUiState({
+     showMatchingJobs: false,
+     tab: this.state.tab,
+   });
+  }
+
   removeOccupationTag(index, e) {
     e.stopPropagation();
     this.props.onRemoveOccupation(index);
@@ -230,6 +238,10 @@ export class HomePage extends React.Component {
       });
       matchingContent = (
         <div>
+          <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
+            Matchningskriterier
+            <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
+          </div>
           <span className={styles.amount}>Hittade {matchingJobs.length} matchande jobb</span>
           <List items={matchingJobs} component={JobListItem} />
         </div>
@@ -304,7 +316,7 @@ export class HomePage extends React.Component {
               >
                 Alla jobb
                 {
-                  !this.props.loading && this.props.amount &&
+                  !this.props.loading && !!this.props.amount &&
                   ` (${this.props.amount})`
                 }
               </button>

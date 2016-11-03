@@ -158,14 +158,16 @@ export class AddOccupation extends React.Component {
 
                 {!!this.props.related.length &&
                   <div className={styles.tagWrapper}>
-                      <span className={styles.smallText}>Relaterade yrken:</span>
+                      <span className={styles.smallText}>Yrkesförslag:</span>
                     {this.createRelatedTags()}
-                    <div className={styles.tag}>
-                      <span className={styles.tagText}>
-                        {this.props.related.length - this.state.related}
-                        <span className="glyphicon glyphicon-plus" />
-                      </span>
-                    </div>
+                    { false &&
+                      <div className={styles.tag}>
+                        <span className={styles.tagText}>
+                          {this.props.related.length - this.state.related}
+                          <span className="glyphicon glyphicon-plus" />
+                        </span>
+                      </div>
+                    }
                   </div>
                 }
               </form>

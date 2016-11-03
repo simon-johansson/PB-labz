@@ -128,6 +128,20 @@ label {
   height: 40px;
 }
 
+.myCompetences {
+  background: #B5D8E9;
+  width: 95%;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 2px;
+  // color: white;
+}
+
+.right {
+  float: right;
+  color: #B0B0B0;
+}
+
 :global(.glyphicon-remove) {
   cursor: pointer;
   color: #8E8E93;
