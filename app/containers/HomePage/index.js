@@ -254,7 +254,9 @@ export class HomePage extends React.Component {
             matchingCompetences.push(requirement);
             match = true;
           } else {
-            notMatchingCompetences.push(requirement);
+            if (requirement.typ == "KOMPETENS") {
+              notMatchingCompetences.push(requirement);
+            }
           }
         });
         if (match) {

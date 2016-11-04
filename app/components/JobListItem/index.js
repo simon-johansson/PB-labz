@@ -56,11 +56,11 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
   }
 
   notkKnownCompetences(item) {
-    if (item.notMatchingCompetences) {
+    if (item.notMatchingCompetences.length) {
       return (
         <span className={styles.competence}>
           <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-          {item.notMatchingCompetences.length - 1}
+          {item.notMatchingCompetences.length}
         </span>
       );
     };
