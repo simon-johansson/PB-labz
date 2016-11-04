@@ -247,19 +247,24 @@ export class HomePage extends React.Component {
       this.props.jobs.forEach(job => {
         const jobCopy = JSON.parse(JSON.stringify(job));
         const matchingCompetences = [];
+        const notMatchingCompetences = [];
         let match = false;
         jobCopy.matchningsresultat.efterfragat.forEach(requirement => {
           if (this.props.knownCompetences.includes(requirement.varde)) {
             matchingCompetences.push(requirement);
             match = true;
+          } else {
+            notMatchingCompetences.push(requirement);
           }
         });
         if (match) {
           jobCopy.matchingCompetences = matchingCompetences;
+          jobCopy.notMatchingCompetences = notMatchingCompetences;
           matchingJobs.push(jobCopy);
         }
       });
-      const sortedMatchingJobs = _.orderBy(matchingJobs, 'matchingCompetences', 'desc');
+      const sortedMatchingJobs = _.orderBy(matchingJobs,
+        ['matchingCompetences', 'notMatchingCompetences'], ['desc', 'asc']);
       matchingContent = (
         <div>
           <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>

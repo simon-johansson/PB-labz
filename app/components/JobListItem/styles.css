@@ -64,8 +64,12 @@
   background: #f5f5f5;
 }
 
-.icon {
+.okIcon {
   color: green;
+  margin-right: 5px;
+}
+
+.plusIcon {
   margin-right: 5px;
 }
 

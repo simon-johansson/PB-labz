@@ -40,11 +40,29 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
         // console.log(competence);
         return (
           <span className={styles.competence}>
-            <span className={styles.icon + ' glyphicon glyphicon-ok'} />
+            <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
             {competence.efterfragat}
           </span>
         );
       });
+
+      // return (
+      //   <span className={styles.competence}>
+      //     <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+      //     {item.matchingCompetences.length}
+      //   </span>
+      // );
+    };
+  }
+
+  notkKnownCompetences(item) {
+    if (item.notMatchingCompetences) {
+      return (
+        <span className={styles.competence}>
+          <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+          {item.notMatchingCompetences.length - 1}
+        </span>
+      );
     };
   }
 
@@ -74,6 +92,7 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
               <span className={styles.smallText}>Vi efterfrågar:</span> <br />
               <div className={styles.knownCompetences}>
                 {this.knownCompetences(item)}
+                {this.notkKnownCompetences(item)}
               </div>
             </div>
           }

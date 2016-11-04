@@ -63,7 +63,7 @@ export class JobAdvert extends React.Component {
       const competencesOrdered = _.orderBy(this.props.advert.kompetenser, 'isKnown', 'asc');
       return competencesOrdered.map((item, index) => {
         return (
-          <div>
+          <div className={styles.wrapperDiv}>
             <span className={styles.competence}>
               { item.isKnown && this.props.params.matching &&
                 <span className={styles.icon + ' glyphicon glyphicon-ok'} />

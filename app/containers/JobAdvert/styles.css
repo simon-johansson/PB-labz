@@ -64,6 +64,10 @@
   margin-right: 5px;
 }
 
+.wrapperDiv {
+  display: inline-block;
+  width: auto;
+}
 
 :global(.glyphicon-chevron-left) {
   position: absolute;
