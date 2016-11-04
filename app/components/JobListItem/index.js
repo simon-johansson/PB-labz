@@ -25,9 +25,13 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
     this.props.changeRoute(route);
   };
 
-  addLocationPage = (id) => {
+  addLocationPage = (item) => {
     // console.log(id);
-    this.openRoute(`/advert/${id}`);
+    if (item.matchingCompetences) {
+      this.openRoute(`/advert/${item.id}/matching`);
+    } else {
+      this.openRoute(`/advert/${item.id}`);
+    }
   };
 
   knownCompetences(item) {
@@ -35,7 +39,10 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
       return item.matchingCompetences.map(competence => {
         // console.log(competence);
         return (
-          <span className={styles.competence}>{competence.efterfragat}</span>
+          <span className={styles.competence}>
+            <span className={styles.icon + ' glyphicon glyphicon-ok'} />
+            {competence.efterfragat}
+          </span>
         );
       });
     };
@@ -49,18 +56,27 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
     // console.log(item);
 
     const content = (
-      <div className={item.matchingCompetences ? styles.bigLinkWrapper : styles.linkWrapper} onClick={this.addLocationPage.bind(this, item.id)}>
+      <div className={item.matchingCompetences ? styles.bigLinkWrapper : styles.linkWrapper} onClick={this.addLocationPage.bind(this, item)}>
         <div>
           <span>{item.arbetsgivarenamn}, {item.erbjudenArbetsplats.kommun && item.erbjudenArbetsplats.kommun.namn}</span>
           <br />
-          <b>{item.rubrik}</b>
+          <b className={styles.title}>{item.rubrik}</b>
           <br />
-          <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
-          <br />
-          <span className={styles.smallText}>Publicerad: {moment(item.publiceringsdatum).calendar(null, momentOptions)}</span>
-          <div className={styles.knownCompetences}>
-            {this.knownCompetences(item)}
-          </div>
+          {!item.matchingCompetences &&
+            <div>
+              <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
+              <br />
+              <span className={styles.smallText}>Publicerad: {moment(item.publiceringsdatum).calendar(null, momentOptions)}</span>
+            </div>
+          }
+          {item.matchingCompetences &&
+            <div>
+              <span className={styles.smallText}>Vi efterfrågar:</span> <br />
+              <div className={styles.knownCompetences}>
+                {this.knownCompetences(item)}
+              </div>
+            </div>
+          }
         </div>
       </div>
     );

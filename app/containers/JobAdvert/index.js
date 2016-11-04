@@ -9,11 +9,16 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
+import _ from 'lodash';
 
 import {
   selectId,
   selectAdvert,
 } from './selectors';
+
+import {
+  selectKnownCompetences,
+} from 'containers/App/selectors';
 
 import {
   loadAdvert,
@@ -52,10 +57,19 @@ export class JobAdvert extends React.Component {
 
   createCompetences() {
     if (this.props.advert.kompetenser.length) {
-      return this.props.advert.kompetenser.map((item, index) => {
+      const competences = this.props.advert.kompetenser.map((k) => {
+        if (this.props.knownCompetences.includes(k.id)) k.isKnown = true;
+      });
+      const competencesOrdered = _.orderBy(this.props.advert.kompetenser, 'isKnown', 'asc');
+      return competencesOrdered.map((item, index) => {
         return (
           <div>
-            <span>{item.namn}</span>
+            <span className={styles.competence}>
+              { item.isKnown && this.props.params.matching &&
+                <span className={styles.icon + ' glyphicon glyphicon-ok'} />
+              }
+              {item.namn}
+            </span>
             <br />
           </div>
         );
@@ -120,6 +134,7 @@ export function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   advert: selectAdvert(),
+  knownCompetences: selectKnownCompetences(),
 });
 
 // Wrap the component to inject dispatch and state into it

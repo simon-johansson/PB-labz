@@ -8,7 +8,7 @@
   // align-items: space-between;
 }
 
-:global(.glyphicon-ok) {
+.competenceOK {
   position: absolute;
   right: 0;
   top: 10px;
