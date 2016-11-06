@@ -113,6 +113,19 @@ label {
   text-align: center;
 }
 
+.matchDescription p {
+  font-size: 17px;
+}
+
+.listDescription {
+  // font-style: italic;
+  text-transform: uppercase;
+  margin-top: 20px;
+  display: block;
+  margin-left: 10px;
+  font-size: 12px;
+}
+
 .showMatchingButton {
   // background: #06769F;
   background: #5E8404;

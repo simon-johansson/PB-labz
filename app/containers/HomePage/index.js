@@ -168,12 +168,16 @@ export class HomePage extends React.Component {
         </div>
       )
     } else {
+      const top5 = _.orderBy(this.props.competences, 'timesRequested', 'desc').slice(0, 5);
       return (
         <div className={styles.matchWrapper}>
           <div className={styles.matchDescription}>
             <h3>Vad kan du?</h3>
             <p>Ange dina kompetenser för att se jobben som passar dig bäst</p>
           </div>
+          <span className={styles.listDescription}>De mest efterfrågade kompetenserna</span>
+          <List items={top5} component={CompetenceListItem} />
+          <span className={styles.listDescription}>Alla efterfrågade kompetenser</span>
           <List items={this.props.competences} component={CompetenceListItem} />
           { !!this.props.knownCompetences.size &&
             <button

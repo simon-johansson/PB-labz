@@ -33,7 +33,16 @@ export class CompetenceListItem extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     // console.log(nextState.isKnown, this.state.isKnown);
-    return nextState.isKnown !== this.state.isKnown;
+    // return nextState.isKnown !== this.state.isKnown;
+    // console.log(nextProps.knownCompetences.includes(nextProps.item.varde), nextProps.item);
+    return nextState.isKnown !== this.state.isKnown ||
+           nextProps.knownCompetences.includes(nextProps.item.varde);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      isKnown: nextProps.knownCompetences.includes(nextProps.item.varde)
+    });
   }
 
   onCompetenceClick() {

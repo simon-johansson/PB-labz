@@ -75,13 +75,19 @@ export function loadJobs() {
 }
 
 export function jobsLoaded(jobsData) {
-  const arr = [];
+  let arr = [];
+  let obj = {};
   jobsData.rekryteringsbehov.forEach(job => {
     job.matchningsresultat.efterfragat.forEach(merit => {
-      if (merit.typ === 'KOMPETENS') {
-        arr.push(merit);
-      }
+      if (merit.typ === 'KOMPETENS') arr.push(merit);
     });
+  });
+  arr.forEach(item => {
+    obj[item.varde] ? obj[item.varde]++ : obj[item.varde] = 1;
+  });
+  arr = arr.map(item => {
+    item.timesRequested = obj[item.varde];
+    return item;
   });
   const competences = _.sortBy(_.uniqBy(arr, 'varde'), ['efterfragat']);
   return {
