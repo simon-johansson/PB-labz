@@ -31,6 +31,21 @@ body.fontLoaded {
   min-width: 100%;
 }
 
+:global(#doorbell-button) {
+  right: 5px !important;
+  bottom: 5px !important;
+  border-radius: 5px !important;
+  background: #345468;
+}
+
+:global(#doorbell-powered-by) {
+  display: none !important;
+}
+
+:global(#doorbell-email) {
+  display: none !important;
+}
+
 .wrapper {
   max-width: calc(768px + 16px * 2);
   margin: 0 auto;

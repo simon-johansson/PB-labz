@@ -55,5 +55,6 @@ export function setUiState(uiState) {
     type: SET_UI_STATE,
     tab: uiState.tab,
     showMatchingJobs: uiState.showMatchingJobs,
+    scrollPosition: uiState.scrollPosition,
   };
 }

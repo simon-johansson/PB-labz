@@ -26,12 +26,12 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
   };
 
   addLocationPage = (item) => {
-    // console.log(id);
     if (item.matchingCompetences) {
       this.openRoute(`/advert/${item.id}/matching`);
     } else {
       this.openRoute(`/advert/${item.id}`);
     }
+    this.props.click();
   };
 
   knownCompetences(item) {

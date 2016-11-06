@@ -11,6 +11,11 @@ import 'babel-polyfill';
 /* eslint-disable import/no-unresolved */
 // Load the favicon, the manifest.json file and the .htaccess file
 import 'file?name=[name].[ext]!./favicon.ico';
+import '!file?name=[name].[ext]!./android-chrome-192x192.png';
+import '!file?name=[name].[ext]!./android-chrome-512x512.png';
+import '!file?name=[name].[ext]!./apple-touch-icon.png';
+import '!file?name=[name].[ext]!./favicon-16x16.png';
+import '!file?name=[name].[ext]!./favicon-32x32.png';
 import '!file?name=[name].[ext]!./manifest.json';
 import 'file?name=[name].[ext]!./.htaccess';
 /* eslint-enable import/no-unresolved */

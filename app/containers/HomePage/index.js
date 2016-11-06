@@ -31,6 +31,8 @@ import {
   selectUiState,
   selectCurrentTab,
   selectShowMatchingJobs,
+  selectShouldLoadNewJobs,
+  selectScrollPosition,
 } from './selectors';
 
 import {
@@ -63,19 +65,29 @@ export class HomePage extends React.Component {
     this.state = {
       tab: 'all',
       showMatchingJobs: props.showMatchingJobs,
-      allScrollPosition: 0,
-      tabScrollPosition: 0,
+      scrollPosition: 0,
     };
   }
   /**
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    this.props.onSubmitForm();
+    if (this.props.shouldLoadNewJobs) {
+      this.props.onSubmitForm();
+    }
+    this.scrollTo(this.props.scrollPosition);
     // if (this.props.occupations && this.props.occupations.length > 0) {
     //   this.props.onSubmitForm();
     // }
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.props.scrollPosition === nextProps.scrollPosition) {
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // }
   /**
    * Changes the route
    *
@@ -183,10 +195,11 @@ export class HomePage extends React.Component {
   showMatchingJobs() {
     this.setState({ showMatchingJobs: true });
     this.props.setUiState({
-     showMatchingJobs: true,
-     tab: this.props.currentTab,
-   });
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
+      showMatchingJobs: true,
+      tab: this.props.currentTab,
+      scrollPosition: 0,
+    });
+    this.scrollTo(0);
   }
 
   hideMatchingJobs() {
@@ -194,6 +207,7 @@ export class HomePage extends React.Component {
     this.props.setUiState({
      showMatchingJobs: false,
      tab: this.props.currentTab,
+     scrollPosition: 0,
    });
   }
 
@@ -213,11 +227,28 @@ export class HomePage extends React.Component {
     this.props.setUiState({
       tab: tabState,
       showMatchingJobs: this.state.showMatchingJobs,
+      scrollPosition: 0,
+    });
+  }
+
+  scrollTo(position = 0) {
+    if (this.props.location.pathname ===  '/') {
+      window.requestAnimationFrame(() => {
+        document.body.scrollTop = document.documentElement.scrollTop = position;
+      });
+    }
+  }
+
+  onAdvertClick() {
+    this.props.setUiState({
+      showMatchingJobs: this.state.showMatchingJobs,
+      tab: this.props.currentTab,
+      scrollPosition: document.body.scrollTop,
     });
   }
 
   render() {
-    // console.log(this.props.knownCompetences);
+    // console.log('render');
     let mainContent = null;
     let matchingContent = null;
     const matchingJobs = [];
@@ -240,7 +271,7 @@ export class HomePage extends React.Component {
       mainContent = (
         <div>
           <span className={styles.amount}>Hittade {this.props.amount} jobb</span>
-          <List items={this.props.jobs} component={JobListItem} />
+          <List items={this.props.jobs} component={JobListItem} click={this.onAdvertClick.bind(this)} />
         </div>
       );
 
@@ -274,7 +305,7 @@ export class HomePage extends React.Component {
             <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
           </div>
           <span className={styles.amount}>Hittade {sortedMatchingJobs.length} matchande jobb</span>
-          <List items={sortedMatchingJobs} component={JobListItem} />
+          <List items={sortedMatchingJobs} component={JobListItem} click={this.onAdvertClick.bind(this)} />
         </div>
       );
     }
@@ -435,10 +466,12 @@ const mapStateToProps = createStructuredSelector({
   uiState: selectUiState(),
   currentTab: selectCurrentTab(),
   showMatchingJobs: selectShowMatchingJobs(),
+  scrollPosition: selectScrollPosition(),
   competences: selectCompetences(),
   knownCompetences: selectKnownCompetences(),
   username: selectUsername(),
   occupations: selectOccupations(),
+  shouldLoadNewJobs: selectShouldLoadNewJobs(),
   locations: selectLocations(),
   loading: selectLoading(),
   error: selectError(),

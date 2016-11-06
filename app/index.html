@@ -9,6 +9,12 @@
     <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <meta name="theme-color" content="#ffffff">
+
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script type="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/locale/sv.js"></script>
@@ -19,6 +25,19 @@
     <div id="app"></div>
     <!-- Open Sans Font -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <script type="text/javascript">
+        window.doorbellOptions = {
+            appKey: 'N6rYOAbq7efDeCHnymH1rry0Zbdx0H7JVCy4BY8H1egzdh0pSUVe5G71kTUk1Agq',
+            hideEmail: true,
+            email: "example@example.com", // Optional, prepopulate the email address field
+        };
+        (function(w, d, t) {
+            var hasLoaded = false;
+            function l() { if (hasLoaded) { return; } hasLoaded = true; window.doorbellOptions.windowLoaded = true; var g = d.createElement(t);g.id = 'doorbellScript';g.type = 'text/javascript';g.async = true;g.src = 'https://embed.doorbell.io/button/4764?t='+(new Date().getTime());(d.getElementsByTagName('head')[0]||d.getElementsByTagName('body')[0]).appendChild(g); }
+            if (w.attachEvent) { w.attachEvent('onload', l); } else if (w.addEventListener) { w.addEventListener('load', l, false); } else { l(); }
+            if (d.readyState == 'complete') { l(); }
+        }(window, document, 'script'));
+    </script>
     <!-- A lot of magic happens in this file. HtmlWebpackPlugin automatically includes all assets (e.g. bundle.js, main.css) with the correct HTML tags, which is why they are missing in this HTML file. Don't add any assets here! (Check out webpackconfig.js if you want to know more) -->
   </body>
 </html>

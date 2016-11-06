@@ -47,7 +47,7 @@ export class CompetenceListItem extends React.Component {
   }
 
   render() {
-    console.log('render');
+    // console.log('render');
     const item = this.props.item;
     const content = (
       <div className={styles.linkWrapper} onClick={this.onCompetenceClick.bind(this)}>

@@ -44,7 +44,7 @@ export class JobAdvert extends React.Component {
   }
 
   componentDidMount() {
-    this.props.onLoadAdvert(this.props.params.id)
+    this.props.onLoadAdvert(this.props.params.id);
   }
 
   openRoute = (route) => {
@@ -78,7 +78,9 @@ export class JobAdvert extends React.Component {
   }
 
   render() {
-    // console.log(this.props.advert);
+    setTimeout(() => {
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    }, 1);
 
     return (
       <article>

@@ -18,6 +18,10 @@ import {
 } from './constants';
 
 import {
+  LOAD_JOBS_SUCCESS
+} from '../App/constants';
+
+import {
   ADD_OCCUPATION,
 } from '../AddOccupation/constants';
 
@@ -32,11 +36,11 @@ const initialState = fromJS({
   username: '',
   occupations: fromJS([]),
   locations: fromJS([]),
+  shouldLoadNewJobs: true,
   uiState: fromJS({
     tab: 'all',
     showMatchingJobs: false,
-    allScrollPosition: 0,
-    tabScrollPosition: 0,
+    scrollPosition: 0,
   }),
 });
 
@@ -49,25 +53,32 @@ function homeReducer(state = initialState, action) {
     case ADD_OCCUPATION:
       return state
         .updateIn(['occupations'], (arr) => arr.push(action.occupation))
-        .setIn(['uiState', 'showMatchingJobs'], false);
+        .setIn(['uiState', 'showMatchingJobs'], false)
+        .set('shouldLoadNewJobs', true);
     case REMOVE_OCCUPATION:
       const occupations = state.get('occupations').filter((item, index) => action.index !== index);
       return state
         .set('occupations', occupations)
-        .setIn(['uiState', 'showMatchingJobs'], false);
+        .setIn(['uiState', 'showMatchingJobs'], false)
+        .set('shouldLoadNewJobs', true);
     case ADD_LOCATION:
       return state
         .updateIn(['locations'], (arr) => arr.push(action.location))
-        .setIn(['uiState', 'showMatchingJobs'], false);
+        .setIn(['uiState', 'showMatchingJobs'], false)
+        .set('shouldLoadNewJobs', true);
     case REMOVE_LOCATION:
       const locations = state.get('locations').filter((item, index) => action.index !== index);
       return state
         .set('locations', locations)
-        .setIn(['uiState', 'showMatchingJobs'], false);
+        .setIn(['uiState', 'showMatchingJobs'], false)
+        .set('shouldLoadNewJobs', true);
+    case LOAD_JOBS_SUCCESS:
+      return state.set('shouldLoadNewJobs', false);
     case SET_UI_STATE:
       return state
         .setIn(['uiState', 'tab'], action.tab)
-        .setIn(['uiState', 'showMatchingJobs'], action.showMatchingJobs);
+        .setIn(['uiState', 'showMatchingJobs'], action.showMatchingJobs)
+        .setIn(['uiState', 'scrollPosition'], action.scrollPosition);
     default:
       return state;
   }
