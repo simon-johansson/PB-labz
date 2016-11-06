@@ -31,7 +31,7 @@ export class JobListItem extends React.Component { // eslint-disable-line react/
     } else {
       this.openRoute(`/advert/${item.id}`);
     }
-    this.props.click();
+    // this.props.click();
   };
 
   knownCompetences(item) {

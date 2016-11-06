@@ -67,6 +67,8 @@ export class HomePage extends React.Component {
       showMatchingJobs: props.showMatchingJobs,
       scrollPosition: 0,
     };
+
+    this.onAdvertClick = this.onAdvertClick.bind(this);
   }
   /**
    * when initial state username is not null, submit the form to load repos
@@ -249,6 +251,9 @@ export class HomePage extends React.Component {
       tab: this.props.currentTab,
       scrollPosition: document.body.scrollTop,
     });
+
+    // localStorage.setItem('scrollPosition', JSON.stringify(document.body.scrollTop));
+    // const scrollPosition = localStorage.getItem('scrollPosition');
   }
 
   render() {
@@ -275,7 +280,9 @@ export class HomePage extends React.Component {
       mainContent = (
         <div>
           <span className={styles.amount}>Hittade {this.props.amount} jobb</span>
-          <List items={this.props.jobs} component={JobListItem} click={this.onAdvertClick.bind(this)} />
+          <div onClick={this.onAdvertClick}>
+            <List items={this.props.jobs} component={JobListItem} />
+          </div>
         </div>
       );
 
@@ -309,7 +316,9 @@ export class HomePage extends React.Component {
             <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
           </div>
           <span className={styles.amount}>Hittade {sortedMatchingJobs.length} matchande jobb</span>
-          <List items={sortedMatchingJobs} component={JobListItem} click={this.onAdvertClick.bind(this)} />
+          <div onClick={this.onAdvertClick}>
+            <List items={sortedMatchingJobs} component={JobListItem} />
+          </div>
         </div>
       );
     }
