@@ -83,6 +83,10 @@ export class HomePage extends React.Component {
     // }
   }
 
+  // componentWillUpdate() {
+  //   this.scrollTo(this.props.scrollPosition);
+  // }
+
   // shouldComponentUpdate(nextProps, nextState) {
   //   if (this.props.scrollPosition === nextProps.scrollPosition) {
   //     return false;
@@ -239,18 +243,25 @@ export class HomePage extends React.Component {
 
   scrollTo(position = 0) {
     if (this.props.location.pathname ===  '/') {
-      window.requestAnimationFrame(() => {
-        document.body.scrollTop = document.documentElement.scrollTop = position;
-      });
+      // window.requestAnimationFrame(() => {
+      //   document.body.scrollTop = document.documentElement.scrollTop = position;
+      // });
+
+      setTimeout(() => {
+        window.scrollTo(0, position);
+      }, 1);
     }
   }
 
-  onAdvertClick() {
+  onAdvertClick(link) {
+    // console.log('click');
     this.props.setUiState({
       showMatchingJobs: this.state.showMatchingJobs,
       tab: this.props.currentTab,
       scrollPosition: document.body.scrollTop,
     });
+
+    this.openRoute(link);
 
     // localStorage.setItem('scrollPosition', JSON.stringify(document.body.scrollTop));
     // const scrollPosition = localStorage.getItem('scrollPosition');
@@ -280,9 +291,7 @@ export class HomePage extends React.Component {
       mainContent = (
         <div>
           <span className={styles.amount}>Hittade {this.props.amount} jobb</span>
-          <div onClick={this.onAdvertClick}>
-            <List items={this.props.jobs} component={JobListItem} />
-          </div>
+            <List items={this.props.jobs} component={JobListItem} click={this.onAdvertClick}/>
         </div>
       );
 
@@ -316,9 +325,7 @@ export class HomePage extends React.Component {
             <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
           </div>
           <span className={styles.amount}>Hittade {sortedMatchingJobs.length} matchande jobb</span>
-          <div onClick={this.onAdvertClick}>
-            <List items={sortedMatchingJobs} component={JobListItem} />
-          </div>
+          <List items={sortedMatchingJobs} component={JobListItem} click={this.onAdvertClick} />
         </div>
       );
     }
