@@ -8,6 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
+import Tappable from 'react-tappable';
 import moment from 'moment';
 moment.locale('sv');
 
@@ -65,30 +66,30 @@ function JobListItem(props) {
   const item = props.item;
 
   const content = (
-    <div className={item.matchingCompetences ? styles.bigLinkWrapper : styles.linkWrapper} onClick={clickHandler.bind(this, item, props.click)}>
-      <div>
-        <span>{item.arbetsgivarenamn}, {item.erbjudenArbetsplats.kommun && item.erbjudenArbetsplats.kommun.namn}</span>
-        <br />
-        <b className={styles.title}>{item.rubrik}</b>
-        <br />
-        {!item.matchingCompetences &&
-          <div>
-            <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
-            <br />
-            <span className={styles.smallText}>Publicerad: {moment(item.publiceringsdatum).calendar(null, momentOptions)}</span>
-          </div>
-        }
-        {item.matchingCompetences &&
-          <div>
-            <span className={styles.smallText}>Vi efterfrågar:</span> <br />
-            <div className={styles.knownCompetences}>
-              {knownCompetences(item)}
-              {notkKnownCompetences(item)}
+    <Tappable className={item.matchingCompetences ? styles.bigLinkWrapper : styles.linkWrapper} onTap={clickHandler.bind(this, item, props.click)}>
+        <div>
+          <span>{item.arbetsgivarenamn}, {item.erbjudenArbetsplats.kommun && item.erbjudenArbetsplats.kommun.namn}</span>
+          <br />
+          <b className={styles.title}>{item.rubrik}</b>
+          <br />
+          {!item.matchingCompetences &&
+            <div>
+              <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
+              <br />
+              <span className={styles.smallText}>Publicerad: {moment(item.publiceringsdatum).calendar(null, momentOptions)}</span>
             </div>
-          </div>
-        }
-      </div>
-    </div>
+          }
+          {item.matchingCompetences &&
+            <div>
+              <span className={styles.smallText}>Vi efterfrågar:</span> <br />
+              <div className={styles.knownCompetences}>
+                {knownCompetences(item)}
+                {notkKnownCompetences(item)}
+              </div>
+            </div>
+          }
+        </div>
+    </Tappable>
   );
 
   return (
