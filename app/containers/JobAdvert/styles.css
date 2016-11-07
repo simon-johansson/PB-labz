@@ -59,14 +59,24 @@
   background: #f5f5f5;
 }
 
-.icon {
+.okIcon {
   color: green;
   margin-right: 5px;
+  margin-left: 0;
+}
+
+.plusIcon {
+  margin-right: 5px;
+  margin-left: 0;
 }
 
 .wrapperDiv {
   display: inline-block;
   width: auto;
+}
+
+.loading {
+  margin-top: 100px;
 }
 
 :global(.glyphicon-chevron-left) {

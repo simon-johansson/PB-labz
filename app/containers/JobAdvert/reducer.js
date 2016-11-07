@@ -26,7 +26,8 @@ function addOccupationReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_ADVERT:
       return state
-        .set('id', action.id);
+        .set('id', action.id)
+        .set('advert', false);
     case LOAD_ADVERT_SUCCESS:
       return state
         .set('advert', action.advert.data);

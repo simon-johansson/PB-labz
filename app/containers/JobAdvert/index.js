@@ -25,6 +25,7 @@ import {
   advertLoaded
 } from './actions';
 
+import LoadingIndicator from 'components/LoadingIndicator';
 import IosMenu from 'components/IosMenu';
 // import RepoListItem from 'containers/RepoListItem';
 // import OccupationListItem from 'components/OccupationListItem';
@@ -66,7 +67,10 @@ export class JobAdvert extends React.Component {
           <div className={styles.wrapperDiv}>
             <span className={styles.competence}>
               { item.isKnown && this.props.params.matching &&
-                <span className={styles.icon + ' glyphicon glyphicon-ok'} />
+                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+              }
+              { !item.isKnown && this.props.params.matching &&
+                <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
               }
               {item.namn}
             </span>
@@ -104,6 +108,11 @@ export class JobAdvert extends React.Component {
                 </div>
               }
               <p dangerouslySetInnerHTML={{__html: this.props.advert.annonstext}}></p>
+            </div>
+          }
+          {!this.props.advert &&
+            <div className={styles.loading}>
+              <LoadingIndicator />
             </div>
           }
         </div>
