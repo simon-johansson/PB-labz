@@ -31,6 +31,7 @@ import {
   selectUiState,
   selectCurrentTab,
   selectShowMatchingJobs,
+  selectShowNonMatchningJobs,
   selectShouldLoadNewJobs,
   selectScrollPosition,
 } from './selectors';
@@ -65,6 +66,7 @@ export class HomePage extends React.Component {
     this.state = {
       tab: 'all',
       showMatchingJobs: props.showMatchingJobs,
+      showNonMatchningJobs: props.showNonMatchningJobs,
       scrollPosition: 0,
     };
 
@@ -169,22 +171,35 @@ export class HomePage extends React.Component {
     } else if (!this.props.jobs.length) {
       return (
         <div>
-          <span className={styles.amount}>Hittade 0 matchande jobb</span>
+          <span className={styles.amount}>Hittade 0 jobb som matchar dina kompetenser</span>
           <List items={[]} component={JobListItem} />
         </div>
       )
     } else {
-      const top5 = _.orderBy(this.props.competences, 'timesRequested', 'desc').slice(0, 5);
+      let top5 = _.orderBy(JSON.parse(JSON.stringify(this.props.competences)), 'timesRequested', 'desc').slice(0, 5);
+      top5 = top5.map((item, index) => {
+        item.isTop5 = (index + 1);
+        return item;
+      });
       return (
         <div className={styles.matchWrapper}>
-          <div className={styles.matchDescription}>
-            <h3>Vad kan du?</h3>
-            <p>Ange dina kompetenser för att se jobben som passar dig bäst</p>
-          </div>
-          <span className={styles.listDescription}>De mest efterfrågade kompetenserna</span>
-          <List items={top5} component={CompetenceListItem} />
-          <span className={styles.listDescription}>Alla efterfrågade kompetenser</span>
-          <List items={this.props.competences} component={CompetenceListItem} />
+          {!!this.props.competences.length &&
+            <div>
+              <div className={styles.matchDescription}>
+                <h3>Vad kan du?</h3>
+                <p>Ange dina kompetenser för att se jobben som passar dig bäst</p>
+              </div>
+              <span className={styles.listDescription}>Mest efterfrågade kompetenserna för din sökning</span>
+              <List items={top5} component={CompetenceListItem} />
+              <span className={styles.listDescription}>Alla efterfrågade kompetenser för din sökning</span>
+              <List items={this.props.competences} component={CompetenceListItem} />
+            </div>
+          }
+          {!this.props.competences.length &&
+            <div className={styles.matchDescription}>
+              <p>Kan tyvärr inte göra någon matchning för denna sökning</p>
+            </div>
+          }
           { !!this.props.knownCompetences.size &&
             <button
               className={styles.showMatchingButton + ' btn btn-default'}
@@ -206,6 +221,7 @@ export class HomePage extends React.Component {
     this.setState({ showMatchingJobs: true });
     this.props.setUiState({
       showMatchingJobs: true,
+      showNonMatchningJobs: false,
       tab: this.props.currentTab,
       scrollPosition: 0,
     });
@@ -216,6 +232,7 @@ export class HomePage extends React.Component {
     this.setState({ showMatchingJobs: false });
     this.props.setUiState({
      showMatchingJobs: false,
+     showNonMatchningJobs: false,
      tab: this.props.currentTab,
      scrollPosition: 0,
    });
@@ -237,6 +254,7 @@ export class HomePage extends React.Component {
     this.props.setUiState({
       tab: tabState,
       showMatchingJobs: this.state.showMatchingJobs,
+      showNonMatchningJobs: this.props.showNonMatchningJobs,
       scrollPosition: 0,
     });
   }
@@ -259,6 +277,7 @@ export class HomePage extends React.Component {
       showMatchingJobs: this.state.showMatchingJobs,
       tab: this.props.currentTab,
       scrollPosition: document.body.scrollTop,
+      showNonMatchningJobs: this.props.showNonMatchningJobs,
     });
 
     this.openRoute(link);
@@ -267,11 +286,23 @@ export class HomePage extends React.Component {
     // const scrollPosition = localStorage.getItem('scrollPosition');
   }
 
+  showNonMatchningJobs() {
+    this.setState({showNonMatchningJobs: true});
+    this.props.setUiState({
+      tab: this.props.currentTab,
+      showMatchingJobs: this.state.showMatchingJobs,
+      showNonMatchningJobs: true,
+      scrollPosition: this.props.scrollPosition,
+    });
+  }
+
   render() {
-    // console.log('render');
+    // console.log(this.props.showNonMatchningJobs);
+
     let mainContent = null;
     let matchingContent = null;
     const matchingJobs = [];
+    const nonMatchingJobs = [];
 
     // Show a loading indicator when we're loading
     if (this.props.loading) {
@@ -314,18 +345,32 @@ export class HomePage extends React.Component {
           jobCopy.matchingCompetences = matchingCompetences;
           jobCopy.notMatchingCompetences = notMatchingCompetences;
           matchingJobs.push(jobCopy);
+        } else {
+          nonMatchingJobs.push(jobCopy);
         }
       });
       const sortedMatchingJobs = _.orderBy(matchingJobs,
         ['matchingCompetences', 'notMatchingCompetences'], ['desc', 'asc']);
       matchingContent = (
-        <div>
+        <div className={styles.listWrapperMatchingContent}>
           <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
-            Matchningskriterier
+            Matchningskriterier ({this.props.knownCompetences.size})
             <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
           </div>
-          <span className={styles.amount}>Hittade {sortedMatchingJobs.length} matchande jobb</span>
+          <span className={styles.amount}>Hittade {sortedMatchingJobs.length} jobb som matchar dina kompetenser</span>
           <List items={sortedMatchingJobs} component={JobListItem} click={this.onAdvertClick} />
+          { !this.props.showNonMatchningJobs ?
+            <button
+              className={styles.showNonMatchningJobs}
+              onClick={this.showNonMatchningJobs.bind(this)}
+            >
+              Visa jobb som inte matchar dina kompetenser
+            </button> :
+            <div>
+              <span className={styles.nonMatchingAmount}>Jobb som inte matchar dina kompetenser</span>
+              <List items={nonMatchingJobs} component={JobListItem} click={this.onAdvertClick} />
+            </div>
+          }
         </div>
       );
     }
@@ -406,7 +451,7 @@ export class HomePage extends React.Component {
                 className={this.props.currentTab === 'match' ? styles.activeButton : ''}
                 onClick={this.setTabState.bind(this, 'match')}
               >
-                Matchande
+                Matchande jobb
                 { !!matchingJobs.length && !this.props.loading &&
                   ` (${matchingJobs.length})`
                 }
@@ -487,6 +532,7 @@ const mapStateToProps = createStructuredSelector({
   currentTab: selectCurrentTab(),
   showMatchingJobs: selectShowMatchingJobs(),
   scrollPosition: selectScrollPosition(),
+  showNonMatchningJobs: selectShowNonMatchningJobs(),
   competences: selectCompetences(),
   knownCompetences: selectKnownCompetences(),
   username: selectUsername(),

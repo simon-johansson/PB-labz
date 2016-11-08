@@ -35,7 +35,8 @@ body.fontLoaded {
   right: 5px !important;
   bottom: 5px !important;
   border-radius: 5px !important;
-  background: #345468;
+  // background: #345468;
+  background:  #bcbcbc;
 }
 
 :global(#doorbell-powered-by) {

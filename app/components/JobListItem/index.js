@@ -9,8 +9,6 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import Tappable from 'react-tappable';
-import moment from 'moment';
-moment.locale('sv');
 
 import { FormattedNumber } from 'react-intl';
 import { selectCurrentUser } from 'containers/App/selectors';
@@ -61,6 +59,11 @@ const clickHandler = (item, click) => {
 
 function JobListItem(props) {
   const momentOptions = {
+    sameDay: '[Idag]',
+    nextDay: '[Imorgon]',
+    lastDay: '[Igår]',
+    nextWeek: '[På] dddd LT',
+    lastWeek: 'DD MMM',
     sameElse: 'DD MMM',
   };
   const item = props.item;

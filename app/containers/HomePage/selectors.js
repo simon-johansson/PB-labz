@@ -43,6 +43,11 @@ const selectShowMatchingJobs = () => createSelector(
   (homeState) => homeState.getIn(['uiState', 'showMatchingJobs'])
 );
 
+const selectShowNonMatchningJobs = () => createSelector(
+  selectHome(),
+  (homeState) => homeState.getIn(['uiState', 'showNonMatchningJobs'])
+);
+
 const selectScrollPosition = () => createSelector(
   selectHome(),
   (homeState) => homeState.getIn(['uiState', 'scrollPosition'])
@@ -57,5 +62,6 @@ export {
   selectCurrentTab,
   selectShowMatchingJobs,
   selectShouldLoadNewJobs,
+  selectShowNonMatchningJobs,
   selectScrollPosition,
 };

@@ -7,8 +7,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import moment from 'moment';
-moment.locale('sv');
 
 import { FormattedNumber } from 'react-intl';
 import { selectCurrentUser } from 'containers/App/selectors';

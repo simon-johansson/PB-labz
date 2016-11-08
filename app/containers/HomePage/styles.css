@@ -82,34 +82,54 @@ label {
 }
 
 .amount {
-  margin: 5px 15px;
+  margin: 15px 10px 5px;
+  display: block;
+}
+
+.nonMatchingAmount {
+  margin: 15px 10px 5px;
   display: block;
 }
 
 .toggleButtons {
-
+  width: 90%;
+  display: block;
+  margin: 15px auto;
 }
 
 .toggleButtons button {
   width: 50%;
   display: inline-block;
-  color: white;
-  height: 40px;
-  background: #345468;
+  color: #848484;
+  height: 35px;
+  // background: #345468;
+  border: 2px solid #848484;
+}
+
+.toggleButtons button:first-child {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.toggleButtons button:last-child {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .activeButton {
-  background: #32749D !important;
+  // background: #32749D !important;
+  background: #848484 !important;
+  color: white !important;
 }
 
 .matchWrapper {
-  padding-bottom: 40px;
+  padding-bottom: 53px;
 }
 
 .matchDescription {
   display: block;
   margin: auto;
-  width: 70%;
+  width: 75%;
   text-align: center;
 }
 
@@ -133,9 +153,10 @@ label {
   display: block;
   color: white;
   border: none;
-  width: 100%;
+  width: 94%;
+  left: 3%;
   position: fixed;
-  bottom: 50px;
+  bottom: 55px;
   display: block;
   z-index: 999;
   height: 40px;
@@ -148,6 +169,22 @@ label {
   padding: 10px;
   border-radius: 2px;
   // color: white;
+}
+
+.showNonMatchningJobs {
+  display: block;
+  background: #848484;
+  color: white;
+  width: 95%;
+  height: 35px;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 5px;
+  padding: 0;
+}
+
+.listWrapperMatchingContent {
+  padding-bottom: 2px;
 }
 
 .right {
