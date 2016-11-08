@@ -171,7 +171,7 @@ export class HomePage extends React.Component {
     } else if (!this.props.jobs.length) {
       return (
         <div>
-          <span className={styles.amount}>Hittade 0 jobb som matchar dina kompetenser</span>
+          <span className={styles.amount}>0 jobb matchar dina kompetenser</span>
           <List items={[]} component={JobListItem} />
         </div>
       )
@@ -357,7 +357,7 @@ export class HomePage extends React.Component {
             Matchningskriterier ({this.props.knownCompetences.size})
             <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
           </div>
-          <span className={styles.amount}>Hittade {sortedMatchingJobs.length} jobb som matchar dina kompetenser</span>
+          <span className={styles.amount}>{sortedMatchingJobs.length} jobb matchar dina kompetenser</span>
           <List items={sortedMatchingJobs} component={JobListItem} click={this.onAdvertClick} />
           { !this.props.showNonMatchningJobs ?
             <button
