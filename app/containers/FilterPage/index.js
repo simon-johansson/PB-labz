@@ -69,11 +69,18 @@ export class FilterPage extends React.Component {
     if (this.props.shouldLoadNewJobs) {
       this.props.onSubmitForm();
     }
-    // this.props.onSubmitForm();
   }
 
   openRoute = (route) => {
     this.props.changeRoute(route);
+  };
+
+  goBack = () => {
+    if (this.props.params.home) {
+      this.openRoute('/');
+    } else {
+      this.openRoute('/list');
+    }
   };
 
   addListPage = () => {
@@ -155,8 +162,13 @@ export class FilterPage extends React.Component {
       <article ref="list" className="noselect">
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
-            <h1>Ändra sökningen</h1>
-            <span className={styles.cancel} onClick={this.addListPage}>
+            <h1>
+              {this.props.params.home ?
+                <span>Ny sökning</span> :
+                <span>Ändra sökningen</span>
+              }
+            </h1>
+            <span className={styles.cancel} onClick={this.goBack}>
               Avbryt
             </span>
           </div>

@@ -80,6 +80,10 @@ export class HomePage extends React.Component {
     this.openRoute('/list');
   };
 
+  addFilterPage = () => {
+    this.openRoute('/filter/home');
+  };
+
   addOccupationPage = () => {
     this.openRoute('/occupation');
   };
@@ -133,7 +137,40 @@ export class HomePage extends React.Component {
   }
 
   onSeachButtonClick() {
-    this.addListPage();
+    this.props.occupations.forEach((item, index) => {
+      this.props.onRemoveOccupation(index);
+    });
+    this.props.locations.forEach((item, index) => {
+      this.props.onRemoveLocation(index);
+    });
+
+    this.addFilterPage();
+  }
+
+  previousSearches() {
+    const array = [{
+      occupations: ['Interaktionsdesign'],
+      locations: ['Stockholm Län'],
+      time: 'igår 15:12',
+    }, {
+      occupations: ['Interaktionsdesign'],
+      locations: ['Stockholm Län'],
+      time: 'igår 15:12',
+    }];
+
+    return array.map(item => {
+      return (
+        <div className={styles.previousSearchesWrapper}>
+          <div className={styles.previousSearcheParameters}>
+            <span>{item.occupations.join(', ')}</span> <br />
+            <span className={styles.small}>{item.locations.join(', ')}</span>
+          </div>
+          {/*<span className={styles.historyIcon + ' glyphicon glyphicon-time'} />*/}
+          <span className={styles.previousSearcheTime}>{item.time}</span>
+          <span className={styles.chevronIcon + ' glyphicon glyphicon-chevron-right'} />
+        </div>
+      )
+    });
   }
 
   render() {
@@ -156,25 +193,6 @@ export class HomePage extends React.Component {
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
             <h1>Mina sökningar</h1>
-            <form onSubmit={this.props.onSubmitForm}>
-              <div className="form-group">
-                <div className={styles.tagsWrapper} onClick={this.addOccupationPage}>
-                  {this.createOccupationTags()}
-                  <span className={styles.inputPlaceholder}>
-                    Lägg till yrke/fritext...
-                  </span>
-                </div>
-              </div>
-              <div className="form-group">
-                <div className={styles.tagsWrapper} onClick={this.addLocationPage}>
-                  {this.createLocationTags()}
-                  <span className={styles.inputPlaceholder}>
-                    Lägg till ort...
-                  </span>
-                </div>
-              </div>
-              <button type="submit" style={{display: 'none'}} className="btn btn-default">Submit</button>
-            </form>
           </div>
 
           <button
@@ -182,12 +200,7 @@ export class HomePage extends React.Component {
             onClick={this.onSeachButtonClick}
           >
             <span className={styles.searchIcon + " glyphicon glyphicon-search"} />
-            Visa <span>
-            { this.props.loading ?
-              <LoadingIndicator options={{size: 'small'}} /> :
-              this.props.amount
-            }
-            </span> jobb
+            Ny sökning
           </button>
 
           <div className={styles.latestSearches}>
@@ -195,7 +208,7 @@ export class HomePage extends React.Component {
             <List items={[]} component={ListItem} />*/}
 
             <span className={styles.listHeader}>Tidigare sökningar</span>
-            <List items={[]} component={ListItem} />
+            <List items={this.previousSearches()} component={ListItem} />
           </div>
         </div>
         <IosMenu />

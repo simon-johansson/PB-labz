@@ -60,7 +60,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/filter',
+      path: '/filter(/:home)',
       name: 'filter',
       getComponent(nextState, cb) {
         const importModules = Promise.all([

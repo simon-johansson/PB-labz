@@ -52,7 +52,7 @@ label {
 
 .searchInputWrapper {
   background: white;
-  border: 1px solid gray;
+  // border: 1px solid gray;
   padding: 0 0 0 8px;
   width: 80%;
   height: 30px;
@@ -65,6 +65,7 @@ label {
 .inputField {
   color: #333333;
   line-height: 30px;
+  height: 30px;
   width: calc(100% - 30px);
   white-space: nowrap;
   overflow: hidden;

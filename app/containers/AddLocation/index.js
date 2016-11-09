@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 // import Helmet from 'react-helmet';
+import { browserHistory } from 'react-router';
 
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';
@@ -46,11 +47,12 @@ export class AddLocation extends React.Component {
   };
 
   goBack = () => {
-    if (this.props.params.filter) {
-      this.openRoute('/filter');
-    } else {
-      this.openRoute('/');
-    }
+    browserHistory.goBack();
+    // if (this.props.params.filter) {
+    //   this.openRoute('/filter');
+    // } else {
+    //   this.openRoute('/');
+    // }
   };
 
 
