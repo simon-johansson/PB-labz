@@ -201,21 +201,33 @@ export class FilterPage extends React.Component {
             </div>
           </form>
 
-          <p className={styles.sectionHeader}>Sortera</p>
+          {/*<p className={styles.sectionHeader}>Sortera</p>
           <section className={styles.sortingWrapper}>
             <div className={styles.buttonGroup}>
               <button>Publiceringsdatum</button>
               <button>Sista ansökningsdagen</button>
               <button>Avstånd</button>
             </div>
-          </section>
+          </section>*/}
 
           <p className={styles.sectionHeader}>Filtrera</p>
           <section className={styles.sortingWrapper}>
+
+            {/*<hr className={styles.noMarginTop} />*/}
+
+            <p>Anställningstyp</p>
             <div className={styles.buttonWrapper}>
               <button>Vanlig anställning</button>
               <button>Sommarjobb</button>
               <button>Behovsanställning</button>
+            </div>
+
+            <hr />
+
+            <p>Omfattning</p>
+            <div className={styles.buttonWrapper}>
+              <button>Heltid</button>
+              <button>Deltid</button>
             </div>
           </section>
 

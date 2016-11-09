@@ -70,9 +70,7 @@ export class JobAdvert extends React.Component {
         return allCompetences.map((item, index) => {
           return (
             <div className={styles.wrapperDiv}>
-              <span className={styles.competence}>
-                {item.namn}
-              </span>
+              <span className={styles.competence}>{item.namn}</span>
               <br />
             </div>
           );
@@ -84,9 +82,7 @@ export class JobAdvert extends React.Component {
         content.push(
           <div className={styles.wrapperDiv}>
             <span className={styles.competence}>
-              <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-              {item.namn}
-            </span>
+              <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />{item.namn}</span>
             <br />
           </div>
         );
@@ -99,9 +95,7 @@ export class JobAdvert extends React.Component {
         content.push(
           <div className={styles.wrapperDiv}>
             <span className={styles.competence}>
-              <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-              {item.namn}
-            </span>
+              <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />{item.namn}</span>
             <br />
           </div>
         );

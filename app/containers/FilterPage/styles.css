@@ -21,8 +21,17 @@
 
 .searchWrapper,
 .sortingWrapper {
-  padding: 10px;
+  padding: 10px 10px 20px 10px;
   background: white;
+}
+
+.searchWrapper {
+  padding-bottom: 1px;
+  background: white;
+}
+
+.sortingWrapper hr {
+  margin-bottom: 15px;
 }
 
 .searchWrapper p {
@@ -30,7 +39,8 @@
 }
 
 .sectionHeader {
-  margin: 15px 0 0 15px;
+  font-weight: bold;
+  margin: 15px 0 0 10px;
 }
 
 .buttonGroup,
@@ -39,7 +49,7 @@
   margin: auto;
 }
 .buttonGroup {
-  // width: 320px;
+  // max-width: 320px;
 }
 .buttonWrapper {
   // width: 330px;
@@ -68,7 +78,7 @@
 
 .buttonWrapper button {
   width: auto;
-  margin-right: 10px;
+  margin-right: 5px;
   font-size: 12px;
   height: 30px;
   vertical-align: top;
@@ -167,6 +177,10 @@ label {
 .right {
   float: right;
   color: #B0B0B0;
+}
+
+.noMarginTop {
+  margin-top: 0;
 }
 
 .cancel {
