@@ -58,26 +58,56 @@ export class JobAdvert extends React.Component {
 
   createCompetences() {
     if (this.props.advert.kompetenser.length) {
+      const content = [];
       const competences = this.props.advert.kompetenser.map((k) => {
-        if (this.props.knownCompetences.includes(k.id)) k.isKnown = true;
+        k.isKnown = (this.props.knownCompetences.includes(k.id) ?  true : false);
       });
-      const competencesOrdered = _.orderBy(this.props.advert.kompetenser, 'isKnown', 'asc');
-      return competencesOrdered.map((item, index) => {
-        return (
+      const allCompetences = this.props.advert.kompetenser;
+      const knownCompetences = _.filter(this.props.advert.kompetenser, {isKnown: true});
+      const unknownCompetences = _.filter(this.props.advert.kompetenser, {isKnown: false});
+
+      if (!this.props.params.matching) {
+        return allCompetences.map((item, index) => {
+          return (
+            <div className={styles.wrapperDiv}>
+              <span className={styles.competence}>
+                {item.namn}
+              </span>
+              <br />
+            </div>
+          );
+        });
+      }
+
+      // if (knownCompetences.length) content.push(<span className={styles.competenceHeader}>Du kan:</span>);
+      knownCompetences.forEach((item, index) => {
+        content.push(
           <div className={styles.wrapperDiv}>
             <span className={styles.competence}>
-              { item.isKnown && this.props.params.matching &&
-                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-              }
-              { !item.isKnown && this.props.params.matching &&
-                <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-              }
+              <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
               {item.namn}
             </span>
             <br />
           </div>
         );
       });
+
+      if (unknownCompetences.length && knownCompetences.length) {
+        content.push(<span className={styles.competenceHeader}>Vi efterfrågar också:</span>);
+      }
+      unknownCompetences.forEach((item, index) => {
+        content.push(
+          <div className={styles.wrapperDiv}>
+            <span className={styles.competence}>
+              <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+              {item.namn}
+            </span>
+            <br />
+          </div>
+        );
+      });
+
+      return content;
     }
   }
 
@@ -102,8 +132,7 @@ export class JobAdvert extends React.Component {
 
               {!!this.props.advert.kompetenser.length &&
                 <div className={styles.competenceWrapper}>
-                  <b>Eterfrågade kompetenser:</b>
-                  <br />
+                  <b>Eterfrågade kompetenser:</b> <br />
                   {this.createCompetences()}
                 </div>
               }

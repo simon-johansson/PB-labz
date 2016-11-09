@@ -34,6 +34,12 @@
   white-space: pre-wrap;
 }
 
+.competenceHeader {
+  display: block;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+
 .competenceWrapper {
   background: #F2F2F2;
   height: auto;
