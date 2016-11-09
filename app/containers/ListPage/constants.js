@@ -9,7 +9,6 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const CHANGE_USERNAME = 'boilerplate/Home/CHANGE_USERNAME';
 export const REMOVE_OCCUPATION = 'boilerplate/Home/REMOVE_OCCUPATION';
 export const REMOVE_LOCATION = 'boilerplate/Home/REMOVE_LOCATION';
 export const SET_UI_STATE = 'boilerplate/Home/SET_UI_STATE';

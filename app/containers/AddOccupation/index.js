@@ -55,13 +55,17 @@ export class AddOccupation extends React.Component {
     this.props.changeRoute(route);
   };
 
-  openHomePage = () => {
-    this.openRoute('/');
+  goBack = () => {
+    if (this.props.params.filter) {
+      this.openRoute('/filter');
+    } else {
+      this.openRoute('/');
+    }
   };
 
   onListItemClick(item) {
     this.props.onAddOccupation(item);
-    this.openRoute('/');
+    this.goBack();
   }
 
   onSubmitForm(e) {
@@ -139,7 +143,7 @@ export class AddOccupation extends React.Component {
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
               <h1>Lägg till yrke/fritext</h1>
-              <span className={styles.cancel} onClick={this.openHomePage}>
+              <span className={styles.cancel} onClick={this.goBack}>
                 Avbryt
               </span>
               <form onSubmit={this.onSubmitForm.bind(this)} autoComplete="off">

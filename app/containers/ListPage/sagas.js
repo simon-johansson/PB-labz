@@ -12,7 +12,7 @@ import {
 import {
   REMOVE_OCCUPATION,
   REMOVE_LOCATION,
-} from 'containers/HomePage/constants';
+} from './constants';
 import {
   reposLoaded,
   repoLoadingError,
@@ -25,7 +25,7 @@ import {
   selectUsername,
   selectOccupations,
   selectLocations,
-} from 'containers/HomePage/selectors';
+} from './selectors';
 
 export function* getJobs() {
 
@@ -103,46 +103,8 @@ export function* afData() {
   yield cancel(watcher);
 }
 
-/**
- * Github repos request/response handler
- */
-export function* getRepos() {
-  // Select username from store
-  const username = yield select(selectUsername());
-  const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
-
-  // Call our request helper (see 'utils/request')
-  const repos = yield call(request, requestURL);
-
-  if (!repos.err) {
-    yield put(reposLoaded(repos.data, username));
-  } else {
-    yield put(repoLoadingError(repos.err));
-  }
-}
-
-/**
- * Watches for LOAD_REPOS actions and calls getRepos when one comes in.
- * By using `takeLatest` only the result of the latest API call is applied.
- */
-export function* getReposWatcher() {
-  yield fork(takeLatest, LOAD_REPOS, getRepos);
-}
-
-/**
- * Root saga manages watcher lifecycle
- */
-export function* githubData() {
-  // Fork watcher so we can continue execution
-  const watcher = yield fork(getReposWatcher);
-
-  // Suspend execution until location changes
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
-}
 
 // Bootstrap sagas
 export default [
-  githubData,
   afData,
 ];

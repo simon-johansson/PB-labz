@@ -1,6 +1,7 @@
 
 .contentWrapper {
   margin-bottom:50px;
+  // background: #E5E5E5;
 }
 
 .searchForm {
@@ -16,6 +17,63 @@
 
 .centered {
   text-align: center;
+}
+
+.searchWrapper,
+.sortingWrapper {
+  padding: 10px;
+  background: white;
+}
+
+.searchWrapper p {
+  margin: 5px 5px;
+}
+
+.sectionHeader {
+  margin: 15px 0 0 15px;
+}
+
+.buttonGroup,
+.buttonWrapper {
+  display: block;
+  margin: auto;
+}
+.buttonGroup {
+  // width: 320px;
+}
+.buttonWrapper {
+  // width: 330px;
+}
+.buttonGroup button {
+  width: auto;
+  margin: 0;
+  font-size: 12px;
+  height: 30px;
+  vertical-align: top;
+  border: 1px solid lightgray;
+  // padding: 10px;
+}
+.buttonGroup button:nth-child(1) {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-right: none;
+}
+.buttonGroup button:nth-child(2) {
+  border-right: none;
+}
+.buttonGroup button:nth-child(3) {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.buttonWrapper button {
+  width: auto;
+  margin-right: 10px;
+  font-size: 12px;
+  height: 30px;
+  vertical-align: top;
+  border: 1px solid lightgray;
+  border-radius: 5px;
 }
 
 p,
@@ -40,7 +98,7 @@ label {
 
 .tagsWrapper {
   background: white;
-  border: 1px solid gray;
+  border: 1px solid lightgray;
   padding: 0 5px 0 5px;
   width: 100%;
   height: auto;
@@ -77,14 +135,14 @@ label {
 .searchButton {
   // background: #06769F;
   background: #5E8404;
-   margin: 15px auto;
+  margin: 15px auto;
   display: block;
   color: white;
   border: none;
-  width: 50%;
-  // left: 3%;
-  // position: fixed;
-  // bottom: 55px;
+  width: 94%;
+  left: 3%;
+  position: fixed;
+  bottom: 50px;
   display: block;
   z-index: 999;
   height: 40px;
@@ -109,6 +167,12 @@ label {
 .right {
   float: right;
   color: #B0B0B0;
+}
+
+.cancel {
+  position: absolute;
+  left: 12px;
+  top: 17px;
 }
 
 :global(.glyphicon-remove) {

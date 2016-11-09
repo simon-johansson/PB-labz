@@ -2,9 +2,16 @@ import React from 'react';
 
 import styles from './styles.css';
 
-function LoadingIndicator() {
+function LoadingIndicator(props) {
+  const { options } = props;
+  let classNames = styles.loadingWrapper;
+  if (options) {
+    if (options.size) {
+      classNames =  options.size.small ? styles.loadingWrapperSmall : styles.loadingWrapper;
+    }
+  }
   return (
-    <div>
+    <div className={classNames}>
       <div className={styles['sk-fading-circle']}>
         <div className={styles.skCircle}></div>
         <div className={styles['sk-circle2']}></div>

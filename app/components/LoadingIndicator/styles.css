@@ -1,7 +1,19 @@
+.loadingWrapper {}
+.loadingWrapperSmall {
+  display: inline-block;
+}
+
 .sk-fading-circle {
   margin: 2em auto;
+  position: relative;
   width: 40px;
   height: 40px;
+}
+
+.loadingWrapperSmall .sk-fading-circle {
+  margin: -5px 5px;
+  width: 20px;
+  height: 20px;
   position: relative;
 }
 
@@ -22,6 +34,10 @@
   background-color: #999;
   border-radius: 100%;
   animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
+}
+
+.loadingWrapperSmall .skCircle::before {
+  background-color: white;
 }
 
 .sk-circle2 {

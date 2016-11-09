@@ -22,15 +22,57 @@ export default function createRoutes(store) {
       name: 'home',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          System.import('containers/HomePage/reducer'),
-          System.import('containers/HomePage/sagas'),
+          System.import('containers/ListPage/reducer'),
+          System.import('containers/ListPage/sagas'),
           System.import('containers/HomePage'),
         ]);
 
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('home', reducer.default);
+          injectReducer('list', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/list',
+      name: 'list',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/ListPage/reducer'),
+          System.import('containers/ListPage/sagas'),
+          System.import('containers/ListPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('list', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/filter',
+      name: 'filter',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/ListPage/reducer'),
+          System.import('containers/ListPage/sagas'),
+          System.import('containers/FilterPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('list', reducer.default);
           injectSagas(sagas.default);
 
           renderRoute(component);
@@ -68,7 +110,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/occupation',
+      path: '/occupation(/:filter)',
       name: 'occupation',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
@@ -89,7 +131,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/location',
+      path: '/location(/:filter)',
       name: 'location',
       getComponent(nextState, cb) {
         const importModules = Promise.all([

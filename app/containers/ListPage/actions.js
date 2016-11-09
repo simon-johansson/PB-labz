@@ -16,25 +16,10 @@
  */
 
 import {
-  CHANGE_USERNAME,
   REMOVE_OCCUPATION,
   REMOVE_LOCATION,
   SET_UI_STATE,
 } from './constants';
-
-/**
- * Changes the input field of the form
- *
- * @param  {name} name The new text of the input field
- *
- * @return {object}    An action object with a type of CHANGE_USERNAME
- */
-export function changeUsername(name) {
-  return {
-    type: CHANGE_USERNAME,
-    name,
-  };
-}
 
 export function removeOccupation(occupationIndex) {
   return {

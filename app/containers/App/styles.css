@@ -47,6 +47,13 @@ body.fontLoaded {
   display: none !important;
 }
 
+:global(.glyphicon-chevron-left) {
+  position: absolute;
+  top: 15px;
+  font-size: 18px;
+  color: white;
+}
+
 .wrapper {
   max-width: calc(768px + 16px * 2);
   margin: 0 auto;

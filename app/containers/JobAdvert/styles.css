@@ -78,10 +78,3 @@
 .loading {
   margin-top: 100px;
 }
-
-:global(.glyphicon-chevron-left) {
-  position: absolute;
-  top: 15px;
-  font-size: 18px;
-  color: white;
-}

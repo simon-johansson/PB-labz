@@ -52,8 +52,8 @@ export class JobAdvert extends React.Component {
     this.props.changeRoute(route);
   };
 
-  openHomePage = () => {
-    this.openRoute('/');
+  openListPage = () => {
+    this.openRoute('/list');
   };
 
   createCompetences() {
@@ -89,7 +89,7 @@ export class JobAdvert extends React.Component {
     return (
       <article>
         <div className={styles.contentWrapper}>
-          <header className={styles.header} onClick={this.openHomePage}>
+          <header className={styles.header} onClick={this.openListPage}>
             <span className='glyphicon glyphicon-chevron-left' />
             <h1>Annons</h1>
           </header>

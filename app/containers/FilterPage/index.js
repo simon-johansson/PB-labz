@@ -57,7 +57,7 @@ import LoadingIndicator from 'components/LoadingIndicator';
 
 import styles from './styles.css';
 
-export class HomePage extends React.Component {
+export class FilterPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -81,11 +81,11 @@ export class HomePage extends React.Component {
   };
 
   addOccupationPage = () => {
-    this.openRoute('/occupation');
+    this.openRoute('/occupation/filter');
   };
 
   addLocationPage = () => {
-    this.openRoute('/location');
+    this.openRoute('/location/filter');
   };
 
   createOccupationTags() {
@@ -155,27 +155,51 @@ export class HomePage extends React.Component {
       <article ref="list" className="noselect">
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
-            <h1>Mina sökningar</h1>
-            <form onSubmit={this.props.onSubmitForm}>
-              <div className="form-group">
-                <div className={styles.tagsWrapper} onClick={this.addOccupationPage}>
-                  {this.createOccupationTags()}
-                  <span className={styles.inputPlaceholder}>
-                    Lägg till yrke/fritext...
-                  </span>
-                </div>
-              </div>
-              <div className="form-group">
-                <div className={styles.tagsWrapper} onClick={this.addLocationPage}>
-                  {this.createLocationTags()}
-                  <span className={styles.inputPlaceholder}>
-                    Lägg till ort...
-                  </span>
-                </div>
-              </div>
-              <button type="submit" style={{display: 'none'}} className="btn btn-default">Submit</button>
-            </form>
+            <h1>Ändra sökningen</h1>
+            <span className={styles.cancel} onClick={this.addListPage}>
+              Avbryt
+            </span>
           </div>
+
+          <form className={styles.searchWrapper}>
+            <p>Jag vill jobba som</p>
+            <div className="form-group">
+              <div className={styles.tagsWrapper} onClick={this.addOccupationPage}>
+                {this.createOccupationTags()}
+                <span className={styles.inputPlaceholder}>
+                  Lägg till yrke/fritext...
+                </span>
+              </div>
+            </div>
+
+            <p>Jag vill jobba i</p>
+            <div className="form-group">
+              <div className={styles.tagsWrapper} onClick={this.addLocationPage}>
+                {this.createLocationTags()}
+                <span className={styles.inputPlaceholder}>
+                  Lägg till ort...
+                </span>
+              </div>
+            </div>
+          </form>
+
+          <p className={styles.sectionHeader}>Sortera</p>
+          <section className={styles.sortingWrapper}>
+            <div className={styles.buttonGroup}>
+              <button>Publiceringsdatum</button>
+              <button>Sista ansökningsdagen</button>
+              <button>Avstånd</button>
+            </div>
+          </section>
+
+          <p className={styles.sectionHeader}>Filtrera</p>
+          <section className={styles.sortingWrapper}>
+            <div className={styles.buttonWrapper}>
+              <button>Vanlig anställning</button>
+              <button>Sommarjobb</button>
+              <button>Behovsanställning</button>
+            </div>
+          </section>
 
           <button
             className={styles.searchButton + ' btn btn-default'}
@@ -189,14 +213,6 @@ export class HomePage extends React.Component {
             }
             </span> jobb
           </button>
-
-          <div className={styles.latestSearches}>
-            {/*<span className={styles.listHeader}>Sparade sökningar</span>
-            <List items={[]} component={ListItem} />*/}
-
-            <span className={styles.listHeader}>Tidigare sökningar</span>
-            <List items={[]} component={ListItem} />
-          </div>
         </div>
         <IosMenu />
       </article>
@@ -204,7 +220,7 @@ export class HomePage extends React.Component {
   }
 }
 
-HomePage.propTypes = {
+FilterPage.propTypes = {
   changeRoute: React.PropTypes.func,
   loading: React.PropTypes.bool,
   error: React.PropTypes.oneOfType([
@@ -266,4 +282,4 @@ const mapStateToProps = createStructuredSelector({
 });
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(FilterPage);

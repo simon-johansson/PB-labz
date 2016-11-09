@@ -45,14 +45,19 @@ export class AddLocation extends React.Component {
     this.props.changeRoute(route);
   };
 
-  openHomePage = () => {
-    this.openRoute('/');
+  goBack = () => {
+    if (this.props.params.filter) {
+      this.openRoute('/filter');
+    } else {
+      this.openRoute('/');
+    }
   };
+
 
   onListItemClick(item) {
     // console.log(item);
     this.props.onAddLocation(item);
-    this.openRoute('/');
+    this.goBack();
   }
 
   render() {
@@ -99,7 +104,7 @@ export class AddLocation extends React.Component {
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
               <h1>Lägg till ort</h1>
-              <span className={styles.cancel} onClick={this.openHomePage}>
+              <span className={styles.cancel} onClick={this.goBack}>
                 Avbryt
               </span>
               <form onSubmit={this.props.onSubmitForm} autoComplete="off">

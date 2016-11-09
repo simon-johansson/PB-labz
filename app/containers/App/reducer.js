@@ -23,7 +23,7 @@ import {
 import {
   REMOVE_OCCUPATION,
   REMOVE_LOCATION,
-} from 'containers/HomePage/constants';
+} from 'containers/ListPage/constants';
 import { fromJS } from 'immutable';
 
 // The initial state of the App
