@@ -19,6 +19,8 @@ import {
   REMOVE_OCCUPATION,
   REMOVE_LOCATION,
   SET_UI_STATE,
+  SET_OCCUPATION,
+  SET_LOCATION,
 } from './constants';
 
 export function removeOccupation(occupationIndex) {
@@ -32,6 +34,20 @@ export function removeLocation(locationIndex) {
   return {
     type: REMOVE_LOCATION,
     index: locationIndex,
+  };
+}
+
+export function setOccupations(occupations = []) {
+  return {
+    type: SET_OCCUPATION,
+    occupations,
+  };
+}
+
+export function setLocations(locations = []) {
+  return {
+    type: SET_LOCATION,
+    locations,
   };
 }
 

@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 // import Helmet from 'react-helmet';
 import _ from 'lodash';
+import * as ls from 'utils/localstorage';
 
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';
@@ -140,6 +141,11 @@ export class FilterPage extends React.Component {
   }
 
   onSeachButtonClick() {
+    ls.newPreviousSearch({
+      occupations: this.props.occupations,
+      locations: this.props.locations,
+      time: new Date().valueOf(),
+    });
     this.addListPage();
   }
 
@@ -151,9 +157,9 @@ export class FilterPage extends React.Component {
 
     // Show a loading indicator when we're loading
     if (this.props.loading) {
-      console.log('loading');
+      // console.log('loading');
     } else if (this.props.error !== false) {
-      console.log('error');
+      // console.log('error');
     } else if (this.props.jobs !== false) {
       // console.log(this.props.jobs);
     }

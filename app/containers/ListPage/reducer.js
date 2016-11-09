@@ -14,6 +14,8 @@ import {
   REMOVE_OCCUPATION,
   REMOVE_LOCATION,
   SET_UI_STATE,
+  SET_OCCUPATION,
+  SET_LOCATION,
 } from './constants';
 
 import {
@@ -73,6 +75,22 @@ function listReducer(state = initialState, action) {
       const locations = state.get('locations').filter((item, index) => action.index !== index);
       return state
         .set('locations', locations)
+        .setIn(['uiState', 'showMatchingJobs'], false)
+        .setIn(['uiState', 'showNonMatchningJobs'], false)
+        .set('shouldLoadNewJobs', true);
+
+    case SET_OCCUPATION:
+      return state
+        .set('occupations', state.get('occupations').clear())
+        .updateIn(['occupations'], (arr) => arr.push(...action.occupations))
+        .setIn(['uiState', 'showMatchingJobs'], false)
+        .setIn(['uiState', 'showNonMatchningJobs'], false)
+        .set('shouldLoadNewJobs', true);
+
+    case SET_LOCATION:
+      return state
+        .set('locations', state.get('locations').clear())
+        .updateIn(['locations'], (arr) => arr.push(...action.locations))
         .setIn(['uiState', 'showMatchingJobs'], false)
         .setIn(['uiState', 'showNonMatchningJobs'], false)
         .set('shouldLoadNewJobs', true);

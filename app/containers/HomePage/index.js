@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 // import Helmet from 'react-helmet';
 import _ from 'lodash';
+import * as ls from 'utils/localstorage';
 
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';
@@ -36,13 +37,12 @@ import {
 } from 'containers/ListPage/selectors';
 
 import {
+  setOccupations,
+  setLocations,
   removeOccupation,
   removeLocation,
   setUiState,
 } from 'containers/ListPage/actions';
-import {
-  loadJobs,
-} from 'containers/App/actions';
 
 import { FormattedMessage } from 'react-intl';
 import RepoListItem from 'containers/RepoListItem';
@@ -66,10 +66,9 @@ export class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.shouldLoadNewJobs) {
-      this.props.onSubmitForm();
-    }
-    // this.props.onSubmitForm();
+    // if (this.props.shouldLoadNewJobs) {
+    //   this.props.onSubmitForm();
+    // }
   }
 
   openRoute = (route) => {
@@ -137,40 +136,48 @@ export class HomePage extends React.Component {
   }
 
   onSeachButtonClick() {
-    this.props.occupations.forEach((item, index) => {
-      this.props.onRemoveOccupation(index);
-    });
-    this.props.locations.forEach((item, index) => {
-      this.props.onRemoveLocation(index);
-    });
+    this.props.onSetLocations();
+    this.props.onSetOccupations();
+    // this.props.occupations.forEach((item, index) => {
+    //   this.props.onRemoveOccupation(index);
+    // });
+    // this.props.locations.forEach((item, index) => {
+    //   this.props.onRemoveLocation(index);
+    // });
 
     this.addFilterPage();
   }
 
   previousSearches() {
-    const array = [{
-      occupations: ['Interaktionsdesign'],
-      locations: ['Stockholm Län'],
-      time: 'igår 15:12',
-    }, {
-      occupations: ['Interaktionsdesign'],
-      locations: ['Stockholm Län'],
-      time: 'igår 15:12',
-    }];
+    const momentOptions = {
+      sameDay: '[Idag] LT',
+      lastDay: '[Igår] LT',
+      lastWeek: 'DD MMM',
+      sameElse: 'DD MMM',
+    };
+    const searches = ls.getPreviousSearchs().slice(0, 5);
 
-    return array.map(item => {
+    return searches.map(item => {
+      const occupations = item.occupations.map(i => i.namn).join(', ');
+      const locations = item.locations.map(i => i.namn).join(' & ');
+
       return (
-        <div className={styles.previousSearchesWrapper}>
+        <div className={styles.previousSearchesWrapper} onClick={this.onClickPreviousSearch.bind(this, item)}>
           <div className={styles.previousSearcheParameters}>
-            <span>{item.occupations.join(', ')}</span> <br />
-            <span className={styles.small}>{item.locations.join(', ')}</span>
+            <span>{occupations}</span> <br />
+            <span className={styles.small}>{locations}</span>
           </div>
-          {/*<span className={styles.historyIcon + ' glyphicon glyphicon-time'} />*/}
-          <span className={styles.previousSearcheTime}>{item.time}</span>
+          <span className={styles.previousSearcheTime}>{moment(item.time).calendar(null, momentOptions)}</span>
           <span className={styles.chevronIcon + ' glyphicon glyphicon-chevron-right'} />
         </div>
       )
     });
+  }
+
+  onClickPreviousSearch(search) {
+    this.props.onSetOccupations(search.occupations);
+    this.props.onSetLocations(search.locations);
+    this.addListPage();
   }
 
   render() {
@@ -239,12 +246,16 @@ HomePage.propTypes = {
   onRemoveOccupation: React.PropTypes.func,
   onRemoveLocation: React.PropTypes.func,
   setUiState: React.PropTypes.func,
+  onSetLocations: React.PropTypes.func,
+  onSetOccupations: React.PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onRemoveOccupation: (index) => dispatch(removeOccupation(index)),
     onRemoveLocation: (index) => dispatch(removeLocation(index)),
+    onSetLocations: (location) => dispatch(setLocations(location)),
+    onSetOccupations: (occupation) => dispatch(setOccupations(occupation)),
     setUiState: (state) => dispatch(setUiState(state)),
     changeRoute: (url) => dispatch(push(url)),
     // onSubmitForm: (evt) => {

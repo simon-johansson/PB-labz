@@ -28,7 +28,6 @@ import {
 } from './selectors';
 
 export function* getJobs() {
-
   const occupation = yield select(selectOccupations());
   const locations = yield select(selectLocations());
   const occupationPayload = occupation.map((item) => {
@@ -57,7 +56,7 @@ export function* getJobs() {
     };
   });
 
-  // console.log(selectOccupation().map(item => console.log(item)));
+  // console.log([...occupationPayload, ...locationPayload]);
 
   const requestURL = '/matchandeRekryteringsbehov';
   const options = {
