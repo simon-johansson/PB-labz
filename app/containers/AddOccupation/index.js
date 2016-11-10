@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { browserHistory } from 'react-router';
+import Tappable from 'react-tappable';
 
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';
@@ -162,9 +163,9 @@ export class AddOccupation extends React.Component {
     return (
       <div>
         {!!this.state.picked.length &&
-          <span className={styles.yrkeslista} onClick={this.onItemsPicked.bind(this)}>
+          <Tappable className={styles.yrkeslista} onTap={this.onItemsPicked.bind(this)}>
             Klar
-          </span>
+          </Tappable>
         }
         {!this.props.params.group &&
           <span className={styles.yrkeslista} onClick={this.openYrkeslistan}>

@@ -19,12 +19,13 @@ import styles from './styles.css';
 export class OccupationListItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   onItemClick() {
+    const { matchningskriterium } = this.props.item;
     if (this.props.item.typ === 'GPS') {
       return this.props.click({
         id: '01', namn: 'Stockholms län', typ: 'LAN'
       });
     }
-    this.props.click(this.props.item);
+    this.props.click(matchningskriterium ? matchningskriterium : this.props.item);
   }
 
   render() {

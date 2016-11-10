@@ -220,9 +220,9 @@ export class FilterPage extends React.Component {
 
             <p>Anställningstyp</p>
             <div className={styles.buttonWrapper}>
-              <button>Vanlig anställning</button>
+              <button>Vanlig</button>
               <button>Sommarjobb</button>
-              <button>Behovsanställning</button>
+              <button>Efter behov</button>
             </div>
 
             <hr />
