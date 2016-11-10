@@ -71,3 +71,8 @@ label {
   right: 12px;
   top: 17px;
 }
+
+.suggestions {
+  margin: 15px 10px 5px;
+  display: block;
+}

@@ -45,7 +45,7 @@ export class AddOccupation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      related: 4,
+      related: 5,
       previous: {},
       picked: [],
     };
@@ -183,13 +183,26 @@ export class AddOccupation extends React.Component {
     if (this.props.loading) {
       mainContent = (<List component={LoadingIndicator} />);
     }
-    else if (!this.props.query) {
+    else if (!this.props.query && !this.props.related) {
       const EmptyComponent = () => (
         <ListItem item={''} />
       );
       mainContent = (<List component={EmptyComponent} />);
     }
+    else if (!this.props.query && this.props.related) {
+      mainContent = (
+        <div>
+          <p className={styles.suggestions}>Yrkesförslag</p>
+          <List
+            items={this.props.related.slice(0, this.state.related)}
+            component={OccupationListItem}
+            click={this.onListItemClick.bind(this)}
+          />
+        </div>
+      );
+    }
     else if (this.props.occupations !== false) {
+      // console.log(this.props.occupations);
       const freetext = {id: `"${this.props.query}"`, namn: `"${this.props.query}"`, typ: 'FRITEXT'};
       mainContent = (
         <List
@@ -256,7 +269,7 @@ export class AddOccupation extends React.Component {
                   </div>
                   <button type="submit" style={{display: 'none'}} className="btn btn-default">Submit</button>
 
-                  {!!this.props.related.length &&
+                  {!!this.props.related.length && false &&
                     <div className={styles.tagWrapper}>
                         <span className={styles.smallText}>Yrkesförslag:</span>
                       {this.createRelatedTags()}

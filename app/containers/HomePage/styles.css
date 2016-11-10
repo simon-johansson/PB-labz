@@ -149,6 +149,17 @@ label {
   font-size: 18px;
 }
 
+.welcome {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.welcome p {
+  margin-bottom: 0;
+}
+
 :global(.glyphicon-remove) {
   cursor: pointer;
   color: #8E8E93;

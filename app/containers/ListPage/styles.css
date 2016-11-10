@@ -120,6 +120,7 @@ label {
 .amount {
   margin: 15px 10px 5px;
   display: block;
+  // font-size: 13px;
 }
 
 .nonMatchingAmount {
@@ -164,7 +165,7 @@ label {
 
 .matchDescription {
   display: block;
-  margin: auto;
+  margin: 20px auto 20px;;
   width: 75%;
   text-align: center;
 }

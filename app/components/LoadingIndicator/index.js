@@ -4,14 +4,17 @@ import styles from './styles.css';
 
 function LoadingIndicator(props) {
   const { options } = props;
-  let classNames = styles.loadingWrapper;
+  let classNames = [styles.loadingWrapper, styles.loadingColorLight];
   if (options) {
     if (options.size) {
-      classNames =  options.size.small ? styles.loadingWrapperSmall : styles.loadingWrapper;
+      classNames.push(options.size.small ? styles.loadingWrapperSmall : styles.loadingWrapper);
+    }
+    if (options.color) {
+      classNames.push(options.color === 'dark' ? styles.loadingColorDark : styles.loadingColorLight);
     }
   }
   return (
-    <div className={classNames}>
+    <div className={classNames.join(' ')}>
       <div className={styles['sk-fading-circle']}>
         <div className={styles.skCircle}></div>
         <div className={styles['sk-circle2']}></div>

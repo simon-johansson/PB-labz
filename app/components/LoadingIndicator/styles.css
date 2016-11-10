@@ -40,6 +40,10 @@
   background-color: white;
 }
 
+.loadingColorDark .skCircle::before {
+  background-color: #999 !important;
+}
+
 .sk-circle2 {
   composes: skCircle;
   transform: rotate(30deg);

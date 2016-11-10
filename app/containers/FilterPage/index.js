@@ -150,7 +150,8 @@ export class FilterPage extends React.Component {
   }
 
   shouldShowSearchButton() {
-    return !!this.props.occupations.size || !!this.props.locations.size;
+    // return !!this.props.occupations.size || !!this.props.locations.size;
+    return true;
   }
 
   render() {
@@ -234,6 +235,7 @@ export class FilterPage extends React.Component {
           </section>
 
           {this.shouldShowSearchButton() &&
+            // <buttontrue;
             <button
               className={styles.searchButton + ' btn btn-default'}
               onClick={this.onSeachButtonClick}

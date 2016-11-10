@@ -57,6 +57,9 @@ export function* getJobs() {
   });
 
   // console.log([...occupationPayload, ...locationPayload]);
+  const payload = [...occupationPayload, ...locationPayload].length ?
+                  [...occupationPayload, ...locationPayload] :
+                  [{ typ: 'FRITEXT', varde: '**' }];
 
   const requestURL = '/matchandeRekryteringsbehov';
   const options = {
@@ -67,10 +70,10 @@ export function* getJobs() {
     },
     body: JSON.stringify({
       matchningsprofil: {
-        profilkriterier: [...occupationPayload, ...locationPayload],
+        profilkriterier: payload,
         hasChanged: true,
       },
-      maxAntal: 200,
+      maxAntal: 100,
       startrad: 0,
       sorteringsordning: 'DATUM',
     }),

@@ -61,10 +61,10 @@ export class CompetenceListItem extends React.Component {
     const content = (
       <div className={styles.linkWrapper} onClick={this.onCompetenceClick.bind(this)}>
         {item.isTop5 &&
-          <span>{item.isTop5}. {item.efterfragat}</span>
+          <span className={styles.efterfragat}>{item.isTop5}. {item.efterfragat}</span>
         }
         {!item.isTop5 &&
-          <span>{item.efterfragat}</span>
+          <span className={styles.efterfragat}>{item.efterfragat}</span>
         }
         {this.state.isKnown &&
           <span className={styles.competenceOK + ' glyphicon glyphicon-ok'} />

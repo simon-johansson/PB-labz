@@ -159,7 +159,8 @@ export class ListPage extends React.Component {
   createSearchInput() {
     const occupations = JSON.parse(JSON.stringify(this.props.occupations)).map((item, index) => item.namn);
     const locations = JSON.parse(JSON.stringify(this.props.locations)).map((item, index) => item.namn);
-    return occupations.concat(locations).join(', ');
+    const str = occupations.concat(locations).join(', ')
+    return str.length ? str : 'Alla jobb i Platsbanken';
   }
 
   createSearchSummary() {
@@ -203,12 +204,11 @@ export class ListPage extends React.Component {
           {!!this.props.competences.length &&
             <div>
               <div className={styles.matchDescription}>
-                <h3>Vad kan du?</h3>
                 <p>Ange dina kompetenser för att se jobben som passar dig bäst</p>
               </div>
-              <span className={styles.listDescription}>Mest efterfrågade kompetenserna för din sökning</span>
+              <span className={styles.amount}>Mest efterfrågade kompetenserna {this.createSearchSummary()}</span>
               <List items={top5} component={CompetenceListItem} />
-              <span className={styles.listDescription}>Alla efterfrågade kompetenser för din sökning</span>
+              <span className={styles.amount}>Alla efterfrågade kompetenser {this.createSearchSummary()}</span>
               <List items={this.props.competences} component={CompetenceListItem} />
             </div>
           }

@@ -44,6 +44,10 @@ import {
   setUiState,
 } from 'containers/ListPage/actions';
 
+import {
+  loadJobs,
+} from 'containers/App/actions';
+
 import { FormattedMessage } from 'react-intl';
 import RepoListItem from 'containers/RepoListItem';
 import JobListItem from 'components/JobListItem';
@@ -66,9 +70,9 @@ export class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    // if (this.props.shouldLoadNewJobs) {
-    //   this.props.onSubmitForm();
-    // }
+    this.props.onSetLocations();
+    this.props.onSetOccupations();
+    this.props.onSubmitForm();
   }
 
   openRoute = (route) => {
@@ -200,6 +204,17 @@ export class HomePage extends React.Component {
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
             <h1>Mina sökningar</h1>
+          </div>
+
+          <div className={styles.welcome}>
+            <p>Välkommen till Platsbanken!</p>
+            <p>
+              { this.props.loading ?
+                <LoadingIndicator options={{size: 'small', color: 'dark'}} /> :
+                `${this.props.amount} `
+              }
+              lediga jobb just nu
+            </p>
           </div>
 
           <button

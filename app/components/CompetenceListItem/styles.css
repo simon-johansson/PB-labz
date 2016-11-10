@@ -8,9 +8,13 @@
   // align-items: space-between;
 }
 
+.efterfragat {
+  margin-left: 20px;
+}
+
 .competenceOK {
   position: absolute;
-  right: 0;
+  left: 0px;
   top: 10px;
   color: green;
 }

@@ -29,14 +29,14 @@ export class OccupationListItem extends React.Component { // eslint-disable-line
 
   render() {
     const item = this.props.item;
-    // console.log(item);
+    const { matchningskriterium, antal } = item;
 
     const content = (
       <div className={styles.linkWrapper} onClick={this.onItemClick.bind(this)}>
-        <span>{item.namn}</span>
+        <span>{item.namn || matchningskriterium.namn}</span>
         { item.typ === 'GPS' ?
           <span className={styles.right + ' glyphicon glyphicon-map-marker'}></span> :
-          <span className={styles.right}>{item.typ.toLowerCase()}</span>
+          <span className={styles.right}>{item.typ ? item.typ.toLowerCase() : antal + ' jobb'}</span>
         }
       </div>
     );
