@@ -72,7 +72,7 @@ export function* getJobs() {
       },
       maxAntal: 200,
       startrad: 0,
-      sorteringsordning: 'RELEVANS',
+      sorteringsordning: 'DATUM',
     }),
   };
 

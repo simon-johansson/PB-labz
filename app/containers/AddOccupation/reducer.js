@@ -13,6 +13,8 @@
 import {
   LOAD_OCCUPATION_SUCCESS,
   CHANGE_QUERY,
+  CHANGE_LIST_QUERY,
+  LOAD_OCCUPATION_LIST_SUCCESS,
 } from './constants';
 import { fromJS } from 'immutable';
 
@@ -21,6 +23,8 @@ const initialState = fromJS({
   query: '',
   occupations: [],
   error: false,
+  occupationListQuery: '',
+  occupationList: fromJS([]),
 });
 
 function addOccupationReducer(state = initialState, action) {
@@ -28,9 +32,16 @@ function addOccupationReducer(state = initialState, action) {
     case CHANGE_QUERY:
       return state
         .set('query', action.query);
+    case CHANGE_LIST_QUERY:
+      return state
+        .set('occupationListQuery', action.occupationListQuery);
     case LOAD_OCCUPATION_SUCCESS:
       return state
         .set('occupations', action.occupations.splice(0, 10));
+    case LOAD_OCCUPATION_LIST_SUCCESS:
+      return state
+        .set('occupationList', state.get('occupationList').clear())
+        .updateIn(['occupationList'], (arr) => arr.push(...action.occupationList));
     default:
       return state;
   }

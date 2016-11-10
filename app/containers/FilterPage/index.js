@@ -89,11 +89,11 @@ export class FilterPage extends React.Component {
   };
 
   addOccupationPage = () => {
-    this.openRoute('/occupation/filter');
+    this.openRoute('/occupation');
   };
 
   addLocationPage = () => {
-    this.openRoute('/location/filter');
+    this.openRoute('/location');
   };
 
   createOccupationTags() {
@@ -149,6 +149,10 @@ export class FilterPage extends React.Component {
     this.addListPage();
   }
 
+  shouldShowSearchButton() {
+    return !!this.props.occupations.size || !!this.props.locations.size;
+  }
+
   render() {
     let mainContent = null;
     let matchingContent = null;
@@ -174,9 +178,7 @@ export class FilterPage extends React.Component {
                 <span>Ändra sökningen</span>
               }
             </h1>
-            <span className={styles.cancel} onClick={this.goBack}>
-              Avbryt
-            </span>
+            <span className={styles.cancel} onClick={this.goBack}>Avbryt</span>
           </div>
 
           <form className={styles.searchWrapper}>
@@ -231,18 +233,20 @@ export class FilterPage extends React.Component {
             </div>
           </section>
 
-          <button
-            className={styles.searchButton + ' btn btn-default'}
-            onClick={this.onSeachButtonClick}
-          >
-            <span className={styles.searchIcon + " glyphicon glyphicon-search"} />
-            Visa <span>
-            { this.props.loading ?
-              <LoadingIndicator options={{size: 'small'}} /> :
-              this.props.amount
-            }
-            </span> jobb
-          </button>
+          {this.shouldShowSearchButton() &&
+            <button
+              className={styles.searchButton + ' btn btn-default'}
+              onClick={this.onSeachButtonClick}
+            >
+              <span className={styles.searchIcon + " glyphicon glyphicon-search"} />
+              Visa <span>
+              { this.props.loading ?
+                <LoadingIndicator options={{size: 'small'}} /> :
+                this.props.amount
+              }
+              </span> jobb
+            </button>
+          }
         </div>
         <IosMenu />
       </article>

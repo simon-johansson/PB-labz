@@ -234,6 +234,15 @@ label {
   top: 17px;
 }
 
+.saveSearch {
+  cursor: pointer;
+  color: white;
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  font-size: 14px;
+}
+
 :global(.glyphicon-remove) {
   cursor: pointer;
   color: #8E8E93;

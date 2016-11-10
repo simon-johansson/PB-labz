@@ -16,6 +16,7 @@ import { createStructuredSelector } from 'reselect';
 import {
   selectQuery,
   selectOccupations,
+  selectOccupationList,
 } from './selectors';
 
 import {
@@ -25,11 +26,13 @@ import {
 import {
   changeQuery,
   addOccupation,
-  occupationsLoaded
+  occupationsLoaded,
+  changeOccupationListQuery,
 } from './actions';
 
 import RepoListItem from 'containers/RepoListItem';
 import OccupationListItem from 'components/OccupationListItem';
+import YrkeslistaListItem from 'components/YrkeslistaListItem';
 import Button from 'components/Button';
 import H2 from 'components/H2';
 import List from 'components/List';
@@ -43,12 +46,26 @@ export class AddOccupation extends React.Component {
     super(props);
     this.state = {
       related: 4,
+      previous: {},
+      picked: [],
     };
   }
 
   componentDidMount() {
-    this.props.onChangeQuery({target: { value: '' }});
-    ReactDOM.findDOMNode(this.refs.occupationInput).focus();
+    const { group, id } = this.props.params;
+    if (group) {
+      this.props.onChangeOccupationListQuery(group, id);
+    } else {
+      this.props.onChangeQuery({target: { value: '' }});
+      ReactDOM.findDOMNode(this.refs.occupationInput).focus();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { group, id } = this.props.params;
+    if (group !== nextProps.params.group) {
+      this.props.onChangeOccupationListQuery(nextProps.params.group, nextProps.params.id);
+    }
   }
 
   openRoute = (route) => {
@@ -56,12 +73,61 @@ export class AddOccupation extends React.Component {
   };
 
   goBack = () => {
-    browserHistory.goBack();
+    this.setState({
+      previous: false,
+      picked: [],
+    });
+    if (this.props.params.group) {
+      this.openRoute('/occupation');
+    } else {
+      // browserHistory.goBack();
+      this.openRoute('/filter');
+    }
   };
+
+  openYrkeslistan = () => {
+    this.openRoute('/occupation/yrkesomraden');
+  }
 
   onListItemClick(item) {
     this.props.onAddOccupation(item);
     this.goBack();
+  }
+
+  onItemsPicked() {
+    this.state.picked.forEach(pick => {
+      this.props.onAddOccupation(pick);
+    })
+    this.openRoute('/filter');
+  }
+
+  onOccupationListItemClick(item) {
+    const { group } = this.props.params;
+    const pickParent = (item) => {
+      item.parent = true;
+      item.picked = true;
+      this.setState({
+        picked: [item],
+        previous: item,
+      });
+    };
+    if (item.typ === 'YRKE') {
+      let picked = this.state.picked.slice();
+      let parent = this.state.previous;
+      picked = picked.filter(i => !i.parent);
+      parent.picked = false;
+
+      this.setState({
+        picked: [item, ...picked],
+        previous: parent,
+      });
+    } else if (group === 'yrkesomraden') {
+      pickParent(item);
+      this.openRoute(`/occupation/yrkesgrupper/${item.id}`);
+    } else if (group === 'yrkesgrupper') {
+      pickParent(item);
+      this.openRoute(`/occupation/yrken/${item.id}`);
+    }
   }
 
   onSubmitForm(e) {
@@ -78,9 +144,7 @@ export class AddOccupation extends React.Component {
 
   createRelatedTags() {
     if (this.props.related.length > 0) {
-      // console.log(this.props.related);
       return this.props.related.map((item, index) => {
-        // console.log(item);
         if (index < this.state.related) {
           return (
             <div className={styles.tag} onClick={this.onListItemClick.bind(this, item.matchningskriterium)}>
@@ -94,16 +158,30 @@ export class AddOccupation extends React.Component {
     }
   }
 
-  render() {
-    // console.log(this.props.related);
+  doneOrYrkeslista() {
+    return (
+      <div>
+        {!!this.state.picked.length &&
+          <span className={styles.yrkeslista} onClick={this.onItemsPicked.bind(this)}>
+            Klar
+          </span>
+        }
+        {!this.props.params.group &&
+          <span className={styles.yrkeslista} onClick={this.openYrkeslistan}>
+            Yrkeslista
+          </span>
+        }
+      </div>
+    )
+  }
 
+  render() {
+    // console.log(this.state.previous);
     let mainContent = null;
 
     // Show a loading indicator when we're loading
     if (this.props.loading) {
       mainContent = (<List component={LoadingIndicator} />);
-
-    // Show an error if there is one
     }
     else if (!this.props.query) {
       const EmptyComponent = () => (
@@ -111,14 +189,6 @@ export class AddOccupation extends React.Component {
       );
       mainContent = (<List component={EmptyComponent} />);
     }
-    // else if (this.props.error !== false) {
-    //   const ErrorComponent = () => (
-    //     <ListItem item={'Something went wrong, please try again!'} />
-    //   );
-    //   mainContent = (<List component={ErrorComponent} />);
-
-    // // If we're not loading, don't have an error and there are repos, show the repos
-    // }
     else if (this.props.occupations !== false) {
       const freetext = {id: `"${this.props.query}"`, namn: `"${this.props.query}"`, typ: 'FRITEXT'};
       mainContent = (
@@ -130,8 +200,36 @@ export class AddOccupation extends React.Component {
       );
     }
 
-    // console.log(this.props.occupations);
-    // console.log(this.props.related);
+    if (this.props.params.group) {
+      let list = this.props.occupationList.map((item) => {
+        // let isPicked = false;
+        // let parent = false;
+        this.state.picked.forEach((pick) => {
+          if (pick.id === item.id) {
+            item.picked = true;
+            // parent = true;
+            // const prev = this.state.previous;
+            // prev.picked = false;
+            // this.setState({previous: prev});
+          }
+        });
+        // if (!item.parent || parent) {
+        //   item.picked = isPicked;
+        // }
+        return item;
+      });
+      // console.log(this.state.previous);
+      let items = this.state.previous.namn ? [this.state.previous, ...list] : list;
+      mainContent = (
+        <div>
+          <List
+            items={items}
+            component={YrkeslistaListItem}
+            click={this.onOccupationListItemClick.bind(this)}
+          />
+        </div>
+      );
+    }
 
     return (
       <article>
@@ -139,62 +237,44 @@ export class AddOccupation extends React.Component {
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
               <h1>Lägg till yrke/fritext</h1>
-              <span className={styles.cancel} onClick={this.goBack}>
-                Avbryt
-              </span>
-              <form onSubmit={this.onSubmitForm.bind(this)} autoComplete="off">
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="occupation"
-                    placeholder="Lägg till yrke/fritext..."
-                    value={this.props.query}
-                    autoComplete="off"
-                    onChange={this.props.onChangeQuery}
-                    ref="occupationInput"
-                  />
-                </div>
-                <button type="submit" style={{display: 'none'}} className="btn btn-default">Submit</button>
+              {this.doneOrYrkeslista()}
+              <span className={styles.cancel} onClick={this.goBack}>Avbryt</span>
 
-                {!!this.props.related.length &&
-                  <div className={styles.tagWrapper}>
-                      <span className={styles.smallText}>Yrkesförslag:</span>
-                    {this.createRelatedTags()}
-                    { false &&
-                      <div className={styles.tag}>
-                        <span className={styles.tagText}>
-                          {this.props.related.length - this.state.related}
-                          <span className="glyphicon glyphicon-plus" />
-                        </span>
-                      </div>
-                    }
+              {!this.props.params.group &&
+                <form onSubmit={this.onSubmitForm.bind(this)} autoComplete="off">
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="occupation"
+                      placeholder="Lägg till yrke/fritext..."
+                      value={this.props.query}
+                      autoComplete="off"
+                      onChange={this.props.onChangeQuery}
+                      ref="occupationInput"
+                    />
                   </div>
-                }
-              </form>
-            </div>
+                  <button type="submit" style={{display: 'none'}} className="btn btn-default">Submit</button>
 
-            {/*<form className={styles.usernameForm} onSubmit={this.props.onSubmitForm}>
-              <label htmlFor="username">
-                <FormattedMessage {...messages.trymeMessage} />
-                <span className={styles.atPrefix}>
-                  <FormattedMessage {...messages.trymeAtPrefix} />
-                </span>
-                <input
-                  id="username"
-                  className={styles.input}
-                  type="text"
-                  placeholder="mxstbr"
-                  value={this.props.username}
-                  onChange={this.props.onChangeUsername}
-                />
-              </label>
-            </form>*/}
+                  {!!this.props.related.length &&
+                    <div className={styles.tagWrapper}>
+                        <span className={styles.smallText}>Yrkesförslag:</span>
+                      {this.createRelatedTags()}
+                      { false &&
+                        <div className={styles.tag}>
+                          <span className={styles.tagText}>
+                            {this.props.related.length - this.state.related}
+                            <span className="glyphicon glyphicon-plus" />
+                          </span>
+                        </div>
+                      }
+                    </div>
+                  }
+                </form>
+              }
+            </div>
             {mainContent}
           </section>
-          {/*<Button handleRoute={this.openFeaturesPage}>
-            <FormattedMessage {...messages.featuresButton} />
-          </Button>*/}
         </div>
       </article>
     );
@@ -216,8 +296,8 @@ AddOccupation.propTypes = {
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
-  // onSubmitForm: React.PropTypes.func,
   onChangeQuery: React.PropTypes.func,
+  onChangeOccupationListQuery: React.PropTypes.func,
   onAddOccupation: React.PropTypes.func,
   query: React.PropTypes.string,
 };
@@ -225,14 +305,9 @@ AddOccupation.propTypes = {
 export function mapDispatchToProps(dispatch, props) {
   return {
     onChangeQuery: (evt) => dispatch(changeQuery(evt.target.value)),
+    onChangeOccupationListQuery: (group, id) => dispatch(changeOccupationListQuery(group, id)),
     onAddOccupation: (occupation) => dispatch(addOccupation(occupation)),
     changeRoute: (url) => dispatch(push(url)),
-    // onSubmitForm: (evt) => {
-    //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-    //   console.log(props);
-    //   dispatch(addOccupation());
-    // },
-    // dispatch,
   };
 }
 
@@ -240,6 +315,7 @@ const mapStateToProps = createStructuredSelector({
   query: selectQuery(),
   occupations: selectOccupations(),
   related: selectRelated(),
+  occupationList: selectOccupationList(),
 });
 
 // Wrap the component to inject dispatch and state into it

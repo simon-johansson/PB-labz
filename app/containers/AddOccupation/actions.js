@@ -19,6 +19,8 @@ import {
   LOAD_OCCUPATION_SUCCESS,
   ADD_OCCUPATION,
   CHANGE_QUERY,
+  CHANGE_LIST_QUERY,
+  LOAD_OCCUPATION_LIST_SUCCESS,
 } from './constants';
 
 export function changeQuery(query) {
@@ -28,10 +30,26 @@ export function changeQuery(query) {
   };
 }
 
+export function changeOccupationListQuery(group, id = '') {
+  return {
+    type: CHANGE_LIST_QUERY,
+    occupationListQuery: {
+      group, id,
+    },
+  };
+}
+
 export function addOccupation(occupation) {
   return {
     type: ADD_OCCUPATION,
     occupation,
+  };
+}
+
+export function occupationListLoaded(occupationList) {
+  return {
+    type: LOAD_OCCUPATION_LIST_SUCCESS,
+    occupationList,
   };
 }
 

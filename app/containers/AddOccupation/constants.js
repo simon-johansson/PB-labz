@@ -11,5 +11,7 @@
 
 export const CHANGE_OCCUPATION = 'boilerplate/AddOccupation/CHANGE_OCCUPATION';
 export const CHANGE_QUERY = 'boilerplate/AddOccupation/CHANGE_QUERY';
+export const CHANGE_LIST_QUERY = 'boilerplate/AddOccupation/CHANGE_LIST_QUERY';
 export const LOAD_OCCUPATION_SUCCESS = 'boilerplate/AddOccupation/LOAD_OCCUPATION_SUCCESS';
 export const ADD_OCCUPATION = 'boilerplate/AddOccupation/ADD_OCCUPATION';
+export const LOAD_OCCUPATION_LIST_SUCCESS = 'boilerplate/AddOccupation/LOAD_OCCUPATION_LIST_SUCCESS';

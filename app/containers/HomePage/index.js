@@ -158,8 +158,8 @@ export class HomePage extends React.Component {
     const searches = ls.getPreviousSearchs().slice(0, 5);
 
     return searches.map(item => {
-      const occupations = item.occupations.map(i => i.namn).join(', ');
-      const locations = item.locations.map(i => i.namn).join(' & ');
+      const occupations = item.occupations.map(i => i.namn).join(', ') || 'Alla yrken';
+      const locations = item.locations.map(i => i.namn).join(' & ') || 'Hela Sverige';
 
       return (
         <div className={styles.previousSearchesWrapper} onClick={this.onClickPreviousSearch.bind(this, item)}>

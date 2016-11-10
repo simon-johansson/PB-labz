@@ -65,3 +65,9 @@ label {
 .tagText {
   color: #333333;
 }
+
+.yrkeslista {
+  position: absolute;
+  right: 12px;
+  top: 17px;
+}

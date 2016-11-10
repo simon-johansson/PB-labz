@@ -21,7 +21,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.post('/matchandeRekryteringsbehov', (req, res) => {
-  const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/matchning/v1/matchandeRekryteringsbehov';
+  // const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/matchning/v1/matchandeRekryteringsbehov';
+  const url = 'https://www.arbetsformedlingen.se/rest/matchning/rest/matchning/v1/matchandeRekryteringsbehov';
   // console.log(req.body);
   request.post(url, {json: req.body}, (error, response, body) => {
     if (!error) {
@@ -32,7 +33,8 @@ app.post('/matchandeRekryteringsbehov', (req, res) => {
 });
 
 app.post('/matchandeRekryteringsbehov/:id', (req, res) => {
-  const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/matchning/v1/matchandeRekryteringsbehov/' + req.params.id;
+  // const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/matchning/v1/matchandeRekryteringsbehov/' + req.params.id;
+  const url = 'https://www.arbetsformedlingen.se/rest/matchning/rest/matchning/v1/matchandeRekryteringsbehov/' + req.params.id;
   // console.log(req.body);
   request.post(url, {json: req.body}, (error, response, body) => {
     if (!error) {
@@ -44,7 +46,8 @@ app.post('/matchandeRekryteringsbehov/:id', (req, res) => {
 
 app.get('/matchningskriterier', (req, res) => {
   // console.log(req);
-  const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/af/v1/matchning' + req.originalUrl;
+  // const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/af/v1/matchning' + req.originalUrl;
+  const url = 'https://www.arbetsformedlingen.se/rest/matchning/rest/af/v1/matchning' + req.originalUrl;
   // console.log(req.body);
   request(url, (error, response, body) => {
     if (!error) {

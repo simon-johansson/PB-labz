@@ -110,7 +110,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/occupation(/:filter)',
+      path: '/occupation(/:group)(/:id)',
       name: 'occupation',
       getComponent(nextState, cb) {
         const importModules = Promise.all([

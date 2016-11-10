@@ -74,7 +74,7 @@ export class ListPage extends React.Component {
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    if (this.props.shouldLoadNewJobs) {
+    if (this.props.shouldLoadNewJobs && !this.props.loading) {
       this.props.onSubmitForm();
     }
     this.scrollTo(this.props.scrollPosition);
@@ -397,6 +397,7 @@ export class ListPage extends React.Component {
         <div className={styles.contentWrapper}>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
+              {/*<span className={styles.saveSearch} onClick={() => console.log('star')}>Spara</span>*/}
               <span className='glyphicon glyphicon-chevron-left' onClick={this.openHomePage} />
               <h1>Mina sökningar</h1>
               <form onClick={this.addFilterPage}>
