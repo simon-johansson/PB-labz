@@ -51,7 +51,6 @@ function listReducer(state = initialState, action) {
 
     case ADD_OCCUPATION:
       let addOccupation = state.get('occupations').filter((item, index) => {
-        console.log(item);
         return action.occupation.id !== item.id;
       }).push(action.occupation);
       return state

@@ -136,7 +136,7 @@ export class AddOccupation extends React.Component {
 
     this.props.onAddOccupation({
       typ: 'FRITEXT',
-      varde: `"${this.props.query}"`,
+      id: `"${this.props.query}"`,
       namn: `"${this.props.query}"`,
     });
     document.activeElement.blur();
