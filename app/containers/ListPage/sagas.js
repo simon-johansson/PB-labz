@@ -46,7 +46,7 @@ export function* getJobs() {
     return {
       typ,
       varde: item.id || item.varde,
-      vikt: 5,
+      // vikt: 5,
       // egenskaper: [],
     };
   });
@@ -54,6 +54,7 @@ export function* getJobs() {
     return {
       typ: item.typ,
       varde: item.id,
+      // vikt: 5,
     };
   });
 

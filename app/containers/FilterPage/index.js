@@ -257,8 +257,8 @@ export class FilterPage extends React.Component {
             <p>Anställningstyp</p>
             <div className={styles.buttonWrapper}>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Vanlig</button>
-              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Sommarjobb</button>
-              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Efter behov</button>
+              <button onClick={this.toggleActive.bind(this)}>Sommarjobb</button>
+              <button onClick={this.toggleActive.bind(this)}>Efter behov</button>
             </div>
 
             <hr />
@@ -266,7 +266,7 @@ export class FilterPage extends React.Component {
             <p>Omfattning</p>
             <div className={styles.buttonWrapper}>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Heltid</button>
-              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Deltid</button>
+              <button onClick={this.toggleActive.bind(this)}>Deltid</button>
             </div>
 
             <hr />
