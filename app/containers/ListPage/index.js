@@ -368,13 +368,16 @@ export class ListPage extends React.Component {
         if (match) {
           jobCopy.matchingCompetences = matchingCompetences;
           jobCopy.notMatchingCompetences = notMatchingCompetences;
+          jobCopy.matchProcent = matchingCompetences.length / _.filter(jobCopy.matchningsresultat.efterfragat, { typ: 'KOMPETENS' }).length;
+          // console.log(jobCopy.matchProcent);
           matchingJobs.push(jobCopy);
         } else {
           nonMatchingJobs.push(jobCopy);
         }
       });
       const sortedMatchingJobs = _.orderBy(matchingJobs,
-        ['matchingCompetences', 'notMatchingCompetences'], ['desc', 'asc']);
+        ['matchProcent', 'matchingCompetences', 'notMatchingCompetences'], ['desc', 'desc', 'asc']);
+      // const sortedMatchingJobs = _.orderBy(matchingJobs,['matchProcent'], ['desc']);
       matchingContent = (
         <div className={styles.listWrapperMatchingContent}>
           <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
@@ -405,7 +408,7 @@ export class ListPage extends React.Component {
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
               {/*<span className={styles.saveSearch} onClick={() => console.log('star')}>Spara</span>*/}
-              <span className='glyphicon glyphicon-chevron-left' onClick={this.openHomePage} />
+              <span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} onClick={this.openHomePage} />
               <h1>Mina sökningar</h1>
               <form onClick={this.addFilterPage}>
                 <div className="form-group">

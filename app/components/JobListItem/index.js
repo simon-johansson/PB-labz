@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import Tappable from 'react-tappable';
+import _ from 'lodash';
 
 import { FormattedNumber } from 'react-intl';
 import { selectCurrentUser } from 'containers/App/selectors';
@@ -17,6 +18,21 @@ import IssueIcon from 'components/IssueIcon';
 import A from 'components/A';
 
 import styles from './styles.css';
+
+const knownCompetencesShort = (item) => {
+  const competences = _.filter(item.matchningsresultat.efterfragat, {typ: "KOMPETENS"});
+  const match = (item.matchingCompetences.length / competences.length);
+  let colorClass = '';
+  if (match === 1) colorClass = 'greenCircle';
+  else if (match > 0.5) colorClass = 'orangeCircle';
+  else colorClass = 'yellowCircle';
+
+  return (
+    <span className={`${styles.circle} ${colorClass}`}>
+      {item.matchingCompetences.length}/{competences.length}
+    </span>
+  );
+}
 
 const knownCompetences = (item) => {
   const content = [];
@@ -90,10 +106,11 @@ function JobListItem(props) {
           }
           {item.matchingCompetences &&
             <div>
-              <span className={styles.smallText}>Vi efterfrågar:</span> <br />
+              {/*<span className={styles.smallText}>Vi efterfrågar:</span> <br />*/}
               <div className={styles.knownCompetences}>
-                {knownCompetences(item)}
-                {notkKnownCompetences(item)}
+                {knownCompetencesShort(item)}
+                {/*knownCompetences(item)*/}
+                {/*notkKnownCompetences(item)*/}
               </div>
             </div>
           }

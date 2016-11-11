@@ -229,6 +229,22 @@ label {
   color: #B0B0B0;
 }
 
+.cancel {
+  // float: right;
+  // color: #B0B0B0;
+  // border: 1px solid #000;
+
+  position: absolute;
+  left: 0px;
+  padding-left: 12px;
+  top: 0px;
+  width: 50px;
+  padding-top: 2px;
+  height: 47px;
+  line-height: 50px;
+}
+
+
 .goBack {
   position: absolute;
   left: 12px;
