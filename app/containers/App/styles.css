@@ -83,7 +83,7 @@ body.fontLoaded {
 
 :global(.rangeslider-horizontal .rangeslider__handle) {
   background: #335467;
-  width: 25px;
-  height: 25px;
-  top: -10px;
+  width: 30px;
+  height: 30px;
+  top: -12px;
 }

@@ -65,6 +65,11 @@ export class FilterPage extends React.Component {
     super(props);
     this.state = {
       range: 10,
+      employment: {
+        ordinary: true,
+        summer: true,
+        needs: true,
+      }
     };
 
     this.onSeachButtonClick = this.onSeachButtonClick.bind(this);
@@ -165,11 +170,24 @@ export class FilterPage extends React.Component {
   createAreaFilter() {
     return this.props.areas.slice(0, 7).map((area) => {
       return (
-        <span className={styles.areaFilter}>
-          {area.namn} {area.amount}
-        </span>
+        <button onClick={this.toggleActive.bind(this)}>
+          {area.namn} ({area.amount})
+        </button>
       );
     });
+  }
+
+  shouldShowAreaFilter() {
+    let freetext;
+    this.props.occupations.forEach(i => freetext = i.typ === 'FRITEXT' ? true : false);
+    return !this.props.loading &&
+           (this.props.areas.length > 1) &&
+           (freetext || !!this.props.locations.size);
+  }
+
+  toggleActive(e) {
+    let className = e.target.className;
+    e.target.className = className ? '' : 'activeFilterButton';
   }
 
   render() {
@@ -238,17 +256,17 @@ export class FilterPage extends React.Component {
 
             <p>Anställningstyp</p>
             <div className={styles.buttonWrapper}>
-              <button>Vanlig</button>
-              <button>Sommarjobb</button>
-              <button>Efter behov</button>
+              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Vanlig</button>
+              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Sommarjobb</button>
+              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Efter behov</button>
             </div>
 
             <hr />
 
             <p>Omfattning</p>
             <div className={styles.buttonWrapper}>
-              <button>Heltid</button>
-              <button>Deltid</button>
+              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Heltid</button>
+              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Deltid</button>
             </div>
 
             <hr />
@@ -267,10 +285,12 @@ export class FilterPage extends React.Component {
               </div>
             }
 
-            {!!this.props.occupations.size || !!this.props.locations.size &&
+            {this.shouldShowAreaFilter() &&
               <div>
                 <p>Visa endast annonser inom yrkesområden</p>
-                  {this.createAreaFilter()}
+                  <div className={styles.buttonWrapper}>
+                    {this.createAreaFilter()}
+                  </div>
                 <hr />
               </div>
             }

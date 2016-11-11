@@ -78,16 +78,12 @@
 
 .buttonWrapper button {
   width: auto;
-  margin-right: 5px;
+  margin: 5px 5px 0 0;
   font-size: 12px;
   height: 30px;
   vertical-align: top;
   border: 1px solid lightgray;
   border-radius: 5px;
-}
-
-.buttonWrapper button:nth-child(3) {
-  margin-right: 0px;
 }
 
 p,
@@ -199,6 +195,10 @@ label {
   border-radius: 2px;
   margin: 0 5px 5px 0;
   display: inline-block;
+}
+
+:global(.activeFilterButton) {
+  background: #B5D8E9;
 }
 
 :global(.glyphicon-remove) {
