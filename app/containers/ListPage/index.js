@@ -106,7 +106,9 @@ export class ListPage extends React.Component {
    */
   openRoute = (route) => {
     console.log('openRoute', route);
-    this.props.changeRoute(route);
+    setTimeout(() => {
+      this.props.changeRoute(route);
+    }, 1);
   };
 
   /**
