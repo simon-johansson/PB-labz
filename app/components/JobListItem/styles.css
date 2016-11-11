@@ -75,6 +75,17 @@
   margin-right: 5px;
 }
 
+.plusIconGreen {
+  color: green !important;
+  margin-right: 5px;
+}
+
 .title {
   color: #32749d;
+}
+
+.today {
+  background: bisque;
+  padding: 0px 4px;
+  border-radius: 2px;
 }

@@ -19,31 +19,36 @@ import A from 'components/A';
 import styles from './styles.css';
 
 const knownCompetences = (item) => {
+  const content = [];
   if (item.matchingCompetences) {
-    return item.matchingCompetences.map((competence, index) => {
-      return (
-        <span className={styles.competence} key={`competence-item-${index}`} >
-          <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-          {competence.efterfragat}
-        </span>
-      );
-    });
-
-    // return (
-    //   <span className={styles.competence}>
-    //     <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-    //     {item.matchingCompetences.length}
-    //   </span>
-    // );
+    content.push(
+      <span className={styles.competence}>
+        <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+        {item.matchingCompetences[0].efterfragat}
+      </span>
+    );
+    // if ((item.matchingCompetences.length - 1) > 0) {
+    //   content.push(
+    //     <span className={styles.competence}>
+    //       <span className={styles.plusIconGreen + ' glyphicon glyphicon-plus'} />
+    //       {(item.matchingCompetences.length - 1)}
+    //     </span>
+    //   );
+    // }
+    return content;
   };
 }
 
 const notkKnownCompetences = (item) => {
-  if (item.notMatchingCompetences.length) {
+  let rest = 0;
+  if ((item.matchingCompetences.length - 1) > 0) {
+    rest = (item.matchingCompetences.length - 1);
+  }
+  if (item.notMatchingCompetences.length || rest) {
     return (
       <span className={styles.competence}>
-        <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-        {item.notMatchingCompetences.length}
+        {/*<span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />*/}
+        + {item.notMatchingCompetences.length + rest}
       </span>
     );
   };
@@ -67,6 +72,7 @@ function JobListItem(props) {
     sameElse: 'DD MMM',
   };
   const item = props.item;
+  const date = moment(item.publiceringsdatum).calendar(null, momentOptions);
 
   const content = (
     <Tappable className={item.matchingCompetences ? styles.bigLinkWrapper : styles.linkWrapper} onTap={clickHandler.bind(this, item, props.click)}>
@@ -79,7 +85,7 @@ function JobListItem(props) {
             <div>
               <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
               <br />
-              <span className={styles.smallText}>Publicerad: {moment(item.publiceringsdatum).calendar(null, momentOptions)}</span>
+              <span className={styles.smallText}>Publicerad: <span className={date === 'Idag' ? styles.today : ''}>{date}</span></span>
             </div>
           }
           {item.matchingCompetences &&
