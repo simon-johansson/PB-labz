@@ -240,14 +240,14 @@ export class FilterPage extends React.Component {
             </div>
           </form>
 
-          {/*<p className={styles.sectionHeader}>Sortera</p>
+          <p className={styles.sectionHeader}>Sortera</p>
           <section className={styles.sortingWrapper}>
             <div className={styles.buttonGroup}>
-              <button>Publiceringsdatum</button>
+              <button className='activeFilterButton'>Publiceringsdatum</button>
               <button>Sista ansökningsdagen</button>
               <button>Avstånd</button>
             </div>
-          </section>*/}
+          </section>
 
           <p className={styles.sectionHeader}>Filtrera</p>
           <section className={styles.sortingWrapper}>
