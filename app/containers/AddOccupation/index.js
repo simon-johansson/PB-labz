@@ -140,7 +140,7 @@ export class AddOccupation extends React.Component {
       namn: `"${this.props.query}"`,
     });
     document.activeElement.blur();
-    this.openRoute('/');
+    this.openRoute('/filter');
   }
 
   createRelatedTags() {
