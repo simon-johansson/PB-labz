@@ -19,7 +19,15 @@
 }
 
 .backArrow {
-  float: left;
+  position: absolute;
+  left: 0px;
+  padding-left: 12px;
+  top: 0px;
+  width: 50px;
+  padding-top: 2px;
+  height: 47px;
+  line-height: 50px;
+  cursor: pointer;
 }
 
 .advertWrapper {
