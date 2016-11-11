@@ -41,8 +41,8 @@ export function* getIdWatcher() {
 
 export function* advertData() {
   const watcher = yield fork(getIdWatcher);
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
+  // yield take(LOCATION_CHANGE);
+  // yield cancel(watcher);
 }
 
 // Bootstrap sagas

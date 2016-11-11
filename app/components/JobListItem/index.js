@@ -93,7 +93,7 @@ function JobListItem(props) {
   const content = (
     <Tappable className={item.matchingCompetences ? styles.bigLinkWrapper : styles.linkWrapper} onTap={clickHandler.bind(this, item, props.click)}>
         <div>
-          <span>{item.arbetsgivarenamn}, {item.erbjudenArbetsplats.kommun && item.erbjudenArbetsplats.kommun.namn}</span>
+          <span className={styles.employer}>{item.arbetsgivarenamn}, {item.erbjudenArbetsplats.kommun && item.erbjudenArbetsplats.kommun.namn}</span>
           <br />
           <b className={styles.title}>{item.rubrik}</b>
           <br />

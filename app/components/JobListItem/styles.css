@@ -17,7 +17,8 @@
   cursor: pointer;
 }
 
-.bigLinkWrapper .title {
+.bigLinkWrapper .title,
+.bigLinkWrapper .employer {
   width: 80%;
   display: inline-block;
 }
@@ -96,23 +97,24 @@
 }
 
 .circle {
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   border-radius: 50px;
   position: absolute;
   right: 10px;
   text-align: center;
-  line-height: 35px;
+  line-height: 45px;
   top: 25px;
+  font-weight: bold;
   font-size: 15px;
 }
 
 :global(.greenCircle) {
-  border: 5px solid green;
+  border: 3px solid green;
 }
 :global(.orangeCircle) {
-  border: 5px solid orange;
+  border: 3px solid orange;
 }
 :global(.yellowCircle) {
-  border: 5px solid #f2e220;
+  border: 3px solid #f2e220;
 }

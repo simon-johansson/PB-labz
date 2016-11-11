@@ -103,8 +103,8 @@ export function* getJobsWatcher() {
 
 export function* afData() {
   const watcher = yield fork(getJobsWatcher);
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
+  // yield take(LOCATION_CHANGE);
+  // yield cancel(watcher);
 }
 
 

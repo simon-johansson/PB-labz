@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 // import Helmet from 'react-helmet';
 import _ from 'lodash';
+import Tappable from 'react-tappable';
 
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';
@@ -59,6 +60,10 @@ import LoadingIndicator from 'components/LoadingIndicator';
 import styles from './styles.css';
 
 export class ListPage extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -100,6 +105,7 @@ export class ListPage extends React.Component {
    * @param  {string} route The route we want to go to
    */
   openRoute = (route) => {
+    console.log('openRoute', route);
     this.props.changeRoute(route);
   };
 
@@ -107,6 +113,8 @@ export class ListPage extends React.Component {
    * Changed route to '/features'
    */
   openHomePage = () => {
+    console.log('openHomePage');
+
     this.props.setUiState({
       showMatchingJobs: false,
       tab: 'all',
@@ -273,6 +281,7 @@ export class ListPage extends React.Component {
   }
 
   setTabState(tabState) {
+    console.log('setTabState');
     // console.log(state);
     this.setState({tab: tabState});
     this.props.setUiState({
@@ -305,9 +314,6 @@ export class ListPage extends React.Component {
     });
 
     this.openRoute(link);
-
-    // localStorage.setItem('scrollPosition', JSON.stringify(document.body.scrollTop));
-    // const scrollPosition = localStorage.getItem('scrollPosition');
   }
 
   showNonMatchningJobs() {
@@ -408,7 +414,7 @@ export class ListPage extends React.Component {
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
               {/*<span className={styles.saveSearch} onClick={() => console.log('star')}>Spara</span>*/}
-              <span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} onClick={this.openHomePage} />
+              <Tappable className={styles.cancel + ' glyphicon glyphicon-chevron-left'} onTap={this.openHomePage} />
               <h1>Mina sökningar</h1>
               <form onClick={this.addFilterPage}>
                 <div className="form-group">
