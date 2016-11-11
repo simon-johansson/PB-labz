@@ -10,6 +10,7 @@ import { push } from 'react-router-redux';
 // import Helmet from 'react-helmet';
 import _ from 'lodash';
 import * as ls from 'utils/localstorage';
+import Slider from 'react-rangeslider';
 
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';
@@ -22,6 +23,7 @@ import {
   selectAmount,
   selectRelated,
   selectCompetences,
+  selectAreas,
   selectKnownCompetences,
 } from 'containers/App/selectors';
 
@@ -61,7 +63,9 @@ import styles from './styles.css';
 export class FilterPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      range: 10,
+    };
 
     this.onSeachButtonClick = this.onSeachButtonClick.bind(this);
   }
@@ -154,6 +158,20 @@ export class FilterPage extends React.Component {
     return true;
   }
 
+  rangeChange(range) {
+    this.setState({ range });
+  }
+
+  createAreaFilter() {
+    return this.props.areas.slice(0, 7).map((area) => {
+      return (
+        <span className={styles.areaFilter}>
+          {area.namn} {area.amount}
+        </span>
+      );
+    });
+  }
+
   render() {
     let mainContent = null;
     let matchingContent = null;
@@ -232,6 +250,44 @@ export class FilterPage extends React.Component {
               <button>Heltid</button>
               <button>Deltid</button>
             </div>
+
+            <hr />
+
+            {!!this.props.locations.size &&
+              <div>
+                <p>Sökradie</p>
+                <div>{this.state.range} km från {this.props.locations.map(l => l.namn).join(' eller ')}</div>
+                <Slider
+                  value={this.state.range}
+                  orientation='horizontal'
+                  onChange={this.rangeChange.bind(this)}
+                />
+
+                <hr />
+              </div>
+            }
+
+            {!!this.props.occupations.size || !!this.props.locations.size &&
+              <div>
+                <p>Visa endast annonser inom yrkesområden</p>
+                  {this.createAreaFilter()}
+                <hr />
+              </div>
+            }
+
+
+            <p>Visa endast annonser med ordet</p>
+            <form autoComplete="off">
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="freetext-filter"
+                  placeholder="T.ex: Engelska"
+                  autoComplete="off"
+                />
+              </div>
+            </form>
           </section>
 
           {this.shouldShowSearchButton() &&
@@ -309,6 +365,7 @@ const mapStateToProps = createStructuredSelector({
   scrollPosition: selectScrollPosition(),
   showNonMatchningJobs: selectShowNonMatchningJobs(),
   competences: selectCompetences(),
+  areas: selectAreas(),
   knownCompetences: selectKnownCompetences(),
   occupations: selectOccupations(),
   shouldLoadNewJobs: selectShouldLoadNewJobs(),

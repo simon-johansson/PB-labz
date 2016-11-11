@@ -118,6 +118,13 @@ export class ListPage extends React.Component {
   };
 
   addFilterPage = () => {
+    this.props.setUiState({
+      showMatchingJobs: this.state.showMatchingJobs,
+      tab: this.props.currentTab,
+      scrollPosition: 0,
+      showNonMatchningJobs: this.props.showNonMatchningJobs,
+    });
+
     this.openRoute('/filter');
   };
 

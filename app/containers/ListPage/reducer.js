@@ -50,14 +50,17 @@ function listReducer(state = initialState, action) {
   switch (action.type) {
 
     case ADD_OCCUPATION:
+      let addOccupation = state.get('occupations').filter((item, index) => {
+        return action.occupation.id !== item.id;
+      }).push(action.occupation);
       return state
-        .updateIn(['occupations'], (arr) => arr.push(action.occupation))
+        .set('occupations', addOccupation)
         .setIn(['uiState', 'showMatchingJobs'], false)
         .setIn(['uiState', 'showNonMatchningJobs'], false)
         .set('shouldLoadNewJobs', true);
 
     case REMOVE_OCCUPATION:
-      const occupations = state.get('occupations').filter((item, index) => action.index !== index);
+      let occupations = state.get('occupations').filter((item, index) => action.index !== index);
       return state
         .set('occupations', occupations)
         .setIn(['uiState', 'showMatchingJobs'], false)
@@ -65,8 +68,11 @@ function listReducer(state = initialState, action) {
         .set('shouldLoadNewJobs', true);
 
     case ADD_LOCATION:
+      let addLocation = state.get('locations').filter((item, index) => {
+        return action.location.id !== item.id;
+      }).push(action.location);
       return state
-        .updateIn(['locations'], (arr) => arr.push(action.location))
+        .set('locations', addLocation)
         .setIn(['uiState', 'showMatchingJobs'], false)
         .setIn(['uiState', 'showNonMatchningJobs'], false)
         .set('shouldLoadNewJobs', true);

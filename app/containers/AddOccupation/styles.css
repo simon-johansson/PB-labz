@@ -40,7 +40,10 @@ label {
 .cancel {
   position: absolute;
   left: 12px;
-  top: 17px;
+  top: 0px;
+  padding-top: 2px;
+  height: 50px;
+  line-height: 50px;
 }
 
 .tagWrapper {
@@ -69,7 +72,10 @@ label {
 .yrkeslista {
   position: absolute;
   right: 12px;
-  top: 17px;
+  top: 0px;
+  padding-top: 2px;
+  height: 50px;
+  line-height: 50px;
 }
 
 .suggestions {

@@ -40,6 +40,7 @@ const initialState = fromJS({
     amount: false,
     related: false,
     competences: false,
+    areas: false
   }),
 });
 
@@ -77,6 +78,7 @@ function appReducer(state = initialState, action) {
         .setIn(['afData', 'amount'], action.amount)
         .setIn(['afData', 'related'], action.related)
         .setIn(['afData', 'competences'], action.competences)
+        .setIn(['afData', 'areas'], action.areas)
         .set('loading', false);
     case LOAD_JOBS_ERROR:
       return state

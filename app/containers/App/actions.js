@@ -77,11 +77,25 @@ export function loadJobs() {
 export function jobsLoaded(jobsData) {
   let arr = [];
   let obj = {};
+  let areasObj = {};
+
   jobsData.rekryteringsbehov.forEach(job => {
+    if (!areasObj[job.yrkesomrade.namn]) areasObj[job.yrkesomrade.namn] = [];
+    areasObj[job.yrkesomrade.namn].push(job);
+
     job.matchningsresultat.efterfragat.forEach(merit => {
       if (merit.typ === 'KOMPETENS') arr.push(merit);
     });
   });
+
+  let areas = _.orderBy(Object.keys(areasObj).map(key => {
+    return {
+      namn: key,
+      items: areasObj[key],
+      amount: areasObj[key].length,
+    };
+  }), 'amount', 'desc');
+
   arr.forEach(item => {
     obj[item.varde] ? obj[item.varde]++ : obj[item.varde] = 1;
   });
@@ -96,6 +110,7 @@ export function jobsLoaded(jobsData) {
     amount: jobsData.antalRekryteringsbehov,
     related: jobsData.relateradeKriterier,
     competences,
+    areas,
   };
 }
 

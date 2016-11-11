@@ -1,6 +1,6 @@
 
 .contentWrapper {
-  margin-bottom:50px;
+  margin-bottom:90px;
   // background: #E5E5E5;
 }
 
@@ -191,6 +191,14 @@ label {
   position: absolute;
   left: 12px;
   top: 17px;
+}
+
+.areaFilter {
+  padding: 5px;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  margin: 0 5px 5px 0;
+  display: inline-block;
 }
 
 :global(.glyphicon-remove) {

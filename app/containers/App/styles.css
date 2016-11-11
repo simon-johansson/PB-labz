@@ -72,3 +72,18 @@ body.fontLoaded {
   margin: 0 auto;
   display: block;
 }
+
+:global(.rangeslider-horizontal) {
+  height: 5px;
+}
+
+:global(.rangeslider-horizontal .rangeslider__fill) {
+  background: #BAD7E8;
+}
+
+:global(.rangeslider-horizontal .rangeslider__handle) {
+  background: #335467;
+  width: 25px;
+  height: 25px;
+  top: -10px;
+}

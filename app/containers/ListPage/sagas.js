@@ -73,7 +73,7 @@ export function* getJobs() {
         profilkriterier: payload,
         hasChanged: true,
       },
-      maxAntal: 100,
+      maxAntal: 200,
       startrad: 0,
       sorteringsordning: 'DATUM',
     }),

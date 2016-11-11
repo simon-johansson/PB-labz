@@ -46,6 +46,11 @@ const selectCompetences = () => createSelector(
   (globalState) => globalState.getIn(['afData', 'competences'])
 );
 
+const selectAreas = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['afData', 'areas'])
+);
+
 const selectKnownCompetences = () => createSelector(
   selectGlobal(),
   (globalState) => globalState.get('knownCompetences')
@@ -77,6 +82,7 @@ export {
   selectAmount,
   selectRelated,
   selectCompetences,
+  selectAreas,
   selectKnownCompetences,
   selectLocationState,
 };
