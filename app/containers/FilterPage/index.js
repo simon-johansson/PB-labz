@@ -168,9 +168,9 @@ export class FilterPage extends React.Component {
   }
 
   createAreaFilter() {
-    return this.props.areas.slice(0, 7).map((area) => {
+    return this.props.areas.slice(0, 7).map((area, index) => {
       return (
-        <button onClick={this.toggleActive.bind(this)}>
+        <button onClick={this.toggleActive.bind(this)} key={'area-filter-' + index}>
           {area.namn} ({area.amount})
         </button>
       );
