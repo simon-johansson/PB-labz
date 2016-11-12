@@ -105,7 +105,7 @@ export class ListPage extends React.Component {
    * @param  {string} route The route we want to go to
    */
   openRoute = (route) => {
-    console.log('openRoute', route);
+    // console.log('openRoute', route);
     setTimeout(() => {
       this.props.changeRoute(route);
     }, 1);
@@ -283,7 +283,7 @@ export class ListPage extends React.Component {
   }
 
   setTabState(tabState) {
-    console.log('setTabState');
+    // console.log('setTabState');
     // console.log(state);
     this.setState({tab: tabState});
     this.props.setUiState({
@@ -354,7 +354,7 @@ export class ListPage extends React.Component {
       mainContent = (
         <div>
           <span className={styles.amount}>Hittade {this.props.amount} jobb {this.createSearchSummary()}</span>
-            <List items={this.props.jobs} component={JobListItem} click={this.onAdvertClick}/>
+            <List items={this.props.jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick}/>
         </div>
       );
 
@@ -393,7 +393,7 @@ export class ListPage extends React.Component {
             <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
           </div>
           <span className={styles.amount}>{sortedMatchingJobs.length} jobb matchar dina kompetenser</span>
-          <List items={sortedMatchingJobs} component={JobListItem} click={this.onAdvertClick} />
+          <List items={sortedMatchingJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
           { !this.props.showNonMatchningJobs ?
             <button
               className={styles.showNonMatchningJobs}
@@ -403,7 +403,7 @@ export class ListPage extends React.Component {
             </button> :
             <div>
               <span className={styles.nonMatchingAmount}>Jobb som inte matchar dina kompetenser</span>
-              <List items={nonMatchingJobs} component={JobListItem} click={this.onAdvertClick} />
+              <List items={nonMatchingJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
             </div>
           }
         </div>

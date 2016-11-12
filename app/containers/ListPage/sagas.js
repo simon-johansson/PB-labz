@@ -8,6 +8,7 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import {
   LOAD_REPOS,
   LOAD_JOBS,
+  GET_TOTAL_AMOUNT,
 } from 'containers/App/constants';
 import {
   REMOVE_OCCUPATION,
@@ -18,11 +19,11 @@ import {
   repoLoadingError,
   jobsLoaded,
   jobsLoadingError,
+  totalAmountLoaded,
 } from 'containers/App/actions';
 
 import request from 'utils/request';
 import {
-  selectUsername,
   selectOccupations,
   selectLocations,
 } from './selectors';
@@ -92,6 +93,35 @@ export function* getJobs() {
   }
 }
 
+export function* getTotalAmount() {
+  const requestURL = '/matchandeRekryteringsbehov';
+  const options = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      matchningsprofil: {
+        profilkriterier: [{ typ: 'FRITEXT', varde: '**' }],
+        hasChanged: true,
+      },
+      maxAntal: 0,
+      startrad: 0,
+    }),
+  };
+
+  // Call our request helper (see 'utils/request')
+  const body = yield call(request, requestURL, options);
+
+  if (!body.err) {
+    // console.log(jobs.data);
+    yield put(totalAmountLoaded(body));
+  } else {
+    // yield put(jobsLoadingError(jobs.err));
+  }
+}
+
 export function* getJobsWatcher() {
   yield [
     fork(takeLatest, LOAD_JOBS, getJobs),
@@ -101,8 +131,18 @@ export function* getJobsWatcher() {
   // yield fork(takeLatest, LOAD_JOBS, getJobs);
 }
 
+export function* getTotalAmountWatcher() {
+  yield fork(takeLatest, GET_TOTAL_AMOUNT, getTotalAmount);
+}
+
 export function* afData() {
   const watcher = yield fork(getJobsWatcher);
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
+
+export function* totalAmount() {
+  const watcher = yield fork(getTotalAmountWatcher);
   // yield take(LOCATION_CHANGE);
   // yield cancel(watcher);
 }
@@ -111,4 +151,5 @@ export function* afData() {
 // Bootstrap sagas
 export default [
   afData,
+  totalAmount,
 ];

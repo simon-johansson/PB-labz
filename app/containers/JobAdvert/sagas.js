@@ -13,10 +13,7 @@ import request from 'utils/request';
 import { selectId } from './selectors';
 
 export function* getAdvert() {
-
   const id = yield select(selectId());
-  // console.log(query);
-
   const requestURL = `/matchandeRekryteringsbehov/${id}`;
   const options = {
     method: 'POST',
@@ -41,8 +38,8 @@ export function* getIdWatcher() {
 
 export function* advertData() {
   const watcher = yield fork(getIdWatcher);
-  // yield take(LOCATION_CHANGE);
-  // yield cancel(watcher);
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
 }
 
 // Bootstrap sagas

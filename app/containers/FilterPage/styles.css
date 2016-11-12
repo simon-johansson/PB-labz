@@ -158,6 +158,16 @@ label {
   height: 40px;
 }
 
+.searchButton[disabled] {
+  background: gray !important;
+  opacity: 1 !important;
+}
+
+.searchButton:hover {
+  background: #5E8404 !important;
+  color: white !important;
+}
+
 .searchIcon {
   margin-right: 5px;
 }

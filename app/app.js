@@ -53,7 +53,7 @@ import { translationMessages } from './i18n';
 // Optionally, this could be changed to leverage a created history
 // e.g. `const browserHistory = useRouterHistory(createBrowserHistory)();`
 const initialState = {};
-const store = configureStore(initialState, hashHistory);
+const store = configureStore(initialState, browserHistory);
 
 // If you use Redux devTools extension, since v2.0.1, they added an
 // `updateStore`, so any enhancers that change the store object
@@ -68,7 +68,7 @@ if (window.devToolsExtension) {
 // is under the non-default key ("routing"), selectLocationState
 // must be provided for resolving how to retrieve the "route" in the state
 import { selectLocationState } from 'containers/App/selectors';
-const history = syncHistoryWithStore(hashHistory, store, {
+const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: selectLocationState(),
 });
 

@@ -56,6 +56,11 @@ const selectKnownCompetences = () => createSelector(
   (globalState) => globalState.get('knownCompetences')
 );
 
+const selectTotalAmount = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.get('totalAmount')
+);
+
 const selectLocationState = () => {
   let prevRoutingState;
   let prevRoutingStateJS;
@@ -84,5 +89,6 @@ export {
   selectCompetences,
   selectAreas,
   selectKnownCompetences,
+  selectTotalAmount,
   selectLocationState,
 };

@@ -25,6 +25,7 @@ import {
   selectCompetences,
   selectAreas,
   selectKnownCompetences,
+  selectTotalAmount,
 } from 'containers/App/selectors';
 
 import {
@@ -45,6 +46,7 @@ import {
 } from 'containers/ListPage/actions';
 import {
   loadJobs,
+  getTotalAmount,
 } from 'containers/App/actions';
 
 import { FormattedMessage } from 'react-intl';
@@ -76,13 +78,22 @@ export class FilterPage extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.shouldLoadNewJobs) {
+    if (this.props.shouldLoadNewJobs &&
+       (!!this.props.occupations.size || !!this.props.locations.size)) {
       this.props.onSubmitForm();
+    } else if (!this.props.totalAmount) {
+      this.props.onGetTotalAmount()
     }
+
+    setTimeout(() => {
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    }, 1);
   }
 
   openRoute = (route) => {
-    this.props.changeRoute(route);
+    setTimeout(() => {
+      this.props.changeRoute(route);
+    }, 100);
   };
 
   goBack = () => {
@@ -180,9 +191,10 @@ export class FilterPage extends React.Component {
   shouldShowAreaFilter() {
     let freetext;
     this.props.occupations.forEach(i => freetext = i.typ === 'FRITEXT' ? true : false);
-    return !this.props.loading &&
-           (this.props.areas.length > 1) &&
-           (freetext || !!this.props.locations.size);
+    if (!this.props.loading && (this.props.areas.length > 1)) {
+      if (freetext) return true;
+      if (!this.props.occupations.size && this.props.locations.size) return true;
+    }
   }
 
   toggleActive(e) {
@@ -190,7 +202,18 @@ export class FilterPage extends React.Component {
     e.target.className = className ? '' : 'activeFilterButton';
   }
 
+  buttonAmount() {
+    if (!!this.props.occupations.size || !!this.props.locations.size) {
+      if (this.props.loading) return <LoadingIndicator options={{size: 'small'}} />;
+      else return this.props.amount;
+    } else {
+      if (!this.props.totalAmount) return <LoadingIndicator options={{size: 'small'}} />;
+      else return this.props.totalAmount;
+    }
+  }
+
   render() {
+
     let mainContent = null;
     let matchingContent = null;
     const matchingJobs = [];
@@ -315,14 +338,10 @@ export class FilterPage extends React.Component {
             <button
               className={styles.searchButton + ' btn btn-default'}
               onClick={this.onSeachButtonClick}
+              disabled={this.props.loading}
             >
               <span className={styles.searchIcon + " glyphicon glyphicon-search"} />
-              Visa <span>
-              { this.props.loading ?
-                <LoadingIndicator options={{size: 'small'}} /> :
-                this.props.amount
-              }
-              </span> jobb
+              Visa <span>{this.buttonAmount()}</span> jobb
             </button>
           }
         </div>
@@ -360,6 +379,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     onRemoveOccupation: (index) => dispatch(removeOccupation(index)),
     onRemoveLocation: (index) => dispatch(removeLocation(index)),
+    onGetTotalAmount: () => dispatch(getTotalAmount()),
     setUiState: (state) => dispatch(setUiState(state)),
     changeRoute: (url) => dispatch(push(url)),
     // onSubmitForm: (evt) => {
@@ -390,6 +410,7 @@ const mapStateToProps = createStructuredSelector({
   occupations: selectOccupations(),
   shouldLoadNewJobs: selectShouldLoadNewJobs(),
   locations: selectLocations(),
+  totalAmount: selectTotalAmount(),
   loading: selectLoading(),
   error: selectError(),
 });

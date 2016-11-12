@@ -25,6 +25,8 @@ import {
   LOAD_JOBS_ERROR,
   SET_COMPETENCE,
   REMOVE_COMPETENCE,
+  TOTAL_AMOUNT_LOADED,
+  GET_TOTAL_AMOUNT,
 } from './constants';
 
 /**
@@ -118,6 +120,19 @@ export function jobsLoadingError(error) {
   return {
     type: LOAD_JOBS_ERROR,
     error,
+  };
+}
+
+export function getTotalAmount() {
+  return {
+    type: GET_TOTAL_AMOUNT,
+  };
+}
+
+export function totalAmountLoaded({ data }) {
+  return {
+    type: TOTAL_AMOUNT_LOADED,
+    amount: data.antalRekryteringsbehov,
   };
 }
 

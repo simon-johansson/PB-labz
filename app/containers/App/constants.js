@@ -19,3 +19,6 @@ export const LOAD_JOBS_ERROR = 'boilerplate/App/LOAD_JOBS_ERROR';
 
 export const SET_COMPETENCE = 'boilerplate/Home/SET_COMPETENCE';
 export const REMOVE_COMPETENCE = 'boilerplate/Home/REMOVE_COMPETENCE';
+
+export const GET_TOTAL_AMOUNT = 'boilerplate/Home/GET_TOTAL_AMOUNT';
+export const TOTAL_AMOUNT_LOADED = 'boilerplate/Home/TOTAL_AMOUNT_LOADED';

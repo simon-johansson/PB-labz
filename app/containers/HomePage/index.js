@@ -15,7 +15,6 @@ import * as ls from 'utils/localstorage';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  selectRepos,
   selectLoading,
   selectError,
   selectJobs,
@@ -23,6 +22,7 @@ import {
   selectRelated,
   selectCompetences,
   selectKnownCompetences,
+  selectTotalAmount,
 } from 'containers/App/selectors';
 
 import {
@@ -46,6 +46,7 @@ import {
 
 import {
   loadJobs,
+  getTotalAmount,
 } from 'containers/App/actions';
 
 import { FormattedMessage } from 'react-intl';
@@ -72,7 +73,11 @@ export class HomePage extends React.Component {
   componentDidMount() {
     this.props.onSetLocations();
     this.props.onSetOccupations();
-    this.props.onSubmitForm();
+    // this.props.onSubmitForm();
+
+    if (!this.props.totalAmount) {
+      this.props.onGetTotalAmount();
+    }
   }
 
   openRoute = (route) => {
@@ -209,9 +214,9 @@ export class HomePage extends React.Component {
           <div className={styles.welcome}>
             <p>Välkommen till Platsbanken!</p>
             <p>
-              { this.props.loading ?
+              { !this.props.totalAmount ?
                 <LoadingIndicator options={{size: 'small', color: 'dark'}} /> :
-                `${this.props.amount} `
+                `${this.props.totalAmount} `
               }
               lediga jobb just nu
             </p>
@@ -273,6 +278,7 @@ export function mapDispatchToProps(dispatch) {
     onSetOccupations: (occupation) => dispatch(setOccupations(occupation)),
     setUiState: (state) => dispatch(setUiState(state)),
     changeRoute: (url) => dispatch(push(url)),
+    onGetTotalAmount: () => dispatch(getTotalAmount()),
     // onSubmitForm: (evt) => {
     //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
     //   dispatch(loadRepos());
@@ -300,6 +306,7 @@ const mapStateToProps = createStructuredSelector({
   occupations: selectOccupations(),
   shouldLoadNewJobs: selectShouldLoadNewJobs(),
   locations: selectLocations(),
+  totalAmount: selectTotalAmount(),
   loading: selectLoading(),
   error: selectError(),
 });
