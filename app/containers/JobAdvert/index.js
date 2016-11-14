@@ -212,6 +212,7 @@ export class JobAdvert extends React.Component {
                   />
                 </div>
               }
+              <button className={styles.applyButton + ' btn btn-default'}>Ansök</button>
             </div>
           }
           {!this.props.advert &&
