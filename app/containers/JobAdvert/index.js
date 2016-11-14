@@ -56,7 +56,7 @@ function SimpleMap (props) {
         }
         googleMapElement={
           <GoogleMap
-            ref={(map) => console.log(map)}
+            ref={(map) => '' }
             defaultZoom={12}
             options={{
               mapTypeControl: false,
