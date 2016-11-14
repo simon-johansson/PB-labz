@@ -60,7 +60,7 @@ function SimpleMap (props) {
             defaultZoom={12}
             options={{
               mapTypeControl: false,
-              zoomControl: true,
+              zoomControl: false,
               scaleControl: false,
               streetViewControl: false,
               draggable: false,
@@ -93,10 +93,16 @@ export class JobAdvert extends React.Component {
 
   componentDidMount() {
     this.props.onLoadAdvert(this.props.params.id);
+
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 1);
   }
 
   openRoute = (route) => {
-    this.props.changeRoute(route);
+    setTimeout(() => {
+      this.props.changeRoute(route);
+    }, 1);
   };
 
   openListPage = () => {
@@ -157,10 +163,6 @@ export class JobAdvert extends React.Component {
   }
 
   render() {
-    setTimeout(() => {
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
-    }, 1);
-
     const { erbjudenArbetsplats } = this.props.advert;
     let markers;
 
