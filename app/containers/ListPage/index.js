@@ -79,7 +79,8 @@ export class ListPage extends React.Component {
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    if (this.props.shouldLoadNewJobs && !this.props.loading) {
+    // console.log(this.props.shouldLoadNewJobs, this.props.loading);
+    if (this.props.shouldLoadNewJobs) {
       this.props.onSubmitForm();
     }
     this.scrollTo(this.props.scrollPosition);
@@ -513,6 +514,7 @@ export function mapDispatchToProps(dispatch) {
     // },
     onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      console.log('load');
       dispatch(loadJobs());
     },
 

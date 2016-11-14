@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
+import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
 import _ from 'lodash';
 
 import {
@@ -37,10 +38,56 @@ import IosMenu from 'components/IosMenu';
 
 import styles from './styles.css';
 
+function SimpleMap (props) {
+  return (
+    <section
+      style={{
+        height: '200px',
+        width: '100%'
+      }}
+    >
+      <GoogleMapLoader
+        containerElement={
+          <div
+            style={{
+              height: "100%",
+            }}
+          />
+        }
+        googleMapElement={
+          <GoogleMap
+            ref={(map) => console.log(map)}
+            defaultZoom={12}
+            options={{
+              mapTypeControl: false,
+              zoomControl: true,
+              scaleControl: false,
+              streetViewControl: false,
+              draggable: false,
+              disableDoubleClickZoom: true,
+            }}
+            defaultCenter={{
+              lat: props.markers[0].position.lat,
+              lng: props.markers[0].position.lng
+            }}
+          >
+            {props.markers.map((marker, index) => {
+              return (
+                <Marker {...marker} />
+              );
+            })}
+          </GoogleMap>
+        }
+      />
+    </section>
+  );
+}
+
 export class JobAdvert extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      folded: true,
     };
   }
 
@@ -105,10 +152,26 @@ export class JobAdvert extends React.Component {
     }
   }
 
+  foldText() {
+    this.setState({ folded: false });
+  }
+
   render() {
     setTimeout(() => {
       document.body.scrollTop = document.documentElement.scrollTop = 0;
     }, 1);
+
+    const { erbjudenArbetsplats } = this.props.advert;
+    let markers;
+
+    if (erbjudenArbetsplats) {
+      markers = [{
+        position: {
+          lat: erbjudenArbetsplats.geoPosition.latitud,
+          lng: erbjudenArbetsplats.geoPosition.longitud,
+        }
+      }];
+    }
 
     return (
       <article>
@@ -130,7 +193,25 @@ export class JobAdvert extends React.Component {
                   {this.createCompetences()}
                 </div>
               }
-              <p dangerouslySetInnerHTML={{__html: this.props.advert.annonstext}}></p>
+              <div className={styles.advertTextWrapper} onClick={this.foldText.bind(this)}>
+                <p
+                  dangerouslySetInnerHTML={{__html: this.props.advert.annonstext}}
+                  className={`${styles.advertText} ${this.state.folded ? styles.unfolded : ''}`}
+                />
+                {this.state.folded &&
+                  <span className={styles.showmore}>Visa hela annonsen</span>
+                }
+              </div>
+
+
+              {!!erbjudenArbetsplats &&
+                <div>
+                  <p><b>Karta:</b> {this.props.advert.besoksadressGatuadress}</p>
+                  <SimpleMap
+                    markers={markers}
+                  />
+                </div>
+              }
             </div>
           }
           {!this.props.advert &&

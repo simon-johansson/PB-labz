@@ -36,10 +36,7 @@
   width: 90%;
   margin: auto;
   padding-top: 75px;
-}
-
-.advertWrapper p {
-  white-space: pre-wrap;
+  position: relative;
 }
 
 .competenceHeader {
@@ -91,4 +88,48 @@
 
 .loading {
   margin-top: 100px;
+}
+
+.advertText {
+  white-space: pre-wrap;
+}
+
+.advertTextWrapper {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.advertText.unfolded {
+  height: 250px;
+  overflow: hidden;
+  white-space: pre-wrap;
+}
+
+.showmore {
+  text-transform: uppercase;
+  position: absolute;
+  right: 0px;
+  bottom: -10px;
+  font-size: 12px;
+  color: #568eb1;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.advertText.unfolded::before {
+  background-image: linear-gradient( top,
+          rgba( 255, 255, 255, 0 ) 60%, rgba( 255, 255, 255, 1 ) 100% );
+      background-image: -moz-linear-gradient( top,
+          rgba( 255, 255, 255, 0 ) 60%, rgba( 255, 255, 255, 1 ) 100% );
+      background-image: -ms-linear-gradient( top,
+          rgba( 255, 255, 255, 0 ) 60%, rgba( 255, 255, 255, 1 ) 100% );
+      background-image: -o-linear-gradient( top,
+          rgba( 255, 255, 255, 0 ) 60%, rgba( 255, 255, 255, 1 ) 100% );
+      background-image: -webkit-linear-gradient( top,
+          rgba( 255, 255, 255, 0 ) 60%, rgba( 255, 255, 255, 1 ) 100% );
+
+  content: "\00a0";
+  height: 250px;
+  position: absolute;
+  width: 100%;
 }

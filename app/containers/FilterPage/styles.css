@@ -158,7 +158,8 @@ label {
   height: 40px;
 }
 
-.searchButton[disabled] {
+.searchButton[disabled],
+.searchButton[disabled]:hover {
   background: gray !important;
   opacity: 1 !important;
 }

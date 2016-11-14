@@ -24,7 +24,7 @@ const knownCompetencesShort = (item) => {
   const match = (item.matchingCompetences.length / competences.length);
   let colorClass = '';
   if (match === 1) colorClass = 'greenCircle';
-  else if (match > 0.5) colorClass = 'orangeCircle';
+  else if (match >= 0.5) colorClass = 'orangeCircle';
   else colorClass = 'yellowCircle';
 
   return (
