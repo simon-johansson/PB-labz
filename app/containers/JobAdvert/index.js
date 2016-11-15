@@ -43,14 +43,14 @@ function SimpleMap (props) {
     <section
       style={{
         height: '200px',
-        width: '100%'
+        width: '100%',
       }}
     >
       <GoogleMapLoader
         containerElement={
           <div
             style={{
-              height: "100%",
+              height: '100%',
             }}
           />
         }
@@ -68,7 +68,7 @@ function SimpleMap (props) {
             }}
             defaultCenter={{
               lat: props.markers[0].position.lat,
-              lng: props.markers[0].position.lng
+              lng: props.markers[0].position.lng,
             }}
           >
             {props.markers.map((marker, index) => {

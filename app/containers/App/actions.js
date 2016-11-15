@@ -16,6 +16,7 @@
  */
 
 import _ from 'lodash';
+import afAreas from './areas.json';
 import {
   LOAD_REPOS,
   LOAD_REPOS_SUCCESS,
@@ -91,10 +92,13 @@ export function jobsLoaded(jobsData) {
   });
 
   let areas = _.orderBy(Object.keys(areasObj).map(key => {
+    let id;
+    afAreas.forEach((area) => { if (key === area.namn) id = area.id; });
     return {
       namn: key,
       items: areasObj[key],
       amount: areasObj[key].length,
+      id,
     };
   }), 'amount', 'desc');
 
@@ -106,6 +110,9 @@ export function jobsLoaded(jobsData) {
     return item;
   });
   const competences = _.sortBy(_.uniqBy(arr, 'varde'), ['efterfragat']);
+
+  // console.log(jobsData.relateradeKriterier);
+
   return {
     type: LOAD_JOBS_SUCCESS,
     jobs: jobsData.rekryteringsbehov,

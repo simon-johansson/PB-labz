@@ -37,6 +37,7 @@ const initialState = fromJS({
   username: '',
   occupations: fromJS([]),
   locations: fromJS([]),
+  filter: fromJS({}),
   shouldLoadNewJobs: true,
   uiState: fromJS({
     tab: 'all',

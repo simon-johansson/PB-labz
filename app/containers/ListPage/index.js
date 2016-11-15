@@ -52,6 +52,7 @@ import JobListItem from 'components/JobListItem';
 import CompetenceListItem from 'components/CompetenceListItem';
 import IosMenu from 'components/IosMenu';
 import Button from 'components/Button';
+import RutTips from 'components/RutTips';
 import H2 from 'components/H2';
 import List from 'components/List';
 import ListItem from 'components/ListItem';
@@ -207,8 +208,9 @@ export class ListPage extends React.Component {
     } else if (!this.props.jobs.length) {
       return (
         <div>
-          <span className={styles.amount}>0 jobb matchar dina kompetenser</span>
-          <List items={[]} component={JobListItem} />
+          <RutTips
+            summary={this.createSearchSummary()}
+          />
         </div>
       )
     } else {
@@ -350,6 +352,13 @@ export class ListPage extends React.Component {
       mainContent = (<List component={ErrorComponent} />);
 
     // If we're not loading, don't have an error and there are repos, show the repos
+    } else if (!this.props.jobs.length) {
+      mainContent = (
+        <RutTips
+          summary={this.createSearchSummary()}
+        />
+      );
+
     } else if (this.props.jobs !== false) {
       // console.log(this.props.jobs);
       mainContent = (
@@ -387,28 +396,32 @@ export class ListPage extends React.Component {
       const sortedMatchingJobs = _.orderBy(matchingJobs,
         ['matchProcent', 'matchingCompetences', 'notMatchingCompetences'], ['desc', 'desc', 'asc']);
       // const sortedMatchingJobs = _.orderBy(matchingJobs,['matchProcent'], ['desc']);
-      matchingContent = (
-        <div className={styles.listWrapperMatchingContent}>
-          <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
-            Matchningskriterier ({this.props.knownCompetences.size})
-            <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
-          </div>
-          <span className={styles.amount}>{sortedMatchingJobs.length} jobb matchar dina kompetenser</span>
-          <List items={sortedMatchingJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
-          { !this.props.showNonMatchningJobs ?
-            <button
-              className={styles.showNonMatchningJobs}
-              onClick={this.showNonMatchningJobs.bind(this)}
-            >
-              Visa jobb som inte matchar dina kompetenser
-            </button> :
-            <div>
-              <span className={styles.nonMatchingAmount}>Jobb som inte matchar dina kompetenser</span>
-              <List items={nonMatchingJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
+      if (!sortedMatchingJobs.length) {
+        // matchingContent = ();
+      } else {
+        matchingContent = (
+          <div className={styles.listWrapperMatchingContent}>
+            <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
+              Matchningskriterier ({this.props.knownCompetences.size})
+              <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
             </div>
-          }
-        </div>
-      );
+            <span className={styles.amount}>{sortedMatchingJobs.length} jobb matchar dina kompetenser</span>
+            <List items={sortedMatchingJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
+            { !this.props.showNonMatchningJobs ?
+              <button
+                className={styles.showNonMatchningJobs}
+                onClick={this.showNonMatchningJobs.bind(this)}
+              >
+                Visa jobb som inte matchar dina kompetenser
+              </button> :
+              <div>
+                <span className={styles.nonMatchingAmount}>Jobb som inte matchar dina kompetenser</span>
+                <List items={nonMatchingJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
+              </div>
+            }
+          </div>
+        );
+      }
     }
 
     return (

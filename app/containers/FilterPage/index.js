@@ -71,7 +71,8 @@ export class FilterPage extends React.Component {
         ordinary: true,
         summer: true,
         needs: true,
-      }
+      },
+      areaFilter: [],
     };
 
     this.onSeachButtonClick = this.onSeachButtonClick.bind(this);
@@ -178,10 +179,20 @@ export class FilterPage extends React.Component {
     this.setState({ range });
   }
 
+  toggleAreaFilter(area, e) {
+    console.log(area);
+
+    let className = e.target.className;
+    e.target.className = className ? '' : 'activeFilterButton';
+  }
+
   createAreaFilter() {
     return this.props.areas.slice(0, 7).map((area, index) => {
       return (
-        <button onClick={this.toggleActive.bind(this)} key={'area-filter-' + index}>
+        <button
+          onClick={this.toggleAreaFilter.bind(this, area)}
+          key={'area-filter-' + index}
+        >
           {area.namn} ({area.amount})
         </button>
       );
@@ -341,7 +352,7 @@ export class FilterPage extends React.Component {
               disabled={this.props.loading}
             >
               <span className={styles.searchIcon + " glyphicon glyphicon-search"} />
-              Visa <span>{this.buttonAmount()}</span> jobb
+              Visa <span>{!!this.buttonAmount() ? this.buttonAmount() : ''}</span> jobb
             </button>
           }
         </div>

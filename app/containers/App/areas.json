@@ -1,0 +1,107 @@
+[
+  {
+    "id": "1",
+    "namn": "Administration, ekonomi, juridik",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "2",
+    "namn": "Bygg och anläggning",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "20",
+    "namn": "Chefer och verksamhetsledare",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "3",
+    "namn": "Data/IT",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "5",
+    "namn": "Försäljning, inköp, marknadsföring",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "6",
+    "namn": "Hantverksyrken",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "7",
+    "namn": "Hotell, restaurang, storhushåll",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "8",
+    "namn": "Hälso- och sjukvård",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "9",
+    "namn": "Industriell tillverkning",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "10",
+    "namn": "Installation, drift, underhåll",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "4",
+    "namn": "Kropps- och skönhetsvård",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "11",
+    "namn": "Kultur, media, design",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "22",
+    "namn": "Militärt arbete",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "13",
+    "namn": "Naturbruk",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "14",
+    "namn": "Naturvetenskapligt arbete",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "15",
+    "namn": "Pedagogiskt arbete",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "12",
+    "namn": "Sanering och renhållning",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "16",
+    "namn": "Socialt arbete",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "17",
+    "namn": "Säkerhetsarbete",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "18",
+    "namn": "Tekniskt arbete",
+    "typ": "YRKESOMRADE"
+  },
+  {
+    "id": "19",
+    "namn": "Transport",
+    "typ": "YRKESOMRADE"
+  }
+]
