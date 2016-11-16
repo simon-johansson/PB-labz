@@ -20,6 +20,8 @@ import {
   SET_COMPETENCE,
   REMOVE_COMPETENCE,
   TOTAL_AMOUNT_LOADED,
+  LOAD_ADDITIONAL_JOBS,
+  LOAD_ADDITIONAL_JOBS_SUCCESS,
 } from './constants';
 import {
   REMOVE_OCCUPATION,
@@ -42,7 +44,16 @@ const initialState = fromJS({
     amount: false,
     related: false,
     competences: false,
-    areas: false
+    areas: false,
+  }),
+  additional: fromJS({
+    occupations: [],
+    jobs: false,
+    amount: false,
+    related: false,
+    competences: false,
+    areas: false,
+    loading: false,
   }),
 });
 
@@ -67,6 +78,9 @@ function appReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false)
+        .setIn(['additional', 'jobs'], false)
+        .setIn(['additional', 'amount'], false)
+        .setIn(['additional', 'occupations'], [])
         .setIn(['afData', 'jobs'], false);
     case REMOVE_OCCUPATION:
     case REMOVE_LOCATION:
@@ -86,6 +100,21 @@ function appReducer(state = initialState, action) {
       return state
         .set('error', action.error)
         .set('loading', false);
+
+    case LOAD_ADDITIONAL_JOBS:
+      return state
+        .setIn(['additional', 'occupations'], action.additional.occupations)
+        .setIn(['additional', 'loading'], true)
+        .setIn(['additional', 'amount'], false)
+        .setIn(['additional', 'jobs'], false);
+    case LOAD_ADDITIONAL_JOBS_SUCCESS:
+      return state
+        .setIn(['additional', 'jobs'], action.jobs)
+        .setIn(['additional', 'amount'], action.amount)
+        .setIn(['additional', 'related'], action.related)
+        .setIn(['additional', 'competences'], action.competences)
+        .setIn(['additional', 'areas'], action.areas)
+        .setIn(['additional', 'loading'], false);
 
     case TOTAL_AMOUNT_LOADED:
       return state.set('totalAmount', action.amount);

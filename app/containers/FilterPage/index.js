@@ -349,7 +349,7 @@ export class FilterPage extends React.Component {
             <button
               className={styles.searchButton + ' btn btn-default'}
               onClick={this.onSeachButtonClick}
-              disabled={this.props.loading}
+              disabled={this.props.loading && (this.props.occupations.size || this.props.locations.size)}
             >
               <span className={styles.searchIcon + " glyphicon glyphicon-search"} />
               Visa <span>{!!this.buttonAmount() ? this.buttonAmount() : ''}</span> jobb

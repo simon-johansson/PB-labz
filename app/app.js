@@ -7,6 +7,7 @@
 
 // Needed for redux-saga es6 generator support
 import 'babel-polyfill';
+require('smoothscroll-polyfill').polyfill();
 
 /* eslint-disable import/no-unresolved */
 // Load the favicon, the manifest.json file and the .htaccess file

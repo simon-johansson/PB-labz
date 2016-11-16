@@ -61,6 +61,26 @@ const selectTotalAmount = () => createSelector(
   (globalState) => globalState.get('totalAmount')
 );
 
+const selectAdditionalOccupations = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['additional', 'occupations'])
+);
+
+const selectAdditionalJobs = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['additional', 'jobs'])
+);
+
+const selectLoadingAdditional = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['additional', 'loading'])
+);
+
+const selectAdditionalAmount = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['additional', 'amount'])
+);
+
 const selectLocationState = () => {
   let prevRoutingState;
   let prevRoutingStateJS;
@@ -91,4 +111,8 @@ export {
   selectKnownCompetences,
   selectTotalAmount,
   selectLocationState,
+  selectAdditionalOccupations,
+  selectAdditionalJobs,
+  selectAdditionalAmount,
+  selectLoadingAdditional,
 };

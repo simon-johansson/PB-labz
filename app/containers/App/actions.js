@@ -27,6 +27,8 @@ import {
   SET_COMPETENCE,
   REMOVE_COMPETENCE,
   TOTAL_AMOUNT_LOADED,
+  LOAD_ADDITIONAL_JOBS,
+  LOAD_ADDITIONAL_JOBS_SUCCESS,
   GET_TOTAL_AMOUNT,
 } from './constants';
 
@@ -77,7 +79,14 @@ export function loadJobs() {
   };
 }
 
-export function jobsLoaded(jobsData) {
+export function loadAdditionalJobs(additional = {}) {
+  return {
+    type: LOAD_ADDITIONAL_JOBS,
+    additional,
+  };
+}
+
+const cleanJobData = (jobsData) =>  {
   let arr = [];
   let obj = {};
   let areasObj = {};
@@ -111,15 +120,21 @@ export function jobsLoaded(jobsData) {
   });
   const competences = _.sortBy(_.uniqBy(arr, 'varde'), ['efterfragat']);
 
-  // console.log(jobsData.relateradeKriterier);
-
   return {
-    type: LOAD_JOBS_SUCCESS,
     jobs: jobsData.rekryteringsbehov,
     amount: jobsData.antalRekryteringsbehov,
     related: jobsData.relateradeKriterier,
     competences,
     areas,
+  };
+};
+
+export function jobsLoaded(jobsData) {
+  const data = cleanJobData(jobsData);
+
+  return {
+    type: LOAD_JOBS_SUCCESS,
+    ...data,
   };
 }
 
@@ -127,6 +142,15 @@ export function jobsLoadingError(error) {
   return {
     type: LOAD_JOBS_ERROR,
     error,
+  };
+}
+
+export function additionalJobsLoaded(jobsData) {
+  const data = cleanJobData(jobsData);
+
+  return {
+    type: LOAD_ADDITIONAL_JOBS_SUCCESS,
+    ...data,
   };
 }
 

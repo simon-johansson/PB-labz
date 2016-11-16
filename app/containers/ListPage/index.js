@@ -23,6 +23,9 @@ import {
   selectRelated,
   selectCompetences,
   selectKnownCompetences,
+  selectAdditionalJobs,
+  selectLoadingAdditional,
+  selectAdditionalOccupations,
 } from 'containers/App/selectors';
 
 import {
@@ -210,6 +213,8 @@ export class ListPage extends React.Component {
         <div>
           <RutTips
             summary={this.createSearchSummary()}
+            shouldShowSadFace={!this.props.amount}
+            shouldShowSadTips={false}
           />
         </div>
       )
@@ -332,7 +337,7 @@ export class ListPage extends React.Component {
   }
 
   render() {
-    // console.log(this.props.showNonMatchningJobs);
+    // console.log(this.props.additionalJobs);
 
     let mainContent = null;
     let matchingContent = null;
@@ -354,17 +359,44 @@ export class ListPage extends React.Component {
     // If we're not loading, don't have an error and there are repos, show the repos
     } else if (!this.props.jobs.length) {
       mainContent = (
-        <RutTips
-          summary={this.createSearchSummary()}
-        />
+        <div>
+          <RutTips
+            summary={this.createSearchSummary()}
+            shouldShowSadFace={!this.props.amount}
+          />
+          {this.props.loadingAdditional &&
+            <div className={styles.additionalJobs}>
+              <List component={LoadingIndicator} />
+            </div>
+          }
+          {this.props.additionalJobs &&
+            <div className={styles.additionalJobs}>
+              <List items={this.props.additionalJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick}/>
+            </div>
+          }
+        </div>
       );
 
     } else if (this.props.jobs !== false) {
-      // console.log(this.props.jobs);
+      // console.log(this.props.additionalJobs);
       mainContent = (
         <div>
           <span className={styles.amount}>Hittade {this.props.amount} jobb {this.createSearchSummary()}</span>
-            <List items={this.props.jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick}/>
+          <List items={this.props.jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick}/>
+          <RutTips
+            summary={this.createSearchSummary()}
+            shouldShowSadFace={!this.props.amount}
+          />
+          {this.props.loadingAdditional && !!this.props.additionalOccupations.length &&
+            <div className={styles.additionalJobs}>
+              <List component={LoadingIndicator} />
+            </div>
+          }
+          {this.props.additionalJobs && !!this.props.additionalOccupations.length &&
+            <div className={styles.additionalJobs}>
+              <List items={this.props.additionalJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick}/>
+            </div>
+          }
         </div>
       );
 
@@ -550,6 +582,9 @@ const mapStateToProps = createStructuredSelector({
   occupations: selectOccupations(),
   shouldLoadNewJobs: selectShouldLoadNewJobs(),
   locations: selectLocations(),
+  additionalJobs: selectAdditionalJobs(),
+  loadingAdditional: selectLoadingAdditional(),
+  additionalOccupations: selectAdditionalOccupations(),
   loading: selectLoading(),
   error: selectError(),
 });

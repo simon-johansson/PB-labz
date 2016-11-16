@@ -7,19 +7,22 @@
 }
 
 .gubbe {
-  width: 110px;
+  width: 100px;
   margin-bottom: 10px;
 }
 
 .tipsWrapper {
   text-align: center;
   display: block;
-  margin: 0 auto 70px;
-  width: 90%;
+  margin: 0 auto 20px;
+  // width: 90%;
 }
 
 .tipsWrapper h2 {
-  color: #82BBFB;
+  // color: #82BBFB;
+  color: #32749d;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .tipsWrapper p {
@@ -29,9 +32,36 @@
 }
 
 .relatedTag {
-  background: #E3E3E3;
+  // background: #E3E3E3;
   display: inline-block;
-  border-radius: 2px;
+  border: 1px solid #666666;
+  border-radius: 5px;
   margin: 8px 8px 0 0;
   padding: 5px 8px;
+}
+
+:global(.activeAdditionalTag) {
+  background: white;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+  border: 1px solid rgba(0,0,0,0);
+}
+
+.tagWrapper {
+  margin-top: 10px;
+  background: #CAE3EC;
+  padding: 12px 0 20px;
+  position: relative;
+}
+
+.tipsImg {
+  width: 30px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.amount {
+  margin: 15px 10px 5px;
+  display: block;
+  // font-size: 13px;
 }

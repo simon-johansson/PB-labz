@@ -263,6 +263,10 @@ label {
   font-size: 14px;
 }
 
+.additionalJobs {
+  min-height: 400px;
+}
+
 :global(.glyphicon-remove) {
   cursor: pointer;
   color: #8E8E93;

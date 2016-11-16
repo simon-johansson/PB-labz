@@ -162,11 +162,16 @@ export class JobAdvert extends React.Component {
     this.setState({ folded: false });
   }
 
+  shouldShowMap(erbjudenArbetsplats) {
+    return erbjudenArbetsplats && erbjudenArbetsplats.geoPosition;
+  }
+
   render() {
     const { erbjudenArbetsplats } = this.props.advert;
     let markers;
 
-    if (erbjudenArbetsplats) {
+    // console.log(erbjudenArbetsplats);
+    if (this.shouldShowMap(erbjudenArbetsplats)) {
       markers = [{
         position: {
           lat: erbjudenArbetsplats.geoPosition.latitud,
@@ -206,7 +211,7 @@ export class JobAdvert extends React.Component {
               </div>
 
 
-              {!!erbjudenArbetsplats &&
+              {!!this.shouldShowMap(erbjudenArbetsplats) &&
                 <div>
                   <p><b>Karta:</b> {this.props.advert.besoksadressGatuadress}</p>
                   <SimpleMap

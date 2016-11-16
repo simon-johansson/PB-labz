@@ -8,6 +8,7 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import {
   LOAD_REPOS,
   LOAD_JOBS,
+  LOAD_ADDITIONAL_JOBS,
   GET_TOTAL_AMOUNT,
 } from 'containers/App/constants';
 import {
@@ -19,6 +20,7 @@ import {
   repoLoadingError,
   jobsLoaded,
   jobsLoadingError,
+  additionalJobsLoaded,
   totalAmountLoaded,
 } from 'containers/App/actions';
 
@@ -28,9 +30,22 @@ import {
   selectLocations,
 } from './selectors';
 
-export function* getJobs() {
-  const occupation = yield select(selectOccupations());
-  const locations = yield select(selectLocations());
+export function* getJobs(action) {
+  // console.log(action);
+
+  const {
+    occupations: additionalOccupations,
+    locations: additionalLocations,
+  } = action.additional || {};
+
+  const occupation = additionalOccupations ?
+                     additionalOccupations :
+                     yield select(selectOccupations());
+
+  const locations = additionalLocations ?
+                    additionalLocations :
+                    yield select(selectLocations());
+
   const occupationPayload = occupation.map((item) => {
     let typ;
     switch (item.typ) {
@@ -86,8 +101,11 @@ export function* getJobs() {
   const jobs = yield call(request, requestURL, options);
 
   if (!jobs.err) {
-    // console.log(jobs.data);
-    yield put(jobsLoaded(jobs.data));
+    if (additionalOccupations || additionalLocations) {
+      yield put(additionalJobsLoaded(jobs.data));
+    } else {
+      yield put(jobsLoaded(jobs.data));
+    }
   } else {
     // yield put(jobsLoadingError(jobs.err));
   }
@@ -125,6 +143,7 @@ export function* getTotalAmount() {
 export function* getJobsWatcher() {
   yield [
     fork(takeLatest, LOAD_JOBS, getJobs),
+    fork(takeLatest, LOAD_ADDITIONAL_JOBS, getJobs),
     fork(takeLatest, REMOVE_OCCUPATION, getJobs),
     fork(takeLatest, REMOVE_LOCATION, getJobs),
   ];
