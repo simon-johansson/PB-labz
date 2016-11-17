@@ -85,15 +85,19 @@ export class RutTips extends React.Component {
   }
 
   filterOccupations() {
-    return this.props.related
-      .filter(rel => {
-        const { namn, typ } = rel.matchningskriterium;
-        let included = false;
-        this.props.occupations.forEach(o => {
-          if (o.namn === namn) included = true;
+    if (this.props.related) {
+      return this.props.related
+        .filter(rel => {
+          const { namn, typ } = rel.matchningskriterium;
+          let included = false;
+          this.props.occupations.forEach(o => {
+            if (o.namn === namn) included = true;
+          });
+          if (typ === 'YRKESROLL' && !included) return true;
         });
-        if (typ === 'YRKESROLL' && !included) return true;
-      });
+    } else {
+      return [];
+    }
   }
 
   getRelatedOccupations() {

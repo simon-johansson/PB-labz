@@ -81,7 +81,9 @@ export class HomePage extends React.Component {
   }
 
   openRoute = (route) => {
-    this.props.changeRoute(route);
+    setTimeout(() => {
+      this.props.changeRoute(route);
+    }, 1);
   };
 
   addListPage = () => {
@@ -260,8 +262,8 @@ HomePage.propTypes = {
     React.PropTypes.bool,
   ]),
   onSubmitForm: React.PropTypes.func,
-  occupations: React.PropTypes.array,
-  locations: React.PropTypes.array,
+  occupations: React.PropTypes.object,
+  locations: React.PropTypes.object,
   jobLocation: React.PropTypes.string,
   onRemoveOccupation: React.PropTypes.func,
   onRemoveLocation: React.PropTypes.func,

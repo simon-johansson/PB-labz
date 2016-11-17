@@ -180,7 +180,7 @@ export class FilterPage extends React.Component {
   }
 
   toggleAreaFilter(area, e) {
-    console.log(area);
+    // console.log(area);
 
     let className = e.target.className;
     e.target.className = className ? '' : 'activeFilterButton';

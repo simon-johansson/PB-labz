@@ -73,7 +73,10 @@ function SimpleMap (props) {
           >
             {props.markers.map((marker, index) => {
               return (
-                <Marker {...marker} />
+                <Marker
+                  {...marker}
+                  key={'marker-' + index}
+                />
               );
             })}
           </GoogleMap>
@@ -122,7 +125,10 @@ export class JobAdvert extends React.Component {
       if (!this.props.params.matching) {
         return allCompetences.map((item, index) => {
           return (
-            <div className={styles.wrapperDiv}>
+            <div
+              className={styles.wrapperDiv}
+              key={'competences-' + index}
+            >
               <span className={styles.competence}>{item.namn}</span>
               <br />
             </div>
@@ -158,8 +164,12 @@ export class JobAdvert extends React.Component {
     }
   }
 
-  foldText() {
-    this.setState({ folded: false });
+  unFoldText(e) {
+    // console.log(this.annonsText);
+    // this.setState({ folded: false });
+    // let className = e.target.className;
+    this.annonsText.className = 'annons-text unfolded';
+    this.showMore.className = 'hidden';
   }
 
   shouldShowMap(erbjudenArbetsplats) {
@@ -200,14 +210,18 @@ export class JobAdvert extends React.Component {
                   {this.createCompetences()}
                 </div>
               }
-              <div className={styles.advertTextWrapper} onClick={this.foldText.bind(this)}>
+              <div className={styles.advertTextWrapper} onClick={this.unFoldText.bind(this)}>
                 <p
                   dangerouslySetInnerHTML={{__html: this.props.advert.annonstext}}
-                  className={`${styles.advertText} ${this.state.folded ? styles.unfolded : ''}`}
+                  className={"annons-text folded"}
+                  ref={(p) => this.annonsText = p}
                 />
-                {this.state.folded &&
-                  <span className={styles.showmore}>Visa hela annonsen</span>
-                }
+                <span
+                  className={styles.showmore}
+                  ref={(span) => this.showMore = span}
+                >
+                  Visa hela annonsen
+                </span>
               </div>
 
 

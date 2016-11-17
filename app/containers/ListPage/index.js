@@ -337,7 +337,7 @@ export class ListPage extends React.Component {
   }
 
   render() {
-    // console.log(this.props.additionalJobs);
+    // console.log(this.props.occupations);
 
     let mainContent = null;
     let matchingContent = null;
@@ -537,8 +537,8 @@ ListPage.propTypes = {
   ]),
   onSubmitForm: React.PropTypes.func,
   // username: React.PropTypes.string,
-  occupations: React.PropTypes.array,
-  locations: React.PropTypes.array,
+  occupations: React.PropTypes.object,
+  locations: React.PropTypes.object,
   jobLocation: React.PropTypes.string,
   onChangeUsername: React.PropTypes.func,
   onRemoveOccupation: React.PropTypes.func,
@@ -559,7 +559,7 @@ export function mapDispatchToProps(dispatch) {
     // },
     onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      console.log('load');
+      // console.log('load');
       dispatch(loadJobs());
     },
 

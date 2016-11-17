@@ -90,33 +90,23 @@
   margin-top: 100px;
 }
 
-.advertText {
-  white-space: pre-wrap;
-}
-
 .advertTextWrapper {
   position: relative;
   margin-bottom: 20px;
 }
 
-.advertText.unfolded {
+:global(.annons-text) {
   height: 250px;
   overflow: hidden;
   white-space: pre-wrap;
 }
 
-.showmore {
-  text-transform: uppercase;
-  position: absolute;
-  right: 0px;
-  bottom: -10px;
-  font-size: 12px;
-  color: #568eb1;
-  font-weight: bold;
-  text-decoration: underline;
+:global(.annons-text.unfolded) {
+  height: auto !important;
+  overflow: none !important;
 }
 
-.advertText.unfolded::before {
+:global(.annons-text.folded::before) {
   background-image: linear-gradient(
           rgba( 255, 255, 255, 0 ) 60%, rgba( 255, 255, 255, 1 ) 100% );
       background-image: -moz-linear-gradient(
@@ -132,6 +122,21 @@
   height: 250px;
   position: absolute;
   width: 100%;
+}
+
+.showmore {
+  text-transform: uppercase;
+  position: absolute;
+  right: 0px;
+  bottom: -10px;
+  font-size: 12px;
+  color: #568eb1;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+:global(.hidden) {
+  display: none;
 }
 
 .applyButton {
