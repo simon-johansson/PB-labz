@@ -61,25 +61,36 @@ const selectTotalAmount = () => createSelector(
   (globalState) => globalState.get('totalAmount')
 );
 
-const selectAdditionalOccupations = () => createSelector(
+
+const selectAdditionalSearchParameters = () => createSelector(
   selectGlobal(),
-  (globalState) => globalState.getIn(['additional', 'occupations'])
+  (globalState) => globalState.getIn(['additional', 'searchParameters'])
 );
 
-const selectAdditionalJobs = () => createSelector(
+const selectAdditionalAds = () => createSelector(
   selectGlobal(),
-  (globalState) => globalState.getIn(['additional', 'jobs'])
+  (globalState) => globalState.getIn(['additional', 'ads'])
 );
 
-const selectLoadingAdditional = () => createSelector(
-  selectGlobal(),
-  (globalState) => globalState.getIn(['additional', 'loading'])
-);
+// const selectAdditionalOccupations = () => createSelector(
+//   selectGlobal(),
+//   (globalState) => globalState.getIn(['additional', 'occupations'])
+// );
 
-const selectAdditionalAmount = () => createSelector(
-  selectGlobal(),
-  (globalState) => globalState.getIn(['additional', 'amount'])
-);
+// const selectAdditionalJobs = () => createSelector(
+//   selectGlobal(),
+//   (globalState) => globalState.getIn(['additional', 'jobs'])
+// );
+
+// const selectLoadingAdditional = () => createSelector(
+//   selectGlobal(),
+//   (globalState) => globalState.getIn(['additional', 'loading'])
+// );
+
+// const selectAdditionalAmount = () => createSelector(
+//   selectGlobal(),
+//   (globalState) => globalState.getIn(['additional', 'amount'])
+// );
 
 const selectLocationState = () => {
   let prevRoutingState;
@@ -111,8 +122,10 @@ export {
   selectKnownCompetences,
   selectTotalAmount,
   selectLocationState,
-  selectAdditionalOccupations,
-  selectAdditionalJobs,
-  selectAdditionalAmount,
-  selectLoadingAdditional,
+  selectAdditionalSearchParameters,
+  selectAdditionalAds,
+  // selectAdditionalOccupations,
+  // selectAdditionalJobs,
+  // selectAdditionalAmount,
+  // selectLoadingAdditional,
 };

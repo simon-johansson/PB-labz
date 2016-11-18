@@ -91,6 +91,8 @@ const cleanJobData = (jobsData) =>  {
   let obj = {};
   let areasObj = {};
 
+  // console.log(jobsData);
+
   jobsData.rekryteringsbehov.forEach(job => {
     if (!areasObj[job.yrkesomrade.namn]) areasObj[job.yrkesomrade.namn] = [];
     areasObj[job.yrkesomrade.namn].push(job);
@@ -150,7 +152,7 @@ export function additionalJobsLoaded(jobsData) {
 
   return {
     type: LOAD_ADDITIONAL_JOBS_SUCCESS,
-    ...data,
+    data,
   };
 }
 

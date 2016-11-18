@@ -200,6 +200,11 @@ export class JobAdvert extends React.Component {
 
           {this.props.advert &&
             <div className={styles.advertWrapper}>
+              {/*<object
+                style={{maxHeight: '60px'}}
+                data={`http://api.arbetsformedlingen.se/platsannons/${this.props.advert.id}/logotyp`} type="image/gif"
+              >
+              </object> <br />*/}
               <b>{this.props.advert.arbetsgivarenamn}</b>
               <h3>{this.props.advert.rubrik}</h3>
               <p>{this.props.advert.yrkesroll.namn}</p>

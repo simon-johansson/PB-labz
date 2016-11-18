@@ -264,7 +264,18 @@ label {
 }
 
 .additionalJobs {
-  min-height: 400px;
+  // min-height: 400px;
+}
+
+.stickyHeader {
+  position: fixed;
+  height: auto;
+  top: 0;
+  width: 100%;
+  background: white;
+  padding: 2px 5px;
+  z-index: 999;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.4)
 }
 
 :global(.glyphicon-remove) {

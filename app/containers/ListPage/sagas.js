@@ -31,19 +31,17 @@ import {
 } from './selectors';
 
 export function* getJobs(action) {
-  // console.log(action);
-
   const {
     occupations: additionalOccupations,
     locations: additionalLocations,
   } = action.additional || {};
 
   const occupation = additionalOccupations ?
-                     additionalOccupations :
+                     [additionalOccupations] :
                      yield select(selectOccupations());
 
   const locations = additionalLocations ?
-                    additionalLocations :
+                    [additionalLocations] :
                     yield select(selectLocations());
 
   const occupationPayload = occupation.map((item) => {
@@ -51,6 +49,9 @@ export function* getJobs(action) {
     switch (item.typ) {
       case 'YRKESOMRADE':
         typ = 'YRKESOMRADE_ROLL';
+        break;
+      case 'YRKESGRUPP':
+        typ = 'YRKESGRUPP_ROLL';
         break;
       case 'YRKE':
         typ = 'YRKESROLL';

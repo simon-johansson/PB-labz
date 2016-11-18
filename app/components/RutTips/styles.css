@@ -26,9 +26,12 @@
 }
 
 .tipsWrapper p {
-  width: 200px;
+  // width: 200px;
   display: block;
   margin: auto;
+  font-weight: bold;
+  margin: 0 0 5px 10px;
+  text-align: left;
 }
 
 .relatedTag {
@@ -37,7 +40,7 @@
   border: 1px solid #666666;
   border-radius: 5px;
   margin: 8px 8px 0 0;
-  padding: 9px 8px;
+  padding: 8px 8px;
 }
 
 .relatedTag:last-child {
@@ -54,15 +57,18 @@
   margin-top: 10px;
   margin-bottom: 10px;
   background: #CAE3EC;
-  padding: 12px 0 20px;
+  padding: 8px 0 0;
   position: relative;
 
-  padding: 2px 10px;
-  height: 60px;
-  overflow: hidden;
-  white-space: nowrap;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  // max-height: 105px;
+  // overflow: hidden;
+
+  // padding: 2px 10px;
+  // height: 60px;
+  // overflow: hidden;
+  // white-space: nowrap;
+  // overflow-x: scroll;
+  // overflow-y: hidden;
 }
 
 .tipsImg {
@@ -76,4 +82,27 @@
   margin: 5px 10px 5px;
   display: block;
   // font-size: 13px;
+}
+
+.swipeDots {
+  margin: 15px auto 0;
+}
+
+.swipeDot {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  border: 2px solid #333;
+  display: inline-block;
+  // background: gray;
+}
+
+.swipeDotActive {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  border: 2px solid #333;
+  background: white;
+  display: inline-block;
+  margin-right: 5px;
 }

@@ -46,14 +46,18 @@ const initialState = fromJS({
     competences: false,
     areas: false,
   }),
+  // additional: fromJS({
+  //   occupations: [],
+  //   jobs: false,
+  //   amount: false,
+  //   related: false,
+  //   competences: false,
+  //   areas: false,
+  //   loading: false,
+  // }),
   additional: fromJS({
-    occupations: [],
-    jobs: false,
-    amount: false,
-    related: false,
-    competences: false,
-    areas: false,
-    loading: false,
+    searchParameters: fromJS([]),
+    ads: fromJS([]),
   }),
 });
 
@@ -78,9 +82,8 @@ function appReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false)
-        .setIn(['additional', 'jobs'], false)
-        .setIn(['additional', 'amount'], false)
-        .setIn(['additional', 'occupations'], [])
+        .setIn(['additional', 'searchParameters'], fromJS([]))
+        .setIn(['additional', 'ads'], fromJS([]))
         .setIn(['afData', 'jobs'], false);
     case REMOVE_OCCUPATION:
     case REMOVE_LOCATION:
@@ -102,19 +105,11 @@ function appReducer(state = initialState, action) {
         .set('loading', false);
 
     case LOAD_ADDITIONAL_JOBS:
+      // console.log(action.additional.occupations);
+      return state.updateIn(['additional', 'searchParameters'], (arr) => arr.push(action.additional.occupations));
       return state
-        .setIn(['additional', 'occupations'], action.additional.occupations)
-        .setIn(['additional', 'loading'], true)
-        .setIn(['additional', 'amount'], false)
-        .setIn(['additional', 'jobs'], false);
     case LOAD_ADDITIONAL_JOBS_SUCCESS:
-      return state
-        .setIn(['additional', 'jobs'], action.jobs)
-        .setIn(['additional', 'amount'], action.amount)
-        .setIn(['additional', 'related'], action.related)
-        .setIn(['additional', 'competences'], action.competences)
-        .setIn(['additional', 'areas'], action.areas)
-        .setIn(['additional', 'loading'], false);
+      return state.updateIn(['additional', 'ads'], (arr) => arr.push(action.data));
 
     case TOTAL_AMOUNT_LOADED:
       return state.set('totalAmount', action.amount);

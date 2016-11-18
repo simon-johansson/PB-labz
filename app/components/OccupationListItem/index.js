@@ -28,17 +28,35 @@ export class OccupationListItem extends React.Component { // eslint-disable-line
     this.props.click(matchningskriterium ? matchningskriterium : this.props.item);
   }
 
+  showMore(item) {
+    return item.typ === 'more';
+  }
+
+  showGPS(item) {
+    return item.typ === 'GPS';
+  }
+
+  rightPart(item, antal) {
+    if (this.showMore(item)) {
+      return '';
+    } else if (this.showGPS(item)) {
+      return <span className={styles.right + ' glyphicon glyphicon-map-marker'}></span>;
+    } else {
+      return <span className={styles.right}>{item.typ ? item.typ.toLowerCase() : antal + ' jobb'}</span>;
+    }
+  }
+
   render() {
     const item = this.props.item;
     const { matchningskriterium, antal } = item;
 
     const content = (
       <div className={styles.linkWrapper} onClick={this.onItemClick.bind(this)}>
-        <span>{item.namn || matchningskriterium.namn}</span>
-        { item.typ === 'GPS' ?
-          <span className={styles.right + ' glyphicon glyphicon-map-marker'}></span> :
-          <span className={styles.right}>{item.typ ? item.typ.toLowerCase() : antal + ' jobb'}</span>
+        {this.showMore(item) ?
+          <span className={styles.showMore}>{item.namn}</span> :
+          <span>{item.namn || matchningskriterium.namn}</span>
         }
+        {this.rightPart(item, antal)}
       </div>
     );
 

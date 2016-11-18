@@ -23,9 +23,12 @@ import {
   selectRelated,
   selectCompetences,
   selectKnownCompetences,
-  selectAdditionalJobs,
-  selectLoadingAdditional,
-  selectAdditionalOccupations,
+  selectAdditionalSearchParameters,
+  selectAdditionalAds,
+  // selectAdditionalJobs,
+  // selectLoadingAdditional,
+  // selectAdditionalOccupations,
+  // selectAdditionalAmount,
 } from 'containers/App/selectors';
 
 import {
@@ -63,6 +66,8 @@ import LoadingIndicator from 'components/LoadingIndicator';
 
 import styles from './styles.css';
 
+let summaryHeaders = [];
+
 export class ListPage extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
@@ -75,9 +80,12 @@ export class ListPage extends React.Component {
       showMatchingJobs: props.showMatchingJobs,
       showNonMatchningJobs: props.showNonMatchningJobs,
       scrollPosition: 0,
+      showStickyHeader: false,
+      stickyHeaderText: '',
     };
 
     this.onAdvertClick = this.onAdvertClick.bind(this);
+    this.onScroll = this.onScroll.bind(this);
   }
   /**
    * when initial state username is not null, submit the form to load repos
@@ -88,9 +96,39 @@ export class ListPage extends React.Component {
       this.props.onSubmitForm();
     }
     this.scrollTo(this.props.scrollPosition);
+
+    // console.log('mount');
+    // summaryHeaders = [];
+    window.addEventListener('scroll', this.onScroll);
+
     // if (this.props.occupations && this.props.occupations.length > 0) {
     //   this.props.onSubmitForm();
     // }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll, false);
+  }
+
+  onScroll() {
+    const headers = summaryHeaders.filter(h => h.el);
+    const position = document.documentElement.scrollTop || document.body.scrollTop;
+
+    // console.log(headers);
+
+    if (position > headers[0].el.offsetTop) {
+      this.setState({ showStickyHeader: true });
+    } else {
+      this.setState({ showStickyHeader: false });
+    }
+
+    const closest = headers.sort((a, b) => {
+      // console.log(a.el.offsetTop, b.el.offsetTop, position);
+      return ((position > a.el.offsetTop) && (position < b.el.offsetTop)) ? -1 : 1;
+    })[0];
+
+    // console.log(closest);
+    this.setState({ stickyHeaderText: closest.text });
   }
 
   // componentWillUpdate() {
@@ -178,16 +216,16 @@ export class ListPage extends React.Component {
     });
   }
 
-  createSearchInput() {
-    const occupations = JSON.parse(JSON.stringify(this.props.occupations)).map((item, index) => item.namn);
-    const locations = JSON.parse(JSON.stringify(this.props.locations)).map((item, index) => item.namn);
+  createSearchInput(occ, loc) {
+    const occupations = JSON.parse(JSON.stringify(occ || this.props.occupations)).map((item, index) => item.namn);
+    const locations = JSON.parse(JSON.stringify(loc || this.props.locations)).map((item, index) => item.namn);
     const str = occupations.concat(locations).join(', ')
     return str.length ? str : 'Alla jobb i Platsbanken';
   }
 
-  createSearchSummary() {
-    const occupations = JSON.parse(JSON.stringify(this.props.occupations)).map((item, index) => item.namn);
-    const locations = JSON.parse(JSON.stringify(this.props.locations)).map((item, index) => item.namn);
+  createSearchSummary(occ, loc) {
+    const occupations = JSON.parse(JSON.stringify(occ || this.props.occupations)).map((item, index) => item.namn);
+    const locations = JSON.parse(JSON.stringify(loc || this.props.locations)).map((item, index) => item.namn);
     let str = '';
     if (occupations.length) str += `för ${occupations.join(' & ')}`;
     if (locations.length) str += ` i ${locations.join(', ')}`;
@@ -209,15 +247,15 @@ export class ListPage extends React.Component {
     if (this.props.loading) {
       return <List component={LoadingIndicator} />
     } else if (!this.props.jobs.length) {
-      return (
-        <div>
-          <RutTips
-            summary={this.createSearchSummary()}
-            shouldShowSadFace={!this.props.amount}
-            shouldShowSadTips={false}
-          />
-        </div>
-      )
+      // return (
+      //   <div>
+      //     <RutTips
+      //       summary={this.createSearchSummary()}
+      //       shouldShowSadFace={!this.props.amount}
+      //       shouldShowSadTips={false}
+      //     />
+      //   </div>
+      // )
     } else {
       let top5 = _.orderBy(JSON.parse(JSON.stringify(this.props.competences)), 'timesRequested', 'desc').slice(0, 5);
       top5 = top5.map((item, index) => {
@@ -336,8 +374,25 @@ export class ListPage extends React.Component {
     });
   }
 
+  shouldShowTips() {
+    let showShow = true;
+    this.props.occupations.forEach(o => {
+      // console.log(o.typ);
+      switch (o.typ) {
+        case 'YRKESOMRADE':
+        case 'YRKESGRUPP':
+          showShow = false;
+        case 'YRKESROLL':
+          break;
+      }
+    });
+    // console.log(showShow);
+    return showShow;
+  }
+
   render() {
-    // console.log(this.props.occupations);
+    // console.log(this.props.additionalSearchParameters);
+    // console.log(this.props.additionalAds);
 
     let mainContent = null;
     let matchingContent = null;
@@ -358,45 +413,70 @@ export class ListPage extends React.Component {
 
     // If we're not loading, don't have an error and there are repos, show the repos
     } else if (!this.props.jobs.length) {
-      mainContent = (
-        <div>
-          <RutTips
-            summary={this.createSearchSummary()}
-            shouldShowSadFace={!this.props.amount}
-          />
-          {this.props.loadingAdditional &&
-            <div className={styles.additionalJobs}>
-              <List component={LoadingIndicator} />
-            </div>
-          }
-          {this.props.additionalJobs &&
-            <div className={styles.additionalJobs}>
-              <List items={this.props.additionalJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick}/>
-            </div>
-          }
-        </div>
-      );
+      // mainContent = (
+      //   <div>
+      //     {this.props.loadingAdditional &&
+      //       <div className={styles.additionalJobs}>
+      //         <List component={LoadingIndicator} />
+      //       </div>
+      //     }
+      //     {this.props.additionalJobs &&
+      //       <div className={styles.additionalJobs}>
+      //         <List items={this.props.additionalJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick}/>
+      //       </div>
+      //     }
+      //     <RutTips
+      //       summary={this.createSearchSummary()}
+      //       shouldShowSadFace={!this.props.amount}
+      //     />
+      //   </div>
+      // );
 
     } else if (this.props.jobs !== false) {
-      // console.log(this.props.additionalJobs);
+      // console.log(this.props.additionalAds.get(0));
+      // console.log(this.props.additionalSearchParameters);
+      // console.log(this.props.additionalSearchParameters[0]);
+
+      summaryHeaders = [];
+      const ads = this.props.additionalSearchParameters.map((param, index) => {
+        return (
+          <div className={styles.additionalJobs} key={'additional-ads-' + index}>
+            {!this.props.additionalAds.get(index) ?
+              <div>
+                <span className={styles.amount}>
+                  Hittade ... jobb {this.createSearchSummary([param])}
+                </span>
+                <List component={LoadingIndicator} />
+              </div> :
+              <div>
+                <span
+                  className={styles.amount}
+                  ref={(r) => summaryHeaders.push({ el: r, text: this.createSearchInput([param]) })}
+                >
+                  Hittade {this.props.additionalAds.get(index).amount} jobb {this.createSearchSummary([param])}
+                </span>
+                <List items={this.props.additionalAds.get(index).jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
+              </div>
+            }
+          </div>
+        );
+      });
+
       mainContent = (
         <div>
-          <span className={styles.amount}>Hittade {this.props.amount} jobb {this.createSearchSummary()}</span>
+          <span
+            ref={(r) => summaryHeaders.push({ el: r, text: this.createSearchInput() })}
+            className={styles.amount}
+          >
+            Hittade {this.props.amount} jobb {this.createSearchSummary()}
+          </span>
           <List items={this.props.jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick}/>
+          {ads}
           <RutTips
             summary={this.createSearchSummary()}
             shouldShowSadFace={!this.props.amount}
+            shouldShowTips={this.shouldShowTips()}
           />
-          {this.props.loadingAdditional && !!this.props.additionalOccupations.length &&
-            <div className={styles.additionalJobs}>
-              <List component={LoadingIndicator} />
-            </div>
-          }
-          {this.props.additionalJobs && !!this.props.additionalOccupations.length &&
-            <div className={styles.additionalJobs}>
-              <List items={this.props.additionalJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick}/>
-            </div>
-          }
         </div>
       );
 
@@ -458,6 +538,11 @@ export class ListPage extends React.Component {
 
     return (
       <article ref='list' className='noselect'>
+        {this.state.showStickyHeader &&
+          <div className={styles.stickyHeader}>
+            {this.state.stickyHeaderText}
+          </div>
+        }
         <div className={styles.contentWrapper}>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
@@ -548,7 +633,7 @@ ListPage.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
+    // onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     onRemoveOccupation: (index) => dispatch(removeOccupation(index)),
     onRemoveLocation: (index) => dispatch(removeLocation(index)),
     setUiState: (state) => dispatch(setUiState(state)),
@@ -582,9 +667,12 @@ const mapStateToProps = createStructuredSelector({
   occupations: selectOccupations(),
   shouldLoadNewJobs: selectShouldLoadNewJobs(),
   locations: selectLocations(),
-  additionalJobs: selectAdditionalJobs(),
-  loadingAdditional: selectLoadingAdditional(),
-  additionalOccupations: selectAdditionalOccupations(),
+  additionalSearchParameters: selectAdditionalSearchParameters(),
+  additionalAds: selectAdditionalAds(),
+  // additionalJobs: selectAdditionalJobs(),
+  // loadingAdditional: selectLoadingAdditional(),
+  // additionalOccupations: selectAdditionalOccupations(),
+  // additionalAmount: selectAdditionalAmount(),
   loading: selectLoading(),
   error: selectError(),
 });

@@ -34,3 +34,8 @@
   top: 10px;
   text-transform: capitalize;
 }
+
+.showMore {
+  color: #32749d;
+  font-style: italic;
+}

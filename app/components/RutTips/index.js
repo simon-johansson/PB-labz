@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as ls from 'utils/localstorage';
 
+import List from 'components/List';
+import OccupationListItem from 'components/OccupationListItem';
+
 import styles from './styles.css';
 import gubbe from './gubbe.png';
 import tips from './tips.png';
@@ -14,8 +17,10 @@ import {
 
 import {
   selectRelated,
-  selectAdditionalOccupations,
-  selectAdditionalAmount,
+  selectAdditionalSearchParameters,
+  selectAdditionalAds,
+  // selectAdditionalOccupations,
+  // selectAdditionalAmount,
 } from 'containers/App/selectors';
 
 import {
@@ -31,21 +36,31 @@ export class RutTips extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      occupations: props.additionalOccupations.slice(),
+      occupationsTipsNumber: 3,
     };
   }
 
   onTagClick(item, e) {
-    let occupations = this.state.occupations.slice();
-    if (!!occupations.filter((o) => o.namn === item.namn).length) {
-      occupations = occupations.filter((o) => o.namn !== item.namn);
+    // let occupations = this.state.occupations.slice();
+
+    // if (!!occupations.filter((o) => o.namn === item.namn).length) {
+    //   occupations = occupations.filter((o) => o.namn !== item.namn);
+    // } else {
+    //   occupations.push(item);
+    // }
+
+    // occupations.push(item);
+
+    if (item.typ === 'more') {
+      this.setState({
+        occupationsTipsNumber: this.state.occupationsTipsNumber + 3,
+      });
     } else {
-      occupations.push(item);
+      this.props.onLoadJobs(item);
+      this.scrollToBottom();
     }
 
-    this.props.onLoadJobs(occupations);
-    this.scrollToBottom();
-    this.setState({ occupations });
+    // this.setState({ occupations });
 
     // ls.newPreviousSearch({
     //   occupations: this.props.occupations.push(item),
@@ -67,31 +82,36 @@ export class RutTips extends React.Component {
       // });
     // }, 1);
 
-    document.getElementById('rut-tips').scrollIntoView({ behavior: 'smooth' });
+    // document.getElementById('rut-tips').scrollIntoView({ behavior: 'smooth' });
   }
 
-  createSearchSummary() {
-    const occupations = JSON.parse(JSON.stringify(this.props.additionalOccupations)).map((item, index) => item.namn);
-    const locations = JSON.parse(JSON.stringify(this.props.locations)).map((item, index) => item.namn);
-    let str = '';
-    if (occupations.length) str += `för ${occupations.join(' & ')}`;
-    if (locations.length) str += ` i ${locations.join(', ')}`;
-    return str;
-  }
+  // createSearchSummary() {
+  //   const occupations = JSON.parse(JSON.stringify(this.props.additionalOccupations)).map((item, index) => item.namn);
+  //   const locations = JSON.parse(JSON.stringify(this.props.locations)).map((item, index) => item.namn);
+  //   let str = '';
+  //   if (occupations.length) str += `för ${occupations.join(' & ')}`;
+  //   if (locations.length) str += ` i ${locations.join(', ')}`;
+  //   return str;
+  // }
 
   shouldShowTips() {
-    return !!this.filterOccupations().length &&
-           this.props.shouldShowSadTips;
+    return this.props.shouldShowTips &&
+           !!this.filterOccupations().length;
   }
 
   filterOccupations() {
     if (this.props.related) {
+      const isIncluded = (name1, name2) => name1 === name2;
       return this.props.related
         .filter(rel => {
           const { namn, typ } = rel.matchningskriterium;
           let included = false;
           this.props.occupations.forEach(o => {
-            if (o.namn === namn) included = true;
+            if (isIncluded(o.namn, namn)) included = true;
+          });
+          // console.log(this.props.additionalSearchParameters);
+          this.props.additionalSearchParameters.forEach(o => {
+            if (isIncluded(o.namn, namn)) included = true;
           });
           if (typ === 'YRKESROLL' && !included) return true;
         });
@@ -118,7 +138,22 @@ export class RutTips extends React.Component {
     });
   }
 
+  numberOfTipsShowing() {
+    return this.state.occupationsTipsNumber;
+  }
+
+  shouldShowMoreItem() {
+    const moreItem = {namn: 'Visa fler...', typ: 'more'};
+    const numberOfTips = this.filterOccupations().length;
+
+    return numberOfTips > this.numberOfTipsShowing() ? moreItem : false;
+  }
+
   render() {
+    const moreItem = this.shouldShowMoreItem();
+    const items = this.filterOccupations().slice(0, this.numberOfTipsShowing());
+    if (moreItem) items.push(moreItem);
+
     return (
       <div>
         {this.props.shouldShowSadFace &&
@@ -130,17 +165,17 @@ export class RutTips extends React.Component {
         {this.shouldShowTips() &&
           <div id='rut-tips' className={styles.tipsWrapper}>
             <h2>Tips!</h2>
-            <p>Vill du se jobb för något utav dessa relaterade yrken?</p>
             <div className={styles.tagWrapper}>
+              <p>Relaterade yrken {this.props.summary}</p>
               {/*<img className={styles.tipsImg} src={tips} />*/}
-              {this.getRelatedOccupations()}
+              {/*this.getRelatedOccupations()*/}
+              <List
+                items={items}
+                component={OccupationListItem}
+                click={this.onTagClick.bind(this)}
+              />
             </div>
           </div>
-        }
-        {this.shouldShowTips() && !!this.props.additionalAmount && !!this.props.additionalOccupations.length &&
-          <span className={styles.amount}>
-            Hittade {this.props.additionalAmount} jobb {this.createSearchSummary()}
-          </span>
         }
       </div>
     );
@@ -152,7 +187,8 @@ RutTips.propTypes = {
 };
 
 RutTips.defaultProps = {
-  shouldShowSadTips: true,
+  shouldShowSadFace: true,
+  shouldShowTips: true,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -170,8 +206,10 @@ const mapStateToProps = createStructuredSelector({
   related: selectRelated(),
   occupations: selectOccupations(),
   locations: selectLocations(),
-  additionalOccupations: selectAdditionalOccupations(),
-  additionalAmount: selectAdditionalAmount(),
+  additionalSearchParameters: selectAdditionalSearchParameters(),
+  additionalAds: selectAdditionalAds(),
+  // additionalOccupations: selectAdditionalOccupations(),
+  // additionalAmount: selectAdditionalAmount(),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RutTips);
