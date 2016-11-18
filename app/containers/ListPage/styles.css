@@ -275,7 +275,10 @@ label {
   background: white;
   padding: 2px 5px;
   z-index: 999;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.4)
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 :global(.glyphicon-remove) {

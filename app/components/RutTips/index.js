@@ -8,7 +8,7 @@ import List from 'components/List';
 import OccupationListItem from 'components/OccupationListItem';
 
 import styles from './styles.css';
-import gubbe from './gubbe.png';
+// import gubbe from './gubbe.png';
 import tips from './tips.png';
 
 import {
@@ -58,15 +58,16 @@ export class RutTips extends React.Component {
     } else {
       this.props.onLoadJobs(item);
       this.scrollToBottom();
+
+      ls.newPreviousSearch({
+        occupations: this.props.occupations.push(item),
+        locations: this.props.locations,
+        time: new Date().valueOf(),
+      });
     }
 
     // this.setState({ occupations });
 
-    // ls.newPreviousSearch({
-    //   occupations: this.props.occupations.push(item),
-    //   locations: this.props.locations,
-    //   time: new Date().valueOf(),
-    // });
   }
 
   scrollToBottom() {
@@ -95,6 +96,7 @@ export class RutTips extends React.Component {
   // }
 
   shouldShowTips() {
+    // console.log(this.props.shouldShowTips, !!this.filterOccupations().length);
     return this.props.shouldShowTips &&
            !!this.filterOccupations().length;
   }
@@ -150,18 +152,14 @@ export class RutTips extends React.Component {
   }
 
   render() {
+    // console.log(this.props.shouldShowSadFace);
+
     const moreItem = this.shouldShowMoreItem();
     const items = this.filterOccupations().slice(0, this.numberOfTipsShowing());
     if (moreItem) items.push(moreItem);
 
     return (
       <div>
-        {this.props.shouldShowSadFace &&
-          <div className={styles.imageWrapper}>
-            <img className={styles.gubbe} src={gubbe} />
-            <p>Inga jobb hittades {this.props.summary}</p>
-          </div>
-        }
         {this.shouldShowTips() &&
           <div id='rut-tips' className={styles.tipsWrapper}>
             <h2>Tips!</h2>

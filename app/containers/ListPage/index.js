@@ -59,6 +59,7 @@ import CompetenceListItem from 'components/CompetenceListItem';
 import IosMenu from 'components/IosMenu';
 import Button from 'components/Button';
 import RutTips from 'components/RutTips';
+import SadFace from 'components/SadFace';
 import H2 from 'components/H2';
 import List from 'components/List';
 import ListItem from 'components/ListItem';
@@ -67,6 +68,7 @@ import LoadingIndicator from 'components/LoadingIndicator';
 import styles from './styles.css';
 
 let summaryHeaders = [];
+const isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 
 export class ListPage extends React.Component {
   static contextTypes = {
@@ -119,34 +121,40 @@ export class ListPage extends React.Component {
 
     // console.log(headers);
 
-    if (position > headers[0].el.offsetTop) {
-      if (!this.state.showStickyHeader) {
-        this.setState({ showStickyHeader: true });
+    if (!!headers.length) {
+      if (position > headers[0].el.offsetTop) {
+        if (!this.state.showStickyHeader) {
+          this.setState({ showStickyHeader: true });
+        }
+      } else {
+        if (this.state.showStickyHeader) {
+          this.setState({ showStickyHeader: false });
+        }
       }
-    } else {
-      if (this.state.showStickyHeader) {
-        this.setState({ showStickyHeader: false });
-      }
-    }
 
-    const closest = headers.sort((a, b) => {
-      // console.log(a, b);
-      // console.log(a.el.offsetTop, b.el.offsetTop, position);
-      const aOffset = a.el.offsetTop;
-      const bOffset = b.el.offsetTop;
-      const high = aOffset > bOffset ? aOffset : bOffset;
-      const low = aOffset < bOffset ? aOffset : bOffset;
+      const closest = headers.sort((a, b) => {
+        // console.log(a, b);
+        // console.log(a.el.offsetTop, b.el.offsetTop, position);
+        const aOffset = a.el.offsetTop;
+        const bOffset = b.el.offsetTop;
+        const high = aOffset > bOffset ? aOffset : bOffset;
+        const low = aOffset < bOffset ? aOffset : bOffset;
 
-      return ((position > low) && (position < high)) ? 1 : -1;
-    })[0];
+        if (isSafari) {
+          return ((position > low) && (position < high)) ? 1 : -1;
+        } else {
+          return ((position > low) && (position < high)) ? -1 : 1;
+        }
+      })[0];
     // console.log(closest);
 
     // const test = _.orderBy(headers, [(o) => {
     //   return o.el.offsetTop;
     // }], ['desc'])[0];
 
-    if (closest.text !== this.state.stickyHeaderText) {
-      this.setState({ stickyHeaderText: closest.text });
+      if (closest.text !== this.state.stickyHeaderText) {
+        this.setState({ stickyHeaderText: closest.text });
+      }
     }
   }
 
@@ -266,15 +274,13 @@ export class ListPage extends React.Component {
     if (this.props.loading) {
       return <List component={LoadingIndicator} />
     } else if (!this.props.jobs.length) {
-      // return (
-      //   <div>
-      //     <RutTips
-      //       summary={this.createSearchSummary()}
-      //       shouldShowSadFace={!this.props.amount}
-      //       shouldShowSadTips={false}
-      //     />
-      //   </div>
-      // )
+      return (
+        <div>
+          <div className={styles.matchDescription}>
+            <p>Kan inte göra någon matchning för denna sökning</p>
+          </div>
+        </div>
+      )
     } else {
       let top5 = _.orderBy(JSON.parse(JSON.stringify(this.props.competences)), 'timesRequested', 'desc').slice(0, 5);
       top5 = top5.map((item, index) => {
@@ -296,7 +302,7 @@ export class ListPage extends React.Component {
           }
           {!this.props.competences.length &&
             <div className={styles.matchDescription}>
-              <p>Kan tyvärr inte göra någon matchning för denna sökning</p>
+              <p>Kan inte göra någon matchning för denna sökning</p>
             </div>
           }
           { !!this.props.knownCompetences.size &&
@@ -410,7 +416,7 @@ export class ListPage extends React.Component {
   }
 
   render() {
-    console.log('render');
+    // console.log('render');
     // console.log(this.props.additionalSearchParameters);
     // console.log(this.props.additionalAds);
 
@@ -418,6 +424,30 @@ export class ListPage extends React.Component {
     let matchingContent = null;
     const matchingJobs = [];
     const nonMatchingJobs = [];
+    summaryHeaders = [];
+    const ads = this.props.additionalSearchParameters.map((param, index) => {
+      return (
+        <div className={styles.additionalJobs} key={'additional-ads-' + index}>
+          {!this.props.additionalAds.get(index) ?
+            <div>
+              <span className={styles.amount}>
+                Hittade ... jobb {this.createSearchSummary([param])}
+              </span>
+              <List component={LoadingIndicator} />
+            </div> :
+            <div>
+              <span
+                className={styles.amount}
+                ref={(r) => summaryHeaders.push({ el: r, text: this.createSearchInput([param]) })}
+              >
+                Hittade {this.props.additionalAds.get(index).amount} jobb {this.createSearchSummary([param])}
+              </span>
+              <List items={this.props.additionalAds.get(index).jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
+            </div>
+          }
+        </div>
+      );
+    });
 
     // Show a loading indicator when we're loading
     if (this.props.loading) {
@@ -433,54 +463,24 @@ export class ListPage extends React.Component {
 
     // If we're not loading, don't have an error and there are repos, show the repos
     } else if (!this.props.jobs.length) {
-      // mainContent = (
-      //   <div>
-      //     {this.props.loadingAdditional &&
-      //       <div className={styles.additionalJobs}>
-      //         <List component={LoadingIndicator} />
-      //       </div>
-      //     }
-      //     {this.props.additionalJobs &&
-      //       <div className={styles.additionalJobs}>
-      //         <List items={this.props.additionalJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick}/>
-      //       </div>
-      //     }
-      //     <RutTips
-      //       summary={this.createSearchSummary()}
-      //       shouldShowSadFace={!this.props.amount}
-      //     />
-      //   </div>
-      // );
+      mainContent = (
+        <div>
+          <SadFace
+            summary={this.createSearchSummary()}
+          />
+          {ads}
+          <RutTips
+            summary={this.createSearchSummary()}
+            shouldShowSadFace={!this.props.amount}
+            shouldShowTips={this.shouldShowTips()}
+          />
+        </div>
+      );
 
     } else if (this.props.jobs !== false) {
       // console.log(this.props.additionalAds.get(0));
       // console.log(this.props.additionalSearchParameters);
       // console.log(this.props.additionalSearchParameters[0]);
-
-      summaryHeaders = [];
-      const ads = this.props.additionalSearchParameters.map((param, index) => {
-        return (
-          <div className={styles.additionalJobs} key={'additional-ads-' + index}>
-            {!this.props.additionalAds.get(index) ?
-              <div>
-                <span className={styles.amount}>
-                  Hittade ... jobb {this.createSearchSummary([param])}
-                </span>
-                <List component={LoadingIndicator} />
-              </div> :
-              <div>
-                <span
-                  className={styles.amount}
-                  ref={(r) => summaryHeaders.push({ el: r, text: this.createSearchInput([param]) })}
-                >
-                  Hittade {this.props.additionalAds.get(index).amount} jobb {this.createSearchSummary([param])}
-                </span>
-                <List items={this.props.additionalAds.get(index).jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
-              </div>
-            }
-          </div>
-        );
-      });
 
       mainContent = (
         <div>

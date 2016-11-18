@@ -20,6 +20,7 @@ import {
 
 import {
   LOAD_JOBS_SUCCESS,
+  LOAD_ADDITIONAL_JOBS,
 } from '../App/constants';
 
 import {
@@ -51,9 +52,16 @@ function listReducer(state = initialState, action) {
   switch (action.type) {
 
     case ADD_OCCUPATION:
-      let addOccupation = state.get('occupations').filter((item, index) => {
-        return action.occupation.id !== item.id;
-      }).push(action.occupation);
+    case LOAD_ADDITIONAL_JOBS:
+      let addOccupation;
+      if (action.additional && action.additional.occupations) {
+        addOccupation = action.additional.occupations;
+      } else {
+        addOccupation = action.occupation;
+      }
+      addOccupation = state.get('occupations').filter((item, index) => {
+        return addOccupation.id !== item.id;
+      }).push(addOccupation);
       return state
         .set('occupations', addOccupation)
         .setIn(['uiState', 'showMatchingJobs'], false)
