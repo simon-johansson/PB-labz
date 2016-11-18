@@ -99,7 +99,8 @@ export class ListPage extends React.Component {
 
     // console.log('mount');
     // summaryHeaders = [];
-    window.addEventListener('scroll', this.onScroll);
+    window.addEventListener('scroll', this.onScroll, false);
+    // window.addEventListener('touchmove', this.onScroll);
 
     // if (this.props.occupations && this.props.occupations.length > 0) {
     //   this.props.onSubmitForm();
@@ -108,27 +109,45 @@ export class ListPage extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll, false);
+    // window.removeEventListener('touchmove', this.onScroll, false);
   }
 
   onScroll() {
     const headers = summaryHeaders.filter(h => h.el);
+    // console.log(headers);
     const position = document.documentElement.scrollTop || document.body.scrollTop;
 
     // console.log(headers);
 
     if (position > headers[0].el.offsetTop) {
-      this.setState({ showStickyHeader: true });
+      if (!this.state.showStickyHeader) {
+        this.setState({ showStickyHeader: true });
+      }
     } else {
-      this.setState({ showStickyHeader: false });
+      if (this.state.showStickyHeader) {
+        this.setState({ showStickyHeader: false });
+      }
     }
 
     const closest = headers.sort((a, b) => {
+      // console.log(a, b);
       // console.log(a.el.offsetTop, b.el.offsetTop, position);
-      return ((position > a.el.offsetTop) && (position < b.el.offsetTop)) ? -1 : 1;
-    })[0];
+      const aOffset = a.el.offsetTop;
+      const bOffset = b.el.offsetTop;
+      const high = aOffset > bOffset ? aOffset : bOffset;
+      const low = aOffset < bOffset ? aOffset : bOffset;
 
+      return ((position > low) && (position < high)) ? 1 : -1;
+    })[0];
     // console.log(closest);
-    this.setState({ stickyHeaderText: closest.text });
+
+    // const test = _.orderBy(headers, [(o) => {
+    //   return o.el.offsetTop;
+    // }], ['desc'])[0];
+
+    if (closest.text !== this.state.stickyHeaderText) {
+      this.setState({ stickyHeaderText: closest.text });
+    }
   }
 
   // componentWillUpdate() {
@@ -158,7 +177,7 @@ export class ListPage extends React.Component {
    * Changed route to '/features'
    */
   openHomePage = () => {
-    console.log('openHomePage');
+    // console.log('openHomePage');
 
     this.props.setUiState({
       showMatchingJobs: false,
@@ -391,6 +410,7 @@ export class ListPage extends React.Component {
   }
 
   render() {
+    console.log('render');
     // console.log(this.props.additionalSearchParameters);
     // console.log(this.props.additionalAds);
 
