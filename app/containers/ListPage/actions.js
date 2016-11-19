@@ -21,6 +21,7 @@ import {
   SET_UI_STATE,
   SET_OCCUPATION,
   SET_LOCATION,
+  SHOULD_LOAD_NEW_JOBS,
 } from './constants';
 
 export function removeOccupation(occupationIndex) {
@@ -48,6 +49,12 @@ export function setLocations(locations = []) {
   return {
     type: SET_LOCATION,
     locations,
+  };
+}
+
+export function shouldLoadNewJobs() {
+  return {
+    type: SHOULD_LOAD_NEW_JOBS,
   };
 }
 

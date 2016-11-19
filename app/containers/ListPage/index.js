@@ -77,6 +77,7 @@ export class ListPage extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       tab: 'all',
       showMatchingJobs: props.showMatchingJobs,
@@ -84,6 +85,10 @@ export class ListPage extends React.Component {
       scrollPosition: 0,
       showStickyHeader: false,
       stickyHeaderText: '',
+      originalSearchParams: {
+        occupations: props.occupations,
+        locations: props.locations,
+      },
     };
 
     this.onAdvertClick = this.onAdvertClick.bind(this);
@@ -141,9 +146,9 @@ export class ListPage extends React.Component {
         const low = aOffset < bOffset ? aOffset : bOffset;
 
         if (isSafari) {
-          return ((position > low) && (position < high)) ? 1 : -1;
-        } else {
           return ((position > low) && (position < high)) ? -1 : 1;
+        } else {
+          return ((position > low) && (position < high)) ? 1 : -1;
         }
       })[0];
     // console.log(closest);
@@ -261,6 +266,11 @@ export class ListPage extends React.Component {
   }
 
   createCompetencesCloud(matchingJobs) {
+    const {
+      occupations: ogOccupations,
+      locations: ogLocations,
+    } = this.state.originalSearchParams;
+
     // if (this.props.competences.length) {
     //   return this.props.competences.map((item) => {
     //     return (
@@ -305,7 +315,7 @@ export class ListPage extends React.Component {
               <p>Kan inte göra någon matchning för denna sökning</p>
             </div>
           }
-          { !!this.props.knownCompetences.size &&
+          {!!this.props.knownCompetences.size &&
             <button
               className={styles.showMatchingButton + ' btn btn-default'}
               onClick={this.showMatchingJobs.bind(this)}
@@ -363,6 +373,9 @@ export class ListPage extends React.Component {
       showNonMatchningJobs: this.props.showNonMatchningJobs,
       scrollPosition: 0,
     });
+    if (this.props.additionalSearchParameters.size) {
+      this.props.onSubmitForm();
+    }
   }
 
   scrollTo(position = 0) {
@@ -401,16 +414,22 @@ export class ListPage extends React.Component {
 
   shouldShowTips() {
     let showShow = true;
-    this.props.occupations.forEach(o => {
-      // console.log(o.typ);
-      switch (o.typ) {
-        case 'YRKESOMRADE':
-        case 'YRKESGRUPP':
-          showShow = false;
-        case 'YRKESROLL':
-          break;
-      }
-    });
+    if (!this.props.occupations.size) {
+      showShow = false;
+    } else {
+      this.props.occupations.forEach(o => {
+        // console.log(o.typ);
+        switch (o.typ) {
+          case 'YRKESOMRADE':
+          case 'YRKESGRUPP':
+            showShow = false;
+            break;
+          case 'YRKE':
+          case 'YRKESROLL':
+            break;
+        }
+      });
+    }
     // console.log(showShow);
     return showShow;
   }
@@ -420,6 +439,10 @@ export class ListPage extends React.Component {
     // console.log(this.props.additionalSearchParameters);
     // console.log(this.props.additionalAds);
 
+    const {
+      occupations: ogOccupations,
+      locations: ogLocations,
+    } = this.state.originalSearchParams;
     let mainContent = null;
     let matchingContent = null;
     const matchingJobs = [];
@@ -465,9 +488,11 @@ export class ListPage extends React.Component {
     } else if (!this.props.jobs.length) {
       mainContent = (
         <div>
-          <SadFace
-            summary={this.createSearchSummary()}
-          />
+          {!this.props.additionalAds.size &&
+            <SadFace
+              summary={this.createSearchSummary()}
+            />
+          }
           {ads}
           <RutTips
             summary={this.createSearchSummary()}
@@ -481,11 +506,10 @@ export class ListPage extends React.Component {
       // console.log(this.props.additionalAds.get(0));
       // console.log(this.props.additionalSearchParameters);
       // console.log(this.props.additionalSearchParameters[0]);
-
       mainContent = (
         <div>
           <span
-            ref={(r) => summaryHeaders.push({ el: r, text: this.createSearchInput() })}
+            ref={(r) => summaryHeaders.push({ el: r, text: this.createSearchInput(ogOccupations, ogLocations) })}
             className={styles.amount}
           >
             Hittade {this.props.amount} jobb {this.createSearchSummary()}

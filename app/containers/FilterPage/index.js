@@ -26,6 +26,7 @@ import {
   selectAreas,
   selectKnownCompetences,
   selectTotalAmount,
+  selectAdditionalAds,
 } from 'containers/App/selectors';
 
 import {
@@ -43,6 +44,7 @@ import {
   removeOccupation,
   removeLocation,
   setUiState,
+  shouldLoadNewJobs,
 } from 'containers/ListPage/actions';
 import {
   loadJobs,
@@ -167,6 +169,7 @@ export class FilterPage extends React.Component {
       locations: this.props.locations,
       time: new Date().valueOf(),
     });
+    this.props.onShouldLoadNewJobs();
     this.addListPage();
   }
 
@@ -384,6 +387,7 @@ FilterPage.propTypes = {
   onRemoveOccupation: React.PropTypes.func,
   onRemoveLocation: React.PropTypes.func,
   setUiState: React.PropTypes.func,
+  onShouldLoadNewJobs: React.PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -392,6 +396,7 @@ export function mapDispatchToProps(dispatch) {
     onRemoveLocation: (index) => dispatch(removeLocation(index)),
     onGetTotalAmount: () => dispatch(getTotalAmount()),
     setUiState: (state) => dispatch(setUiState(state)),
+    onShouldLoadNewJobs: () => dispatch(shouldLoadNewJobs()),
     changeRoute: (url) => dispatch(push(url)),
     // onSubmitForm: (evt) => {
     //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
@@ -422,6 +427,7 @@ const mapStateToProps = createStructuredSelector({
   shouldLoadNewJobs: selectShouldLoadNewJobs(),
   locations: selectLocations(),
   totalAmount: selectTotalAmount(),
+  additionalAds: selectAdditionalAds(),
   loading: selectLoading(),
   error: selectError(),
 });

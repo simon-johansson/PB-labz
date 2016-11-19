@@ -16,6 +16,7 @@ import {
   SET_UI_STATE,
   SET_OCCUPATION,
   SET_LOCATION,
+  SHOULD_LOAD_NEW_JOBS,
 } from './constants';
 
 import {
@@ -52,21 +53,20 @@ function listReducer(state = initialState, action) {
   switch (action.type) {
 
     case ADD_OCCUPATION:
-    case LOAD_ADDITIONAL_JOBS:
-      let addOccupation;
-      if (action.additional && action.additional.occupations) {
-        addOccupation = action.additional.occupations;
-      } else {
-        addOccupation = action.occupation;
-      }
-      addOccupation = state.get('occupations').filter((item, index) => {
-        return addOccupation.id !== item.id;
-      }).push(addOccupation);
+      const addOccupation = state.get('occupations').filter((item, index) => {
+        return action.occupation.id !== item.id;
+      }).push(action.occupation);
       return state
         .set('occupations', addOccupation)
         .setIn(['uiState', 'showMatchingJobs'], false)
         .setIn(['uiState', 'showNonMatchningJobs'], false)
         .set('shouldLoadNewJobs', true);
+
+    case LOAD_ADDITIONAL_JOBS:
+      const addAdditionalOccupation = state.get('occupations').filter((item, index) => {
+        return action.additional.occupations.id !== item.id;
+      }).push(action.additional.occupations);
+      return state.set('occupations', addAdditionalOccupation);
 
     case REMOVE_OCCUPATION:
       let occupations = state.get('occupations').filter((item, index) => action.index !== index);
@@ -119,6 +119,10 @@ function listReducer(state = initialState, action) {
         .setIn(['uiState', 'showMatchingJobs'], action.showMatchingJobs)
         .setIn(['uiState', 'showNonMatchningJobs'], action.showNonMatchningJobs)
         .setIn(['uiState', 'scrollPosition'], action.scrollPosition);
+
+    case SHOULD_LOAD_NEW_JOBS:
+      return state.set('shouldLoadNewJobs', true);
+
     default:
       return state;
   }

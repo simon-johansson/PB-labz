@@ -14,3 +14,4 @@ export const REMOVE_LOCATION = 'boilerplate/Home/REMOVE_LOCATION';
 export const SET_UI_STATE = 'boilerplate/Home/SET_UI_STATE';
 export const SET_LOCATION = 'boilerplate/Home/SET_LOCATION';
 export const SET_OCCUPATION = 'boilerplate/Home/SET_OCCUPATION';
+export const SHOULD_LOAD_NEW_JOBS = 'boilerplate/Home/SHOULD_LOAD_NEW_JOBS';
