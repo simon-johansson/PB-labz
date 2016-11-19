@@ -374,6 +374,12 @@ export class ListPage extends React.Component {
       scrollPosition: 0,
     });
     if (this.props.additionalSearchParameters.size) {
+      this.setState({
+        originalSearchParams: {
+          occupations: this.props.occupations,
+          locations: this.props.locations,
+        },
+      })
       this.props.onSubmitForm();
     }
   }
