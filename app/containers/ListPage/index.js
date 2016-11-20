@@ -304,9 +304,19 @@ export class ListPage extends React.Component {
               <div className={styles.matchDescription}>
                 <p>Ange dina kompetenser för att se jobben som passar dig bäst</p>
               </div>
-              <span className={styles.amount}>Mest efterfrågade kompetenserna {this.createSearchSummary()}</span>
+              <span
+                className={styles.amount}
+                ref={(r) => summaryHeaders.push({ el: r, text: 'Mest efterfrågade kompetenserna' })}
+              >
+                Mest efterfrågade kompetenserna {this.createSearchSummary()}
+              </span>
               <List items={top5} component={CompetenceListItem} />
-              <span className={styles.amount}>Alla efterfrågade kompetenser {this.createSearchSummary()}</span>
+              <span
+                className={styles.amount}
+                ref={(r) => summaryHeaders.push({ el: r, text: 'Alla efterfrågade kompetenserna' })}
+              >
+                Alla efterfrågade kompetenser {this.createSearchSummary()}
+              </span>
               <List items={this.props.competences} component={CompetenceListItem} />
             </div>
           }
@@ -384,15 +394,24 @@ export class ListPage extends React.Component {
     }
   }
 
-  scrollTo(position = 0) {
+  scrollTo(position = 0, effect = 'instant') {
     if (this.props.location.pathname ===  '/list') {
       // window.requestAnimationFrame(() => {
       //   document.body.scrollTop = document.documentElement.scrollTop = position;
       // });
 
-      setTimeout(() => {
-        window.scrollTo(0, position);
-      }, 1);
+      if (effect === 'instant') {
+        setTimeout(() => {
+          window.scrollTo(0, position);
+        }, 1);
+      } else {
+        setTimeout(() => {
+          window.scroll({
+            top: position,
+            behavior: 'smooth',
+          });
+        }, 1);
+      }
     }
   }
 
@@ -438,6 +457,10 @@ export class ListPage extends React.Component {
     }
     // console.log(showShow);
     return showShow;
+  }
+
+  onStickyHeaderClick() {
+    this.scrollTo(0, 'smooth');
   }
 
   render() {
@@ -567,7 +590,12 @@ export class ListPage extends React.Component {
               Matchningskriterier ({this.props.knownCompetences.size})
               <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
             </div>
-            <span className={styles.amount}>{sortedMatchingJobs.length} jobb matchar dina kompetenser</span>
+            <span
+              className={styles.amount}
+              ref={(r) => summaryHeaders.push({ el: r, text: 'Jobb som matchar dina kompetenser' })}
+            >
+              {sortedMatchingJobs.length} jobb matchar dina kompetenser
+            </span>
             <List items={sortedMatchingJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
             { !this.props.showNonMatchningJobs ?
               <button
@@ -577,7 +605,12 @@ export class ListPage extends React.Component {
                 Visa jobb som inte matchar dina kompetenser
               </button> :
               <div>
-                <span className={styles.nonMatchingAmount}>Jobb som inte matchar dina kompetenser</span>
+                <span
+                  className={styles.nonMatchingAmount}
+                  ref={(r) => summaryHeaders.push({ el: r, text: 'Jobb som inte matchar dina kompetenser' })}
+                >
+                  Jobb som inte matchar dina kompetenser
+                </span>
                 <List items={nonMatchingJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
               </div>
             }
@@ -589,7 +622,10 @@ export class ListPage extends React.Component {
     return (
       <article ref='list' className='noselect'>
         {this.state.showStickyHeader &&
-          <div className={styles.stickyHeader}>
+          <div
+            className={styles.stickyHeader}
+            onClick={this.onStickyHeaderClick.bind(this)}
+          >
             {this.state.stickyHeaderText}
           </div>
         }
