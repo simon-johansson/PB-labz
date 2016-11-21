@@ -63,10 +63,17 @@ function listReducer(state = initialState, action) {
         .set('shouldLoadNewJobs', true);
 
     case LOAD_ADDITIONAL_JOBS:
-      const addAdditionalOccupation = state.get('occupations').filter((item, index) => {
-        return action.additional.occupations.id !== item.id;
-      }).push(action.additional.occupations);
-      return state.set('occupations', addAdditionalOccupation);
+      if (action.additional.occupations) {
+        const addAdditionalOccupation = state.get('occupations').filter((item, index) => {
+          return action.additional.occupations.id !== item.id;
+        }).push(action.additional.occupations);
+        return state.set('occupations', addAdditionalOccupation);
+      } else if (action.additional.locations) {
+        const addAdditionalLocation = state.get('locations').filter((item, index) => {
+          return action.additional.locations.id !== item.id;
+        }).push(action.additional.locations);
+        return state.set('locations', addAdditionalLocation);
+      }
 
     case REMOVE_OCCUPATION:
       let occupations = state.get('occupations').filter((item, index) => action.index !== index);

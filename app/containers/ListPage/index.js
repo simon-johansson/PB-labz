@@ -437,7 +437,7 @@ export class ListPage extends React.Component {
     });
   }
 
-  shouldShowTips() {
+  shouldShowOccupationTips() {
     let showShow = true;
     if (!this.props.occupations.size) {
       showShow = false;
@@ -451,6 +451,26 @@ export class ListPage extends React.Component {
             break;
           case 'YRKE':
           case 'YRKESROLL':
+            break;
+        }
+      });
+    }
+    // console.log(showShow);
+    return showShow;
+  }
+
+  shouldShowLocationTips() {
+    let showShow = true;
+    if (!this.props.locations.size) {
+      showShow = false;
+    } else {
+      this.props.locations.forEach(o => {
+        // console.log(o.typ);
+        switch (o.typ) {
+          case 'LAN':
+            showShow = false;
+            break;
+          case 'KOMMUN':
             break;
         }
       });
@@ -478,21 +498,25 @@ export class ListPage extends React.Component {
     const nonMatchingJobs = [];
     summaryHeaders = [];
     const ads = this.props.additionalSearchParameters.map((param, index) => {
+      const isLocation = param.typ === 'KOMMUN';
+      const searchSummary = isLocation ? this.createSearchSummary(null, [param]) : this.createSearchSummary([param]);
+      const inputSummary = isLocation ? this.createSearchInput(null, [param]) : this.createSearchInput([param]);
+
       return (
         <div className={styles.additionalJobs} key={'additional-ads-' + index}>
           {!this.props.additionalAds.get(index) ?
             <div>
               <span className={styles.amount}>
-                Hittade ... jobb {this.createSearchSummary([param])}
+                Hittade ... jobb {searchSummary}
               </span>
               <List component={LoadingIndicator} />
             </div> :
             <div>
               <span
                 className={styles.amount}
-                ref={(r) => summaryHeaders.push({ el: r, text: this.createSearchInput([param]) })}
+                ref={(r) => summaryHeaders.push({ el: r, text: inputSummary })}
               >
-                Hittade {this.props.additionalAds.get(index).amount} jobb {this.createSearchSummary([param])}
+                Hittade {this.props.additionalAds.get(index).amount} jobb {searchSummary}
               </span>
               <List items={this.props.additionalAds.get(index).jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
             </div>
@@ -525,8 +549,10 @@ export class ListPage extends React.Component {
           {ads}
           <RutTips
             summary={this.createSearchSummary()}
+            occupationSummary={this.createSearchSummary(this.props.occupations, [])}
             shouldShowSadFace={!this.props.amount}
-            shouldShowTips={this.shouldShowTips()}
+            shouldShowOccupationTips={this.shouldShowOccupationTips()}
+            shouldShowLocationTips={this.shouldShowLocationTips()}
           />
         </div>
       );
@@ -547,8 +573,10 @@ export class ListPage extends React.Component {
           {ads}
           <RutTips
             summary={this.createSearchSummary()}
+            occupationSummary={this.createSearchSummary(this.props.occupations, [])}
             shouldShowSadFace={!this.props.amount}
-            shouldShowTips={this.shouldShowTips()}
+            shouldShowOccupationTips={this.shouldShowOccupationTips()}
+            shouldShowLocationTips={this.shouldShowLocationTips()}
           />
         </div>
       );

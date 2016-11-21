@@ -37,26 +37,18 @@ export class RutTips extends React.Component {
     super(props);
     this.state = {
       occupationsTipsNumber: 3,
+      locationsTipsNumber: 3,
     };
   }
 
-  onTagClick(item, e) {
-    // let occupations = this.state.occupations.slice();
-
-    // if (!!occupations.filter((o) => o.namn === item.namn).length) {
-    //   occupations = occupations.filter((o) => o.namn !== item.namn);
-    // } else {
-    //   occupations.push(item);
-    // }
-
-    // occupations.push(item);
+  onOccupationTagClick(item, e) {
 
     if (item.typ === 'more') {
       this.setState({
         occupationsTipsNumber: this.state.occupationsTipsNumber + 3,
       });
     } else {
-      this.props.onLoadJobs(item);
+      this.props.onLoadAdditionalOccupation(item);
       this.scrollToBottom();
 
       ls.newPreviousSearch({
@@ -65,9 +57,24 @@ export class RutTips extends React.Component {
         time: new Date().valueOf(),
       });
     }
+  }
 
-    // this.setState({ occupations });
+  onLocationTagClick(item, e) {
 
+    if (item.typ === 'more') {
+    this.setState({
+      locationsTipsNumber: this.state.locationsTipsNumber + 3,
+    });
+    } else {
+      this.props.onLoadAdditionalLocations(item);
+      this.scrollToBottom();
+
+      ls.newPreviousSearch({
+        occupations: this.props.occupations,
+        locations: this.props.locations.push(item),
+        time: new Date().valueOf(),
+      });
+    }
   }
 
   scrollToBottom() {
@@ -96,9 +103,15 @@ export class RutTips extends React.Component {
   // }
 
   shouldShowTips() {
-    // console.log(this.props.shouldShowTips, !!this.filterOccupations().length);
-    return this.props.shouldShowTips &&
-           !!this.filterOccupations().length;
+    return this.shouldShowOccupationTips() || this.shouldShowLocationTips();
+  }
+
+  shouldShowOccupationTips() {
+    return this.props.shouldShowOccupationTips && !!this.filterOccupations().length;
+  }
+
+  shouldShowLocationTips() {
+    return this.props.shouldShowLocationTips && !!this.filterLocations().length;
   }
 
   filterOccupations() {
@@ -113,9 +126,32 @@ export class RutTips extends React.Component {
           });
           // console.log(this.props.additionalSearchParameters);
           this.props.additionalSearchParameters.forEach(o => {
+            // console.log(o);
             if (isIncluded(o.namn, namn)) included = true;
           });
+          // console.log(typ);
           if (typ === 'YRKESROLL' && !included) return true;
+        });
+    } else {
+      return [];
+    }
+  }
+
+  filterLocations() {
+    if (this.props.related) {
+      const isIncluded = (name1, name2) => name1 === name2;
+      return this.props.related
+        .filter(rel => {
+          const { namn, typ } = rel.matchningskriterium;
+          let included = false;
+          this.props.locations.forEach((o) => {
+            if (isIncluded(o.namn, namn)) included = true;
+          });
+          this.props.additionalSearchParameters.forEach((o) => {
+            if (isIncluded(o.namn, namn)) included = true;
+          });
+          // console.log(typ);
+          if (typ === 'KOMMUN' && !included) return true;
         });
     } else {
       return [];
@@ -140,39 +176,47 @@ export class RutTips extends React.Component {
     });
   }
 
-  numberOfTipsShowing() {
-    return this.state.occupationsTipsNumber;
-  }
-
-  shouldShowMoreItem() {
-    const moreItem = {namn: 'Visa fler...', typ: 'more'};
-    const numberOfTips = this.filterOccupations().length;
-
-    return numberOfTips > this.numberOfTipsShowing() ? moreItem : false;
+  shouldShowMoreItem(listType, numberOfTips, numberOfTipsShowing) {
+    const moreItem = { namn: 'Visa fler...', typ: 'more', list: listType };
+    return numberOfTips > numberOfTipsShowing ? moreItem : false;
   }
 
   render() {
-    // console.log(this.props.shouldShowSadFace);
+    const moreOccupationItems = this.shouldShowMoreItem('occupations', this.filterOccupations().length, this.state.occupationsTipsNumber);
+    const occupationItems = this.filterOccupations().slice(0, this.state.occupationsTipsNumber);
+    if (moreOccupationItems) occupationItems.push(moreOccupationItems);
 
-    const moreItem = this.shouldShowMoreItem();
-    const items = this.filterOccupations().slice(0, this.numberOfTipsShowing());
-    if (moreItem) items.push(moreItem);
+    const moreLocationItems = this.shouldShowMoreItem('locations', this.filterOccupations().length, this.state.locationsTipsNumber);
+    const locationItems = this.filterLocations().slice(0, this.state.locationsTipsNumber);
+    if (moreLocationItems) locationItems.push(moreLocationItems);
 
     return (
       <div>
         {this.shouldShowTips() &&
           <div id='rut-tips' className={styles.tipsWrapper}>
             <h2>Tips!</h2>
-            <div className={styles.tagWrapper}>
-              <p>Relaterade yrken {this.props.summary}</p>
-              {/*<img className={styles.tipsImg} src={tips} />*/}
-              {/*this.getRelatedOccupations()*/}
-              <List
-                items={items}
-                component={OccupationListItem}
-                click={this.onTagClick.bind(this)}
-              />
-            </div>
+
+            {this.shouldShowLocationTips() &&
+              <div className={styles.tagWrapper}>
+                <p>Jobb {this.props.occupationSummary} i närliggande orter</p>
+                <List
+                  items={locationItems}
+                  component={OccupationListItem}
+                  click={this.onLocationTagClick.bind(this)}
+                />
+              </div>
+            }
+
+            {this.shouldShowOccupationTips() &&
+              <div className={styles.tagWrapper}>
+                <p>Relaterade yrken {this.props.summary}</p>
+                <List
+                  items={occupationItems}
+                  component={OccupationListItem}
+                  click={this.onOccupationTagClick.bind(this)}
+                />
+              </div>
+            }
           </div>
         }
       </div>
@@ -186,15 +230,22 @@ RutTips.propTypes = {
 
 RutTips.defaultProps = {
   shouldShowSadFace: true,
-  shouldShowTips: true,
+  shouldShowOccupationTips: true,
+  shouldShowLocationTips: true,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLoadJobs: (occupations) => {
+    onLoadAdditionalOccupation: (occupations) => {
       // dispatch(addOccupation(occupation));
       dispatch(loadAdditionalJobs({
-        occupations: occupations,
+        occupations,
+      }));
+    },
+    onLoadAdditionalLocations: (locations) => {
+      // dispatch(addOccupation(occupation));
+      dispatch(loadAdditionalJobs({
+        locations,
       }));
     }
   };

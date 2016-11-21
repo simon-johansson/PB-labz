@@ -106,7 +106,7 @@ function appReducer(state = initialState, action) {
 
     case LOAD_ADDITIONAL_JOBS:
       // console.log(action.additional.occupations);
-      return state.updateIn(['additional', 'searchParameters'], (arr) => arr.push(action.additional.occupations));
+      return state.updateIn(['additional', 'searchParameters'], (arr) => arr.push(action.additional.occupations || action.additional.locations));
     case LOAD_ADDITIONAL_JOBS_SUCCESS:
       return state
         .setIn(['afData', 'amount'], state.getIn(['afData', 'amount']) + action.data.amount)
