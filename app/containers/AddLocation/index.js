@@ -118,6 +118,8 @@ export class AddLocation extends React.Component {
                     placeholder="Lägg till ort..."
                     value={this.props.query}
                     autoComplete="off"
+                    autoCapitalize="off"
+                    autoCorrect="off"
                     onChange={this.props.onChangeQuery}
                     ref="locationInput"
                   />

@@ -264,6 +264,8 @@ export class AddOccupation extends React.Component {
                       placeholder="Lägg till yrke/fritext..."
                       value={this.props.query}
                       autoComplete="off"
+                      autoCapitalize="off"
+                      autoCorrect="off"
                       onChange={this.props.onChangeQuery}
                       ref="occupationInput"
                     />
