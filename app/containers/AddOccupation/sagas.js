@@ -36,7 +36,7 @@ import {
 } from 'containers/AddOccupation/selectors';
 
 export function* getOccupations() {
-  yield call(delay, 800);
+  yield call(delay, 500);
 
   const query = yield select(selectQuery());
 
