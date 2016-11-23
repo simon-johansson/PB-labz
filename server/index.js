@@ -12,6 +12,21 @@ const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngr
 const resolve = require('path').resolve;
 const app = express();
 
+const Fuse = require('fuse.js');
+const yrken = require('../yrken.json');
+const fuesOptions = {
+  // include: ["matches"],
+  shouldSort: true,
+  threshold: 0.4,
+  // tokenize: true,
+  // matchAllTokens: true,
+  location: 0,
+  distance: 100,
+  maxPatternLength: 32,
+  keys: ['namn'],
+};
+const fuse = new Fuse(yrken, fuesOptions);
+
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
 
@@ -45,16 +60,17 @@ app.post('/matchandeRekryteringsbehov/:id', (req, res) => {
 });
 
 app.get('/matchningskriterier', (req, res) => {
-  // console.log(req);
+  const query = req.query.namnfilter;
   // const url = 'http://pilot.arbetsformedlingen.se:80/pbv3api/rest/af/v1/matchning' + req.originalUrl;
-  const url = 'https://www.arbetsformedlingen.se/rest/matchning/rest/af/v1/matchning' + req.originalUrl;
-  // console.log(req.body);
-  request(url, (error, response, body) => {
-    if (!error) {
-      console.log(body);
-      res.json(body);
-    }
-  });
+  // const url = 'https://www.arbetsformedlingen.se/rest/matchning/rest/af/v1/matchning/matchningskriterier?namnfilter=' + 'test' + '&typer=yrken&typer=yrkesgrupper&typer=yrkesomraden';
+  // request(url, (error, response, body) => {
+  //   if (!error) {
+  //     console.log(body);
+  //     res.json(body);
+  //   }
+  // });
+  const result = fuse.search(query);
+  res.json(result);
 });
 
 

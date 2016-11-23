@@ -173,6 +173,7 @@ export class JobAdvert extends React.Component {
   }
 
   shouldShowMap(erbjudenArbetsplats) {
+    // console.log(erbjudenArbetsplats);
     return erbjudenArbetsplats && erbjudenArbetsplats.geoPosition;
   }
 
@@ -182,10 +183,11 @@ export class JobAdvert extends React.Component {
 
     // console.log(erbjudenArbetsplats);
     if (this.shouldShowMap(erbjudenArbetsplats)) {
+      const { latitud, longitud } = erbjudenArbetsplats.geoPosition;
       markers = [{
         position: {
-          lat: erbjudenArbetsplats.geoPosition.latitud,
-          lng: erbjudenArbetsplats.geoPosition.longitud,
+          lat: latitud > longitud ? latitud : longitud,
+          lng: latitud < longitud ? latitud : longitud,
         }
       }];
     }
@@ -238,7 +240,12 @@ export class JobAdvert extends React.Component {
                   />
                 </div>
               }
-              <button className={styles.applyButton + ' btn btn-default'}>Ansök</button>
+              <button
+                className={styles.applyButton + ' btn btn-default'}
+                onClick={() => alert('Går ej att ansöka i prototypen')}
+              >
+                Ansök
+              </button>
             </div>
           }
           {!this.props.advert &&

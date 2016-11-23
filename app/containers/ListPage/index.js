@@ -302,7 +302,7 @@ export class ListPage extends React.Component {
           {!!this.props.competences.length &&
             <div>
               <div className={styles.matchDescription}>
-                <p>Ange dina kompetenser för att se jobben som passar dig bäst</p>
+                <p>Välj dina kompetenser för att se jobben som passar dig bäst</p>
               </div>
               <span
                 className={styles.amount}

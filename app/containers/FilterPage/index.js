@@ -291,6 +291,15 @@ export class FilterPage extends React.Component {
 
             {/*<hr className={styles.noMarginTop} />*/}
 
+            <p>Visa endast annonser inkommna</p>
+            <div className={styles.buttonGroup}>
+              <button>Idag</button>
+              <button>Senaste veckan</button>
+              <button>Senaste månaden</button>
+            </div>
+
+            <hr />
+
             <p>Anställningstyp</p>
             <div className={styles.buttonWrapper}>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Vanlig</button>
@@ -333,14 +342,14 @@ export class FilterPage extends React.Component {
             }
 
 
-            <p>Visa endast annonser med ordet</p>
+            <p>Visa endast annonser med ordet...</p>
             <form autoComplete="off">
               <div className="form-group">
                 <input
                   type="text"
                   className="form-control"
                   id="freetext-filter"
-                  placeholder="T.ex: Engelska"
+                  placeholder="nyckelord/företagsnamn/osv."
                   autoComplete="off"
                 />
               </div>
