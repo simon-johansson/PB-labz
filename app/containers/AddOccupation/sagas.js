@@ -6,7 +6,7 @@ import { takeLatest } from 'redux-saga';
 import { take, call, put, select, fork, cancel } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import Fuse from 'fuse.js';
-import yrken from '../../../yrken.json'
+import yrken from '../../../yrken.json';
 const options = {
   shouldSort: true,
   threshold: 0.3,
@@ -18,6 +18,7 @@ const options = {
   keys: ['namn'],
 };
 const fuse = new Fuse(yrken, options);
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
 import {
   CHANGE_QUERY,
@@ -35,9 +36,9 @@ import {
 } from 'containers/AddOccupation/selectors';
 
 export function* getOccupations() {
+  yield call(delay, 150);
 
   const query = yield select(selectQuery());
-  // console.log(query);
 
   // const requestURL = `https://www.arbetsformedlingen.se/rest/matchning/rest/af/v1/matchning/matchningskriterier?namnfilter=${query}&typer=yrken&typer=yrkesgrupper&typer=yrkesomraden`;
   // const occupations = yield call(request, requestURL);
@@ -48,7 +49,6 @@ export function* getOccupations() {
     // yield put(occupationsLoaded(occupations.data));
 
     const result = fuse.search(query);
-    // console.log(result);
     yield put(occupationsLoaded(result));
 
   } else {
