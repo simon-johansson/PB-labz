@@ -10,6 +10,7 @@ import { push } from 'react-router-redux';
 // import Helmet from 'react-helmet';
 import _ from 'lodash';
 import * as ls from 'utils/localstorage';
+import Switch from 'react-ios-switch';
 
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';
@@ -62,10 +63,21 @@ import LoadingIndicator from 'components/LoadingIndicator';
 
 import styles from './styles.css';
 
+const momentOptions = {
+  sameDay: '[Idag] LT',
+  lastDay: '[Igår] LT',
+  lastWeek: 'DD MMM',
+  sameElse: 'DD MMM',
+};
+
 export class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      amountPrevious: 3,
+      savedSearches: ls.getFavoriteSearchs(),
+      editSaved: false,
+    };
 
     this.onSeachButtonClick = this.onSeachButtonClick.bind(this);
   }
@@ -159,14 +171,69 @@ export class HomePage extends React.Component {
     this.addFilterPage();
   }
 
+  onChangeNotify(index, shouldNotify) {
+    const searches = this.state.savedSearches.slice();
+    const search = searches[index];
+    search.notify = shouldNotify;
+    searches[index] = search;
+
+    this.setState({ savedSearches: searches });
+    ls.setFavoriteSearchs(searches);
+  }
+
+  onDeleteSaved(index) {
+    const searches = this.state.savedSearches.slice();
+    searches.splice(index, 1);
+
+    this.setState({ savedSearches: searches });
+    ls.deleteFavoriteSearch(index);
+  }
+
+  savedSearches() {
+    return this.state.savedSearches.map((item, index) => {
+      const occupations = item.occupations.map(i => i.namn).join(', ') || 'Alla yrken';
+      const locations = item.locations.map(i => i.namn).join(' & ') || 'Hela Sverige';
+
+      return (
+        <div
+          className={this.state.editSaved ? styles.savedSearchesWrapper : styles.previousSearchesWrapper}
+          onClick={!this.state.editSaved ? this.onClickPreviousSearch.bind(this, item) : () => {}}
+        >
+          <div className={styles.previousSearcheParameters}>
+            {item.notify &&
+              <span className={styles.bell + ' glyphicon glyphicon-bell'} />
+            }
+            <span>{occupations}</span> <br />
+            <span className={styles.small}>{locations}</span>
+            { this.state.editSaved &&
+              <div>
+                <span className={styles.notifyText}>Notiser för nyinkomna jobb</span>
+                <Switch
+                  checked={item.notify}
+                  onChange={this.onChangeNotify.bind(this, index, !item.notify)}
+                />
+              </div>
+            }
+          </div>
+          {this.state.editSaved ?
+            <div
+              className={styles.deleteSaved}
+              onClick={this.onDeleteSaved.bind(this, index)}
+            >
+              <span className={styles.deleteIcon + ' glyphicon glyphicon-trash'} />
+            </div> :
+            <div>
+              <span className={styles.newJobs}>{Math.floor(Math.random() * 15)}</span>
+              <span className={styles.chevronIcon + ' glyphicon glyphicon-chevron-right'} />
+            </div>
+          }
+        </div>
+      )
+    });
+  }
+
   previousSearches() {
-    const momentOptions = {
-      sameDay: '[Idag] LT',
-      lastDay: '[Igår] LT',
-      lastWeek: 'DD MMM',
-      sameElse: 'DD MMM',
-    };
-    const searches = ls.getPreviousSearchs().slice(0, 5);
+    const searches = ls.getPreviousSearchs().slice(0, this.state.amountPrevious);
 
     return searches.map(item => {
       const occupations = item.occupations.map(i => i.namn).join(', ') || 'Alla yrken';
@@ -189,6 +256,10 @@ export class HomePage extends React.Component {
     this.props.onSetOccupations(search.occupations);
     this.props.onSetLocations(search.locations);
     this.addListPage();
+  }
+
+  onEditSaved() {
+    this.setState({ editSaved: !this.state.editSaved });
   }
 
   render() {
@@ -233,14 +304,29 @@ export class HomePage extends React.Component {
           </button>
 
           <div className={styles.latestSearches}>
-            {/*<span className={styles.listHeader}>Sparade sökningar</span>
-            <List items={[]} component={ListItem} />*/}
+            {!!this.savedSearches().length &&
+              <div>
+                <span className={styles.listHeader}>
+                  Bevakade sökningar
+                  {/*<span className={styles.pencil + ' glyphicon glyphicon-pencil'} />*/}
+                  <span
+                    className={styles.pencil}
+                    onClick={this.onEditSaved.bind(this)}
+                  >
+                    { this.state.editSaved ? 'Klar' : 'Redigera' }
+                  </span>
+                </span>
+                <List items={this.savedSearches()} component={ListItem} />
+              </div>
+            }
 
             <span className={styles.listHeader}>Tidigare sökningar</span>
             <List items={this.previousSearches()} component={ListItem} />
           </div>
         </div>
-        <IosMenu />
+        <IosMenu
+          changeRoute={this.props.changeRoute}
+        />
       </article>
     );
   }

@@ -254,15 +254,6 @@ label {
   cursor: pointer;
 }
 
-.saveSearch {
-  cursor: pointer;
-  color: white;
-  position: absolute;
-  top: 20px;
-  right: 15px;
-  font-size: 14px;
-}
-
 .additionalJobs {
   // min-height: 400px;
 }
@@ -279,6 +270,76 @@ label {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.saveSearch {
+  position: absolute;
+  right: 12px;
+  top: 0px;
+  padding-top: 2px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.isSaved {
+  color: gray;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 999;
+  // pointer-events: none;
+}
+
+.saveSearchPopup {
+  position: fixed;
+  top: 30%;
+  width: 80%;
+  left: 10%;
+  height: auto;
+  padding-top: 20px;
+  padding-bottom: 45px;
+  // border: 2px solid red;
+  background: rgba(255,255,255,0.95);
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.popupText {
+  padding: 0 15px;
+}
+
+.bell {
+  margin-right: 5px;
+  color: gray;
+}
+
+.leftConfirmButton,
+.rightConfirmButton {
+  width: 50%;
+  border-top: 1px solid lightgray;
+  display: inline-block;
+  height: 40px;
+  line-height: 35px;
+  position: absolute;
+  bottom: 0;
+}
+
+.leftConfirmButton {
+  border-bottom-left-radius: 5px;
+  left: 0;
+}
+
+.rightConfirmButton {
+  border-bottom-right-radius: 5px;
+  right: 0;
+  border-left: 1px solid lightgray;
 }
 
 :global(.glyphicon-remove) {

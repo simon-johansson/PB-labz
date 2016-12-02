@@ -233,7 +233,7 @@ export class JobAdvert extends React.Component {
 
 
               {!!this.shouldShowMap(erbjudenArbetsplats) &&
-                <div>
+                <div className={styles.map}>
                   <p><b>Karta:</b> {this.props.advert.besoksadressGatuadress}</p>
                   <SimpleMap
                     markers={markers}
@@ -254,7 +254,9 @@ export class JobAdvert extends React.Component {
             </div>
           }
         </div>
-        <IosMenu />
+        <IosMenu
+          changeRoute={this.props.changeRoute}
+        />
       </article>
     );
   }

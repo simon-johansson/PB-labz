@@ -139,6 +139,10 @@
   display: none;
 }
 
+.map {
+  pointer-events: none;
+}
+
 .applyButton {
   // background: #06769F;
   background: #5E8404;

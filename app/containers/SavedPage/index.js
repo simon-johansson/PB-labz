@@ -64,7 +64,7 @@ import LoadingIndicator from 'components/LoadingIndicator';
 
 import styles from './styles.css';
 
-export class FilterPage extends React.Component {
+export class SavedPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -247,12 +247,8 @@ export class FilterPage extends React.Component {
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
             <h1>
-              {this.props.params.home ?
-                <span>Ny sökning</span> :
-                <span>Ändra sökningen</span>
-              }
+              <span>Sparade jobb</span>
             </h1>
-            <span className={styles.cancel} onClick={this.goBack}>Avbryt</span>
           </div>
 
           <form className={styles.searchWrapper}>
@@ -302,8 +298,7 @@ export class FilterPage extends React.Component {
 
             <p>Anställningstyp</p>
             <div className={styles.buttonWrapper}>
-              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Tillsvidare</button>
-              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Visstid</button>
+              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Vanlig</button>
               <button onClick={this.toggleActive.bind(this)}>Sommarjobb</button>
               <button onClick={this.toggleActive.bind(this)}>Efter behov</button>
             </div>
@@ -377,7 +372,7 @@ export class FilterPage extends React.Component {
   }
 }
 
-FilterPage.propTypes = {
+SavedPage.propTypes = {
   changeRoute: React.PropTypes.func,
   loading: React.PropTypes.bool,
   error: React.PropTypes.oneOfType([
@@ -445,4 +440,4 @@ const mapStateToProps = createStructuredSelector({
 });
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(FilterPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SavedPage);

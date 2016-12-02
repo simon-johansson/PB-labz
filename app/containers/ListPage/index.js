@@ -13,6 +13,7 @@ import Tappable from 'react-tappable';
 
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';
+import * as ls from 'utils/localstorage';
 
 import {
   selectRepos,
@@ -89,6 +90,8 @@ export class ListPage extends React.Component {
         occupations: props.occupations,
         locations: props.locations,
       },
+      showSaveSearchPopup: false,
+      searchIsSaved: false
     };
 
     this.onAdvertClick = this.onAdvertClick.bind(this);
@@ -483,6 +486,28 @@ export class ListPage extends React.Component {
     this.scrollTo(0, 'smooth');
   }
 
+  saveSearch() {
+    if (!this.state.searchIsSaved) {
+      this.setState({
+        showSaveSearchPopup: true,
+      });
+    }
+  }
+
+  onSaveConfirm(shouldNotify) {
+    ls.newFavoriteSearch({
+      occupations: this.props.occupations,
+      locations: this.props.locations,
+      time: new Date().valueOf(),
+      notify: shouldNotify,
+    });
+
+    this.setState({
+      searchIsSaved: true,
+      showSaveSearchPopup: false,
+    });
+  }
+
   render() {
     // console.log('render');
     // console.log(this.props.additionalSearchParameters);
@@ -660,9 +685,14 @@ export class ListPage extends React.Component {
         <div className={styles.contentWrapper}>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
-              {/*<span className={styles.saveSearch} onClick={() => console.log('star')}>Spara</span>*/}
               <Tappable className={styles.cancel + ' glyphicon glyphicon-chevron-left'} onTap={this.openHomePage} />
               <h1>Mina sökningar</h1>
+              <span
+                className={`${styles.saveSearch} ${this.state.searchIsSaved ? styles.isSaved : ''}`}
+                onClick={this.saveSearch.bind(this)}
+              >
+                {this.state.searchIsSaved ? 'Bevakad' : 'Bevaka'}
+              </span>
               <form onClick={this.addFilterPage}>
                 <div className="form-group">
                   <div className={styles.searchInputWrapper}>
@@ -713,7 +743,27 @@ export class ListPage extends React.Component {
             <FormattedMessage {...messages.featuresButton} />
           </Button>*/}
         </div>
-        <IosMenu />
+        <IosMenu
+          changeRoute={this.props.changeRoute}
+        />
+        {this.state.showSaveSearchPopup &&
+          <div className={styles.overlay}>
+            <div className={styles.saveSearchPopup}>
+              <p className={styles.popupText}>
+                <span className={styles.bell + ' glyphicon glyphicon-bell'} />
+                Vill du få notiser när nya jobb dyker upp {this.createSearchSummary() || 'denna sökning'}?
+              </p>
+              <div
+                className={styles.leftConfirmButton}
+                onClick={this.onSaveConfirm.bind(this, true)}
+              >Ja</div>
+              <div
+                className={styles.rightConfirmButton}
+                onClick={this.onSaveConfirm.bind(this, false)}
+              >Nej</div>
+            </div>
+          </div>
+        }
       </article>
     );
   }

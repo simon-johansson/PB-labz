@@ -17,6 +17,14 @@ export function set(key, data) {
   setBase(base);
 }
 
+export function setIn(key, index, data) {
+  const base = getBase();
+  const arr = base[key] || [];
+  arr[index] = data;
+  base[key] = arr;
+  setBase(base);
+}
+
 export function pushIn(key, data) {
   const base = getBase();
   const arr = base[key] || [];
@@ -33,7 +41,20 @@ export function unshiftIn(key, data) {
   setBase(base);
 }
 
+export function deleteIn(key, index) {
+  const base = getBase();
+  const arr = base[key] || [];
+  arr.splice(index, 1);
+  base[key] = arr;
+  setBase(base);
+}
+
 export function newPreviousSearch(data) { unshiftIn(PREVIOUS_SEARCH, data); }
+export function deletePreviousSearch(index) { deleteIn(PREVIOUS_SEARCH, index); }
+
 export function newFavoriteSearch(data) { unshiftIn(FAVORITE_SEARCH, data); }
+export function setFavoriteSearchs(data) { set(FAVORITE_SEARCH, data); }
+export function deleteFavoriteSearch(index) { deleteIn(FAVORITE_SEARCH, index); }
+
 export function getPreviousSearchs() { return get(PREVIOUS_SEARCH) || []; }
 export function getFavoriteSearchs() { return get(FAVORITE_SEARCH) || []; }
