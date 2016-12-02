@@ -1,6 +1,6 @@
 
 .contentWrapper {
-  margin-bottom:50px;
+  margin-bottom: 70px;
 }
 
 .searchForm {
@@ -133,6 +133,11 @@ label {
   text-overflow: ellipsis;
   display: block;
 }
+
+.savedSearchesWrapper .previousSearcheParameters {
+  width: calc(100% - 50px);
+}
+
 
 .small {
   font-size: 13px;

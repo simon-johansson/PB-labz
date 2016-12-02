@@ -207,11 +207,13 @@ export class HomePage extends React.Component {
             <span className={styles.small}>{locations}</span>
             { this.state.editSaved &&
               <div>
-                <span className={styles.notifyText}>Notiser för nyinkomna jobb</span>
-                <Switch
-                  checked={item.notify}
-                  onChange={this.onChangeNotify.bind(this, index, !item.notify)}
-                />
+                <label>
+                  <span className={styles.notifyText}>Notiser för nyinkomna jobb</span>
+                  <Switch
+                    checked={item.notify}
+                    onChange={this.onChangeNotify.bind(this, index, !item.notify)}
+                  />
+                </label>
               </div>
             }
           </div>
@@ -223,7 +225,7 @@ export class HomePage extends React.Component {
               <span className={styles.deleteIcon + ' glyphicon glyphicon-trash'} />
             </div> :
             <div>
-              <span className={styles.newJobs}>{Math.floor(Math.random() * 15)}</span>
+              {/*<span className={styles.newJobs}>{Math.floor(Math.random() * 15)}</span>*/}
               <span className={styles.chevronIcon + ' glyphicon glyphicon-chevron-right'} />
             </div>
           }
