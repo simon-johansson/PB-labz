@@ -307,13 +307,14 @@ export class HomePage extends React.Component {
             {!!this.savedSearches().length &&
               <div>
                 <span className={styles.listHeader}>
-                  Bevakade sökningar
-                  {/*<span className={styles.pencil + ' glyphicon glyphicon-pencil'} />*/}
+                  Sparade sökningar
                   <span
                     className={styles.pencil}
                     onClick={this.onEditSaved.bind(this)}
                   >
                     { this.state.editSaved ? 'Klar' : 'Redigera' }
+                    &nbsp;&nbsp;
+                    <span className={'glyphicon glyphicon-pencil'} />
                   </span>
                 </span>
                 <List items={this.savedSearches()} component={ListItem} />

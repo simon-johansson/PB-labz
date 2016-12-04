@@ -9,12 +9,12 @@
 }
 
 .efterfragat {
-  margin-left: 20px;
+  margin-left: 0px;
 }
 
 .competenceOK {
   position: absolute;
-  left: 0px;
+  right: 0px;
   top: 10px;
   color: green;
 }
