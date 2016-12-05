@@ -213,7 +213,11 @@ export class JobAdvert extends React.Component {
 
               {!!this.props.advert.kompetenser.length &&
                 <div className={styles.competenceWrapper}>
-                  <b>Du matchar med:</b> <br />
+                  {this.props.params.matching ?
+                    <b>Du matchar med:</b> :
+                    <b>Vi efterfrågar:</b>
+                  }
+                  <br />
                   {this.createCompetences()}
                 </div>
               }
