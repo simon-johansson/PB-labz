@@ -109,7 +109,7 @@ export class AddLocation extends React.Component {
               <span className={styles.cancel} onClick={this.goBack}>
                 Avbryt
               </span>
-              <form onSubmit={this.props.onSubmitForm} autoComplete="off">
+              <form onSubmit={(e) => { e.preventDefault() }} autoComplete="off">
                 <div className="form-group">
                   <input
                     type="text"
@@ -124,7 +124,6 @@ export class AddLocation extends React.Component {
                     ref="locationInput"
                   />
                 </div>
-                <button type="submit" style={{display: 'none'}} className="btn btn-default">Submit</button>
               </form>
             </div>
 
