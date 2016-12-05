@@ -888,7 +888,8 @@ export class ListPage extends React.Component {
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
               <Tappable className={styles.cancel + ' glyphicon glyphicon-chevron-left'} onTap={this.openHomePage} />
-              <h1>Mina sökningar</h1>
+              {/*<h1>Mina sökningar</h1>*/}
+              <h1>&nbsp;</h1>
               <span
                 className={`${styles.saveSearch} ${this.state.searchIsSaved ? styles.isSaved : ''}`}
                 onClick={this.saveSearch.bind(this)}

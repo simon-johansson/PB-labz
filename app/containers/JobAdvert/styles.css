@@ -165,3 +165,14 @@
   opacity: 1 !important;
 }
 
+.saveAdvert {
+  position: absolute;
+  right: 12px;
+  top: 0px;
+  padding-top: 2px;
+  height: 50px;
+  line-height: 50px;
+
+  font-size: 25px;
+}
+

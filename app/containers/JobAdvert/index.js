@@ -198,6 +198,8 @@ export class JobAdvert extends React.Component {
           <header className={styles.header} onClick={this.openListPage}>
             <span className='glyphicon glyphicon-chevron-left' />
             <h1>Annons</h1>
+            {/*<span className={styles.saveAdvert}>Spara jobb</span>*/}
+            <span className={styles.saveAdvert + ' glyphicon glyphicon-star-empty'} />
           </header>
 
           {this.props.advert &&
