@@ -141,10 +141,12 @@ label {
 .toggleButtons button {
   width: 50%;
   display: inline-block;
-  color: #848484;
+  // color: #848484;
+  color: #345468;
   height: 35px;
   // background: #345468;
-  border: 2px solid #848484;
+  // border: 2px solid #848484;
+  border: 2px solid #345468;
 }
 
 .toggleButtons button:first-child {
@@ -159,7 +161,8 @@ label {
 
 .activeButton {
   // background: #32749D !important;
-  background: #848484 !important;
+  // background: #848484 !important;
+  background: #345468 !important;
   color: white !important;
 }
 
