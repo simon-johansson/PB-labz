@@ -893,7 +893,7 @@ export class ListPage extends React.Component {
                 className={`${styles.saveSearch} ${this.state.searchIsSaved ? styles.isSaved : ''}`}
                 onClick={this.saveSearch.bind(this)}
               >
-                {this.state.searchIsSaved ? 'Sparad' : 'Spara'}
+                {this.state.searchIsSaved ? 'Sparad' : 'Spara sökning'}
               </span>
               <form onClick={this.addFilterPage}>
                 <div className="form-group">
