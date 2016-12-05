@@ -57,7 +57,7 @@ label {
   // border: 1px solid gray;
   padding: 0 0 0 8px;
   width: 80%;
-  height: 30px;
+  height: 35px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   position: relative;
@@ -66,26 +66,28 @@ label {
 
 .inputField {
   color: #333333;
-  line-height: 30px;
+  line-height: 35px;
   height: 30px;
   width: calc(100% - 30px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
+  // font-size: 15px;
 }
 
 .filter {
   display: inline-block;
   vertical-align: top;
-  line-height: 30px;
+  line-height: 35px;
   text-align: center;
   background: #848484;
   color: white;
   width: 20%;
-  height: 30px;
+  height: 35px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  font-size: 15px;
 }
 
 .searchIcon {
@@ -93,7 +95,7 @@ label {
   right: 8px;
   top: 8px;
   display: block;
-  font-size: 15px;
+  font-size: 18px;
   color: #848484;
 }
 
