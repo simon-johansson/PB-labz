@@ -1,0 +1,56 @@
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  position: absolute;
+  right: 10px;
+  text-align: center;
+  line-height: 43px;
+  top: 12px;
+  font-weight: bold;
+  font-size: 15px;
+  background: white;
+}
+
+.circle sup,
+.circle sub {
+  font-size: 16px;
+}
+
+.circle sup {
+  top: -13px;
+  left: -1px;
+}
+
+.circle sub {
+  bottom: -1px;
+  right: -1px;
+}
+
+.division {
+  font-size: 35px;
+  font-weight: normal
+}
+
+.circleTextWrapper {
+  // width: 50px;
+  // height: 50px;
+  // border-radius: 50px;
+  position: absolute;
+  right: 0px;
+  text-align: center;
+  line-height: 10px;
+  bottom: 13px;
+  // font-weight: bold;
+  font-size: 11px;
+}
+
+:global(.greenCircle) {
+  border: 3px solid green;
+}
+:global(.orangeCircle) {
+  border: 3px solid orange;
+}
+:global(.yellowCircle) {
+  border: 3px solid #f2e220;
+}

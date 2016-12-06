@@ -22,12 +22,18 @@ import {
 } from 'containers/App/selectors';
 
 import {
+  setCompetence,
+  removeCompetence,
+} from 'containers/App/actions';
+
+import {
   loadAdvert,
   advertLoaded
 } from './actions';
 
 import LoadingIndicator from 'components/LoadingIndicator';
 import IosMenu from 'components/IosMenu';
+import Circle from 'components/Circle';
 // import RepoListItem from 'containers/RepoListItem';
 // import OccupationListItem from 'components/OccupationListItem';
 // import Button from 'components/Button';
@@ -139,7 +145,7 @@ export class JobAdvert extends React.Component {
       // if (knownCompetences.length) content.push(<span className={styles.competenceHeader}>Du kan:</span>);
       knownCompetences.forEach((item, index) => {
         content.push(
-          <div className={styles.wrapperDiv}>
+          <div className={styles.wrapperDiv} onClick={this.onCompetenceClick.bind(this, item)}>
             <span className={styles.competence}>
               <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />{item.namn}</span>
             <br />
@@ -152,7 +158,7 @@ export class JobAdvert extends React.Component {
       }
       unknownCompetences.forEach((item, index) => {
         content.push(
-          <div className={styles.wrapperDiv}>
+          <div className={styles.wrapperDiv} onClick={this.onCompetenceClick.bind(this, item)}>
             <span className={styles.competence}>
               <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />{item.namn}</span>
             <br />
@@ -160,7 +166,24 @@ export class JobAdvert extends React.Component {
         );
       });
 
+      content.push(
+        <Circle
+          known={knownCompetences.length}
+          total={allCompetences.length}
+          showText={false}
+        />
+      )
+
       return content;
+    }
+  }
+
+  onCompetenceClick(item) {
+    // console.log(item);
+    if (!this.props.knownCompetences.includes(item.id)) {
+      this.props.onSetCompetence(item.id);
+    } else {
+      this.props.onRemoveCompetence(item.id);
     }
   }
 
@@ -200,6 +223,7 @@ export class JobAdvert extends React.Component {
             {/*<h1>Annons</h1>*/}
             <h1>&nbsp;</h1>
             {/*<span className={styles.saveAdvert}>Spara jobb</span>*/}
+
             <span className={styles.saveAdvert + ' glyphicon glyphicon-star-empty'} />
           </header>
 
@@ -287,6 +311,8 @@ export function mapDispatchToProps(dispatch) {
   return {
     onLoadAdvert: (id) => dispatch(loadAdvert(id)),
     changeRoute: (url) => dispatch(push(url)),
+    onSetCompetence: (id) => dispatch(setCompetence(id)),
+    onRemoveCompetence: (id) => dispatch(removeCompetence(id)),
   };
 }
 

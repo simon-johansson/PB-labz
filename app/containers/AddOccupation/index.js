@@ -167,13 +167,22 @@ export class AddOccupation extends React.Component {
             Klar
           </Tappable>
         }
-        {!this.props.params.group &&
+        {/*!this.props.params.group &&
           <span className={styles.yrkeslista} onClick={this.openYrkeslistan}>
             Yrkeslista
           </span>
-        }
+        */}
       </div>
     )
+  }
+
+  yrkesguideListItem() {
+    return [
+      <div className={styles.linkWrapper} onClick={this.openYrkeslistan}>
+        <span className={styles.yrkeslistan}>Välj ur yrkeslistan</span>
+        <span className={styles.chevronRight + ' glyphicon glyphicon-chevron-right'}></span>
+      </div>
+    ];
   }
 
   render() {
@@ -206,11 +215,13 @@ export class AddOccupation extends React.Component {
       // console.log(this.props.occupations);
       const freetext = {id: `"${this.props.query}"`, namn: `"${this.props.query}"`, typ: 'FRITEXT'};
       mainContent = (
-        <List
-          items={[...this.props.occupations, freetext]}
-          component={OccupationListItem}
-          click={this.onListItemClick.bind(this)}
-        />
+        <div className={styles.autoCompleteList}>
+          <List
+            items={[...this.props.occupations, freetext]}
+            component={OccupationListItem}
+            click={this.onListItemClick.bind(this)}
+          />
+        </div>
       );
     }
 
@@ -289,6 +300,9 @@ export class AddOccupation extends React.Component {
                 </form>
               }
             </div>
+            {!this.props.params.group &&
+              <List items={this.yrkesguideListItem()} component={ListItem} />
+            }
             {mainContent}
           </section>
         </div>

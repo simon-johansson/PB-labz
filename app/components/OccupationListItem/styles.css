@@ -39,3 +39,12 @@
   color: #32749d;
   font-style: italic;
 }
+
+.itemName {
+  width: calc(100% - 80px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  text-align: left;
+}

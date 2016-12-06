@@ -54,7 +54,7 @@ export class OccupationListItem extends React.Component { // eslint-disable-line
       <div className={styles.linkWrapper} onClick={this.onItemClick.bind(this)}>
         {this.showMore(item) ?
           <span className={styles.showMore}>{item.namn}</span> :
-          <span>{item.namn || matchningskriterium.namn}</span>
+          <span className={styles.itemName}>{item.namn || matchningskriterium.namn}</span>
         }
         {this.rightPart(item, antal)}
       </div>

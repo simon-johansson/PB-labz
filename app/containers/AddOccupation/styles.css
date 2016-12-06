@@ -82,3 +82,31 @@ label {
   margin: 15px 10px 5px;
   display: block;
 }
+
+.linkWrapper {
+  width: 100%;
+  // height: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.chevronRight {
+  position: absolute;
+  right: 0;
+  top: 12px;
+  color: gray;
+  // text-transform: capitalize;
+}
+
+.autoCompleteList {
+  margin-top: 10px;
+}
+
+.autoCompleteList > div{
+  // width: calc(100% - 100px);
+  // white-space: nowrap;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  // display: block;
+}

@@ -95,26 +95,3 @@
   padding: 0px 4px;
   border-radius: 2px;
 }
-
-.circle {
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  position: absolute;
-  right: 10px;
-  text-align: center;
-  line-height: 45px;
-  top: 25px;
-  font-weight: bold;
-  font-size: 15px;
-}
-
-:global(.greenCircle) {
-  border: 3px solid green;
-}
-:global(.orangeCircle) {
-  border: 3px solid orange;
-}
-:global(.yellowCircle) {
-  border: 3px solid #f2e220;
-}
