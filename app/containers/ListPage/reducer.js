@@ -77,6 +77,9 @@ function listReducer(state = initialState, action) {
 
     case REMOVE_OCCUPATION:
       let occupations = state.get('occupations').filter((item, index) => action.index !== index);
+      if (!action.shouldReload && typeof action.shouldReload !== 'undefined') {
+        return state.set('occupations', occupations);
+      }
       return state
         .set('occupations', occupations)
         .setIn(['uiState', 'showMatchingJobs'], false)
@@ -95,6 +98,9 @@ function listReducer(state = initialState, action) {
 
     case REMOVE_LOCATION:
       const locations = state.get('locations').filter((item, index) => action.index !== index);
+      if (!action.shouldReload && typeof action.shouldReload !== 'undefined') {
+        return state.set('locations', locations);
+      }
       return state
         .set('locations', locations)
         .setIn(['uiState', 'showMatchingJobs'], false)

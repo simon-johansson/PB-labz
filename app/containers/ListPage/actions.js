@@ -24,17 +24,19 @@ import {
   SHOULD_LOAD_NEW_JOBS,
 } from './constants';
 
-export function removeOccupation(occupationIndex) {
+export function removeOccupation(occupationIndex, shouldReload = true) {
   return {
     type: REMOVE_OCCUPATION,
     index: occupationIndex,
+    shouldReload,
   };
 }
 
-export function removeLocation(locationIndex) {
+export function removeLocation(locationIndex, shouldReload = true) {
   return {
     type: REMOVE_LOCATION,
     index: locationIndex,
+    shouldReload,
   };
 }
 

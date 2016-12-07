@@ -52,6 +52,7 @@ import {
 import {
   loadRepos,
   loadJobs,
+  removeAdditionalJob,
 } from '../App/actions';
 
 import { FormattedMessage } from 'react-intl';
@@ -708,6 +709,25 @@ export class ListPage extends React.Component {
     return this.state.showMatchingJobs && hasMatching;
   }
 
+  removeAdditionalSearchParams(param, index) {
+    // console.log(param.typ);
+    let removeIndex;
+    if (param.typ === 'YRKESROLL') {
+      this.props.occupations.forEach((occ, occIndex) => {
+        // console.log(occ);
+        if (param.id === occ.id) removeIndex = occIndex;
+      });
+      this.props.onRemoveOccupation(removeIndex, false);
+    } else {
+      this.props.locations.forEach((loc, locIndex) => {
+        // console.log(loc);
+        if (param.id === loc.id) removeIndex = locIndex;
+      });
+      this.props.onRemoveLocation(removeIndex, false);
+    }
+    this.props.onRemoveAdditionalJob(index);
+  }
+
   render() {
     // console.log(this.state.showMatchingJobs);
     // console.log(this.props.additionalSearchParameters);
@@ -737,12 +757,18 @@ export class ListPage extends React.Component {
               <List component={LoadingIndicator} />
             </div> :
             <div>
-              <span
-                className={styles.amount}
-                ref={(r) => summaryHeaders.push({ el: r, text: inputSummary })}
-              >
-                Hittade {this.props.additionalAds.get(index).amount} jobb {searchSummary}
-              </span>
+              <div className={styles.additionalAmountWrapper}>
+                <span
+                  className={styles.amount}
+                  ref={(r) => summaryHeaders.push({ el: r, text: inputSummary })}
+                >
+                  Hittade {this.props.additionalAds.get(index).amount} jobb {searchSummary}
+                </span>
+                <span
+                  className={styles.rightPart + ' glyphicon glyphicon-remove-circle'}
+                  onClick={this.removeAdditionalSearchParams.bind(this, param, index)}
+                />
+              </div>
               <List items={this.props.additionalAds.get(index).jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
             </div>
           }
@@ -995,14 +1021,16 @@ ListPage.propTypes = {
   onChangeUsername: React.PropTypes.func,
   onRemoveOccupation: React.PropTypes.func,
   onRemoveLocation: React.PropTypes.func,
+  onRemoveAdditionalJob: React.PropTypes.func,
   setUiState: React.PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     // onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
-    onRemoveOccupation: (index) => dispatch(removeOccupation(index)),
-    onRemoveLocation: (index) => dispatch(removeLocation(index)),
+    onRemoveOccupation: (index, shouldReload) => dispatch(removeOccupation(index, shouldReload)),
+    onRemoveLocation: (index, shouldReload) => dispatch(removeLocation(index, shouldReload)),
+    onRemoveAdditionalJob: (index) => dispatch(removeAdditionalJob(index)),
     setUiState: (state) => dispatch(setUiState(state)),
     changeRoute: (url) => dispatch(push(url)),
     // onSubmitForm: (evt) => {

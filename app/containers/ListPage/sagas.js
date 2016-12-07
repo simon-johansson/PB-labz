@@ -31,6 +31,8 @@ import {
 } from './selectors';
 
 export function* getJobs(action) {
+  if (!action.shouldReload && typeof action.shouldReload !== 'undefined') return false;
+
   const {
     occupations: additionalOccupations,
     locations: additionalLocations,

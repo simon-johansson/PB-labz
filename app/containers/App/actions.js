@@ -29,6 +29,7 @@ import {
   TOTAL_AMOUNT_LOADED,
   LOAD_ADDITIONAL_JOBS,
   LOAD_ADDITIONAL_JOBS_SUCCESS,
+  REMOVE_ADDITIONAL_JOB,
   GET_TOTAL_AMOUNT,
 } from './constants';
 
@@ -153,6 +154,13 @@ export function additionalJobsLoaded(jobsData) {
   return {
     type: LOAD_ADDITIONAL_JOBS_SUCCESS,
     data,
+  };
+}
+
+export function removeAdditionalJob(index) {
+  return {
+    type: REMOVE_ADDITIONAL_JOB,
+    index,
   };
 }
 

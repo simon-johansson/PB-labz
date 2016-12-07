@@ -124,6 +124,7 @@ label {
 .amount {
   margin: 15px 10px 5px;
   display: block;
+  position: relative;
   // font-size: 13px;
 }
 
@@ -236,6 +237,14 @@ label {
   color: #B0B0B0;
 }
 
+.rightPart {
+  position: absolute;
+  right: 0px;
+  top: calc(55% - 10px);
+  color: #B0B0B0;
+  font-size: 18px;
+}
+
 .cancel {
   // float: right;
   // color: #B0B0B0;
@@ -258,6 +267,12 @@ label {
   left: 12px;
   top: 17px;
   cursor: pointer;
+}
+
+.additionalAmountWrapper {
+  position: relative;
+  width: calc(100% - 10px);
+  padding-right: 4px;
 }
 
 .additionalJobs {

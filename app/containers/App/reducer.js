@@ -22,6 +22,7 @@ import {
   TOTAL_AMOUNT_LOADED,
   LOAD_ADDITIONAL_JOBS,
   LOAD_ADDITIONAL_JOBS_SUCCESS,
+  REMOVE_ADDITIONAL_JOB,
 } from './constants';
 import {
   REMOVE_OCCUPATION,
@@ -87,6 +88,7 @@ function appReducer(state = initialState, action) {
         .setIn(['afData', 'jobs'], false);
     case REMOVE_OCCUPATION:
     case REMOVE_LOCATION:
+      if (!action.shouldReload && typeof action.shouldReload !== 'undefined') return state;
       return state
         .set('loading', true)
         .set('error', false)
@@ -108,6 +110,16 @@ function appReducer(state = initialState, action) {
       // console.log(action.additional.occupations);
       return state.updateIn(['additional', 'searchParameters'], (arr) => arr.push(action.additional.occupations || action.additional.locations));
     case LOAD_ADDITIONAL_JOBS_SUCCESS:
+      return state
+        .setIn(['afData', 'amount'], state.getIn(['afData', 'amount']) + action.data.amount)
+        .updateIn(['additional', 'ads'], (arr) => arr.push(action.data));
+    case REMOVE_ADDITIONAL_JOB:
+      let additionalParam = state.getIn(['additional', 'searchParameters']).filter((item, index) => action.index !== index);
+      let additionalJobs = state.getIn(['additional', 'ads']).filter((item, index) => action.index !== index);
+      return state
+        .setIn(['additional', 'searchParameters'], additionalParam)
+        .setIn(['additional', 'ads'], additionalJobs);
+
       return state
         .setIn(['afData', 'amount'], state.getIn(['afData', 'amount']) + action.data.amount)
         .updateIn(['additional', 'ads'], (arr) => arr.push(action.data));
