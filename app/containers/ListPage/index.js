@@ -751,9 +751,15 @@ export class ListPage extends React.Component {
         <div className={styles.additionalJobs} key={'additional-ads-' + index}>
           {!this.props.additionalAds.get(index) ?
             <div>
-              <span className={styles.amount}>
-                Hittade ... jobb {searchSummary}
-              </span>
+              <div className={styles.additionalAmountWrapper}>
+                <span className={styles.amount}>
+                  Hittade ... jobb {searchSummary}
+                </span>
+                <span
+                  className={styles.rightPart + ' glyphicon glyphicon-remove-circle'}
+                  onClick={this.removeAdditionalSearchParams.bind(this, param, index)}
+                />
+              </div>
               <List component={LoadingIndicator} />
             </div> :
             <div>
