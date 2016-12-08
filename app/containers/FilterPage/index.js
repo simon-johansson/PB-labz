@@ -302,7 +302,7 @@ export class FilterPage extends React.Component {
 
             <p>Anställningstyp</p>
             <div className={styles.buttonWrapper}>
-              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Tillsvidare anställning</button>
+              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Tillsvidareanställning</button>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Visstidsanställning</button>
               <button onClick={this.toggleActive.bind(this)}>Sommarjobb</button>
               <button onClick={this.toggleActive.bind(this)}>Behovsanställning</button>
