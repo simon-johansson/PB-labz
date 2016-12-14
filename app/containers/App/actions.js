@@ -26,6 +26,8 @@ import {
   LOAD_JOBS_ERROR,
   SET_COMPETENCE,
   REMOVE_COMPETENCE,
+  SET_EXPERIENCE,
+  REMOVE_EXPERIENCE,
   TOTAL_AMOUNT_LOADED,
   LOAD_ADDITIONAL_JOBS,
   LOAD_ADDITIONAL_JOBS_SUCCESS,
@@ -88,7 +90,9 @@ export function loadAdditionalJobs(additional = {}) {
 }
 
 const cleanJobData = (jobsData) =>  {
-  let arr = [];
+  let compArr = [];
+  let expArr = [];
+  let driveArr = [];
   let obj = {};
   let areasObj = {};
 
@@ -99,7 +103,9 @@ const cleanJobData = (jobsData) =>  {
     areasObj[job.yrkesomrade.namn].push(job);
 
     job.matchningsresultat.efterfragat.forEach(merit => {
-      if (merit.typ === 'KOMPETENS') arr.push(merit);
+      if (merit.typ === 'KOMPETENS') compArr.push(merit);
+      if (merit.typ === 'YRKE') expArr.push(merit);
+      if (merit.typ === 'KORKORT') driveArr.push(merit);
     });
   });
 
@@ -114,19 +120,22 @@ const cleanJobData = (jobsData) =>  {
     };
   }), 'amount', 'desc');
 
-  arr.forEach(item => {
+  compArr.forEach(item => {
     obj[item.varde] ? obj[item.varde]++ : obj[item.varde] = 1;
   });
-  arr = arr.map(item => {
+  compArr = compArr.map(item => {
     item.timesRequested = obj[item.varde];
     return item;
   });
-  const competences = _.sortBy(_.uniqBy(arr, 'varde'), ['efterfragat']);
+  const competences = _.sortBy(_.uniqBy(compArr, 'varde'), ['efterfragat']);
+  const experiences = _.uniqBy(expArr, 'varde');
 
   return {
     jobs: jobsData.rekryteringsbehov,
     amount: jobsData.antalRekryteringsbehov,
     related: jobsData.relateradeKriterier,
+    driverLicenses: driveArr,
+    experiences,
     competences,
     areas,
   };
@@ -187,6 +196,21 @@ export function setCompetence(id) {
 export function removeCompetence(id) {
   return {
     type: REMOVE_COMPETENCE,
+    id,
+  };
+};
+
+export function setExperience(id, years) {
+  return {
+    type: SET_EXPERIENCE,
+    id,
+    years,
+  };
+};
+
+export function removeExperience(id) {
+  return {
+    type: REMOVE_EXPERIENCE,
     id,
   };
 };

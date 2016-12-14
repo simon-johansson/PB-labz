@@ -18,7 +18,7 @@ function Circle(props) {
   let total = props.total;
 
   if (props.item) {
-    competences = _.filter(props.item.matchningsresultat.efterfragat, {typ: "KOMPETENS"});
+    competences = _.filter(props.item.matchningsresultat.efterfragat, (j) => j.typ === 'KOMPETENS' || j.typ === 'YRKE');
     known = props.item.matchingCompetences.length;
     total = competences.length;
   }

@@ -19,6 +19,7 @@ import {
 
 import {
   selectKnownCompetences,
+  selectKnownExperiences,
 } from 'containers/App/selectors';
 
 import {
@@ -118,24 +119,58 @@ export class JobAdvert extends React.Component {
     this.openRoute('/list');
   };
 
+  cleanLevel(level) {
+    if (level) {
+      return level.efterfragat.replace('Mindre än 1 års erfarenhet', 'Erfarenhet') + ' som ';
+    } else {
+      return '';
+    }
+  }
+
   createCompetences() {
-    if (this.props.advert.kompetenser.length) {
+    const isKnown = (k) => {
+      if (k.typ === 'KOMPETENS') {
+        return this.props.knownCompetences.includes(k.varde);
+      }
+      else if (k.typ === 'YRKE') {
+        let hasExperience = false;
+        this.props.knownExperiences.forEach((item) => {
+          if (item.id === k.varde) {
+            if ((item.years + 1) >= parseInt(k.niva.varde)) {
+              hasExperience = true;
+            }
+          }
+        });
+        return hasExperience;
+      } else {
+        return undefined;
+      }
+    };
+    if (this.props.advert.matchningsresultat.efterfragat.length) {
+      const { efterfragat } = this.props.advert.matchningsresultat;
       const content = [];
-      const competences = this.props.advert.kompetenser.map((k) => {
-        k.isKnown = (this.props.knownCompetences.includes(k.id) ?  true : false);
+      const competences = efterfragat.map((k) => {
+        k.isKnown = isKnown(k);
+        return k;
       });
-      const allCompetences = this.props.advert.kompetenser;
-      const knownCompetences = _.filter(this.props.advert.kompetenser, {isKnown: true});
-      const unknownCompetences = _.filter(this.props.advert.kompetenser, {isKnown: false});
+      const allCompetences = competences.filter((k) => typeof k.isKnown !== 'undefined');
+      const knownCompetences = _.filter(allCompetences, {isKnown: true});
+      const unknownCompetences = _.filter(allCompetences, {isKnown: false});
 
       if (!this.props.params.matching) {
         return allCompetences.map((item, index) => {
           return (
             <div
               className={styles.wrapperDiv}
-              key={'competences-' + index}
+              key={'all-competences-' + index}
             >
-              <span className={styles.competence}>{item.namn}</span>
+              {item.typ === 'YRKE' &&
+                <span className={styles.competence}>{`${this.cleanLevel(item.niva)} ${item.efterfragat}`}</span>
+              }
+
+              {item.typ === 'KOMPETENS' &&
+                <span className={styles.competence}>{item.efterfragat}</span>
+              }
               <br />
             </div>
           );
@@ -145,22 +180,52 @@ export class JobAdvert extends React.Component {
       // if (knownCompetences.length) content.push(<span className={styles.competenceHeader}>Du kan:</span>);
       knownCompetences.forEach((item, index) => {
         content.push(
-          <div className={styles.wrapperDiv} onClick={this.onCompetenceClick.bind(this, item)}>
-            <span className={styles.competence}>
-              <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />{item.namn}</span>
+          <div
+            className={styles.wrapperDiv}
+            onClick={this.onCompetenceClick.bind(this, item)}
+            key={'known-competences-' + index}
+          >
+            {item.typ === 'YRKE' &&
+              <span className={styles.competence}>
+                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+                {`${this.cleanLevel(item.niva)} ${item.efterfragat}`}
+              </span>
+            }
+
+            {item.typ === 'KOMPETENS' &&
+              <span className={styles.competence}>
+                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+                {item.efterfragat}
+              </span>
+            }
             <br />
           </div>
         );
       });
+
+      // console.log(unknownCompetences);
 
       if (unknownCompetences.length && knownCompetences.length) {
         content.push(<span className={styles.competenceHeader}>Vi efterfrågar också:</span>);
       }
       unknownCompetences.forEach((item, index) => {
         content.push(
-          <div className={styles.wrapperDiv} onClick={this.onCompetenceClick.bind(this, item)}>
-            <span className={styles.competence}>
-              <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />{item.namn}</span>
+          <div
+            className={styles.wrapperDiv}
+            onClick={this.onCompetenceClick.bind(this, item)}
+          >
+            {item.typ === 'YRKE' &&
+              <span className={styles.competence}>
+                {`${this.cleanLevel(item.niva)} ${item.efterfragat}`}
+              </span>
+            }
+
+            {item.typ === 'KOMPETENS' &&
+              <span className={styles.competence}>
+                <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+                {item.efterfragat}
+              </span>
+            }
             <br />
           </div>
         );
@@ -180,10 +245,10 @@ export class JobAdvert extends React.Component {
 
   onCompetenceClick(item) {
     // console.log(item);
-    if (!this.props.knownCompetences.includes(item.id)) {
-      this.props.onSetCompetence(item.id);
+    if (!this.props.knownCompetences.includes(item.varde)) {
+      this.props.onSetCompetence(item.varde);
     } else {
-      this.props.onRemoveCompetence(item.id);
+      this.props.onRemoveCompetence(item.varde);
     }
   }
 
@@ -238,7 +303,7 @@ export class JobAdvert extends React.Component {
               <h3>{this.props.advert.rubrik}</h3>
               <p>{this.props.advert.yrkesroll.namn}</p>
 
-              {!!this.props.advert.kompetenser.length &&
+              {!!this.props.advert.matchningsresultat.efterfragat.length &&
                 <div className={styles.competenceWrapper}>
                   {this.props.params.matching ?
                     <b>Du matchar med:</b> :
@@ -319,6 +384,7 @@ export function mapDispatchToProps(dispatch) {
 const mapStateToProps = createStructuredSelector({
   advert: selectAdvert(),
   knownCompetences: selectKnownCompetences(),
+  knownExperiences: selectKnownExperiences(),
 });
 
 // Wrap the component to inject dispatch and state into it

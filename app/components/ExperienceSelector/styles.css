@@ -1,0 +1,38 @@
+.experience {
+  width: calc(100%);
+  margin: 10px auto 0;
+  padding: 10px;
+
+  background-color: white;
+  border: 1px solid #e3e3e3;
+  border-radius: 3px;
+}
+
+.experienceOccupation {
+  font-weight: normal;
+}
+
+.years span {
+  width: 20%;
+  display: inline-block;
+  text-align: center;
+  font-size: 11px;
+}
+
+.years span:first-child {
+  text-align: left;
+}
+
+.years span:nth-child(2) {
+  padding-left: 3%;
+  text-align: left;
+}
+
+.years span:nth-child(4) {
+  padding-left: 9%;
+  text-align: left;
+}
+
+.years span:last-child {
+  text-align: right;
+}

@@ -19,6 +19,8 @@ import {
   LOAD_JOBS_ERROR,
   SET_COMPETENCE,
   REMOVE_COMPETENCE,
+  SET_EXPERIENCE,
+  REMOVE_EXPERIENCE,
   TOTAL_AMOUNT_LOADED,
   LOAD_ADDITIONAL_JOBS,
   LOAD_ADDITIONAL_JOBS_SUCCESS,
@@ -37,6 +39,7 @@ const initialState = fromJS({
   currentUser: false,
   totalAmount: false,
   knownCompetences: [],
+  knownExperiences: [],
   userData: fromJS({
     repositories: false,
   }),
@@ -45,6 +48,8 @@ const initialState = fromJS({
     amount: false,
     related: false,
     competences: false,
+    experiences: false,
+    driverLicenses: false,
     areas: false,
   }),
   // additional: fromJS({
@@ -99,6 +104,8 @@ function appReducer(state = initialState, action) {
         .setIn(['afData', 'amount'], action.amount)
         .setIn(['afData', 'related'], action.related)
         .setIn(['afData', 'competences'], action.competences)
+        .setIn(['afData', 'experiences'], action.experiences)
+        .setIn(['afData', 'driverLicenses'], action.driverLicenses)
         .setIn(['afData', 'areas'], action.areas)
         .set('loading', false);
     case LOAD_JOBS_ERROR:
@@ -132,6 +139,17 @@ function appReducer(state = initialState, action) {
     case REMOVE_COMPETENCE:
       const competences = state.get('knownCompetences').filter((item) => action.id !== item);
       return state.set('knownCompetences', competences);
+
+    case SET_EXPERIENCE:
+      // console.log(state.get('knownExperiences'));
+      const setExperiences = state.get('knownExperiences')
+                                  .filter((item) => action.id !== item.id)
+                                  .update((arr) => arr.push({ id: action.id, years: action.years }));
+      return state.set('knownExperiences', setExperiences);
+    case REMOVE_EXPERIENCE:
+      // console.log(action);
+      const experiences = state.get('knownExperiences').filter((item) => action.id !== item.id);
+      return state.set('knownExperiences', experiences);
 
     default:
       return state;

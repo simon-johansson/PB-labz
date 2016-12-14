@@ -24,5 +24,8 @@ export const REMOVE_ADDITIONAL_JOB = 'boilerplate/App/REMOVE_ADDITIONAL_JOB';
 export const SET_COMPETENCE = 'boilerplate/Home/SET_COMPETENCE';
 export const REMOVE_COMPETENCE = 'boilerplate/Home/REMOVE_COMPETENCE';
 
+export const SET_EXPERIENCE = 'boilerplate/Home/SET_EXPERIENCE';
+export const REMOVE_EXPERIENCE = 'boilerplate/Home/REMOVE_EXPERIENCE';
+
 export const GET_TOTAL_AMOUNT = 'boilerplate/Home/GET_TOTAL_AMOUNT';
 export const TOTAL_AMOUNT_LOADED = 'boilerplate/Home/TOTAL_AMOUNT_LOADED';

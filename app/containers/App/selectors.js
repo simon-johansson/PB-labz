@@ -46,6 +46,16 @@ const selectCompetences = () => createSelector(
   (globalState) => globalState.getIn(['afData', 'competences'])
 );
 
+const selectExperiences = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['afData', 'experiences'])
+);
+
+const selectDriverLicenses = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['afData', 'driverLicenses'])
+);
+
 const selectAreas = () => createSelector(
   selectGlobal(),
   (globalState) => globalState.getIn(['afData', 'areas'])
@@ -54,6 +64,11 @@ const selectAreas = () => createSelector(
 const selectKnownCompetences = () => createSelector(
   selectGlobal(),
   (globalState) => globalState.get('knownCompetences')
+);
+
+const selectKnownExperiences = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.get('knownExperiences')
 );
 
 const selectTotalAmount = () => createSelector(
@@ -118,8 +133,11 @@ export {
   selectAmount,
   selectRelated,
   selectCompetences,
+  selectExperiences,
+  selectDriverLicenses,
   selectAreas,
   selectKnownCompetences,
+  selectKnownExperiences,
   selectTotalAmount,
   selectLocationState,
   selectAdditionalSearchParameters,

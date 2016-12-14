@@ -14,7 +14,6 @@ import Tappable from 'react-tappable';
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';
 import * as ls from 'utils/localstorage';
-import Slider from 'react-rangeslider';
 
 import {
   selectRepos,
@@ -25,6 +24,9 @@ import {
   selectRelated,
   selectCompetences,
   selectKnownCompetences,
+  selectExperiences,
+  selectDriverLicenses,
+  selectKnownExperiences,
   selectAdditionalSearchParameters,
   selectAdditionalAds,
   // selectAdditionalJobs,
@@ -67,6 +69,7 @@ import H2 from 'components/H2';
 import List from 'components/List';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
+import ExperienceSelector from 'components/ExperienceSelector';
 
 import styles from './styles.css';
 
@@ -82,17 +85,23 @@ export class ListPage extends React.Component {
     super(props);
 
     let hasMatching = false;
-
     if (props.competences) {
       hasMatching = !!props.competences.filter((comp) => {
-        return props.knownCompetences.includes(comp.varde)
+        return props.knownCompetences.includes(comp.varde);
       }).length;
+    }
+    if (!hasMatching && props.experiences) {
+      props.experiences.forEach((exp) => {
+        props.knownExperiences.forEach((item) => {
+          if (exp.id === item.varde) hasMatching = true;
+        });
+      });
     }
 
     // console.log(hasMatching);
 
     this.state = {
-      tab: hasMatching ? props.currentTab : 'all',
+      // tab: hasMatching ? props.currentTab : 'all',
       // showMatchingJobs: false,
       showMatchingJobs: hasMatching,
       showNonMatchningJobs: props.showNonMatchningJobs,
@@ -105,7 +114,8 @@ export class ListPage extends React.Component {
       },
       showSaveSearchPopup: false,
       searchIsSaved: false,
-      showCriteriaContent: false,
+      showCompetenceCriteriaContent: false,
+      showExperienceCriteriaContent: false,
     };
 
     this.onAdvertClick = this.onAdvertClick.bind(this);
@@ -115,7 +125,8 @@ export class ListPage extends React.Component {
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    // console.log(this.props.shouldLoadNewJobs, this.props.loading);
+    // console.log('componentDidMount');
+
     if (this.props.shouldLoadNewJobs) {
       this.props.onSubmitForm();
     }
@@ -125,6 +136,13 @@ export class ListPage extends React.Component {
       hasMatching = !!this.props.competences.filter((comp) => {
         return this.props.knownCompetences.includes(comp.varde);
       }).length;
+    }
+    if (!hasMatching && this.props.experiences) {
+      this.props.experiences.forEach((exp) => {
+        this.props.knownExperiences.forEach((item) => {
+          if (exp.id === item.varde) hasMatching = true;
+        });
+      });
     }
 
     this.props.setUiState({
@@ -153,13 +171,21 @@ export class ListPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.competences !== this.props.competences) {
+    // console.log('componentWillReceiveProps');
+    if (nextProps.competences !== this.props.competences ||
+        nextProps.experiences !== this.props.experiences) {
       let hasMatching = false;
-
       if (nextProps.competences) {
         hasMatching = !!nextProps.competences.filter((comp) => {
           return nextProps.knownCompetences.includes(comp.varde);
         }).length;
+      }
+      if (!hasMatching && nextProps.experiences) {
+        nextProps.experiences.forEach((exp) => {
+          nextProps.knownExperiences.forEach((item) => {
+            if (exp.id === item.varde) hasMatching = true;
+          });
+        });
       }
 
       this.setState({ showMatchingJobs: hasMatching });
@@ -384,6 +410,31 @@ export class ListPage extends React.Component {
       return content;
     };
 
+    const renderKnownExperiences = () => {
+      const content = [];
+
+      this.props.experiences.forEach((exp, index) => {
+        let hasExperience = false;
+        this.props.knownExperiences.forEach((item) => {
+          if (item.id === exp.varde) hasExperience = true;
+        });
+        if (hasExperience) {
+          content.push(
+            <div
+              className={styles.tag}
+              key={`experience-${index}`}
+            >
+              <span className={styles.tagText}>
+                {exp.efterfragat}
+              </span>
+            </div>
+          );
+        }
+      });
+
+      return content;
+    };
+
     let locations = this.createSearchInput([], this.props.locations);
     locations = locations === 'Alla jobb i Platsbanken' ? 'Hela Sverige' : locations;
 
@@ -410,28 +461,42 @@ export class ListPage extends React.Component {
         <div className={styles.criteraWrappper}>
           <header
             className={styles.criteriaSelectionHeader}
-            onClick={this.showCriteriaContent.bind(this)}
+            onClick={this.toggleCompetenceCriteriaContent.bind(this)}
           >
             Kompetenser
             <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
           </header>
-          {this.state.showCriteriaContent &&
+          {this.state.showCompetenceCriteriaContent &&
             <section className={styles.criteriaSelectionContent}>
               {this.competenceSelection()}
             </section>
           }
 
-          {!this.state.showCriteriaContent && !!renderKnownCompetences().length &&
+          {!this.state.showCompetenceCriteriaContent && !!renderKnownCompetences().length &&
             <section className={styles.criteriaSelectionContent}>
               {renderKnownCompetences()}
             </section>
           }
         </div>
         <div className={styles.criteraWrappper}>
-          <header className={styles.criteriaSelectionHeader}>
+          <header
+            className={styles.criteriaSelectionHeader}
+            onClick={this.toggleExperienceCriteriaContent.bind(this)}
+          >
             Erfarenheter
             <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
           </header>
+          {this.state.showExperienceCriteriaContent &&
+            <section className={styles.criteriaSelectionContent}>
+              {this.experienceSelection()}
+            </section>
+          }
+
+          {!this.state.showExperienceCriteriaContent && !!renderKnownExperiences().length &&
+            <section className={styles.criteriaSelectionContent}>
+              {renderKnownExperiences()}
+            </section>
+          }
         </div>
         <div className={styles.criteraWrappper}>
           <header className={styles.criteriaSelectionHeader}>
@@ -443,9 +508,15 @@ export class ListPage extends React.Component {
     );
   }
 
-  showCriteriaContent() {
+  toggleCompetenceCriteriaContent() {
     this.setState({
-      showCriteriaContent: !this.state.showCriteriaContent,
+      showCompetenceCriteriaContent: !this.state.showCompetenceCriteriaContent,
+    });
+  }
+
+  toggleExperienceCriteriaContent() {
+    this.setState({
+      showExperienceCriteriaContent: !this.state.showExperienceCriteriaContent,
     });
   }
 
@@ -494,7 +565,7 @@ export class ListPage extends React.Component {
       return (
         <div className={styles.matchWrapper}>
           {this.criteriaSelection()}
-          {!!this.props.knownCompetences.size &&
+          {!!matchingJobs &&
             <button
               className={styles.showMatchingButton + ' btn btn-default'}
               onClick={this.showMatchingJobs.bind(this)}
@@ -510,25 +581,15 @@ export class ListPage extends React.Component {
     }
   }
 
-  experienceTest() {
-    return (
-      <div className={styles.experience}>
-        <Slider
-          value={5}
-          min={0}
-          max={20}
-          step={5}
-          orientation='horizontal'
-          onChange={() => console.log('change')}
+  experienceSelection() {
+    return this.props.experiences.map((exp, index) => {
+      return (
+        <ExperienceSelector
+          key={'experience-selector-' + index}
+          item={exp}
         />
-        <div>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-    )
+      )
+    })
   }
 
   showMatchingJobs() {
@@ -567,7 +628,8 @@ export class ListPage extends React.Component {
 
   setTabState(tabState) {
     // console.log('setTabState');
-    // console.log(state);
+    // console.log(tabState);
+
     this.setState({tab: tabState});
     this.props.setUiState({
       tab: tabState,
@@ -729,8 +791,8 @@ export class ListPage extends React.Component {
   }
 
   render() {
-    // console.log(this.state.showMatchingJobs);
-    // console.log(this.props.additionalSearchParameters);
+    // console.log(this.props.experiences);
+    // console.log(this.props.driverLicenses);
     // console.log(this.props.additionalAds);
 
     const {
@@ -846,9 +908,19 @@ export class ListPage extends React.Component {
         const notMatchingCompetences = [];
         let match = false;
         jobCopy.matchningsresultat.efterfragat.forEach(requirement => {
-          if (this.props.knownCompetences.includes(requirement.varde)) {
+          if (requirement.typ == "KOMPETENS" && this.props.knownCompetences.includes(requirement.varde)) {
             matchingCompetences.push(requirement);
             match = true;
+          } else if(requirement.typ == "YRKE") {
+            this.props.knownExperiences.forEach((item) => {
+              if (item.id === requirement.varde) {
+                // console.log(item.years, requirement.niva);
+                if ((item.years + 1) >= parseInt(requirement.niva.varde)) {
+                  match = true;
+                  matchingCompetences.push(requirement);
+                }
+              }
+            });
           } else {
             if (requirement.typ == "KOMPETENS") {
               notMatchingCompetences.push(requirement);
@@ -858,7 +930,9 @@ export class ListPage extends React.Component {
         if (match) {
           jobCopy.matchingCompetences = matchingCompetences;
           jobCopy.notMatchingCompetences = notMatchingCompetences;
-          jobCopy.matchProcent = matchingCompetences.length / _.filter(jobCopy.matchningsresultat.efterfragat, { typ: 'KOMPETENS' }).length;
+          jobCopy.matchProcent = matchingCompetences.length / _.filter(jobCopy.matchningsresultat.efterfragat, (j) => {
+            return j.typ === 'KOMPETENS' || j.typ === 'YRKE';
+          }).length;
           // console.log(jobCopy.matchProcent);
           matchingJobs.push(jobCopy);
         } else {
@@ -1064,7 +1138,10 @@ const mapStateToProps = createStructuredSelector({
   scrollPosition: selectScrollPosition(),
   showNonMatchningJobs: selectShowNonMatchningJobs(),
   competences: selectCompetences(),
+  experiences: selectExperiences(),
+  driverLicenses: selectDriverLicenses(),
   knownCompetences: selectKnownCompetences(),
+  knownExperiences: selectKnownExperiences(),
   occupations: selectOccupations(),
   shouldLoadNewJobs: selectShouldLoadNewJobs(),
   locations: selectLocations(),
