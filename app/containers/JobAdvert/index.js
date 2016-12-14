@@ -236,6 +236,7 @@ export class JobAdvert extends React.Component {
           known={knownCompetences.length}
           total={allCompetences.length}
           showText={false}
+          style={{right: '10px'}}
         />
       )
 

@@ -10,6 +10,8 @@
 
 .experienceOccupation {
   font-weight: normal;
+  margin-bottom: 5px;
+  display: block;
 }
 
 .years span {

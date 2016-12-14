@@ -30,7 +30,10 @@ function Circle(props) {
 
   return (
     <div className={styles.circleWrapper}>
-      <span className={`${styles.circle} ${colorClass}`}>
+      <span
+        style={props.style}
+        className={`${styles.circle} ${colorClass}`}
+      >
         <sup>{known}</sup>
         <span className={styles.division}>&frasl;</span>
         <sub>{total}</sub>
@@ -38,7 +41,7 @@ function Circle(props) {
       {props.showText &&
         <div className={styles.circleTextWrapper}>
           <span>matchande</span> <br />
-          <span>kompetenser</span>
+          <span>kriterier</span>
         </div>
       }
     </div>

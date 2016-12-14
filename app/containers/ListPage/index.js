@@ -93,7 +93,7 @@ export class ListPage extends React.Component {
     if (!hasMatching && props.experiences) {
       props.experiences.forEach((exp) => {
         props.knownExperiences.forEach((item) => {
-          if (exp.id === item.varde) hasMatching = true;
+          if (exp.varde === item.id) hasMatching = true;
         });
       });
     }
@@ -140,7 +140,7 @@ export class ListPage extends React.Component {
     if (!hasMatching && this.props.experiences) {
       this.props.experiences.forEach((exp) => {
         this.props.knownExperiences.forEach((item) => {
-          if (exp.id === item.varde) hasMatching = true;
+          if (exp.varde === item.id) hasMatching = true;
         });
       });
     }
@@ -183,14 +183,14 @@ export class ListPage extends React.Component {
       if (!hasMatching && nextProps.experiences) {
         nextProps.experiences.forEach((exp) => {
           nextProps.knownExperiences.forEach((item) => {
-            if (exp.id === item.varde) hasMatching = true;
+            if (exp.varde === item.id) hasMatching = true;
           });
         });
       }
 
       this.setState({ showMatchingJobs: hasMatching });
 
-      // console.log(nextProps.currentTab);
+      // console.log(hasMatching);
 
       nextProps.setUiState({
         showMatchingJobs: hasMatching,

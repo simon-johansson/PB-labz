@@ -71,6 +71,13 @@ export class ExperienceSelector extends React.Component {
     return (
       <div className={styles.experience}>
         <span className={styles.experienceOccupation}>{item.efterfragat}</span>
+        <div className={styles.years}>
+          <span>ingen</span>
+          <span>0-1 år</span>
+          <span>1-2 år</span>
+          <span>2-4 år</span>
+          <span>+4 år</span>
+        </div>
         <Slider
           value={this.state.hasExperience}
           min={0}
@@ -79,13 +86,6 @@ export class ExperienceSelector extends React.Component {
           orientation='horizontal'
           onChange={this.setExperience.bind(this)}
         />
-        <div className={styles.years}>
-          <span>ingen</span>
-          <span>0-1 år</span>
-          <span>1-2 år</span>
-          <span>2-4 år</span>
-          <span>+4 år</span>
-        </div>
       </div>
     )
   }
