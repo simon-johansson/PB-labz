@@ -47,6 +47,9 @@ import {
   shouldLoadNewJobs,
 } from 'containers/ListPage/actions';
 import {
+  addLocation,
+} from 'containers/AddLocation/actions';
+import {
   loadJobs,
   getTotalAmount,
 } from 'containers/App/actions';
@@ -226,6 +229,27 @@ export class FilterPage extends React.Component {
     }
   }
 
+  createRange() {
+    return this.props.locations.map((loc) => {
+      return (
+        <div className={styles.rangeSelector}>
+          <div>{this.state.range} km från {loc.namn}</div>
+          <Slider
+            value={this.state.range}
+            orientation='horizontal'
+            onChange={this.rangeChange.bind(this)}
+          />
+        </div>
+      );
+    });
+  }
+
+  onGPS(evt) {
+    evt.stopPropagation();
+    this.props.onAddLocation({ id: '01', namn: 'Stockholms län', typ: 'LAN' });
+    this.props.onSubmitForm();
+  }
+
   render() {
 
     let mainContent = null;
@@ -261,7 +285,10 @@ export class FilterPage extends React.Component {
               <div className={styles.tagsWrapper} onClick={this.addOccupationPage}>
                 {this.createOccupationTags()}
                 <span className={styles.inputPlaceholder}>
-                  Lägg till yrke/fritext...
+                  { !this.props.occupations.size ?
+                    'Skriv t.ex "Gymnasielärare"' :
+                    'Lägg till yrke...'
+                  }
                 </span>
               </div>
             </div>
@@ -271,14 +298,27 @@ export class FilterPage extends React.Component {
               <div className={styles.tagsWrapper} onClick={this.addLocationPage}>
                 {this.createLocationTags()}
                 <span className={styles.inputPlaceholder}>
-                  Lägg till ort...
+                { !this.props.locations.size ?
+                  'Skriv Kommun/Län/Land' :
+                  'Lägg till Kommun/Län/Land...'
+                }
                 </span>
+                { !this.props.locations.size &&
+                  <span
+                    className={styles.gps}
+                    onClick={this.onGPS.bind(this)}
+                  >
+                    <span className={styles.right + ' glyphicon glyphicon-map-marker'}></span>
+                    GPS
+                  </span>
+                }
               </div>
             </div>
           </form>
 
           <p className={styles.sectionHeader}>Sortera</p>
           <section className={styles.sortingWrapper}>
+            <p>Ordning i lista</p>
             <div className={styles.buttonGroup}>
               <button className='activeFilterButton'>Publiceringsdatum</button>
               <button>Sista ansökningsdagen</button>
@@ -304,8 +344,8 @@ export class FilterPage extends React.Component {
             <div className={styles.buttonWrapper}>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Tillsvidareanställning</button>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Visstidsanställning</button>
-              <button onClick={this.toggleActive.bind(this)}>Sommarjobb</button>
-              <button onClick={this.toggleActive.bind(this)}>Behovsanställning</button>
+              <button onClick={this.toggleActive.bind(this)}>Sommarjobb / feriejobb</button>
+              <button onClick={this.toggleActive.bind(this)}>Behovsanställning / poolanställning</button>
             </div>
 
             <hr />
@@ -321,13 +361,7 @@ export class FilterPage extends React.Component {
             {!!this.props.locations.size &&
               <div>
                 <p>Sökradie</p>
-                <div>{this.state.range} km från {this.props.locations.map(l => l.namn).join(' eller ')}</div>
-                <Slider
-                  value={this.state.range}
-                  orientation='horizontal'
-                  onChange={this.rangeChange.bind(this)}
-                />
-
+                {this.createRange()}
                 <hr />
               </div>
             }
@@ -405,6 +439,7 @@ FilterPage.propTypes = {
 export function mapDispatchToProps(dispatch) {
   return {
     onRemoveOccupation: (index) => dispatch(removeOccupation(index)),
+    onAddLocation: (location) => dispatch(addLocation(location)),
     onRemoveLocation: (index) => dispatch(removeLocation(index)),
     onGetTotalAmount: () => dispatch(getTotalAmount()),
     setUiState: (state) => dispatch(setUiState(state)),

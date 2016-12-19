@@ -199,6 +199,7 @@ export class RutTips extends React.Component {
             {this.shouldShowLocationTips() &&
               <div className={styles.tagWrapper}>
                 <p>Jobb {this.props.occupationSummary} i närliggande orter</p>
+                {/*<p>Jobb för din sökning i närliggande orter</p>*/}
                 <List
                   items={locationItems}
                   component={OccupationListItem}
@@ -209,7 +210,8 @@ export class RutTips extends React.Component {
 
             {this.shouldShowOccupationTips() &&
               <div className={styles.tagWrapper}>
-                <p>Relaterade yrken {this.props.summary}</p>
+                {/*<p>Relaterade yrken {this.props.summary}</p>*/}
+                <p>Relaterade yrken {this.props.locationSummary}</p>
                 <List
                   items={occupationItems}
                   component={OccupationListItem}

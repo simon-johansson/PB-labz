@@ -415,21 +415,35 @@ export class ListPage extends React.Component {
 
       this.props.experiences.forEach((exp, index) => {
         let hasExperience = false;
+        let years;
         this.props.knownExperiences.forEach((item) => {
-          if (item.id === exp.varde) hasExperience = true;
+          switch(item.years) {
+            case 1:
+              years = '0-1 år';
+              break;
+            case 2:
+              years = '1-2 år';
+              break;
+            case 3:
+              years = '2-4 år';
+              break;
+            case 4:
+              years = '+4 år';
+              break;
+          }
+          if (item.id === exp.varde) {
+            content.push(
+              <div
+                className={styles.tag}
+                key={`experience-${index}`}
+              >
+                <span className={styles.tagText}>
+                  {exp.efterfragat} ({years})
+                </span>
+              </div>
+            );
+          }
         });
-        if (hasExperience) {
-          content.push(
-            <div
-              className={styles.tag}
-              key={`experience-${index}`}
-            >
-              <span className={styles.tagText}>
-                {exp.efterfragat}
-              </span>
-            </div>
-          );
-        }
       });
 
       return content;
@@ -483,7 +497,7 @@ export class ListPage extends React.Component {
             className={styles.criteriaSelectionHeader}
             onClick={this.toggleExperienceCriteriaContent.bind(this)}
           >
-            Erfarenheter
+            Arbetslivserfarenheter
             <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
           </header>
           {this.state.showExperienceCriteriaContent &&
@@ -534,7 +548,9 @@ export class ListPage extends React.Component {
 
     this.setState({
       showMatchingJobs,
-      tab
+      tab,
+      showCompetenceCriteriaContent: false,
+      showExperienceCriteriaContent: false,
     });
     this.props.setUiState({
       tab,
@@ -593,7 +609,11 @@ export class ListPage extends React.Component {
   }
 
   showMatchingJobs() {
-    this.setState({ showMatchingJobs: true });
+    this.setState({
+      showMatchingJobs: true,
+      showCompetenceCriteriaContent: false,
+      showExperienceCriteriaContent: false,
+    });
     this.props.setUiState({
       showMatchingJobs: true,
       showNonMatchningJobs: false,
@@ -871,6 +891,7 @@ export class ListPage extends React.Component {
           <RutTips
             summary={this.createSearchSummary()}
             occupationSummary={this.createSearchSummary(this.props.occupations, [])}
+            locationSummary={this.createSearchSummary([], this.props.locations)}
             shouldShowSadFace={!this.props.amount}
             shouldShowOccupationTips={this.shouldShowOccupationTips()}
             shouldShowLocationTips={this.shouldShowLocationTips()}
@@ -895,6 +916,7 @@ export class ListPage extends React.Component {
           <RutTips
             summary={this.createSearchSummary()}
             occupationSummary={this.createSearchSummary(this.props.occupations, [])}
+            locationSummary={this.createSearchSummary([], this.props.locations)}
             shouldShowSadFace={!this.props.amount}
             shouldShowOccupationTips={this.shouldShowOccupationTips()}
             shouldShowLocationTips={this.shouldShowLocationTips()}

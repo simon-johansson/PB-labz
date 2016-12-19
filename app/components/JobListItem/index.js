@@ -104,18 +104,17 @@ function JobListItem(props) {
           <br />
           <b className={styles.title}>{item.rubrik}</b>
           <br />
-          {!item.matchingCompetences &&
-            <div>
-              <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
-              <br />
-              <span className={styles.smallText}>Publicerad: <span className={date === 'Idag' ? styles.today : ''}>{date}</span></span>
-            </div>
-          }
+          <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
+          <br />
+          <span className={styles.smallText}>Publicerad: <span className={date === 'Idag' ? styles.today : ''}>{date}</span></span>
           {item.matchingCompetences &&
             <div>
               {/*<span className={styles.smallText}>Vi efterfrågar:</span> <br />*/}
               <div className={styles.knownCompetences}>
-                <Circle item={item} />
+                <Circle
+                  item={item}
+                  style={{top: '28px'}}
+                />
                 {/*knownCompetences(item)*/}
                 {/*notkKnownCompetences(item)*/}
               </div>

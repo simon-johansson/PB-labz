@@ -261,7 +261,7 @@ export class AddOccupation extends React.Component {
         <div>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
-              <h1>Lägg till yrke/fritext</h1>
+              <h1>Jag vill jobba som</h1>
               {this.doneOrYrkeslista()}
               <span className={styles.cancel} onClick={this.goBack}>Avbryt</span>
 
@@ -272,7 +272,7 @@ export class AddOccupation extends React.Component {
                       type="text"
                       className="form-control"
                       id="occupation"
-                      placeholder="Lägg till yrke/fritext..."
+                      placeholder="Yrke, Yrkesgrupp eller Yrkesområde"
                       value={this.props.query}
                       autoComplete="off"
                       autoCapitalize="off"

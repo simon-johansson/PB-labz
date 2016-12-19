@@ -105,7 +105,7 @@ export class AddLocation extends React.Component {
         <div>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
-              <h1>Lägg till ort</h1>
+              <h1>Jag vill jobba i</h1>
               <span className={styles.cancel} onClick={this.goBack}>
                 Avbryt
               </span>
@@ -115,7 +115,7 @@ export class AddLocation extends React.Component {
                     type="text"
                     className="form-control"
                     id="location"
-                    placeholder="Lägg till ort..."
+                    placeholder="Kommun, Län eller Land"
                     value={this.props.query}
                     autoComplete="off"
                     autoCapitalize="off"

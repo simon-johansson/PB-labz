@@ -40,8 +40,7 @@ function Circle(props) {
       </span>
       {props.showText &&
         <div className={styles.circleTextWrapper}>
-          <span>matchande</span> <br />
-          <span>kriterier</span>
+          <span>Matchning</span>
         </div>
       }
     </div>

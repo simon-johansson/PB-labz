@@ -285,9 +285,10 @@ export class JobAdvert extends React.Component {
       <article>
         <div className={styles.contentWrapper}>
           <header className={styles.header} onClick={this.openListPage}>
-            <span className='glyphicon glyphicon-chevron-left' />
+            <span className={styles.back + ' glyphicon glyphicon-chevron-left'} />
             {/*<h1>Annons</h1>*/}
-            <h1>&nbsp;</h1>
+            {/*<h1>&nbsp;</h1>*/}
+            <h1>Annons</h1>
             {/*<span className={styles.saveAdvert}>Spara jobb</span>*/}
 
             <span className={styles.saveAdvert + ' glyphicon glyphicon-star-empty'} />
@@ -331,7 +332,7 @@ export class JobAdvert extends React.Component {
 
               {!!this.shouldShowMap(erbjudenArbetsplats) &&
                 <div className={styles.map}>
-                  <p><b>Karta:</b> {this.props.advert.besoksadressGatuadress}</p>
+                  <p><b>Arbetsplats:</b> {this.props.advert.besoksadressGatuadress}</p>
                   <SimpleMap
                     markers={markers}
                   />

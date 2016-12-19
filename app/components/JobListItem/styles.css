@@ -11,16 +11,24 @@
 
 .bigLinkWrapper {
   width: 100%;
-  height: 100px;
+  height: 130px;
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
 .bigLinkWrapper .title,
-.bigLinkWrapper .employer {
+.bigLinkWrapper .employer,
+.bigLinkWrapper .smallText {
   width: 80%;
   display: inline-block;
+}
+
+.bigLinkWrapper .smallText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  // display: block;
 }
 
 .bigLinkWrapper > div{
