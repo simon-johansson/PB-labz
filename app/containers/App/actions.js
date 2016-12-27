@@ -28,6 +28,8 @@ import {
   REMOVE_COMPETENCE,
   SET_EXPERIENCE,
   REMOVE_EXPERIENCE,
+  SET_DRIVERS_LICENSE,
+  REMOVE_DRIVERS_LICENSE,
   TOTAL_AMOUNT_LOADED,
   LOAD_ADDITIONAL_JOBS,
   LOAD_ADDITIONAL_JOBS_SUCCESS,
@@ -129,12 +131,13 @@ const cleanJobData = (jobsData) =>  {
   });
   const competences = _.sortBy(_.uniqBy(compArr, 'varde'), ['efterfragat']);
   const experiences = _.uniqBy(expArr, 'varde');
+  const driverLicenses = _.uniqBy(driveArr, 'varde');
 
   return {
     jobs: jobsData.rekryteringsbehov,
     amount: jobsData.antalRekryteringsbehov,
     related: jobsData.relateradeKriterier,
-    driverLicenses: driveArr,
+    driverLicenses,
     experiences,
     competences,
     areas,
@@ -211,6 +214,20 @@ export function setExperience(id, years) {
 export function removeExperience(id) {
   return {
     type: REMOVE_EXPERIENCE,
+    id,
+  };
+};
+
+export function setDriversLicense(id) {
+  return {
+    type: SET_DRIVERS_LICENSE,
+    id,
+  };
+};
+
+export function removeDriversLicense(id) {
+  return {
+    type: REMOVE_DRIVERS_LICENSE,
     id,
   };
 };

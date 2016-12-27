@@ -27,5 +27,8 @@ export const REMOVE_COMPETENCE = 'boilerplate/Home/REMOVE_COMPETENCE';
 export const SET_EXPERIENCE = 'boilerplate/Home/SET_EXPERIENCE';
 export const REMOVE_EXPERIENCE = 'boilerplate/Home/REMOVE_EXPERIENCE';
 
+export const SET_DRIVERS_LICENSE = 'boilerplate/Home/SET_DRIVERS_LICENSE';
+export const REMOVE_DRIVERS_LICENSE = 'boilerplate/Home/REMOVE_DRIVERS_LICENSE';
+
 export const GET_TOTAL_AMOUNT = 'boilerplate/Home/GET_TOTAL_AMOUNT';
 export const TOTAL_AMOUNT_LOADED = 'boilerplate/Home/TOTAL_AMOUNT_LOADED';

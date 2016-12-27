@@ -46,12 +46,49 @@
   font-size: 11px;
 }
 
-:global(.greenCircle) {
+.greenCircle {
   border: 3px solid green;
 }
-:global(.orangeCircle) {
+.orangeCircle {
   border: 3px solid orange;
 }
-:global(.yellowCircle) {
+.yellowCircle {
+  border: 3px solid #f2e220;
+}
+
+.circleWrapperSmall p {
+  font-weight: bold;
+}
+
+.circleWrapperSmall .greenCircle,
+.circleWrapperSmall .orangeCircle,
+.circleWrapperSmall .yellowCircle {
+  border: none;
+  position: absolute;
+  top: 5px;
+  right: 0px;
+  font-size: 10px;
+}
+
+.circleWrapperSmall .greenCircle p,
+.circleWrapperSmall .orangeCircle p,
+.circleWrapperSmall .yellowCircle p {
+  border-radius: 100px;
+  padding: 1px 3px;
+  // color: white;
+}
+
+.circleWrapperSmall .greenCircle p {
+  // background: green;
+  border: 3px solid green;
+}
+
+.circleWrapperSmall .orangeCircle p {
+  // background: orange;
+  border: 3px solid green;
+}
+
+.circleWrapperSmall .yellowCircle p {
+  // background: #f2e220;
   border: 3px solid #f2e220;
 }

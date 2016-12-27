@@ -377,7 +377,7 @@ export class FilterPage extends React.Component {
             }
 
 
-            <p>Visa endast annonser med ordet...</p>
+            {/*<p>Visa endast annonser med ordet...</p>
             <form autoComplete="off">
               <div className="form-group">
                 <input
@@ -388,7 +388,7 @@ export class FilterPage extends React.Component {
                   autoComplete="off"
                 />
               </div>
-            </form>
+            </form>*/}
           </section>
 
           {this.shouldShowSearchButton() &&

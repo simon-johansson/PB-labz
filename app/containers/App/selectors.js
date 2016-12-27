@@ -31,6 +31,21 @@ const selectJobs = () => createSelector(
   (globalState) => globalState.getIn(['afData', 'jobs'])
 );
 
+const selectMatchingJobs = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['afData', 'matchingJobs'])
+);
+
+const selectNonMatchingJobs = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['afData', 'nonMatchingJobs'])
+);
+
+const selectHasMatchningJobs = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['afData', 'hasMatchningJobs'])
+);
+
 const selectAmount = () => createSelector(
   selectGlobal(),
   (globalState) => globalState.getIn(['afData', 'amount'])
@@ -69,6 +84,11 @@ const selectKnownCompetences = () => createSelector(
 const selectKnownExperiences = () => createSelector(
   selectGlobal(),
   (globalState) => globalState.get('knownExperiences')
+);
+
+const selectKnownDriversLicenses = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.get('knownDriversLicenses')
 );
 
 const selectTotalAmount = () => createSelector(
@@ -130,6 +150,9 @@ export {
   selectError,
   selectRepos,
   selectJobs,
+  selectMatchingJobs,
+  selectNonMatchingJobs,
+  selectHasMatchningJobs,
   selectAmount,
   selectRelated,
   selectCompetences,
@@ -138,6 +161,7 @@ export {
   selectAreas,
   selectKnownCompetences,
   selectKnownExperiences,
+  selectKnownDriversLicenses,
   selectTotalAmount,
   selectLocationState,
   selectAdditionalSearchParameters,

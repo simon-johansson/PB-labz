@@ -11,7 +11,8 @@
   margin-bottom:50px;
 }
 
-.searchForm {
+.searchForm,
+.searchFormSticky {
   padding: 2px 10px;
   background: #345468;
   color: white;
@@ -19,7 +20,15 @@
   min-height: 55px;
 }
 
-.searchForm h1 {
+.searchFormSticky {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+}
+
+.searchForm h1,
+.searchFormSticky h1 {
   font-size: 20px;
   text-align: center;
 }
@@ -246,19 +255,28 @@ label {
 }
 
 .cancel {
-  // float: right;
-  // color: #B0B0B0;
-  // border: 1px solid #000;
-
   position: absolute;
   left: 0px;
   padding-left: 12px;
-  top: 0px;
+  top: -2px;
   width: 50px;
   padding-top: 2px;
   height: 47px;
   line-height: 55px;
   cursor: pointer;
+}
+
+.done {
+  position: absolute;
+  right: 0px;
+  padding-right: 12px;
+  top: -2px;
+  width: 50px;
+  padding-top: 2px;
+  height: 47px;
+  line-height: 55px;
+  cursor: pointer;
+  text-align: right;
 }
 
 
@@ -373,6 +391,7 @@ label {
   height: 100%;
   width: 100%;
   overflow-y: scroll;
+  padding-top: 55px;
   padding-bottom: 105px;
 }
 
@@ -400,6 +419,26 @@ label {
   display: block;
   margin: auto;
   padding: 5px 0 10px;
+}
+
+.criteriaSelectionView {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: #FAFAFA;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  padding-top: 55px;
+  padding-bottom: 115px;
+  z-index: 999;
+}
+
+.experienceSelectionWrapper {
+  width: 100%;
+  padding: 0 10px;
 }
 
 .matchCriteriaSearchSummary {

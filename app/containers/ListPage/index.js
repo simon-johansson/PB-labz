@@ -7,11 +7,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-// import Helmet from 'react-helmet';
 import _ from 'lodash';
 import Tappable from 'react-tappable';
 
-// import messages from './messages';
 import { createStructuredSelector } from 'reselect';
 import * as ls from 'utils/localstorage';
 
@@ -20,6 +18,9 @@ import {
   selectLoading,
   selectError,
   selectJobs,
+  selectMatchingJobs,
+  selectNonMatchingJobs,
+  selectHasMatchningJobs,
   selectAmount,
   selectRelated,
   selectCompetences,
@@ -52,20 +53,15 @@ import {
   setUiState,
 } from './actions';
 import {
-  loadRepos,
   loadJobs,
   removeAdditionalJob,
 } from '../App/actions';
 
-import { FormattedMessage } from 'react-intl';
-import RepoListItem from 'containers/RepoListItem';
 import JobListItem from 'components/JobListItem';
 import CompetenceListItem from 'components/CompetenceListItem';
 import IosMenu from 'components/IosMenu';
-import Button from 'components/Button';
 import RutTips from 'components/RutTips';
 import SadFace from 'components/SadFace';
-import H2 from 'components/H2';
 import List from 'components/List';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
@@ -78,32 +74,14 @@ const isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 
 export class ListPage extends React.Component {
   static contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
   }
 
   constructor(props) {
     super(props);
 
-    let hasMatching = false;
-    if (props.competences) {
-      hasMatching = !!props.competences.filter((comp) => {
-        return props.knownCompetences.includes(comp.varde);
-      }).length;
-    }
-    if (!hasMatching && props.experiences) {
-      props.experiences.forEach((exp) => {
-        props.knownExperiences.forEach((item) => {
-          if (exp.varde === item.id) hasMatching = true;
-        });
-      });
-    }
-
-    // console.log(hasMatching);
-
     this.state = {
-      // tab: hasMatching ? props.currentTab : 'all',
-      // showMatchingJobs: false,
-      showMatchingJobs: hasMatching,
+      showMatchingJobs: props.hasMatchningJobs,
       showNonMatchningJobs: props.showNonMatchningJobs,
       scrollPosition: 0,
       showStickyHeader: false,
@@ -125,75 +103,29 @@ export class ListPage extends React.Component {
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    // console.log('componentDidMount');
-
     if (this.props.shouldLoadNewJobs) {
       this.props.onSubmitForm();
     }
 
-    let hasMatching = false;
-    if (this.props.competences) {
-      hasMatching = !!this.props.competences.filter((comp) => {
-        return this.props.knownCompetences.includes(comp.varde);
-      }).length;
-    }
-    if (!hasMatching && this.props.experiences) {
-      this.props.experiences.forEach((exp) => {
-        this.props.knownExperiences.forEach((item) => {
-          if (exp.varde === item.id) hasMatching = true;
-        });
-      });
-    }
-
     this.props.setUiState({
-      showMatchingJobs: hasMatching,
-      tab: hasMatching ? this.props.currentTab : 'all',
+      showMatchingJobs: this.props.hasMatchningJobs,
+      tab: this.props.hasMatchningJobs ? this.props.currentTab : 'all',
       scrollPosition: 0,
       showNonMatchningJobs: this.props.showNonMatchningJobs,
     });
 
-
     this.scrollTo(this.props.scrollPosition);
-
-    // console.log('mount');
-    // summaryHeaders = [];
     window.addEventListener('scroll', this.onScroll, false);
-    // window.addEventListener('touchmove', this.onScroll);
-
-    // if (this.props.occupations && this.props.occupations.length > 0) {
-    //   this.props.onSubmitForm();
-    // }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll, false);
-    // window.removeEventListener('touchmove', this.onScroll, false);
   }
 
   componentWillReceiveProps(nextProps) {
     // console.log('componentWillReceiveProps');
     if (nextProps.competences !== this.props.competences ||
         nextProps.experiences !== this.props.experiences) {
-      let hasMatching = false;
-      if (nextProps.competences) {
-        hasMatching = !!nextProps.competences.filter((comp) => {
-          return nextProps.knownCompetences.includes(comp.varde);
-        }).length;
-      }
-      if (!hasMatching && nextProps.experiences) {
-        nextProps.experiences.forEach((exp) => {
-          nextProps.knownExperiences.forEach((item) => {
-            if (exp.varde === item.id) hasMatching = true;
-          });
-        });
-      }
 
-      this.setState({ showMatchingJobs: hasMatching });
-
-      // console.log(hasMatching);
-
+      this.setState({ showMatchingJobs: nextProps.hasMatchningJobs });
       nextProps.setUiState({
-        showMatchingJobs: hasMatching,
+        showMatchingJobs: nextProps.hasMatchningJobs,
         tab: nextProps.currentTab,
         scrollPosition: 0,
         showNonMatchningJobs: nextProps.showNonMatchningJobs,
@@ -201,12 +133,13 @@ export class ListPage extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll, false);
+  }
+
   onScroll() {
     const headers = summaryHeaders.filter(h => h.el);
-    // console.log(headers);
     const position = document.documentElement.scrollTop || document.body.scrollTop;
-
-    // console.log(headers);
 
     if (!!headers.length) {
       if (position > headers[0].el.offsetTop) {
@@ -220,8 +153,6 @@ export class ListPage extends React.Component {
       }
 
       const closest = headers.sort((a, b) => {
-        // console.log(a, b);
-        // console.log(a.el.offsetTop, b.el.offsetTop, position);
         const aOffset = a.el.offsetTop;
         const bOffset = b.el.offsetTop;
         const high = aOffset > bOffset ? aOffset : bOffset;
@@ -233,11 +164,6 @@ export class ListPage extends React.Component {
           return ((position > low) && (position < high)) ? 1 : -1;
         }
       })[0];
-    // console.log(closest);
-
-    // const test = _.orderBy(headers, [(o) => {
-    //   return o.el.offsetTop;
-    // }], ['desc'])[0];
 
       if (closest.text !== this.state.stickyHeaderText) {
         this.setState({ stickyHeaderText: closest.text });
@@ -245,24 +171,7 @@ export class ListPage extends React.Component {
     }
   }
 
-  // componentWillUpdate() {
-  //   this.scrollTo(this.props.scrollPosition);
-  // }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.props.scrollPosition === nextProps.scrollPosition) {
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
-  /**
-   * Changes the route
-   *
-   * @param  {string} route The route we want to go to
-   */
   openRoute = (route) => {
-    // console.log('openRoute', route);
     setTimeout(() => {
       this.props.changeRoute(route);
     }, 1);
@@ -295,41 +204,6 @@ export class ListPage extends React.Component {
     this.openRoute('/filter');
   };
 
-  createOccupationTags() {
-    return this.props.occupations.map((item, index) => {
-      return (
-        <div
-          className={styles.tag}
-          onClick={this.removeOccupationTag.bind(this, index)}
-          key={`occupations-${index}`}
-        >
-          <span className={styles.tagText}>
-            {item.namn}
-            <span className="glyphicon glyphicon-remove" />
-          </span>
-        </div>
-      );
-    });
-  }
-
-  createLocationTags() {
-    return this.props.locations.map((item, index) => {
-      // console.log(item);
-      return (
-        <div
-          className={styles.tag}
-          onClick={this.removeLocationTag.bind(this, index)}
-          key={`locations-${index}`}
-        >
-          <span className={styles.tagText}>
-            {item.namn}
-            <span className="glyphicon glyphicon-remove" />
-          </span>
-        </div>
-      );
-    });
-  }
-
   createSearchInput(occ, loc) {
     const occupations = JSON.parse(JSON.stringify(occ || this.props.occupations)).map((item, index) => item.namn);
     const locations = JSON.parse(JSON.stringify(loc || this.props.locations)).map((item, index) => item.namn);
@@ -358,6 +232,18 @@ export class ListPage extends React.Component {
       <div>
         {!!this.props.competences.length &&
           <div>
+            <div className={styles.searchFormSticky}>
+              <span
+                className={styles.cancel}
+                onClick={this.toggleCompetenceCriteriaContent.bind(this)}
+              >Avbryt</span>
+              <span
+                className={styles.done}
+                onClick={this.toggleCompetenceCriteriaContent.bind(this)}
+              >Klar</span>
+              <h1>Kompetenser</h1>
+            </div>
+
             {(this.props.competences.length > 10) &&
               <div>
                 <span
@@ -391,7 +277,7 @@ export class ListPage extends React.Component {
 
   criteriaSelection() {
     const renderKnownCompetences = () => {
-      const content = []
+      const content = [];
       this.props.competences.forEach((comp, index) => {
         if (this.props.knownCompetences.includes(comp.varde)) {
           content.push(
@@ -454,7 +340,7 @@ export class ListPage extends React.Component {
 
     return (
       <div className={styles.matchCriteriaPopover}>
-        <div className={styles.searchForm}>
+        <div className={styles.searchFormSticky}>
           <span
             className={styles.cancel}
             onClick={this.cancelMatchCriteriaPopover.bind(this, !!renderKnownCompetences().length)}
@@ -481,7 +367,7 @@ export class ListPage extends React.Component {
             <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
           </header>
           {this.state.showCompetenceCriteriaContent &&
-            <section className={styles.criteriaSelectionContent}>
+            <section className={styles.criteriaSelectionView}>
               {this.competenceSelection()}
             </section>
           }
@@ -501,7 +387,7 @@ export class ListPage extends React.Component {
             <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
           </header>
           {this.state.showExperienceCriteriaContent &&
-            <section className={styles.criteriaSelectionContent}>
+            <section className={styles.criteriaSelectionView}>
               {this.experienceSelection()}
             </section>
           }
@@ -598,14 +484,33 @@ export class ListPage extends React.Component {
   }
 
   experienceSelection() {
-    return this.props.experiences.map((exp, index) => {
+    const experiences = this.props.experiences.map((exp, index) => {
       return (
         <ExperienceSelector
           key={'experience-selector-' + index}
           item={exp}
         />
-      )
-    })
+      );
+    });
+
+    return (
+      <div>
+        <div className={styles.searchFormSticky}>
+          <span
+            className={styles.cancel}
+            onClick={this.toggleExperienceCriteriaContent.bind(this)}
+          >Avbryt</span>
+          <span
+            className={styles.done}
+            onClick={this.toggleExperienceCriteriaContent.bind(this)}
+          >Klar</span>
+          <h1>Arbetslivserfarenheter</h1>
+        </div>
+        <div className={styles.experienceSelectionWrapper}>
+          {experiences}
+        </div>
+      </div>
+    )
   }
 
   showMatchingJobs() {
@@ -636,20 +541,18 @@ export class ListPage extends React.Component {
    });
   }
 
-  removeOccupationTag(index, e) {
-    e.stopPropagation();
-    this.props.onRemoveOccupation(index);
-  }
+  onAdvertClick(link) {
+    this.props.setUiState({
+      showMatchingJobs: this.state.showMatchingJobs,
+      tab: this.props.currentTab,
+      scrollPosition: document.body.scrollTop,
+      showNonMatchningJobs: this.props.showNonMatchningJobs,
+    });
 
-  removeLocationTag(index, e) {
-    e.stopPropagation();
-    this.props.onRemoveLocation(index);
+    this.openRoute(link);
   }
 
   setTabState(tabState) {
-    // console.log('setTabState');
-    // console.log(tabState);
-
     this.setState({tab: tabState});
     this.props.setUiState({
       tab: tabState,
@@ -670,9 +573,6 @@ export class ListPage extends React.Component {
 
   scrollTo(position = 0, effect = 'instant') {
     if (this.props.location.pathname ===  '/list') {
-      // window.requestAnimationFrame(() => {
-      //   document.body.scrollTop = document.documentElement.scrollTop = position;
-      // });
 
       if (effect === 'instant') {
         setTimeout(() => {
@@ -687,18 +587,6 @@ export class ListPage extends React.Component {
         }, 1);
       }
     }
-  }
-
-  onAdvertClick(link) {
-    // console.log('click');
-    this.props.setUiState({
-      showMatchingJobs: this.state.showMatchingJobs,
-      tab: this.props.currentTab,
-      scrollPosition: document.body.scrollTop,
-      showNonMatchningJobs: this.props.showNonMatchningJobs,
-    });
-
-    this.openRoute(link);
   }
 
   showNonMatchningJobs() {
@@ -811,7 +699,7 @@ export class ListPage extends React.Component {
   }
 
   render() {
-    // console.log(this.props.experiences);
+    // console.log(this.props.hasMatchningJobs);
     // console.log(this.props.driverLicenses);
     // console.log(this.props.additionalAds);
 
@@ -821,10 +709,8 @@ export class ListPage extends React.Component {
     } = this.state.originalSearchParams;
     let mainContent = null;
     let matchingContent = null;
-    const matchingJobs = [];
-    const nonMatchingJobs = [];
     summaryHeaders = [];
-    const ads = this.props.additionalSearchParameters.map((param, index) => {
+    const additionalAds = this.props.additionalSearchParameters.map((param, index) => {
       const isLocation = param.typ === 'KOMMUN';
       const searchSummary = isLocation ? this.createSearchSummary(null, [param]) : this.createSearchSummary([param]);
       const inputSummary = isLocation ? this.createSearchInput(null, [param]) : this.createSearchInput([param]);
@@ -869,16 +755,12 @@ export class ListPage extends React.Component {
       mainContent = (<List component={LoadingIndicator} />);
       matchingContent = (<List component={LoadingIndicator} />);
 
-      const component = () => (
-        <ListItem item={'Something went wrong, please try again!'} />
-      );
     } else if (this.props.error !== false) {
       const ErrorComponent = () => (
         <ListItem item={'Something went wrong, please try again!'} />
       );
       mainContent = (<List component={ErrorComponent} />);
 
-    // If we're not loading, don't have an error and there are repos, show the repos
     } else if (!this.props.jobs.length) {
       mainContent = (
         <div>
@@ -887,7 +769,7 @@ export class ListPage extends React.Component {
               summary={this.createSearchSummary()}
             />
           }
-          {ads}
+          {additionalAds}
           <RutTips
             summary={this.createSearchSummary()}
             occupationSummary={this.createSearchSummary(this.props.occupations, [])}
@@ -900,9 +782,6 @@ export class ListPage extends React.Component {
       );
 
     } else if (this.props.jobs !== false) {
-      // console.log(this.props.additionalAds.get(0));
-      // console.log(this.props.additionalSearchParameters);
-      // console.log(this.props.additionalSearchParameters[0]);
       mainContent = (
         <div>
           <span
@@ -911,8 +790,8 @@ export class ListPage extends React.Component {
           >
             Hittade {this.props.amount} jobb {this.createSearchSummary()}
           </span>
-          <List items={this.props.jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick}/>
-          {ads}
+          <List items={this.props.jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
+          {additionalAds}
           <RutTips
             summary={this.createSearchSummary()}
             occupationSummary={this.createSearchSummary(this.props.occupations, [])}
@@ -924,49 +803,7 @@ export class ListPage extends React.Component {
         </div>
       );
 
-      this.props.jobs.forEach(job => {
-        const jobCopy = JSON.parse(JSON.stringify(job));
-        const matchingCompetences = [];
-        const notMatchingCompetences = [];
-        let match = false;
-        jobCopy.matchningsresultat.efterfragat.forEach(requirement => {
-          if (requirement.typ == "KOMPETENS" && this.props.knownCompetences.includes(requirement.varde)) {
-            matchingCompetences.push(requirement);
-            match = true;
-          } else if(requirement.typ == "YRKE") {
-            this.props.knownExperiences.forEach((item) => {
-              if (item.id === requirement.varde) {
-                // console.log(item.years, requirement.niva);
-                if ((item.years + 1) >= parseInt(requirement.niva.varde)) {
-                  match = true;
-                  matchingCompetences.push(requirement);
-                }
-              }
-            });
-          } else {
-            if (requirement.typ == "KOMPETENS") {
-              notMatchingCompetences.push(requirement);
-            }
-          }
-        });
-        if (match) {
-          jobCopy.matchingCompetences = matchingCompetences;
-          jobCopy.notMatchingCompetences = notMatchingCompetences;
-          jobCopy.matchProcent = matchingCompetences.length / _.filter(jobCopy.matchningsresultat.efterfragat, (j) => {
-            return j.typ === 'KOMPETENS' || j.typ === 'YRKE';
-          }).length;
-          // console.log(jobCopy.matchProcent);
-          matchingJobs.push(jobCopy);
-        } else {
-          nonMatchingJobs.push(jobCopy);
-        }
-      });
-      const sortedMatchingJobs = _.orderBy(matchingJobs,
-        ['matchProcent', 'matchingCompetences', 'notMatchingCompetences'], ['desc', 'desc', 'asc']);
-      // const sortedMatchingJobs = _.orderBy(matchingJobs,['matchProcent'], ['desc']);
-      if (!sortedMatchingJobs.length) {
-        // matchingContent = ();
-      } else {
+      if (this.props.hasMatchningJobs) {
         matchingContent = (
           <div className={styles.listWrapperMatchingContent}>
             <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
@@ -977,10 +814,15 @@ export class ListPage extends React.Component {
               className={styles.amount}
               ref={(r) => summaryHeaders.push({ el: r, text: 'Jobb som matchar dina kompetenser' })}
             >
-              {sortedMatchingJobs.length} jobb matchar dina kompetenser
+              {this.props.matchingJobs.length} jobb matchar dina kompetenser
             </span>
-            <List items={sortedMatchingJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
-            { !this.props.showNonMatchningJobs ?
+            <List
+              items={this.props.matchingJobs.slice(0, 50)}
+              component={JobListItem}
+              click={this.onAdvertClick}
+              options={{view: 'matching'}}
+            />
+            { /*!this.props.showNonMatchningJobs ?
               <button
                 className={styles.showNonMatchningJobs}
                 onClick={this.showNonMatchningJobs.bind(this)}
@@ -994,8 +836,8 @@ export class ListPage extends React.Component {
                 >
                   Jobb som inte matchar dina kompetenser
                 </span>
-                <List items={nonMatchingJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
-              </div>
+                <List items={this.props.nonMatchingJobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
+              </div>*/
             }
           </div>
         );
@@ -1055,8 +897,8 @@ export class ListPage extends React.Component {
                 onClick={this.setTabState.bind(this, 'match')}
               >
                 Matchande jobb
-                { !!matchingJobs.length && !this.props.loading &&
-                  ` (${matchingJobs.length})`
+                { this.props.hasMatchningJobs && !this.props.loading &&
+                  ` (${this.props.matchingJobs.length})`
                 }
               </button>
             </div>
@@ -1066,13 +908,10 @@ export class ListPage extends React.Component {
             { this.props.currentTab === 'match' &&
               (this.state.showMatchingJobs ?
                 matchingContent :
-                this.createCompetencesCloud(matchingJobs.length)
+                this.createCompetencesCloud(this.props.matchingJobs.length)
               )
             }
           </section>
-          {/*<Button handleRoute={this.openFeaturesPage}>
-            <FormattedMessage {...messages.featuresButton} />
-          </Button>*/}
         </div>
         <IosMenu
           changeRoute={this.props.changeRoute}
@@ -1129,16 +968,11 @@ ListPage.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    // onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     onRemoveOccupation: (index, shouldReload) => dispatch(removeOccupation(index, shouldReload)),
     onRemoveLocation: (index, shouldReload) => dispatch(removeLocation(index, shouldReload)),
     onRemoveAdditionalJob: (index) => dispatch(removeAdditionalJob(index)),
     setUiState: (state) => dispatch(setUiState(state)),
     changeRoute: (url) => dispatch(push(url)),
-    // onSubmitForm: (evt) => {
-    //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-    //   dispatch(loadRepos());
-    // },
     onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       // console.log('load');
@@ -1152,6 +986,9 @@ export function mapDispatchToProps(dispatch) {
 const mapStateToProps = createStructuredSelector({
   repos: selectRepos(),
   jobs: selectJobs(),
+  matchingJobs: selectMatchingJobs(),
+  nonMatchingJobs: selectNonMatchingJobs(),
+  hasMatchningJobs: selectHasMatchningJobs(),
   amount: selectAmount(),
   related: selectRelated(),
   uiState: selectUiState(),
