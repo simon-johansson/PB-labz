@@ -200,10 +200,11 @@ label {
   font-size: 12px;
 }
 
-.showMatchingButton {
+.showMatchingButton,
+.addToSearchButton {
   // background: #06769F;
   background: #5E8404;
-   margin: 15px auto;
+  margin: 15px auto;
   display: block;
   color: white;
   border: none;
@@ -214,6 +215,14 @@ label {
   display: block;
   z-index: 999;
   height: 40px;
+}
+
+.addToSearchButton {
+  height: auto !important;
+  min-height: 40px;
+  bottom: -5px;
+  white-space: normal;
+  line-height: 25px;
 }
 
 .myCompetences {
@@ -287,14 +296,25 @@ label {
   cursor: pointer;
 }
 
+.additionalJobs {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: #FAFAFA;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  padding-top: 55px;
+  padding-bottom: 80px;
+  z-index: 999;
+}
+
 .additionalAmountWrapper {
   position: relative;
   width: calc(100% - 10px);
   padding-right: 4px;
-}
-
-.additionalJobs {
-  // min-height: 400px;
 }
 
 .stickyHeader {

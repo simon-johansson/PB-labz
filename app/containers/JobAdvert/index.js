@@ -102,6 +102,7 @@ export class JobAdvert extends React.Component {
   }
 
   componentDidMount() {
+    window.$('body').removeClass('modal-open');
     this.props.onLoadAdvert(this.props.params.id);
 
     setTimeout(() => {

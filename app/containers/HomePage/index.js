@@ -74,7 +74,7 @@ export class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      amountPrevious: 3,
+      amountPrevious: 5,
       savedSearches: ls.getFavoriteSearchs(),
       editSaved: false,
     };

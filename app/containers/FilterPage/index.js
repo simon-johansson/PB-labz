@@ -11,6 +11,7 @@ import { push } from 'react-router-redux';
 import _ from 'lodash';
 import * as ls from 'utils/localstorage';
 import Slider from 'react-rangeslider';
+import Switch from 'react-ios-switch';
 
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';
@@ -72,11 +73,10 @@ export class FilterPage extends React.Component {
     super(props);
     this.state = {
       range: 10,
-      employment: {
-        ordinary: true,
-        summer: true,
-        needs: true,
-      },
+      sorting: 'pub',
+      date: '',
+      employment: [true, true, true, true],
+      amount: [true, true],
       areaFilter: [],
     };
 
@@ -250,6 +250,22 @@ export class FilterPage extends React.Component {
     this.props.onSubmitForm();
   }
 
+  setEmployment(indexToChange) {
+    const arr = this.state.employment.map((state, index) => {
+      if (index === indexToChange) return !state;
+      else return state;
+    });
+    this.setState({ employment: arr });
+  }
+
+  setAmount(indexToChange) {
+    const arr = this.state.amount.map((state, index) => {
+      if (index === indexToChange) return !state;
+      else return state;
+    });
+    this.setState({ amount: arr });
+  }
+
   render() {
 
     let mainContent = null;
@@ -318,11 +334,41 @@ export class FilterPage extends React.Component {
 
           <p className={styles.sectionHeader}>Sortera</p>
           <section className={styles.sortingWrapper}>
-            <p>Ordning i lista</p>
-            <div className={styles.buttonGroup}>
-              <button className='activeFilterButton'>Publiceringsdatum</button>
-              <button>Sista ansökningsdagen</button>
-              <button>Avstånd</button>
+            <p className={styles.subTitle}>Ordning i lista</p>
+            <div className={styles.radioButtonGroup}>
+              <div
+                className={styles.radioWrapperRow}
+                onClick={() => this.setState({sorting: 'pub'})}
+              >
+                <span className={styles.radioTitle}>Publiceringsdatum</span>
+                <div className={styles.radioButton}>
+                  <span
+                    className={`${styles.radioOk} ${this.state.sorting !== 'pub' ? styles.inActive : ''} glyphicon glyphicon-ok`}
+                  />
+                </div>
+              </div>
+              <div
+                className={styles.radioWrapperRow}
+                onClick={() => this.setState({sorting: 'last'})}
+              >
+                <span className={styles.radioWrapperTitle}>Sista ansökningsdagen</span>
+                <div className={styles.radioButton}>
+                  <span
+                    className={`${styles.radioOk} ${this.state.sorting !== 'last' ? styles.inActive : ''} glyphicon glyphicon-ok`}
+                  />
+                </div>
+              </div>
+              <div
+                className={styles.radioWrapperRow}
+                onClick={() => this.setState({sorting: 'range'})}
+              >
+                <span className={styles.radioWrapperTitle}>Avstånd</span>
+                <div className={styles.radioButton}>
+                  <span
+                    className={`${styles.radioOk} ${this.state.sorting !== 'range' ? styles.inActive : ''} glyphicon glyphicon-ok`}
+                  />
+                </div>
+              </div>
             </div>
           </section>
 
@@ -331,36 +377,136 @@ export class FilterPage extends React.Component {
 
             {/*<hr className={styles.noMarginTop} />*/}
 
-            <p>Visa endast annonser inkommna</p>
-            <div className={styles.buttonGroup}>
-              <button>Idag</button>
-              <button>Senaste veckan</button>
-              <button>Senaste månaden</button>
-            </div>
-
-            <hr />
-
-            <p>Anställningstyp</p>
-            <div className={styles.buttonWrapper}>
+            <p className={styles.subTitle}>Anställningstyp</p>
+            {/*<div className={styles.buttonWrapper}>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Tillsvidareanställning</button>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Visstidsanställning</button>
               <button onClick={this.toggleActive.bind(this)}>Sommarjobb / feriejobb</button>
               <button onClick={this.toggleActive.bind(this)}>Behovsanställning / poolanställning</button>
+            </div>*/}
+            <div className={styles.switchWrapper}>
+              <div
+                className={styles.switchWrapperRow}
+                onClick={this.setEmployment.bind(this, 0)}
+              >
+                <span className={styles.switchTitle}>Tillsvidareanställning</span>
+                <Switch
+                  className={styles.rowSwitch}
+                  checked={this.state.employment[0]}
+                  onChange={() => {}}
+                />
+              </div>
+              <div
+                className={styles.switchWrapperRow}
+                onClick={this.setEmployment.bind(this, 1)}
+              >
+                <span className={styles.switchWrapperTitle}>Visstidsanställning</span>
+                <Switch
+                  className={styles.rowSwitch}
+                  checked={this.state.employment[1]}
+                  onChange={() => {}}
+                />
+              </div>
+              <div
+                className={styles.switchWrapperRow}
+                onClick={this.setEmployment.bind(this, 2)}
+              >
+                <span className={styles.switchWrapperTitle}>Sommarjobb / feriejobb</span>
+                <Switch
+                  className={styles.rowSwitch}
+                  checked={this.state.employment[2]}
+                  onChange={() => {}}
+                />
+              </div>
+              <div
+                className={styles.switchWrapperRow}
+                onClick={this.setEmployment.bind(this, 3)}
+              >
+                <span className={styles.switchWrapperTitle}>Behovsanställning / poolanställning</span>
+                <Switch
+                  className={styles.rowSwitch}
+                  checked={this.state.employment[3]}
+                  onChange={() => {}}
+                />
+              </div>
             </div>
 
             <hr />
 
-            <p>Omfattning</p>
-            <div className={styles.buttonWrapper}>
+            <p className={styles.subTitle}>Omfattning</p>
+            {/*<div className={styles.buttonWrapper}>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Heltid</button>
               <button onClick={this.toggleActive.bind(this)}>Deltid</button>
+            </div>*/}
+            <div className={styles.switchWrapper}>
+              <div
+                className={styles.switchWrapperRow}
+                onClick={this.setAmount.bind(this, 0)}
+              >
+                <span className={styles.switchTitle}>Heltid</span>
+                <Switch
+                  className={styles.rowSwitch}
+                  checked={this.state.amount[0]}
+                  onChange={() => {}}
+                />
+              </div>
+              <div
+                className={styles.switchWrapperRow}
+                onClick={this.setAmount.bind(this, 1)}
+              >
+                <span className={styles.switchWrapperTitle}>Deltid</span>
+                <Switch
+                  className={styles.rowSwitch}
+                  checked={this.state.amount[1]}
+                  onChange={() => {}}
+                />
+              </div>
+            </div>
+
+            <hr />
+
+            <p className={styles.subTitle}>Visa endast annonser inkommna</p>
+            <div className={styles.radioButtonGroup}>
+              <div
+                className={styles.radioWrapperRow}
+                onClick={() => this.setState({date: this.state.date === 'day' ? '' : 'day'})}
+              >
+                <span className={styles.radioTitle}>Idag</span>
+                <div className={styles.radioButton}>
+                  <span
+                    className={`${styles.radioOk} ${this.state.date !== 'day' ? styles.inActive : ''} glyphicon glyphicon-ok`}
+                  />
+                </div>
+              </div>
+              <div
+                className={styles.radioWrapperRow}
+                onClick={() => this.setState({date: this.state.date === 'week' ? '' : 'week'})}
+              >
+                <span className={styles.radioWrapperTitle}>Senaste veckan</span>
+                <div className={styles.radioButton}>
+                  <span
+                    className={`${styles.radioOk} ${this.state.date !== 'week' ? styles.inActive : ''} glyphicon glyphicon-ok`}
+                  />
+                </div>
+              </div>
+              <div
+                className={styles.radioWrapperRow}
+                onClick={() => this.setState({date: this.state.date === 'month' ? '' : 'month'})}
+              >
+                <span className={styles.radioWrapperTitle}>Senaste månaden</span>
+                <div className={styles.radioButton}>
+                  <span
+                    className={`${styles.radioOk} ${this.state.date !== 'month' ? styles.inActive : ''} glyphicon glyphicon-ok`}
+                  />
+                </div>
+              </div>
             </div>
 
             <hr />
 
             {!!this.props.locations.size &&
               <div>
-                <p>Sökradie</p>
+                <p className={`${styles.subTitle} ${styles.extraPadding}`}>Sökradie</p>
                 {this.createRange()}
                 <hr />
               </div>
@@ -368,7 +514,7 @@ export class FilterPage extends React.Component {
 
             {this.shouldShowAreaFilter() &&
               <div>
-                <p>Visa endast annonser inom yrkesområden</p>
+                <p className={styles.subTitle}>Visa endast annonser inom yrkesområden</p>
                   <div className={styles.buttonWrapper}>
                     {this.createAreaFilter()}
                   </div>

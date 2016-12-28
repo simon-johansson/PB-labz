@@ -72,11 +72,11 @@ export class ExperienceSelector extends React.Component {
       <div className={styles.experience}>
         <span className={styles.experienceOccupation}>{item.efterfragat}</span>
         <div className={styles.years}>
-          <span>ingen</span>
-          <span>0-1 år</span>
-          <span>1-2 år</span>
-          <span>2-4 år</span>
-          <span>+4 år</span>
+          <span onClick={this.setExperience.bind(this, 0)}>ingen</span>
+          <span onClick={this.setExperience.bind(this, 1)}>0-1 år</span>
+          <span onClick={this.setExperience.bind(this, 2)}>1-2 år</span>
+          <span onClick={this.setExperience.bind(this, 3)}>2-4 år</span>
+          <span onClick={this.setExperience.bind(this, 4)}>+4 år</span>
         </div>
         <Slider
           value={this.state.hasExperience}

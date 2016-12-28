@@ -103,6 +103,8 @@ export class ListPage extends React.Component {
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
+    window.$('body').removeClass('modal-open');
+
     if (this.props.shouldLoadNewJobs) {
       this.props.onSubmitForm();
     }
@@ -545,7 +547,7 @@ export class ListPage extends React.Component {
     this.props.setUiState({
       showMatchingJobs: this.state.showMatchingJobs,
       tab: this.props.currentTab,
-      scrollPosition: document.body.scrollTop,
+      scrollPosition: this.additionalJobsEl ? this.additionalJobsEl.scrollTop : document.body.scrollTop,
       showNonMatchningJobs: this.props.showNonMatchningJobs,
     });
 
@@ -577,6 +579,7 @@ export class ListPage extends React.Component {
       if (effect === 'instant') {
         setTimeout(() => {
           window.scrollTo(0, position);
+          window.$(this.additionalJobsEl).scrollTo(position);
         }, 1);
       } else {
         setTimeout(() => {
@@ -696,6 +699,15 @@ export class ListPage extends React.Component {
       this.props.onRemoveLocation(removeIndex, false);
     }
     this.props.onRemoveAdditionalJob(index);
+
+    window.$('body').removeClass('modal-open');
+    this.scrollTo(99999);
+  }
+
+  addToSearch() {
+    window.$('body').removeClass('modal-open');
+    this.setState({ showStickyHeader: false });
+    this.props.onSubmitForm();
   }
 
   render() {
@@ -714,38 +726,58 @@ export class ListPage extends React.Component {
       const isLocation = param.typ === 'KOMMUN';
       const searchSummary = isLocation ? this.createSearchSummary(null, [param]) : this.createSearchSummary([param]);
       const inputSummary = isLocation ? this.createSearchInput(null, [param]) : this.createSearchInput([param]);
+      const toAdd = isLocation ? this.createSearchInput([], [param]) : this.createSearchInput([param], []);
+
+      let occupations = !isLocation ? this.createSearchSummary([param], []) : this.createSearchSummary(this.props.occupations, []);
+      occupations = occupations.split('för ')[1];
+      let locations = isLocation ? this.createSearchInput([], [param]) : this.createSearchInput([], this.props.locations);
+      locations = locations === 'Alla jobb i Platsbanken' ? 'Hela Sverige' : locations;
+
+      window.$('body').addClass('modal-open');
 
       return (
-        <div className={styles.additionalJobs} key={'additional-ads-' + index}>
-          {!this.props.additionalAds.get(index) ?
-            <div>
-              <div className={styles.additionalAmountWrapper}>
-                <span className={styles.amount}>
-                  Hittade ... jobb {searchSummary}
-                </span>
-                <span
-                  className={styles.rightPart + ' glyphicon glyphicon-remove-circle'}
-                  onClick={this.removeAdditionalSearchParams.bind(this, param, index)}
-                />
+        <div
+          className={styles.additionalJobs}
+          key={'additional-ads-' + index}
+          ref={(div) => { this.additionalJobsEl = div; }}
+        >
+          <div>
+            <div className={styles.searchFormSticky}>
+              <span
+                className={styles.cancel}
+                onClick={this.removeAdditionalSearchParams.bind(this, param, index)}
+              >Avbryt</span>
+              <div className={styles.matchCriteriaSearchSummary}>
+                <div className={styles.matchCriteriaSearchSummaryText}>
+                  <span>{occupations}</span>
+                  <span className={styles.small}>{locations}</span>
+                </div>
               </div>
-              <List component={LoadingIndicator} />
-            </div> :
-            <div>
-              <div className={styles.additionalAmountWrapper}>
-                <span
-                  className={styles.amount}
-                  ref={(r) => summaryHeaders.push({ el: r, text: inputSummary })}
-                >
-                  Hittade {this.props.additionalAds.get(index).amount} jobb {searchSummary}
-                </span>
-                <span
-                  className={styles.rightPart + ' glyphicon glyphicon-remove-circle'}
-                  onClick={this.removeAdditionalSearchParams.bind(this, param, index)}
-                />
-              </div>
-              <List items={this.props.additionalAds.get(index).jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
             </div>
-          }
+
+            <div className={styles.additionalAmountWrapper}>
+              <span
+                className={styles.amount}
+                ref={(r) => summaryHeaders.push({ el: r, text: inputSummary })}
+              >
+                Hittade {this.props.additionalAds.get(index) ? this.props.additionalAds.get(index).amount : '...'} jobb {searchSummary}
+              </span>
+              {/*<span
+                className={styles.rightPart + ' glyphicon glyphicon-remove-circle'}
+                onClick={this.removeAdditionalSearchParams.bind(this, param, index)}
+              />*/}
+            </div>
+            {!this.props.additionalAds.get(index) ?
+              <List component={LoadingIndicator} /> :
+              <List items={this.props.additionalAds.get(index).jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
+            }
+          </div>
+          <div
+            className={styles.addToSearchButton + ' btn btn-default'}
+            onClick={this.addToSearch.bind(this)}
+          >
+            Lägg till {toAdd} i din sökning
+          </div>
         </div>
       );
     });
