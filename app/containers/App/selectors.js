@@ -107,6 +107,11 @@ const selectAdditionalAds = () => createSelector(
   (globalState) => globalState.getIn(['additional', 'ads'])
 );
 
+const selectSavedAdverts = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.get('savedAdverts')
+);
+
 // const selectAdditionalOccupations = () => createSelector(
 //   selectGlobal(),
 //   (globalState) => globalState.getIn(['additional', 'occupations'])
@@ -166,6 +171,7 @@ export {
   selectLocationState,
   selectAdditionalSearchParameters,
   selectAdditionalAds,
+  selectSavedAdverts,
   // selectAdditionalOccupations,
   // selectAdditionalJobs,
   // selectAdditionalAmount,

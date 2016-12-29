@@ -2,6 +2,7 @@
 import ls from 'local-storage';
 const BASE_KEY = 'pb-labz';
 const PREVIOUS_SEARCH = 'previous-search';
+const PREVIOUS_LOCATION = 'previous-location';
 const FAVORITE_SEARCH = 'favorite-search';
 
 const getBase = () => ls(BASE_KEY) || {};
@@ -58,3 +59,6 @@ export function deleteFavoriteSearch(index) { deleteIn(FAVORITE_SEARCH, index); 
 
 export function getPreviousSearchs() { return get(PREVIOUS_SEARCH) || []; }
 export function getFavoriteSearchs() { return get(FAVORITE_SEARCH) || []; }
+
+export function getPreviousLocation() { return get(PREVIOUS_LOCATION) || []; }
+export function setPreviousLocation(data) { set(PREVIOUS_LOCATION, data); }

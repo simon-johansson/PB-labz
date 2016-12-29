@@ -35,6 +35,8 @@ import {
   LOAD_ADDITIONAL_JOBS_SUCCESS,
   REMOVE_ADDITIONAL_JOB,
   GET_TOTAL_AMOUNT,
+  SAVE_ADVERT,
+  DELETE_ADVERT,
 } from './constants';
 
 /**
@@ -228,6 +230,20 @@ export function setDriversLicense(id) {
 export function removeDriversLicense(id) {
   return {
     type: REMOVE_DRIVERS_LICENSE,
+    id,
+  };
+};
+
+export function saveAdvert(ad) {
+  return {
+    type: SAVE_ADVERT,
+    ad,
+  };
+};
+
+export function removeAdvert(id) {
+  return {
+    type: DELETE_ADVERT,
     id,
   };
 };

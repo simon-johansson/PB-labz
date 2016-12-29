@@ -28,6 +28,7 @@ import {
   selectExperiences,
   selectDriverLicenses,
   selectKnownExperiences,
+  selectKnownDriversLicenses,
   selectAdditionalSearchParameters,
   selectAdditionalAds,
   // selectAdditionalJobs,
@@ -59,6 +60,7 @@ import {
 
 import JobListItem from 'components/JobListItem';
 import CompetenceListItem from 'components/CompetenceListItem';
+import DriversLicenseListItem from 'components/DriversLicenseListItem';
 import IosMenu from 'components/IosMenu';
 import RutTips from 'components/RutTips';
 import SadFace from 'components/SadFace';
@@ -94,6 +96,7 @@ export class ListPage extends React.Component {
       searchIsSaved: false,
       showCompetenceCriteriaContent: false,
       showExperienceCriteriaContent: false,
+      showDriversLicenseCriteriaContent: false,
     };
 
     this.onAdvertClick = this.onAdvertClick.bind(this);
@@ -121,7 +124,6 @@ export class ListPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log('componentWillReceiveProps');
     if (nextProps.competences !== this.props.competences ||
         nextProps.experiences !== this.props.experiences) {
 
@@ -270,7 +272,7 @@ export class ListPage extends React.Component {
         }
         {!this.props.competences.length &&
           <div className={styles.matchDescription}>
-            <p>Kan inte göra någon matchning för denna sökning</p>
+            <p>Inga kompetenser efterfrågas för denna sökning</p>
           </div>
         }
       </div>
@@ -334,6 +336,25 @@ export class ListPage extends React.Component {
         });
       });
 
+      return content;
+    };
+
+    const renderKnownDriversLicenses = () => {
+      const content = [];
+      this.props.driverLicenses.forEach((dl, index) => {
+        if (this.props.knownDriversLicenses.includes(dl.varde)) {
+          content.push(
+            <div
+              className={styles.tag}
+              key={`drivers-license-${index}`}
+            >
+              <span className={styles.tagText}>
+                {dl.efterfragat}
+              </span>
+            </div>
+          );
+        }
+      });
       return content;
     };
 
@@ -401,10 +422,24 @@ export class ListPage extends React.Component {
           }
         </div>
         <div className={styles.criteraWrappper}>
-          <header className={styles.criteriaSelectionHeader}>
+          <header
+            className={styles.criteriaSelectionHeader}
+            onClick={this.toggleDriversLicenseCriteriaContent.bind(this)}
+          >
             Körkort
             <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
           </header>
+          {this.state.showDriversLicenseCriteriaContent &&
+            <section className={styles.criteriaSelectionView}>
+              {this.driversLicenseSelection()}
+            </section>
+          }
+
+          {!this.state.showDriversLicenseCriteriaContent && !!renderKnownDriversLicenses().length &&
+            <section className={styles.criteriaSelectionContent}>
+              {renderKnownDriversLicenses()}
+            </section>
+          }
         </div>
       </div>
     );
@@ -419,6 +454,12 @@ export class ListPage extends React.Component {
   toggleExperienceCriteriaContent() {
     this.setState({
       showExperienceCriteriaContent: !this.state.showExperienceCriteriaContent,
+    });
+  }
+
+  toggleDriversLicenseCriteriaContent() {
+    this.setState({
+      showDriversLicenseCriteriaContent: !this.state.showDriversLicenseCriteriaContent,
     });
   }
 
@@ -509,10 +550,97 @@ export class ListPage extends React.Component {
           <h1>Arbetslivserfarenheter</h1>
         </div>
         <div className={styles.experienceSelectionWrapper}>
-          {experiences}
+        {
+          !!this.props.experiences.length ?
+          experiences :
+          <div className={styles.matchDescription}>
+            <p>Inga arbetslivserfarenheter efterfågas för denna sökning</p>
+          </div>
+        }
         </div>
       </div>
     )
+  }
+
+  driversLicenseSelection() {
+    const licenses = [[], [], [], []];
+    this.props.driverLicenses.forEach((dl, index) => {
+      switch (dl.efterfragat) {
+        case 'AM':
+        case 'A1':
+        case 'A2':
+        case 'A':
+          licenses[0].push(dl);
+          break;
+        case 'B':
+        case 'Utökad B':
+        case 'BE':
+          licenses[1].push(dl);
+          break;
+        case 'C':
+        case 'C1':
+        case 'C1E':
+        case 'CE':
+          licenses[2].push(dl);
+          break;
+        case 'D':
+        case 'D1':
+        case 'D1E':
+        case 'DE':
+          licenses[3].push(dl);
+      }
+    });
+    const driverLicenses = licenses.map((group, index) => {
+      let heading;
+      switch (index) {
+        case 0:
+          heading = 'Moped, motorcykel och traktor';
+          break;
+        case 1:
+          heading = 'Personbil';
+          break;
+        case 2:
+          heading = 'Lastbil';
+          break;
+        case 3:
+          heading = 'Buss';
+      }
+      if (!!group.length) {
+        // const licenses = group.map(l => <div>{l.efterfragat}</div>);
+        return (
+          <div>
+            <span className={styles.amount}>{heading}</span>
+            <List items={group} component={DriversLicenseListItem} />
+          </div>
+        );
+      }
+    });
+
+    return (
+      <div>
+        <div className={styles.searchFormSticky}>
+          <span
+            className={styles.cancel}
+            onClick={this.toggleDriversLicenseCriteriaContent.bind(this)}
+          >Avbryt</span>
+          <span
+            className={styles.done}
+            onClick={this.toggleDriversLicenseCriteriaContent.bind(this)}
+          >Klar</span>
+          <h1>Körkort</h1>
+        </div>
+
+        <div>
+          {
+            !!this.props.driverLicenses.length ?
+            driverLicenses :
+            <div className={styles.matchDescription}>
+              <p>Inga körtkort efterfågas för denna sökning</p>
+            </div>
+          }
+        </div>
+      </div>
+    );
   }
 
   showMatchingJobs() {
@@ -711,7 +839,7 @@ export class ListPage extends React.Component {
   }
 
   render() {
-    // console.log(this.props.hasMatchningJobs);
+    // console.log(this.props.knownDriversLicenses);
     // console.log(this.props.driverLicenses);
     // console.log(this.props.additionalAds);
 
@@ -776,7 +904,7 @@ export class ListPage extends React.Component {
             className={styles.addToSearchButton + ' btn btn-default'}
             onClick={this.addToSearch.bind(this)}
           >
-            Lägg till {toAdd} i din sökning
+            Lägg till {toAdd} i min sökning
           </div>
         </div>
       );
@@ -1033,6 +1161,7 @@ const mapStateToProps = createStructuredSelector({
   driverLicenses: selectDriverLicenses(),
   knownCompetences: selectKnownCompetences(),
   knownExperiences: selectKnownExperiences(),
+  knownDriversLicenses: selectKnownDriversLicenses(),
   occupations: selectOccupations(),
   shouldLoadNewJobs: selectShouldLoadNewJobs(),
   locations: selectLocations(),

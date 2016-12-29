@@ -508,13 +508,6 @@ label {
   top: 2px;
 }
 
-:global(.glyphicon-plus) {
-  cursor: pointer;
-  color: #8E8E93;
-  margin-left: 5px;
-  top: 2px;
-}
-
 :global(input.form-control) {
   height: 40px;
 }

@@ -1,89 +1,40 @@
-
-.contentWrapper {
-  margin-bottom:90px;
-  // background: #E5E5E5;
+.textSection {
+  // margin: 3em auto;
+  // padding-top: 20px;
 }
 
-.searchForm {
+.textSection:first-child {
+  margin-top: 0;
+}
+
+.contentWrapper {
+  margin-bottom:50px;
+}
+
+.searchForm,
+.searchFormSticky {
   padding: 2px 10px;
   background: #345468;
   color: white;
+  cursor: pointer;
+  min-height: 55px;
 }
 
-.searchForm h1 {
+.searchFormSticky {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+}
+
+.searchForm h1,
+.searchFormSticky h1 {
   font-size: 20px;
   text-align: center;
 }
 
 .centered {
   text-align: center;
-}
-
-.searchWrapper,
-.sortingWrapper {
-  padding: 10px 10px 20px 10px;
-  background: white;
-}
-
-.searchWrapper {
-  padding-bottom: 1px;
-  background: white;
-}
-
-.sortingWrapper hr {
-  margin-bottom: 15px;
-}
-
-.searchWrapper p {
-  margin: 5px 5px;
-}
-
-.sectionHeader {
-  font-weight: bold;
-  margin: 15px 0 0 10px;
-}
-
-.buttonGroup,
-.buttonWrapper {
-  display: block;
-  margin: auto;
-}
-.buttonGroup {
-  // max-width: 320px;
-}
-.buttonWrapper {
-  // width: 330px;
-}
-.buttonGroup button {
-  width: auto;
-  margin: 0;
-  font-size: 12px;
-  height: 30px;
-  vertical-align: top;
-  border: 1px solid lightgray;
-  // padding: 10px;
-}
-.buttonGroup button:nth-child(1) {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-right: none;
-}
-.buttonGroup button:nth-child(2) {
-  border-right: none;
-}
-.buttonGroup button:nth-child(3) {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.buttonWrapper button {
-  width: auto;
-  margin: 5px 5px 0 0;
-  font-size: 12px;
-  height: 30px;
-  vertical-align: top;
-  border: 1px solid lightgray;
-  border-radius: 5px;
 }
 
 p,
@@ -96,6 +47,10 @@ label {
   text-decoration: none;
 }
 
+.usernameForm {
+  margin-bottom: 1em;
+}
+
 .input {
   outline: none;
   border-bottom: 1px dotted #999;
@@ -106,13 +61,51 @@ label {
   margin-left: 0.4em;
 }
 
-.tagsWrapper {
+.searchInputWrapper {
   background: white;
-  border: 1px solid lightgray;
-  padding: 0 5px 0 5px;
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
+  // border: 1px solid gray;
+  padding: 0 0 0 8px;
+  width: 80%;
+  height: 35px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  position: relative;
+  display: inline-block;
+}
+
+.inputField {
+  color: #333333;
+  line-height: 35px;
+  height: 30px;
+  width: calc(100% - 30px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  // font-size: 15px;
+}
+
+.filter {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 35px;
+  text-align: center;
+  background: #848484;
+  color: white;
+  width: 20%;
+  height: 35px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 15px;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  display: block;
+  font-size: 18px;
+  color: #848484;
 }
 
 .inputPlaceholder {
@@ -140,9 +133,75 @@ label {
 .amount {
   margin: 15px 10px 5px;
   display: block;
+  position: relative;
+  // font-size: 13px;
 }
 
-.searchButton {
+.nonMatchingAmount {
+  margin: 15px 10px 5px;
+  display: block;
+}
+
+.toggleButtons {
+  width: calc(100% - 25px);
+  display: block;
+  margin: 15px auto;
+}
+
+.toggleButtons button {
+  width: 50%;
+  display: inline-block;
+  // color: #848484;
+  color: #345468;
+  height: 35px;
+  // background: #345468;
+  // border: 2px solid #848484;
+  border: 2px solid #345468;
+}
+
+.toggleButtons button:first-child {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.toggleButtons button:last-child {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.activeButton {
+  // background: #32749D !important;
+  // background: #848484 !important;
+  background: #345468 !important;
+  color: white !important;
+}
+
+.matchWrapper {
+  padding-bottom: 53px;
+}
+
+.matchDescription {
+  display: block;
+  margin: 20px auto 20px;;
+  width: 75%;
+  text-align: center;
+}
+
+.matchDescription p {
+  font-size: 17px;
+}
+
+.listDescription {
+  // font-style: italic;
+  text-transform: uppercase;
+  margin-top: 20px;
+  display: block;
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+.showMatchingButton,
+.addToSearchButton {
   // background: #06769F;
   background: #5E8404;
   margin: 15px auto;
@@ -158,31 +217,37 @@ label {
   height: 40px;
 }
 
-.searchButton[disabled],
-.searchButton[disabled]:hover {
-  background: gray !important;
-  opacity: 1 !important;
+.addToSearchButton {
+  height: auto !important;
+  min-height: 40px;
+  bottom: -5px;
+  white-space: normal;
+  line-height: 25px;
 }
 
-.searchButton:hover {
-  background: #5E8404 !important;
-  color: white !important;
+.myCompetences {
+  background: #B5D8E9;
+  width: 95%;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 2px;
+  // color: white;
 }
 
-.searchIcon {
-  margin-right: 5px;
-}
-
-.latestSearches {
-
-}
-
-.listHeader {
-  text-transform: uppercase;
-  margin-top: 20px;
+.showNonMatchningJobs {
   display: block;
-  margin-left: 10px;
-  font-size: 12px;
+  background: #848484;
+  color: white;
+  width: 95%;
+  height: 35px;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 5px;
+  padding: 0;
+}
+
+.listWrapperMatchingContent {
+  padding-bottom: 2px;
 }
 
 .right {
@@ -190,39 +255,253 @@ label {
   color: #B0B0B0;
 }
 
-.noMarginTop {
-  margin-top: 0;
+.rightPart {
+  position: absolute;
+  right: 0px;
+  top: calc(55% - 10px);
+  color: #B0B0B0;
+  font-size: 18px;
 }
 
 .cancel {
   position: absolute;
+  left: 0px;
+  padding-left: 12px;
+  top: -2px;
+  width: 50px;
+  padding-top: 2px;
+  height: 47px;
+  line-height: 55px;
+  cursor: pointer;
+}
+
+.done {
+  position: absolute;
+  right: 0px;
+  padding-right: 12px;
+  top: -2px;
+  width: 50px;
+  padding-top: 2px;
+  height: 47px;
+  line-height: 55px;
+  cursor: pointer;
+  text-align: right;
+}
+
+
+.goBack {
+  position: absolute;
   left: 12px;
+  top: 17px;
+  cursor: pointer;
+}
+
+.additionalJobs {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: #FAFAFA;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  padding-top: 55px;
+  padding-bottom: 80px;
+  z-index: 999;
+}
+
+.additionalAmountWrapper {
+  position: relative;
+  width: calc(100% - 10px);
+  padding-right: 4px;
+}
+
+.stickyHeader {
+  position: fixed;
+  height: auto;
+  top: 0;
+  width: 100%;
+  background: white;
+  padding: 2px 5px;
+  z-index: 999;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saveSearch {
+  position: absolute;
+  right: 12px;
   top: 0px;
   padding-top: 2px;
   height: 50px;
   line-height: 50px;
 }
 
-.areaFilter {
-  padding: 5px;
-  border: 1px solid lightgray;
-  border-radius: 2px;
-  margin: 0 5px 5px 0;
-  display: inline-block;
+.isSaved {
+  color: gray;
 }
 
-:global(.activeFilterButton) {
-  background: #B5D8E9;
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 999;
+  // pointer-events: none;
+}
+
+.saveSearchPopup {
+  position: fixed;
+  top: 30%;
+  width: 80%;
+  left: 10%;
+  height: auto;
+  padding-top: 20px;
+  padding-bottom: 45px;
+  // border: 2px solid red;
+  background: rgba(255,255,255,0.95);
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.popupText {
+  padding: 0 15px;
+}
+
+.bell {
+  margin-right: 5px;
+  color: gray;
+}
+
+.leftConfirmButton,
+.rightConfirmButton {
+  width: 50%;
+  border-top: 1px solid lightgray;
+  display: inline-block;
+  height: 40px;
+  line-height: 35px;
+  position: absolute;
+  bottom: 0;
+}
+
+.leftConfirmButton {
+  border-bottom-left-radius: 5px;
+  left: 0;
+}
+
+.rightConfirmButton {
+  border-bottom-right-radius: 5px;
+  right: 0;
+  border-left: 1px solid lightgray;
+}
+
+.matchCriteriaPopover {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: #FAFAFA;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  padding-top: 55px;
+  padding-bottom: 105px;
+}
+
+.criteraWrappper {
+  width: calc(100% - 20px);
+  background: white;
+  border: 1px solid #CCC;
+  border-radius: 2px;
+  margin: 0 auto 20px;
+}
+
+.criteriaSelectionHeader {
+  width: calc(100% - 20px);
+  display: block;
+  margin: 10px auto;
+  position: relative;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.criteriaSelectionContent {
+  border-top: 1px solid #EEE;
+  width: calc(100% - 20px);
+  height: auto;
+  display: block;
+  margin: auto;
+  padding: 5px 0 10px;
+}
+
+.criteriaSelectionView {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: #FAFAFA;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  padding-top: 55px;
+  padding-bottom: 115px;
+  z-index: 999;
+}
+
+.experienceSelectionWrapper {
+  width: 100%;
+  padding: 0 10px;
+}
+
+.matchCriteriaSearchSummary {
+  text-align: center;
+  // padding-bottom: 5px;
+  // margin-top: -5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 55px;
+  font-weight: bold;
+}
+
+.matchCriteriaSearchSummaryText {
+  width: calc(100% - 112px);
+  // width: auto;
+  margin: auto;
+}
+
+.matchCriteriaSearchSummaryText span {
+  // font-size: 12px;
+  // width: calc(100% - 112px);
+  // height: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.small {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.pencilIcon {
+  position: absolute;
+  right: 0;
+  top: 0px;
+  color: #33749A;
+  font-size: 18px;
 }
 
 :global(.glyphicon-remove) {
-  cursor: pointer;
-  color: #8E8E93;
-  margin-left: 5px;
-  top: 2px;
-}
-
-:global(.glyphicon-plus) {
   cursor: pointer;
   color: #8E8E93;
   margin-left: 5px;

@@ -32,3 +32,6 @@ export const REMOVE_DRIVERS_LICENSE = 'boilerplate/Home/REMOVE_DRIVERS_LICENSE';
 
 export const GET_TOTAL_AMOUNT = 'boilerplate/Home/GET_TOTAL_AMOUNT';
 export const TOTAL_AMOUNT_LOADED = 'boilerplate/Home/TOTAL_AMOUNT_LOADED';
+
+export const SAVE_ADVERT = 'boilerplate/Home/SAVE_ADVERT';
+export const DELETE_ADVERT = 'boilerplate/Home/DELETE_ADVERT';

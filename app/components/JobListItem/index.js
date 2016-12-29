@@ -63,12 +63,8 @@ import styles from './styles.css';
 // }
 
 const clickHandler = (item, click) => {
-  if (item.matchingCriteria) {
-    click(`/advert/${item.id}/matching`);
-  } else {
-    click(`/advert/${item.id}`);
-  }
-}
+  click(`/advert/${item.id}`);
+};
 
 function JobListItem(props) {
   const momentOptions = {
@@ -82,7 +78,8 @@ function JobListItem(props) {
   const item = props.item;
   const date = moment(item.publiceringsdatum).calendar(null, momentOptions);
   const isMatchingView = props.options.view == 'matching';
-  const isMaching = item.matchingCriteria;
+  const isMaching = !!item.matchingCriteria.length;
+  // console.log(isMaching);
   const wrapperClass = (isMatchingView && isMaching) ? styles.bigLinkWrapper : styles.linkWrapper;
   const content = (
     <Tappable className={wrapperClass} onTap={clickHandler.bind(this, item, props.click)}>

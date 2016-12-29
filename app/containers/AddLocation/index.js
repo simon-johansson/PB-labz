@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 // import Helmet from 'react-helmet';
 import { browserHistory } from 'react-router';
+import * as ls from 'utils/localstorage';
 
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';

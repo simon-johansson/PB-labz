@@ -28,12 +28,15 @@ import {
   LOAD_ADDITIONAL_JOBS,
   LOAD_ADDITIONAL_JOBS_SUCCESS,
   REMOVE_ADDITIONAL_JOB,
+  SAVE_ADVERT,
+  DELETE_ADVERT,
 } from './constants';
 import {
   REMOVE_OCCUPATION,
   REMOVE_LOCATION,
 } from 'containers/ListPage/constants';
 import { fromJS } from 'immutable';
+import matching from 'utils/matching';
 
 // The initial state of the App
 const initialState = fromJS({
@@ -44,6 +47,7 @@ const initialState = fromJS({
   knownCompetences: [],
   knownExperiences: [],
   knownDriversLicenses: [],
+  savedAdverts: [],
   userData: fromJS({
     repositories: false,
   }),
@@ -64,98 +68,6 @@ const initialState = fromJS({
     ads: fromJS([]),
   }),
 });
-
-const isCompetence = (type) => type === 'KOMPETENS';
-const isExperience = (type) => type === 'YRKE';
-const isDriversLicense = (type) => type === 'KORKORT';
-const isKnownCompetence = (id, knownComp, callback) => {
-  if (knownComp.includes(id)) callback(true);
-  else callback(false);
-};
-const isKnownExperience = (exp, knownExp, callback) => {
-  let isMatch = false;
-  knownExp.forEach((item) => {
-    if (item.id === exp.varde) {
-      if ((item.years + 1) >= parseInt(exp.niva.varde)) isMatch = true;
-    }
-  });
-  callback(isMatch);
-};
-const isKnownDriversLicense = (id, knownDL, callback) => {
-  if (knownDL.includes(id)) callback(true);
-  else callback(false);
-};
-const getMatchProcentage = (matchningLen, job) => {
-  return matchningLen / _.filter(job.matchningsresultat.efterfragat, (j) => {
-    return isCompetence(j.typ) || isExperience(j.typ);
-  }).length;
-};
-
-// hasmatching?
-//
-const findMatchningJobs = (
-    jobs,
-    knownCompetences,
-    knownExperiences,
-    knownDriversLicenses = [],
-  ) => {
-  const allJobs = [];
-  const matchingJobs = [];
-  const nonMatchingJobs = [];
-
-  jobs.forEach((job) => {
-    const jobCopy = JSON.parse(JSON.stringify(job));
-    const matchingCriteria = [];
-    const notMatchingCriteria = [];
-    let isMatch = false;
-    const onMatch = (req) => {
-      matchingCriteria.push(req);
-      isMatch = true;
-      req.isKnown = true;
-    };
-    const onNotMatch = (req) => {
-      notMatchingCriteria.push(req);
-      req.isKnown = false;
-    };
-
-    // console.log(knownCompetences, knownExperiences);
-
-    jobCopy.matchningsresultat.efterfragat.forEach((req) => {
-      if (isCompetence(req.typ)) {
-        isKnownCompetence(req.varde, knownCompetences, (isKnown) => {
-          if (isKnown) onMatch(req);
-          else onNotMatch(req);
-        });
-      } else if (isExperience(req.typ)) {
-        isKnownExperience(req, knownExperiences, (isKnown) => {
-          if (isKnown) onMatch(req);
-          else onNotMatch(req);
-        });
-      } else if (isDriversLicense(req.typ)) {
-        isKnownDriversLicense(req, knownDriversLicenses, (isKnown) => {
-          if (isKnown) onMatch(req);
-          else onNotMatch(req);
-        });
-      }
-    });
-
-    if (isMatch) {
-      jobCopy.isMatch = true;
-      jobCopy.matchingCriteria = matchingCriteria;
-      jobCopy.notMatchingCriteria = notMatchingCriteria;
-      jobCopy.matchProcent = getMatchProcentage(matchingCriteria.length, jobCopy);
-      matchingJobs.push(jobCopy);
-    } else {
-      jobCopy.isMatch = false;
-      nonMatchingJobs.push(jobCopy);
-    }
-    allJobs.push(jobCopy);
-  });
-  const sortedMatchingJobs = _.orderBy(matchingJobs,
-    ['matchProcent', 'matchingCriteria', 'notMatchingCriteria'], ['desc', 'desc', 'asc']);
-
-  return [allJobs, sortedMatchingJobs, nonMatchingJobs];
-};
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
@@ -191,8 +103,8 @@ function appReducer(state = initialState, action) {
         .setIn(['afData', 'matchingJobs'], false)
         .setIn(['afData', 'nonMatchingJobs'], false);
     case LOAD_JOBS_SUCCESS: {
-      const [allJobs, matchingJobs, nonMatchingJobs] = findMatchningJobs(
-        action.jobs, state.get('knownCompetences'), state.get('knownExperiences')
+      const [allJobs, matchingJobs, nonMatchingJobs] = matching(
+        action.jobs, state.get('knownCompetences'), state.get('knownExperiences'), state.get('knownDriversLicenses'),
       );
 
       return state
@@ -214,22 +126,22 @@ function appReducer(state = initialState, action) {
         .set('loading', false);
 
     case LOAD_ADDITIONAL_JOBS:
-      // console.log(action.additional.occupations);
       return state.updateIn(['additional', 'searchParameters'], (arr) => arr.push(action.additional.occupations || action.additional.locations));
-    case LOAD_ADDITIONAL_JOBS_SUCCESS:
+    case LOAD_ADDITIONAL_JOBS_SUCCESS: {
+      const [allJobs] = matching(
+        action.data.jobs, state.get('knownCompetences'), state.get('knownExperiences'), state.get('knownDriversLicenses'),
+      );
+      action.data.jobs = allJobs;
       return state
         .setIn(['afData', 'amount'], state.getIn(['afData', 'amount']) + action.data.amount)
         .updateIn(['additional', 'ads'], (arr) => arr.push(action.data));
+    }
     case REMOVE_ADDITIONAL_JOB: {
       let additionalParam = state.getIn(['additional', 'searchParameters']).filter((item, index) => action.index !== index);
       let additionalJobs = state.getIn(['additional', 'ads']).filter((item, index) => action.index !== index);
       return state
         .setIn(['additional', 'searchParameters'], additionalParam)
         .setIn(['additional', 'ads'], additionalJobs);
-
-      // return state
-      //   .setIn(['afData', 'amount'], state.getIn(['afData', 'amount']) + action.data.amount)
-      //   .updateIn(['additional', 'ads'], (arr) => arr.push(action.data));
     }
 
     case TOTAL_AMOUNT_LOADED:
@@ -237,8 +149,8 @@ function appReducer(state = initialState, action) {
 
     case SET_COMPETENCE: {
       const competences = state.get('knownCompetences').update((arr) => arr.push(action.id));
-      const [allJobs, matchingJobs, nonMatchingJobs] = findMatchningJobs(
-        state.getIn(['afData', 'jobs']), competences, state.get('knownExperiences')
+      const [allJobs, matchingJobs, nonMatchingJobs] = matching(
+        state.getIn(['afData', 'jobs']), competences, state.get('knownExperiences'), state.get('knownDriversLicenses'),
       );
       return state
         .set('knownCompetences', competences)
@@ -249,8 +161,8 @@ function appReducer(state = initialState, action) {
     }
     case REMOVE_COMPETENCE: {
       const competences = state.get('knownCompetences').filter((item) => action.id !== item);
-      const [allJobs, matchingJobs, nonMatchingJobs] = findMatchningJobs(
-        state.getIn(['afData', 'jobs']), competences, state.get('knownExperiences')
+      const [allJobs, matchingJobs, nonMatchingJobs] = matching(
+        state.getIn(['afData', 'jobs']), competences, state.get('knownExperiences'), state.get('knownDriversLicenses'),
       );
       return state
         .set('knownCompetences', competences)
@@ -264,8 +176,8 @@ function appReducer(state = initialState, action) {
       const experiences = state.get('knownExperiences')
                             .filter((item) => action.id !== item.id)
                             .update((arr) => arr.push({ id: action.id, years: action.years }));
-      const [allJobs, matchingJobs, nonMatchingJobs] = findMatchningJobs(
-        state.getIn(['afData', 'jobs']), state.get('knownCompetences'), experiences
+      const [allJobs, matchingJobs, nonMatchingJobs] = matching(
+        state.getIn(['afData', 'jobs']), state.get('knownCompetences'), experiences, state.get('knownDriversLicenses'),
       );
       return state
         .set('knownExperiences', experiences)
@@ -276,8 +188,8 @@ function appReducer(state = initialState, action) {
     }
     case REMOVE_EXPERIENCE: {
       const experiences = state.get('knownExperiences').filter((item) => action.id !== item.id);
-      const [allJobs, matchingJobs, nonMatchingJobs] = findMatchningJobs(
-        state.getIn(['afData', 'jobs']), state.get('knownCompetences'), experiences
+      const [allJobs, matchingJobs, nonMatchingJobs] = matching(
+        state.getIn(['afData', 'jobs']), state.get('knownCompetences'), experiences, state.get('knownDriversLicenses'),
       );
       return state
         .set('knownExperiences', experiences)
@@ -289,7 +201,7 @@ function appReducer(state = initialState, action) {
 
     case SET_DRIVERS_LICENSE: {
       const driversLicenses = state.get('knownDriversLicenses').update((arr) => arr.push(action.id));
-      const [allJobs, matchingJobs, nonMatchingJobs] = findMatchningJobs(
+      const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), state.get('knownCompetences'), state.get('knownExperiences'), driversLicenses
       );
       return state
@@ -301,7 +213,7 @@ function appReducer(state = initialState, action) {
     }
     case REMOVE_DRIVERS_LICENSE: {
       const driversLicenses = state.get('knownDriversLicenses').filter((item) => action.id !== item);
-      const [allJobs, matchingJobs, nonMatchingJobs] = findMatchningJobs(
+      const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), state.get('knownCompetences'), state.get('knownExperiences'), driversLicenses
       );
       return state
@@ -310,6 +222,17 @@ function appReducer(state = initialState, action) {
         .setIn(['afData', 'matchingJobs'], matchingJobs)
         .setIn(['afData', 'nonMatchingJobs'], nonMatchingJobs)
         .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length);
+    }
+
+    case SAVE_ADVERT: {
+      // console.log(action.ad);
+      const adverts = state.get('savedAdverts').update((arr) => arr.push(action.ad));
+      return state.set('savedAdverts', adverts);
+    }
+    case DELETE_ADVERT: {
+      // console.log(action.id);
+      const adverts = state.get('savedAdverts').filter((item) => action.id !== item.id);
+      return state.set('savedAdverts', adverts);
     }
 
     default:

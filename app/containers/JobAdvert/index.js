@@ -11,6 +11,7 @@ import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
 import _ from 'lodash';
+import matching from 'utils/matching';
 
 import {
   selectId,
@@ -20,11 +21,17 @@ import {
 import {
   selectKnownCompetences,
   selectKnownExperiences,
+  selectKnownDriversLicenses,
+  selectSavedAdverts,
 } from 'containers/App/selectors';
 
 import {
   setCompetence,
   removeCompetence,
+  setDriversLicense,
+  removeDriversLicense,
+  saveAdvert,
+  removeAdvert,
 } from 'containers/App/actions';
 
 import {
@@ -98,6 +105,8 @@ export class JobAdvert extends React.Component {
     super(props);
     this.state = {
       folded: true,
+      ad: false,
+      isMatch: false,
     };
   }
 
@@ -110,14 +119,36 @@ export class JobAdvert extends React.Component {
     }, 1);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.advert) {
+      const {
+        knownCompetences,
+        knownExperiences,
+        knownDriversLicenses,
+      } = nextProps;
+      const [all, match] = matching(
+          [nextProps.advert], knownCompetences, knownExperiences, knownDriversLicenses
+        );
+      this.setState({
+        ad: all[0],
+        isMatch: !!match.length,
+      });
+    }
+  }
+
   openRoute = (route) => {
     setTimeout(() => {
       this.props.changeRoute(route);
     }, 1);
   };
 
-  openListPage = () => {
-    this.openRoute('/list');
+  goBack = () => {
+    const { pathname } = window.location;
+    if (pathname.indexOf('saved') !== -1) {
+      this.openRoute('/saved');
+    } else {
+      this.openRoute('/list');
+    }
   };
 
   cleanLevel(level) {
@@ -128,118 +159,142 @@ export class JobAdvert extends React.Component {
     }
   }
 
+  typeOfLicense(efterfragat) {
+    let type;
+    switch (efterfragat) {
+      case 'AM': case 'A1': case 'A2': case 'A':
+        type = 'Moped, motorcykel och traktor';
+        break;
+      case 'B': case 'Utökad B': case 'BE':
+        type = 'Personbil';
+        break;
+      case 'C': case 'C1': case 'C1E': case 'CE':
+        type = 'Lastbil';
+        break;
+      case 'D': case 'D1': case 'D1E': case 'DE':
+        type = 'Buss';
+    }
+    return type;
+  }
+
   createCompetences() {
-    const isKnown = (k) => {
-      if (k.typ === 'KOMPETENS') {
-        return this.props.knownCompetences.includes(k.varde);
-      }
-      else if (k.typ === 'YRKE') {
-        let hasExperience = false;
-        this.props.knownExperiences.forEach((item) => {
-          if (item.id === k.varde) {
-            if ((item.years + 1) >= parseInt(k.niva.varde)) {
-              hasExperience = true;
-            }
-          }
-        });
-        return hasExperience;
-      } else {
-        return undefined;
-      }
-    };
-    if (this.props.advert.matchningsresultat.efterfragat.length) {
-      const { efterfragat } = this.props.advert.matchningsresultat;
+
+    if (this.state.ad.matchningsresultat.efterfragat.length) {
+      const ad = this.state.ad;
       const content = [];
-      const competences = efterfragat.map((k) => {
-        k.isKnown = isKnown(k);
-        return k;
-      });
-      const allCompetences = competences.filter((k) => typeof k.isKnown !== 'undefined');
-      const knownCompetences = _.filter(allCompetences, {isKnown: true});
-      const unknownCompetences = _.filter(allCompetences, {isKnown: false});
+      const isMatch = ad.isMatch;
+      const allCriteria = [...ad.matchingCriteria, ...ad.notMatchingCriteria];
+      const knownCriteria = ad.matchingCriteria;
+      const unknownCriteria = ad.notMatchingCriteria;
+      const competences = _.filter(allCriteria, { typ: 'KOMPETENS' });
+      const experiences = _.filter(allCriteria, { typ: 'YRKE' });
+      const driversLicenses = _.filter(allCriteria, { typ: 'KORKORT' });
 
-      if (!this.props.params.matching) {
-        return allCompetences.map((item, index) => {
-          return (
-            <div
-              className={styles.wrapperDiv}
-              key={'all-competences-' + index}
-            >
-              {item.typ === 'YRKE' &&
-                <span className={styles.competence}>{`${this.cleanLevel(item.niva)} ${item.efterfragat}`}</span>
-              }
-
-              {item.typ === 'KOMPETENS' &&
-                <span className={styles.competence}>{item.efterfragat}</span>
-              }
-              <br />
-            </div>
-          );
-        });
-      }
-
-      // if (knownCompetences.length) content.push(<span className={styles.competenceHeader}>Du kan:</span>);
-      knownCompetences.forEach((item, index) => {
-        content.push(
-          <div
-            className={styles.wrapperDiv}
-            onClick={this.onCompetenceClick.bind(this, item)}
-            key={'known-competences-' + index}
-          >
-            {item.typ === 'YRKE' &&
-              <span className={styles.competence}>
+      if (competences.length) {
+        const known = _.filter(competences, { isKnown: true });
+        const unknown = _.filter(competences, { isKnown: false });
+        content.push(<b className={styles.criteriaHeading}>Kompetenser</b>);
+        if (known.length) {
+          content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
+          known.forEach((comp) => {
+            content.push(
+              <span
+                className={styles.competence}
+                onClick={this.onCompetenceClick.bind(this, comp)}
+              >
                 <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-                {`${this.cleanLevel(item.niva)} ${item.efterfragat}`}
+                {comp.efterfragat}
               </span>
-            }
-
-            {item.typ === 'KOMPETENS' &&
-              <span className={styles.competence}>
-                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-                {item.efterfragat}
-              </span>
-            }
-            <br />
-          </div>
-        );
-      });
-
-      // console.log(unknownCompetences);
-
-      if (unknownCompetences.length && knownCompetences.length) {
-        content.push(<span className={styles.competenceHeader}>Vi efterfrågar också:</span>);
-      }
-      unknownCompetences.forEach((item, index) => {
-        content.push(
-          <div
-            className={styles.wrapperDiv}
-            onClick={this.onCompetenceClick.bind(this, item)}
-          >
-            {item.typ === 'YRKE' &&
-              <span className={styles.competence}>
-                {`${this.cleanLevel(item.niva)} ${item.efterfragat}`}
-              </span>
-            }
-
-            {item.typ === 'KOMPETENS' &&
-              <span className={styles.competence}>
+            );
+          });
+        }
+        if (unknown.length) {
+          content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
+          unknown.forEach((comp) => {
+            content.push(
+              <span
+                className={styles.competence}
+                onClick={this.onCompetenceClick.bind(this, comp)}
+              >
                 <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-                {item.efterfragat}
+                {comp.efterfragat}
               </span>
-            }
-            <br />
-          </div>
-        );
-      });
+            );
+          });
+        }
+      }
 
-      content.push(
-        <Circle
-          known={knownCompetences.length}
-          total={allCompetences.length}
-          showText={false}
-          style={{right: '10px'}}
-        />
-      )
+      if (experiences.length) {
+        const known = _.filter(experiences, { isKnown: true });
+        const unknown = _.filter(experiences, { isKnown: false });
+        content.push(<b className={styles.criteriaHeading}>Arbetslivserfarenheter</b>);
+        if (known.length) {
+          content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
+          known.forEach((exp) => {
+            content.push(
+              <span className={styles.competence}>
+                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`}
+              </span>
+            );
+          });
+        }
+        if (unknown.length) {
+          content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
+          unknown.forEach((exp) => {
+            content.push(
+              <span className={styles.competence}>
+                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`}
+              </span>
+            );
+          });
+        }
+      }
+
+      if (driversLicenses.length) {
+        const known = _.filter(driversLicenses, { isKnown: true });
+        const unknown = _.filter(driversLicenses, { isKnown: false });
+        content.push(<b className={styles.criteriaHeading}>Körkort</b>);
+        if (known.length) {
+          content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
+          known.forEach((dl) => {
+            content.push(
+              <span
+                className={styles.competence}
+                onClick={this.onDriversLicenseClick.bind(this, dl)}
+              >
+                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+                {dl.efterfragat} <span className={styles.small}>({this.typeOfLicense(dl.efterfragat)})</span>
+              </span>
+            );
+          });
+        }
+        if (unknown.length) {
+          content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
+          unknown.forEach((dl) => {
+            content.push(
+              <span
+                className={styles.competence}
+                onClick={this.onDriversLicenseClick.bind(this, dl)}
+              >
+                <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+                {dl.efterfragat} <span className={styles.small}>({this.typeOfLicense(dl.efterfragat)})</span>
+              </span>
+            );
+          });
+        }
+      }
+
+      if (isMatch) {
+        content.push(
+          <Circle
+            known={knownCriteria.length}
+            total={allCriteria.length}
+            showText={false}
+            style={{right: '10px'}}
+          />
+        );
+      }
 
       return content;
     }
@@ -251,6 +306,14 @@ export class JobAdvert extends React.Component {
       this.props.onSetCompetence(item.varde);
     } else {
       this.props.onRemoveCompetence(item.varde);
+    }
+  }
+
+  onDriversLicenseClick(item) {
+    if (!this.props.knownDriversLicenses.includes(item.varde)) {
+      this.props.onSetDriversLicenses(item.varde);
+    } else {
+      this.props.onRemoveDriversLicenses(item.varde);
     }
   }
 
@@ -267,8 +330,19 @@ export class JobAdvert extends React.Component {
     return erbjudenArbetsplats && erbjudenArbetsplats.geoPosition;
   }
 
+  toggleSaveAd(item, isSaved) {
+    if (!isSaved) {
+      this.props.onSaveAdvert(item);
+    } else {
+      this.props.onRemoveAdvert(item.id);
+    }
+  }
+
   render() {
-    const { erbjudenArbetsplats } = this.props.advert;
+    const { erbjudenArbetsplats } = this.state.ad;
+    const adIsSaved = !!this.props.savedAdverts.filter(saved => {
+      return saved.id === this.state.ad.id;
+    }).size;
     let markers;
 
     // console.log(erbjudenArbetsplats);
@@ -285,40 +359,48 @@ export class JobAdvert extends React.Component {
     return (
       <article>
         <div className={styles.contentWrapper}>
-          <header className={styles.header} onClick={this.openListPage}>
-            <span className={styles.back + ' glyphicon glyphicon-chevron-left'} />
-            {/*<h1>Annons</h1>*/}
-            {/*<h1>&nbsp;</h1>*/}
+          <header className={styles.header}>
+            <span
+              className={styles.back + ' glyphicon glyphicon-chevron-left'}
+              onClick={this.goBack}
+            />
             <h1>Annons</h1>
-            {/*<span className={styles.saveAdvert}>Spara jobb</span>*/}
-
-            <span className={styles.saveAdvert + ' glyphicon glyphicon-star-empty'} />
+            {
+              adIsSaved ?
+              <span
+                onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}
+                className={styles.savedAdvert + ' glyphicon glyphicon-star'}
+              /> :
+              <span
+                onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}
+                className={styles.saveAdvert + ' glyphicon glyphicon-star-empty'}
+              />
+            }
           </header>
 
-          {this.props.advert &&
+          {this.state.ad &&
             <div className={styles.advertWrapper}>
               {/*<object
                 style={{maxHeight: '60px'}}
-                data={`http://api.arbetsformedlingen.se/platsannons/${this.props.advert.id}/logotyp`} type="image/gif"
+                data={`http://api.arbetsformedlingen.se/platsannons/${this.state.ad.id}/logotyp`} type="image/gif"
               >
               </object> <br />*/}
-              <b>{this.props.advert.arbetsgivarenamn}</b>
-              <h3>{this.props.advert.rubrik}</h3>
-              <p>{this.props.advert.yrkesroll.namn}</p>
+              <b>{this.state.ad.arbetsgivarenamn}</b>
+              <h3>{this.state.ad.rubrik}</h3>
+              <p>{this.state.ad.yrkesroll.namn}</p>
 
-              {!!this.props.advert.matchningsresultat.efterfragat.length &&
+              {!!this.state.ad.matchningsresultat.efterfragat.length &&
                 <div className={styles.competenceWrapper}>
-                  {this.props.params.matching ?
+                  {/*this.props.params.matching ?
                     <b>Du matchar med:</b> :
-                    <b>Vi efterfrågar:</b>
+                    <b>Vi efterfrågar:</b>*/
                   }
-                  <br />
                   {this.createCompetences()}
                 </div>
               }
               <div className={styles.advertTextWrapper} onClick={this.unFoldText.bind(this)}>
                 <p
-                  dangerouslySetInnerHTML={{__html: this.props.advert.annonstext}}
+                  dangerouslySetInnerHTML={{__html: this.state.ad.annonstext}}
                   className={"annons-text folded"}
                   ref={(p) => this.annonsText = p}
                 />
@@ -333,7 +415,7 @@ export class JobAdvert extends React.Component {
 
               {!!this.shouldShowMap(erbjudenArbetsplats) &&
                 <div className={styles.map}>
-                  <p><b>Arbetsplats:</b> {this.props.advert.besoksadressGatuadress}</p>
+                  <p><b>Arbetsplats:</b> {this.state.ad.besoksadressGatuadress}</p>
                   <SimpleMap
                     markers={markers}
                   />
@@ -347,7 +429,7 @@ export class JobAdvert extends React.Component {
               </button>
             </div>
           }
-          {!this.props.advert &&
+          {!this.state.ad &&
             <div className={styles.loading}>
               <LoadingIndicator />
             </div>
@@ -381,6 +463,10 @@ export function mapDispatchToProps(dispatch) {
     changeRoute: (url) => dispatch(push(url)),
     onSetCompetence: (id) => dispatch(setCompetence(id)),
     onRemoveCompetence: (id) => dispatch(removeCompetence(id)),
+    onSetDriversLicenses: (id) => dispatch(setDriversLicense(id)),
+    onRemoveDriversLicenses: (id) => dispatch(removeDriversLicense(id)),
+    onSaveAdvert: (ad) => dispatch(saveAdvert(ad)),
+    onRemoveAdvert: (id) => dispatch(removeAdvert(id)),
   };
 }
 
@@ -388,6 +474,8 @@ const mapStateToProps = createStructuredSelector({
   advert: selectAdvert(),
   knownCompetences: selectKnownCompetences(),
   knownExperiences: selectKnownExperiences(),
+  knownDriversLicenses: selectKnownDriversLicenses(),
+  savedAdverts: selectSavedAdverts(),
 });
 
 // Wrap the component to inject dispatch and state into it

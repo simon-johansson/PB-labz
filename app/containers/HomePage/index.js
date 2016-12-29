@@ -159,7 +159,7 @@ export class HomePage extends React.Component {
   }
 
   onSeachButtonClick() {
-    this.props.onSetLocations();
+    this.props.onSetLocations(ls.getPreviousLocation().locations);
     this.props.onSetOccupations();
     // this.props.occupations.forEach((item, index) => {
     //   this.props.onRemoveOccupation(index);

@@ -13,15 +13,13 @@ import styles from './styles.css';
 
 function Circle(props) {
   let content;
-  let competences;
   let colorClass = '';
   let known = props.known;
   let total = props.total;
 
   if (props.item) {
-    competences = _.filter(props.item.matchningsresultat.efterfragat, (j) => j.typ === 'KOMPETENS' || j.typ === 'YRKE');
     known = props.item.matchingCriteria.length;
-    total = competences.length;
+    total = props.item.notMatchingCriteria.length + props.item.matchingCriteria.length;
   }
 
   const match = (known / total);

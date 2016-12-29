@@ -172,6 +172,9 @@ export class FilterPage extends React.Component {
       locations: this.props.locations,
       time: new Date().valueOf(),
     });
+    ls.setPreviousLocation({
+      locations: this.props.locations,
+    });
     this.props.onShouldLoadNewJobs();
     this.addListPage();
   }
