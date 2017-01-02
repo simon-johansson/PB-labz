@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import _ from 'lodash';
 import Tappable from 'react-tappable';
+import { Doughnut } from 'react-chartjs-2';
 
 import { createStructuredSelector } from 'reselect';
 import * as ls from 'utils/localstorage';
@@ -226,11 +227,85 @@ export class ListPage extends React.Component {
   }
 
   competenceSelection() {
-    let top5 = _.orderBy(JSON.parse(JSON.stringify(this.props.competences)), 'timesRequested', 'desc').slice(0, 5);
-    top5 = top5.map((item, index) => {
+    let requestedTop5 = 0;
+    let requestedNotTop5 = 0;
+    const colorArr = [
+      '#69B8E3',
+      '#F1583B',
+      '#FBB678',
+      '#394F80',
+      '#35AB6E',
+      'lightgray',
+    ];
+    const top5Comps = _.orderBy(JSON.parse(JSON.stringify(this.props.competences)), 'timesRequested', 'desc').slice(0, 5);
+    const top5 = top5Comps.map((item, index) => {
+      requestedTop5 += item.timesRequested;
       item.isTop5 = (index + 1);
       return item;
     });
+    this.props.competences.forEach((comp, index) => requestedNotTop5 += comp.timesRequested);
+    requestedNotTop5 -= requestedTop5;
+    const dataset = [
+      ...top5.map((c) => c.timesRequested),
+      requestedNotTop5,
+    ];
+
+    const data = {
+      labels: [
+        ...top5.map((c) => {
+          const cutoff = 26;
+          if (c.efterfragat.length > cutoff) {
+            return c.efterfragat.substring(0, cutoff) + '... 50%';
+          } else {
+            return c.efterfragat + ' 50%';
+          }
+        }),
+        'Resterande'
+      ],
+      datasets: [{
+        data: dataset,
+        backgroundColor: colorArr,
+      }]
+    };
+    const options = {
+      // layout: {
+        // padding: {
+          // right: 100,
+        // },
+      // },
+      legend: {
+        display: false,
+        position: 'right',
+        fullWidth: false,
+        labels: {
+          boxWidth: 12,
+        }
+      }
+    }
+
+    const donutLabels = () => {
+      const content = [];
+      top5.forEach((c, index) => {
+        const procent = Math.floor((c.timesRequested / this.props.jobs.length) * 100);
+        content.push(
+          <li>
+            <figure style={{background: colorArr[index]}} />
+            <span className={styles.donutLabel}>{c.efterfragat}</span>
+            <span className={styles.donutProcent}>{procent}%</span>
+          </li>
+        );
+      });
+      if (!!requestedNotTop5) {
+        content.push(
+          <li>
+            <figure style={{background: colorArr[5]}} />
+            <span className={styles.donutLabel}>Resterande</span>
+            {/*<span className={styles.donutProcent}>{Math.floor((requestedNotTop5 / this.props.jobs.length) * 100)}</span>*/}
+          </li>
+        );
+      }
+      return content;
+    };
 
     return (
       <div>
@@ -248,8 +323,24 @@ export class ListPage extends React.Component {
               <h1>Kompetenser</h1>
             </div>
 
+
+
             {(this.props.competences.length > 10) &&
               <div>
+                <div className={styles.doughnutWrapper}>
+                  <div className={styles.chartWrapper}>
+                    <Doughnut
+                      data={data}
+                      height={200}
+                      options={options}
+                    />
+                  </div>
+                  <div className={styles.doughnutLablesWrapper}>
+                    <ul>
+                      {donutLabels()}
+                    </ul>
+                  </div>
+                </div>
                 <span
                   className={styles.amount}
                   ref={(r) => summaryHeaders.push({ el: r, text: 'Mest efterfrågade kompetenserna' })}

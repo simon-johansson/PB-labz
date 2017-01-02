@@ -501,6 +501,62 @@ label {
   font-size: 18px;
 }
 
+.doughnutWrapper {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  margin: 20px 0;
+  display: block;
+}
+
+.chartWrapper,
+.doughnutLablesWrapper {
+  display: inline-block;
+  float: left;
+}
+
+
+.chartWrapper {
+  width: 40%;
+  margin-top: 20px;
+}
+
+.doughnutLablesWrapper {
+  width: 60%;
+}
+
+.doughnutLablesWrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.doughnutLablesWrapper ul li {
+  width: 95%;
+  list-style: none;
+}
+
+.donutLabel {
+  width: 75%;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.donutProcent {
+  float: right;
+}
+
+.doughnutLablesWrapper ul li figure {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: super;
+}
+
+
 :global(.glyphicon-remove) {
   cursor: pointer;
   color: #8E8E93;

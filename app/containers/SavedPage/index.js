@@ -82,6 +82,18 @@ export class SavedPage extends React.Component {
               <span>Sparade annonser</span>
             </h1>
           </div>
+          {!!this.props.savedAdverts.size &&
+            <span className={styles.listHeader}>
+              <span
+                className={styles.pencil}
+                onClick={() => {}}
+              >
+                { this.state.editSaved ? 'Klar' : 'Redigera' }
+                &nbsp;&nbsp;
+                <span className={'glyphicon glyphicon-pencil'} />
+              </span>
+            </span>
+          }
           {
             !!this.props.savedAdverts.size ?
             <List items={this.props.savedAdverts} component={JobListItem} click={this.onAdvertClick} />:

@@ -113,8 +113,10 @@ label {
   color: #B0B0B0;
 }
 
+.savedSearchesWrapper,
 .previousSearchesWrapper,
-.savedSearchesWrapper {
+.editSavedSearchesWrapper,
+.editPreviousSearchesWrapper {
   margin-top: 10px;
   width: 100%;
   height: 50px;
@@ -123,8 +125,12 @@ label {
   // align-items: space-between;
 }
 
-.savedSearchesWrapper {
+.editSavedSearchesWrapper {
   height: 80px;
+}
+
+.editPreviousSearchesWrapper .deleteIcon{
+  line-height: 57px;
 }
 
 .previousSearcheParameters {
@@ -135,10 +141,10 @@ label {
   display: block;
 }
 
-.savedSearchesWrapper .previousSearcheParameters {
+.savedSearchesWrapper .previousSearcheParameters,
+.editSavedSearchesWrapper .previousSearcheParameters {
   width: calc(100% - 50px);
 }
-
 
 .small {
   font-size: 13px;
@@ -183,8 +189,9 @@ label {
   // top: -5px;
 }
 
-.deleteSaved {
-  background: red;
+.deleteSaved,
+.savePrevious {
+  background: #EB5442;
   display: block;
   width: 50px;
   position: absolute;
@@ -194,10 +201,22 @@ label {
   text-align: center;
 }
 
+.savePrevious {
+  background: #397AA2;
+  right: calc(50px - 1em);
+}
+
 .deleteIcon {
   color: white;
   font-size: 20px;
   line-height: 88px;
+}
+
+.savePreviousIcon {
+  color: white;
+  font-size: 12px;
+  // font-weight: bold;
+  line-height: 57px;
 }
 
 .notifyText {
@@ -232,6 +251,64 @@ label {
 
 .welcome p {
   margin-bottom: 0;
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 999;
+  // pointer-events: none;
+}
+
+.saveSearchPopup {
+  position: fixed;
+  top: 30%;
+  width: 80%;
+  left: 10%;
+  height: auto;
+  padding-top: 20px;
+  padding-bottom: 45px;
+  // border: 2px solid red;
+  background: rgba(255,255,255,0.95);
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.popupText {
+  padding: 0 15px;
+}
+
+.bell {
+  margin-right: 5px;
+  color: gray;
+}
+
+.leftConfirmButton,
+.rightConfirmButton {
+  width: 50%;
+  border-top: 1px solid lightgray;
+  display: inline-block;
+  height: 40px;
+  line-height: 35px;
+  position: absolute;
+  bottom: 0;
+}
+
+.leftConfirmButton {
+  border-bottom-left-radius: 5px;
+  left: 0;
+}
+
+.rightConfirmButton {
+  border-bottom-right-radius: 5px;
+  right: 0;
+  border-left: 1px solid lightgray;
 }
 
 :global(.glyphicon-remove) {

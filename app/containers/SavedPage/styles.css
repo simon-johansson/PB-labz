@@ -501,6 +501,25 @@ label {
   font-size: 18px;
 }
 
+.listHeader {
+  text-transform: uppercase;
+  margin-top: 20px;
+  display: block;
+  margin-left: 10px;
+  font-size: 12px;
+  position: relative;
+  margin-bottom: 6px;
+  height: 17px;
+}
+
+.pencil {
+  position: absolute;
+  right: 8px;
+  color: gray;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 :global(.glyphicon-remove) {
   cursor: pointer;
   color: #8E8E93;

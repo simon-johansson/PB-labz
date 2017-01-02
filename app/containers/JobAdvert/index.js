@@ -389,7 +389,7 @@ export class JobAdvert extends React.Component {
               <h3>{this.state.ad.rubrik}</h3>
               <p>{this.state.ad.yrkesroll.namn}</p>
 
-              {!!this.state.ad.matchningsresultat.efterfragat.length &&
+              {(!!this.state.ad.matchingCriteria.length || !!this.state.ad.notMatchingCriteria.length) &&
                 <div className={styles.competenceWrapper}>
                   {/*this.props.params.matching ?
                     <b>Du matchar med:</b> :
