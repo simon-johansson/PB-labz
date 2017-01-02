@@ -9,7 +9,9 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import _ from 'lodash';
 import Tappable from 'react-tappable';
-import { Doughnut } from 'react-chartjs-2';
+import { defaults, Doughnut, Bar } from 'react-chartjs-2';
+
+defaults.scale.gridLines.display = false;
 
 import { createStructuredSelector } from 'reselect';
 import * as ls from 'utils/localstorage';
@@ -618,7 +620,9 @@ export class ListPage extends React.Component {
   }
 
   experienceSelection() {
+    const dataSet = [0, 0, 0, 0];
     const experiences = this.props.experiences.map((exp, index) => {
+      dataSet[exp.niva.varde - 2] += 1;
       return (
         <ExperienceSelector
           key={'experience-selector-' + index}
@@ -626,6 +630,21 @@ export class ListPage extends React.Component {
         />
       );
     });
+
+    const data = {
+      labels: ['0-1 år', '1-2 år', '3-4 år', '+4 år'],
+      datasets: [{
+        data: dataSet,
+        backgroundColor: '#69B8E3',
+        borderWidth: 0,
+      }]
+    };
+
+    const options = {
+      legend: {
+        display: false,
+      }
+    };
 
     return (
       <div>
@@ -641,6 +660,12 @@ export class ListPage extends React.Component {
           <h1>Arbetslivserfarenheter</h1>
         </div>
         <div className={styles.experienceSelectionWrapper}>
+        <div className={styles.barChartWrapper}>
+          <Bar
+              data={data}
+              options={options}
+          />
+        </div>
         {
           !!this.props.experiences.length ?
           experiences :

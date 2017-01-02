@@ -558,6 +558,10 @@ label {
   // vertical-align: super;
 }
 
+.barChartWrapper {
+  width: 100%;
+  margin: 20px 0;
+}
 
 :global(.glyphicon-remove) {
   cursor: pointer;
