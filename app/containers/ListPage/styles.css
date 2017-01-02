@@ -534,6 +534,7 @@ label {
 .doughnutLablesWrapper ul li {
   width: 95%;
   list-style: none;
+  margin-bottom: 2px;
 }
 
 .donutLabel {
@@ -553,7 +554,8 @@ label {
   height: 10px;
   display: inline-block;
   margin-right: 5px;
-  vertical-align: super;
+  margin-bottom: 5px;
+  // vertical-align: super;
 }
 
 
