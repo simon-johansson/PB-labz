@@ -100,6 +100,7 @@ export class ListPage extends React.Component {
       showCompetenceCriteriaContent: false,
       showExperienceCriteriaContent: false,
       showDriversLicenseCriteriaContent: false,
+      animationDuration: false,
     };
 
     this.onAdvertClick = this.onAdvertClick.bind(this);
@@ -275,6 +276,10 @@ export class ListPage extends React.Component {
           // right: 100,
         // },
       // },
+      events: false,
+      tooltips: {
+        enabled: false
+      },
       legend: {
         display: false,
         position: 'right',
@@ -547,6 +552,7 @@ export class ListPage extends React.Component {
   toggleExperienceCriteriaContent() {
     this.setState({
       showExperienceCriteriaContent: !this.state.showExperienceCriteriaContent,
+      animationDuration: (!this.state.showExperienceCriteriaContent && this.state.animationDuration) ? false : 1,
     });
   }
 
@@ -621,8 +627,14 @@ export class ListPage extends React.Component {
 
   experienceSelection() {
     const dataSet = [0, 0, 0, 0];
+    const expArr = [];
+    const self = this;
+    this.props.jobs.forEach(job => {
+      job.matchningsresultat.efterfragat.forEach(merit => {
+        if (merit.typ === 'YRKE') dataSet[merit.niva.varde - 2] += 1;
+      });
+    });
     const experiences = this.props.experiences.map((exp, index) => {
-      dataSet[exp.niva.varde - 2] += 1;
       return (
         <ExperienceSelector
           key={'experience-selector-' + index}
@@ -632,7 +644,7 @@ export class ListPage extends React.Component {
     });
 
     const data = {
-      labels: ['0-1 år', '1-2 år', '3-4 år', '+4 år'],
+      labels: ['0-1 år', '1-2 år', '2-4 år', '+4 år'],
       datasets: [{
         data: dataSet,
         backgroundColor: '#69B8E3',
@@ -640,9 +652,49 @@ export class ListPage extends React.Component {
       }]
     };
 
-    const options = {
+    const opt = {
+      scales: {
+        xAxes: [{
+          // display: false
+        }],
+        yAxes: [{
+          display: false
+        }],
+      },
+      events: false,
+      tooltips: {
+        enabled: false
+      },
       legend: {
         display: false,
+      },
+      hover: {
+        animationDuration: 0
+      },
+      animation: {
+        duration: this.state.animationDuration || 700,
+        onComplete: function () {
+          const ctx = this.chart.ctx;
+          ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+
+          this.data.datasets.forEach(function (dataset) {
+            for (var i = 0; i < dataset.data.length; i++) {
+              var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+              ctx.fillStyle = '#444';
+              var y_pos = model.y - 5;
+              // Make sure data value does not get overflown and hidden
+              // when the bar's value is too close to max value of scale
+              // Note: The y value is reverse, it counts from top down
+              if ((scale_max - model.y) / scale_max >= 0.85)
+                y_pos = model.y + 20;
+              ctx.fillText(dataset.data[i] + ' jobb', model.x, y_pos);
+              self.setState({animationDuration: 1})
+            }
+          });
+        }
       }
     };
 
@@ -663,7 +715,7 @@ export class ListPage extends React.Component {
         <div className={styles.barChartWrapper}>
           <Bar
               data={data}
-              options={options}
+              options={opt}
           />
         </div>
         {
