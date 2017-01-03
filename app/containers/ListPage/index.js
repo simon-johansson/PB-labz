@@ -334,6 +334,13 @@ export class ListPage extends React.Component {
 
             {(this.props.competences.length > 10) &&
               <div>
+                <span
+                  className={styles.amount}
+                  ref={(r) => summaryHeaders.push({ el: r, text: 'Mest efterfrågade kompetenserna' })}
+                >
+                  {/*Mest efterfrågade kompetenserna {this.createSearchSummary()}*/}
+                  Mest efterfrågade för din sökning
+                </span>
                 <div className={styles.doughnutWrapper}>
                   <div className={styles.chartWrapper}>
                     <Doughnut
@@ -347,14 +354,8 @@ export class ListPage extends React.Component {
                       {donutLabels()}
                     </ul>
                   </div>
+                  <i>Antal annonser där kompetensen efterfrågas</i>
                 </div>
-                <span
-                  className={styles.amount}
-                  ref={(r) => summaryHeaders.push({ el: r, text: 'Mest efterfrågade kompetenserna' })}
-                >
-                  {/*Mest efterfrågade kompetenserna {this.createSearchSummary()}*/}
-                  Mest efterfrågade
-                </span>
                 <List items={top5} component={CompetenceListItem} />
               </div>
             }
@@ -363,7 +364,7 @@ export class ListPage extends React.Component {
               ref={(r) => summaryHeaders.push({ el: r, text: 'Alla efterfrågade kompetenserna' })}
             >
               {/*Alla efterfrågade kompetenser {this.createSearchSummary()}*/}
-              Alla efterfrågade
+              Alla efterfrågade för din sökning
             </span>
             <List items={this.props.competences} component={CompetenceListItem} />
           </div>
@@ -690,13 +691,13 @@ export class ListPage extends React.Component {
               // when the bar's value is too close to max value of scale
               // Note: The y value is reverse, it counts from top down
               if ((scale_max - model.y) / scale_max >= 0.85) {
-                ctx.fillStyle = 'white';
+                ctx.fillStyle = '#FAFAFA';
                 y_pos = model.y + 20;
               }
               ctx.fillText(dataset.data[i] + ' jobb', model.x, y_pos);
-              self.setState({animationDuration: 1})
             }
           });
+          self.setState({animationDuration: 1})
         }
       }
     };
@@ -715,15 +716,20 @@ export class ListPage extends React.Component {
           <h1>Arbetslivserfarenheter</h1>
         </div>
         <div className={styles.experienceSelectionWrapper}>
-        <div className={styles.barChartWrapper}>
-          <Bar
-              data={data}
-              options={opt}
-          />
-        </div>
         {
           !!this.props.experiences.length ?
-          experiences :
+          <div>
+            <div className={styles.barChartWrapper}>
+              <Bar
+                data={data}
+                options={opt}
+              />
+            </div>
+            <span className={styles.amount}>
+              Efterfrågad arbetslivserfarenhet för din sökning
+            </span>
+            {experiences}
+          </div> :
           <div className={styles.matchDescription}>
             <p>Inga arbetslivserfarenheter efterfågas för denna sökning</p>
           </div>
