@@ -550,9 +550,10 @@ export class ListPage extends React.Component {
   }
 
   toggleExperienceCriteriaContent() {
+    const { showExperienceCriteriaContent, animationDuration } = this.state;
     this.setState({
-      showExperienceCriteriaContent: !this.state.showExperienceCriteriaContent,
-      animationDuration: (!this.state.showExperienceCriteriaContent && this.state.animationDuration) ? false : 1,
+      showExperienceCriteriaContent: !showExperienceCriteriaContent,
+      animationDuration: (!showExperienceCriteriaContent || animationDuration) ? false : 1,
     });
   }
 
