@@ -472,8 +472,10 @@ export class ListPage extends React.Component {
           {/*<h1>Matchningskriterier</h1>*/}
           <div className={styles.matchCriteriaSearchSummary}>
             <div className={styles.matchCriteriaSearchSummaryText}>
-              <span>{this.createSearchInput(this.props.occupations, [])}</span>
-              <span className={styles.small}>{locations}</span>
+              <span>Matchningskriterier</span>
+              {/*<span>{this.createSearchInput(this.props.occupations, [])}</span>*/}
+              <span className={styles.small}>{this.createSearchInput(this.props.occupations, [])}</span>
+              {/*<span className={styles.small}>{locations}</span>*/}
             </div>
           </div>
         </div>
@@ -742,58 +744,41 @@ export class ListPage extends React.Component {
   }
 
   driversLicenseSelection() {
-    const licenses = [[], [], [], []];
+    const licenses = [];
     this.props.driverLicenses.forEach((dl, index) => {
       switch (dl.efterfragat) {
         case 'AM':
         case 'A1':
         case 'A2':
         case 'A':
-          licenses[0].push(dl);
+          dl.categoryNr = 1;
+          dl.category = 'Moped, motorcykel och traktor';
           break;
         case 'B':
         case 'Utökad B':
         case 'BE':
-          licenses[1].push(dl);
+          dl.categoryNr = 2;
+          dl.category = 'Personbil';
           break;
         case 'C':
         case 'C1':
         case 'C1E':
         case 'CE':
-          licenses[2].push(dl);
+          dl.categoryNr = 3;
+          dl.category = 'Lastbil';
           break;
         case 'D':
         case 'D1':
         case 'D1E':
         case 'DE':
-          licenses[3].push(dl);
+          dl.categoryNr = 4;
+          dl.category = 'Buss';
+          break;
       }
+      licenses.push(dl);
     });
-    const driverLicenses = licenses.map((group, index) => {
-      let heading;
-      switch (index) {
-        case 0:
-          heading = 'Moped, motorcykel och traktor';
-          break;
-        case 1:
-          heading = 'Personbil';
-          break;
-        case 2:
-          heading = 'Lastbil';
-          break;
-        case 3:
-          heading = 'Buss';
-      }
-      if (!!group.length) {
-        // const licenses = group.map(l => <div>{l.efterfragat}</div>);
-        return (
-          <div>
-            <span className={styles.amount}>{heading}</span>
-            <List items={group} component={DriversLicenseListItem} />
-          </div>
-        );
-      }
-    });
+
+    const sortedLicenses = _.orderBy(licenses, ['categoryNr'], ['asc']);
 
     return (
       <div>
@@ -812,7 +797,12 @@ export class ListPage extends React.Component {
         <div>
           {
             !!this.props.driverLicenses.length ?
-            driverLicenses :
+            <div>
+              <span className={styles.amount}>
+                Efterfrågade körkort för din sökning
+              </span>
+              <List items={sortedLicenses} component={DriversLicenseListItem} />
+            </div> :
             <div className={styles.matchDescription}>
               <p>Inga körtkort efterfågas för denna sökning</p>
             </div>
@@ -1054,6 +1044,10 @@ export class ListPage extends React.Component {
                 className={styles.cancel}
                 onClick={this.removeAdditionalSearchParams.bind(this, param, index)}
               >Avbryt</span>
+              {/*<span
+                              className={styles.done}
+                              onClick={this.addToSearch.bind(this)}
+                            >Lägg till</span>*/}
               <div className={styles.matchCriteriaSearchSummary}>
                 <div className={styles.matchCriteriaSearchSummaryText}>
                   <span>{occupations}</span>
@@ -1067,7 +1061,11 @@ export class ListPage extends React.Component {
                 className={styles.amount}
                 ref={(r) => summaryHeaders.push({ el: r, text: inputSummary })}
               >
-                Hittade {this.props.additionalAds.get(index) ? this.props.additionalAds.get(index).amount : '...'} jobb {searchSummary}
+                Hittade {this.props.additionalAds.get(index) ? this.props.additionalAds.get(index).amount : '...'} jobb {/*searchSummary*/}
+                <div className={styles.addToSearchTag} onClick={this.addToSearch.bind(this)}>
+                  <span className='glyphicon glyphicon-plus' />
+                  Lägg till i min sökning
+                </div>
               </span>
               {/*<span
                 className={styles.rightPart + ' glyphicon glyphicon-remove-circle'}
@@ -1079,12 +1077,12 @@ export class ListPage extends React.Component {
               <List items={this.props.additionalAds.get(index).jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
             }
           </div>
-          <div
-            className={styles.addToSearchButton + ' btn btn-default'}
-            onClick={this.addToSearch.bind(this)}
-          >
-            Lägg till {toAdd} i min sökning
-          </div>
+          {/*<div
+                      className={styles.addToSearchButton + ' btn btn-default'}
+                      onClick={this.addToSearch.bind(this)}
+                    >
+                      Lägg till {toAdd} i min sökning
+                    </div>*/}
         </div>
       );
     });
@@ -1127,7 +1125,7 @@ export class ListPage extends React.Component {
             ref={(r) => summaryHeaders.push({ el: r, text: this.createSearchInput(ogOccupations, ogLocations) })}
             className={styles.amount}
           >
-            Hittade {this.props.amount} jobb {this.createSearchSummary()}
+            Hittade {this.props.amount} jobb {/*this.createSearchSummary()*/}
           </span>
           <List items={this.props.jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
           {additionalAds}
@@ -1146,14 +1144,14 @@ export class ListPage extends React.Component {
         matchingContent = (
           <div className={styles.listWrapperMatchingContent}>
             <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
-              Kompetenser, erfarenheter & körkort {/*({this.props.knownCompetences.size})*/}
+              Matchningskriterier {/*({this.props.knownCompetences.size})*/}
               <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
             </div>
             <span
               className={styles.amount}
               ref={(r) => summaryHeaders.push({ el: r, text: 'Jobb som matchar dina kompetenser' })}
             >
-              {this.props.matchingJobs.length} jobb matchar dina kompetenser
+              {this.props.matchingJobs.length} jobb matchar dig
             </span>
             <List
               items={this.props.matchingJobs.slice(0, 50)}

@@ -76,6 +76,7 @@ function JobListItem(props) {
     sameElse: 'DD MMM',
   };
   const item = props.item;
+  // console.log(item);
   // console.log(window.moment().diff(item.sistaAnsokningsdatum, 'days'));
   const date = moment(item.publiceringsdatum).calendar(null, momentOptions);
   const isMatchingView = props.options.view == 'matching';

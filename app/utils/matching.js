@@ -21,9 +21,9 @@ const isKnownDriversLicense = (id, knownDL, callback) => {
   else callback(false);
 };
 const getMatchProcentage = (matchningLen, job) => {
-  return matchningLen / _.filter(job.matchningsresultat.efterfragat, (j) => {
-    return isCompetence(j.typ) || isExperience(j.typ);
-  }).length;
+  return (matchningLen / _.filter(job.matchningsresultat.efterfragat, (j) => {
+    return isCompetence(j.typ) || isExperience(j.typ) || isDriversLicense(j.typ);
+  }).length) * 100;
 };
 
 export default function findMatchningJobs(jobs, knownCompetences, knownExperiences, knownDriversLicenses) {
