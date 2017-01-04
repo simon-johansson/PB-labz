@@ -33,7 +33,7 @@
 .advertWrapper {
   padding-top: 10px;
   display: block;
-  width: 90%;
+  width: calc(100% - 40px);
   margin: auto;
   padding-top: 75px;
   position: relative;
@@ -48,8 +48,10 @@
 .competenceWrapper {
   background: #F2F2F2;
   height: auto;
-  width: 100%;
+  width: calc(100% + 40px);
   margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: -20px;
   border-radius: 2px;
   padding: 10px 12px;
   position: relative;
@@ -69,6 +71,7 @@
   border-radius: 2px;
   // background: #e0ebd4;
   background: #f5f5f5;
+  font-size: 12px;
 }
 
 .okIcon {
@@ -210,4 +213,53 @@
 
 .small {
   font-size: 12px;
+}
+
+.niva {
+  text-transform: capitalize;
+}
+
+.criteriaTabs {
+  padding: 0;
+  margin-top: -30px;
+  margin-bottom: 5px;
+  margin-left: -12px;
+  width: calc(100% + 27px);
+}
+
+.criteriaTab {
+  // border: 1px solid #000;
+  width: 33%;
+  list-style: none;
+  display: inline-block;
+  text-align: center;
+  background: #F2F2F2;
+  height: 35px;
+  line-height: 35px;
+  font-size: 12px;
+}
+
+.criteriaTab:nth-child(1) {
+  // font-weight: bold;
+  border-top-left-radius: 5px;
+  // border-top-right-radius: 5px;
+  border-right: 2px solid white;
+}
+.criteriaTab:nth-child(2) {
+  // border-top-left-radius: 5px;
+  // border-top-right-radius: 5px;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+}
+.criteriaTab:nth-child(3) {
+  // border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 2px solid white;
+}
+
+:global(.glyphicon-thumbs-up) {
+  color: green;
+}
+:global(.glyphicon-warning-sign) {
+  color: red;
 }

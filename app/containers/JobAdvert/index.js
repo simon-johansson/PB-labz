@@ -153,7 +153,9 @@ export class JobAdvert extends React.Component {
 
   cleanLevel(level) {
     if (level) {
-      return level.efterfragat.replace('Mindre än 1 års erfarenhet', 'Erfarenhet') + ' som ';
+      return level.efterfragat
+        .replace('Mindre än 1 års erfarenhet', '0-1 år')
+        .replace('5 års erfarenhet eller mer', '+5 år');
     } else {
       return '';
     }
@@ -197,13 +199,14 @@ export class JobAdvert extends React.Component {
         if (known.length) {
           content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
           known.forEach((comp) => {
+            console.log(comp);
             content.push(
               <span
                 className={styles.competence}
                 onClick={this.onCompetenceClick.bind(this, comp)}
               >
                 <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-                {comp.efterfragat}
+                {comp.efterfragat} <span className={styles.small}>({comp.efterfragatKravniva.toLowerCase()[0]})</span>
               </span>
             );
           });
@@ -217,7 +220,7 @@ export class JobAdvert extends React.Component {
                 onClick={this.onCompetenceClick.bind(this, comp)}
               >
                 <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-                {comp.efterfragat}
+                {comp.efterfragat} <span className={styles.small}>({comp.efterfragatKravniva.toLowerCase()[0]})</span>
               </span>
             );
           });
@@ -234,7 +237,7 @@ export class JobAdvert extends React.Component {
             content.push(
               <span className={styles.competence}>
                 <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`}
+                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`} <span className={styles.small}>({exp.efterfragatKravniva.toLowerCase()[0]})</span>
               </span>
             );
           });
@@ -242,9 +245,10 @@ export class JobAdvert extends React.Component {
         if (unknown.length) {
           content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
           unknown.forEach((exp) => {
+            console.log(exp);
             content.push(
               <span className={styles.competence}>
-                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`}
+                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`} <span className={styles.small}>({exp.efterfragatKravniva.toLowerCase()[0]})</span>
               </span>
             );
           });
@@ -391,10 +395,11 @@ export class JobAdvert extends React.Component {
 
               {(!!this.state.ad.matchingCriteria.length || !!this.state.ad.notMatchingCriteria.length) &&
                 <div className={styles.competenceWrapper}>
-                  {/*this.props.params.matching ?
-                    <b>Du matchar med:</b> :
-                    <b>Vi efterfrågar:</b>*/
-                  }
+                  {/*<ul className={styles.criteriaTabs}>
+                    <li className={styles.criteriaTab}>Allt efterfrågat</li>
+                    <li className={styles.criteriaTab}>Krav</li>
+                    <li className={styles.criteriaTab}>Meriterande</li>
+                  </ul>*/}
                   {this.createCompetences()}
                 </div>
               }

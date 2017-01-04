@@ -817,6 +817,7 @@ export class ListPage extends React.Component {
       showMatchingJobs: true,
       showCompetenceCriteriaContent: false,
       showExperienceCriteriaContent: false,
+      showDriversLicenseCriteriaContent: false,
     });
     this.props.setUiState({
       showMatchingJobs: true,
@@ -1045,9 +1046,9 @@ export class ListPage extends React.Component {
                 onClick={this.removeAdditionalSearchParams.bind(this, param, index)}
               >Avbryt</span>
               {/*<span
-                              className={styles.done}
-                              onClick={this.addToSearch.bind(this)}
-                            >Lägg till</span>*/}
+                className={styles.done}
+                onClick={this.addToSearch.bind(this)}
+              >Lägg till</span>*/}
               <div className={styles.matchCriteriaSearchSummary}>
                 <div className={styles.matchCriteriaSearchSummaryText}>
                   <span>{occupations}</span>
@@ -1078,11 +1079,11 @@ export class ListPage extends React.Component {
             }
           </div>
           {/*<div
-                      className={styles.addToSearchButton + ' btn btn-default'}
-                      onClick={this.addToSearch.bind(this)}
-                    >
-                      Lägg till {toAdd} i min sökning
-                    </div>*/}
+            className={styles.addToSearchButton + ' btn btn-default'}
+            onClick={this.addToSearch.bind(this)}
+          >
+            Lägg till {toAdd} i min sökning
+          </div>*/}
         </div>
       );
     });
