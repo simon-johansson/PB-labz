@@ -57,8 +57,13 @@
   margin-right: 0.25em;
 }
 
-.smallText {
+.smallText,
+.canApplyToAd {
   font-size: 12px;
+}
+
+.canApplyToAd span {
+  margin-right: 5px;
 }
 
 .knownCompetences {

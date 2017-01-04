@@ -76,6 +76,7 @@ function JobListItem(props) {
     sameElse: 'DD MMM',
   };
   const item = props.item;
+  // console.log(window.moment().diff(item.sistaAnsokningsdatum, 'days'));
   const date = moment(item.publiceringsdatum).calendar(null, momentOptions);
   const isMatchingView = props.options.view == 'matching';
   const isMaching = !!item.matchingCriteria.length;
@@ -91,6 +92,13 @@ function JobListItem(props) {
           <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
           <br />
           <span className={styles.smallText}>Publicerad: <span className={date === 'Idag' ? styles.today : ''}>{date}</span></span>
+          {/*
+            <br />
+            <span className={styles.canApplyToAd}>
+              <span className='glyphicon glyphicon-warning-sign' />
+              Ansökningstiden har gått ut
+            </span>
+          */}
           {isMaching && isMatchingView &&
             <div>
               <div className={styles.knownCompetences}>

@@ -278,8 +278,9 @@ export class ListPage extends React.Component {
       // },
       events: false,
       tooltips: {
-        enabled: false
+        enabled: false,
       },
+      responsive: false,
       legend: {
         display: false,
         position: 'right',
@@ -345,7 +346,8 @@ export class ListPage extends React.Component {
                   <div className={styles.chartWrapper}>
                     <Doughnut
                       data={data}
-                      height={200}
+                      height={100}
+                      width={100}
                       options={options}
                     />
                   </div>
