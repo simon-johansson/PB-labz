@@ -209,7 +209,8 @@
   display: block !important;
 }
 
-.competence + .criteriaHeading {
+.competence + .criteriaHeading,
+.competenceMatch + .criteriaHeading {
   margin-top: 15px;
 }
 
@@ -218,7 +219,8 @@
   margin-left: 5px;
 }
 
-.competence + .criteriaSubHeading {
+.competence + .criteriaSubHeading,
+.competenceMatch + .criteriaSubHeading {
   margin-top: 5px;
 }
 
