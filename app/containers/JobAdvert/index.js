@@ -153,7 +153,7 @@ export class JobAdvert extends React.Component {
 
   cleanLevel(level) {
     if (level) {
-      console.log(level);
+      // console.log(level);
       return level.efterfragat
         .replace('Mindre än 1 års erfarenhet', '0-1 år')
         .replace('1-2 års erfarenhet', '1-2 år')

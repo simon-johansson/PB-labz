@@ -19,7 +19,6 @@ export class FeaturePage extends React.Component {
   };
 
   componentDidMount() {
-    // window.doorbell.setOption('hideButton', true);
     setTimeout(() => {
       this.setState({ imgClass: styles.animate });
     }, 100);

@@ -82,7 +82,7 @@ function JobListItem(props) {
   const isMatchingView = props.options.view == 'matching';
   const isMaching = !!item.matchingCriteria.length;
   // console.log(isMaching);
-  const wrapperClass = (isMatchingView && isMaching) ? styles.bigLinkWrapper : styles.linkWrapper;
+  const wrapperClass = (/*isMatchingView &&*/ isMaching) ? styles.bigLinkWrapper : styles.linkWrapper;
   const content = (
     <Tappable className={wrapperClass} onTap={clickHandler.bind(this, item, props.click)}>
         <div>
@@ -100,17 +100,17 @@ function JobListItem(props) {
               Ansökningstiden har gått ut
             </span>
           */}
-          {isMaching && isMatchingView &&
+          {isMaching &&
             <div>
               <div className={styles.knownCompetences}>
                 <Circle
                   item={item}
-                  style={{top: '28px'}}
+                  style={{top: '35px'}}
                 />
               </div>
             </div>
           }
-          {isMaching && !isMatchingView &&
+          {/*isMaching && !isMatchingView &&
             <div>
               <div className={styles.knownCompetences}>
                 <Circle
@@ -119,7 +119,7 @@ function JobListItem(props) {
                 />
               </div>
             </div>
-          }
+          */}
         </div>
     </Tappable>
   );
