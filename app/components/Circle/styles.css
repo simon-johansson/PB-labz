@@ -11,6 +11,7 @@
   font-weight: bold;
   font-size: 15px;
   background: white;
+  transition: all 0.3s;
 }
 
 .circle sup,

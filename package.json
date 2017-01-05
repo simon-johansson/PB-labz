@@ -223,6 +223,7 @@
     "minimist": "1.2.0",
     "moment": "^2.15.2",
     "react": "15.3.1",
+    "react-animate-on-change": "^0.2.1",
     "react-chartjs-2": "^1.6.2",
     "react-dom": "15.3.1",
     "react-google-maps": "5.1.0",

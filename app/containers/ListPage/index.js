@@ -342,7 +342,7 @@ export class ListPage extends React.Component {
                   {/*Mest efterfrågade kompetenserna {this.createSearchSummary()}*/}
                   Mest efterfrågade för din sökning
                 </span>
-                <div className={styles.doughnutWrapper}>
+                {/*<div className={styles.doughnutWrapper}>
                   <div className={styles.chartWrapper}>
                     <Doughnut
                       data={data}
@@ -357,7 +357,7 @@ export class ListPage extends React.Component {
                     </ul>
                   </div>
                   <i>Antal annonser där kompetensen efterfrågas</i>
-                </div>
+                </div>*/}
                 <List items={top5} component={CompetenceListItem} />
               </div>
             }
@@ -389,6 +389,7 @@ export class ListPage extends React.Component {
             <div
               className={styles.tag}
               key={`competence-${index}`}
+              onClick={(e) => e.stopPropagation()}
             >
               <span className={styles.tagText}>
                 {comp.efterfragat}
@@ -427,6 +428,7 @@ export class ListPage extends React.Component {
               <div
                 className={styles.tag}
                 key={`experience-${index}`}
+                onClick={(e) => e.stopPropagation()}
               >
                 <span className={styles.tagText}>
                   {exp.efterfragat} ({years})
@@ -448,6 +450,7 @@ export class ListPage extends React.Component {
             <div
               className={styles.tag}
               key={`drivers-license-${index}`}
+              onClick={(e) => e.stopPropagation()}
             >
               <span className={styles.tagText}>
                 {dl.efterfragat}
@@ -484,11 +487,11 @@ export class ListPage extends React.Component {
           <p>Ange vad du kan för att se jobben som passar dig bäst</p>
         </div>
 
-        <div className={styles.criteraWrappper}>
-          <header
-            className={styles.criteriaSelectionHeader}
-            onClick={this.toggleCompetenceCriteriaContent.bind(this)}
-          >
+        <div
+          className={styles.criteraWrappper}
+          onClick={!this.state.showCompetenceCriteriaContent && this.toggleCompetenceCriteriaContent.bind(this)}
+        >
+          <header className={styles.criteriaSelectionHeader}>
             Kompetenser
             <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
           </header>
@@ -504,11 +507,11 @@ export class ListPage extends React.Component {
             </section>
           }
         </div>
-        <div className={styles.criteraWrappper}>
-          <header
-            className={styles.criteriaSelectionHeader}
-            onClick={this.toggleExperienceCriteriaContent.bind(this)}
-          >
+        <div
+          className={styles.criteraWrappper}
+          onClick={!this.state.showExperienceCriteriaContent && this.toggleExperienceCriteriaContent.bind(this)}
+        >
+          <header className={styles.criteriaSelectionHeader}>
             Arbetslivserfarenheter
             <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
           </header>
@@ -524,11 +527,11 @@ export class ListPage extends React.Component {
             </section>
           }
         </div>
-        <div className={styles.criteraWrappper}>
-          <header
-            className={styles.criteriaSelectionHeader}
-            onClick={this.toggleDriversLicenseCriteriaContent.bind(this)}
-          >
+        <div
+          className={styles.criteraWrappper}
+          onClick={!this.state.showDriversLicenseCriteriaContent && this.toggleDriversLicenseCriteriaContent.bind(this)}
+        >
+          <header className={styles.criteriaSelectionHeader}>
             Körkort
             <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
           </header>
@@ -723,12 +726,12 @@ export class ListPage extends React.Component {
         {
           !!this.props.experiences.length ?
           <div>
-            <div className={styles.barChartWrapper}>
+            {/*<div className={styles.barChartWrapper}>
               <Bar
                 data={data}
                 options={opt}
               />
-            </div>
+            </div>*/}
             <span className={styles.amount}>
               Efterfrågad arbetslivserfarenhet för din sökning
             </span>

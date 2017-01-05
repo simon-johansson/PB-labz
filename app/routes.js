@@ -173,6 +173,14 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/onboarding',
+      name: 'onboarding',
+      getComponent(nextState, cb) {
+        System.import('containers/OnboardingPage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {
