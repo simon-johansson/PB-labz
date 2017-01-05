@@ -200,12 +200,12 @@ export class JobAdvert extends React.Component {
         const unknown = _.filter(competences, { isKnown: false });
         content.push(<b className={styles.criteriaHeading}>Kompetenser</b>);
         if (known.length) {
-          content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
+          // content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
           known.forEach((comp) => {
             const req = comp.efterfragatKravniva.toLowerCase()[0];
             content.push(
               <span
-                className={styles.competence}
+                className={styles.competenceMatch}
                 onClick={this.onCompetenceClick.bind(this, comp)}
               >
                 <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
@@ -215,7 +215,7 @@ export class JobAdvert extends React.Component {
           });
         }
         if (unknown.length) {
-          content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
+          // content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
           unknown.forEach((comp) => {
             const req = comp.efterfragatKravniva.toLowerCase()[0];
             content.push(
@@ -236,11 +236,11 @@ export class JobAdvert extends React.Component {
         const unknown = _.filter(experiences, { isKnown: false });
         content.push(<b className={styles.criteriaHeading}>Arbetslivserfarenheter</b>);
         if (known.length) {
-          content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
+          // content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
           known.forEach((exp) => {
             const req = exp.efterfragatKravniva.toLowerCase()[0];
             content.push(
-              <span className={styles.competence}>
+              <span className={styles.competenceMatch}>
                 <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
                 {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`} <span className={styles.small}>({(req === 's') ? 'k' : req})</span>
               </span>
@@ -248,7 +248,7 @@ export class JobAdvert extends React.Component {
           });
         }
         if (unknown.length) {
-          content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
+          // content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
           unknown.forEach((exp) => {
             const req = exp.efterfragatKravniva.toLowerCase()[0];
             content.push(
@@ -265,11 +265,11 @@ export class JobAdvert extends React.Component {
         const unknown = _.filter(driversLicenses, { isKnown: false });
         content.push(<b className={styles.criteriaHeading}>Körkort</b>);
         if (known.length) {
-          content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
+          // content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
           known.forEach((dl) => {
             content.push(
               <span
-                className={styles.competence}
+                className={styles.competenceMatch}
                 onClick={this.onDriversLicenseClick.bind(this, dl)}
               >
                 <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
@@ -279,7 +279,7 @@ export class JobAdvert extends React.Component {
           });
         }
         if (unknown.length) {
-          content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
+          // content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
           unknown.forEach((dl) => {
             content.push(
               <span
