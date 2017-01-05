@@ -87,7 +87,7 @@ export class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    window.doorbellOptions.hideButton = false;
+    window.doorbell.setOption('hideButton', false);
     this.props.onSetLocations();
     this.props.onSetOccupations();
     // this.props.onSubmitForm();
