@@ -350,6 +350,11 @@ label {
   text-overflow: ellipsis;
 }
 
+.toTopArrow {
+  float: right;
+  color: #848484;
+}
+
 .saveSearch {
   position: absolute;
   right: 12px;
