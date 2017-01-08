@@ -1192,7 +1192,7 @@ export class ListPage extends React.Component {
             className={styles.stickyHeader}
             onClick={this.onStickyHeaderClick.bind(this)}
           >
-            {this.state.stickyHeaderText}
+            <span className={styles.stickyHeaderText}>{this.state.stickyHeaderText}</span>
             <span className={styles.toTopArrow}>⬆</span>
           </div>
         }
