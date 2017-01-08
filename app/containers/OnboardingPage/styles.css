@@ -79,6 +79,12 @@
   font-size: 17px;
 }
 
+.startButton:hover,
+.startButton:active {
+  background: #35739D !important;
+  color: white !important;
+}
+
 .splashImgWrapper {
   position: absolute;
   z-index: 99999;
