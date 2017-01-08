@@ -5,11 +5,13 @@ import { push } from 'react-router-redux';
 
 import styles from './styles.css';
 import match from './match.png';
+import splash from './splash.png';
 
 export class FeaturePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      splash: true,
       imgClass: '',
     };
   }
@@ -20,13 +22,22 @@ export class FeaturePage extends React.Component {
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({ imgClass: styles.animate });
-    }, 100);
+      this.setState({ splash: false });
+      setTimeout(() => {
+        this.setState({ imgClass: styles.animate });
+      }, 500);
+    }, 3000);
   }
 
   render() {
     return (
       <div className={styles.splashWrapper}>
+        <div className={`${styles.splashImgWrapper} ${!this.state.splash ? styles.fadeout : ''} `}>
+          <img
+            src={splash}
+            className={styles.splashImg}
+          />
+        </div>
         <div className={styles.imgWrapper}>
           <img
             src={match}

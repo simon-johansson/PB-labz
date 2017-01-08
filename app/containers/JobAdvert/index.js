@@ -300,7 +300,7 @@ export class JobAdvert extends React.Component {
             known={knownCriteria.length}
             total={allCriteria.length}
             showText={false}
-            style={{right: '10px'}}
+            style={{top: '56px'}}
           />
         );
       }
@@ -401,6 +401,12 @@ export class JobAdvert extends React.Component {
               {(!!this.state.ad.matchingCriteria.length || !!this.state.ad.notMatchingCriteria.length) &&
                 <div>
                   <div className={styles.competenceWrapper}>
+                    <header className={styles.competenceHeader}>
+                      <hr/>
+                        <span>Matchningskriterier</span>
+                        <span className={styles.infoIcon}>ℹ</span>
+                      <hr/>
+                    </header>
                     {/*<ul className={styles.criteriaTabs}>
                       <li className={styles.criteriaTab}>Allt efterfrågat</li>
                       <li className={styles.criteriaTab}>Krav</li>
