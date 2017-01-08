@@ -1193,7 +1193,8 @@ export class ListPage extends React.Component {
             onClick={this.onStickyHeaderClick.bind(this)}
           >
             <span className={styles.stickyHeaderText}>{this.state.stickyHeaderText}</span>
-            <span className={styles.toTopArrow}>⬆</span>
+            {/*<span className={styles.toTopArrow}>⬆</span>*/}
+            <span className={styles.toTopArrow + ' glyphicon glyphicon-arrow-up'} />
           </div>
         }
         <div className={styles.contentWrapper}>

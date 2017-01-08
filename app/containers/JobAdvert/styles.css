@@ -64,18 +64,18 @@
 
 .infoIcon {
   float: right;
-  border: 2px solid gray;
+  // border: 2px solid gray;
   // background: #B5D8E9;
   // background: white;
-  background: gray;
-  border-radius: 20px;
-  height: 20px;
-  width: 20px;
-  line-height: 14px;
-  font-size: 18px;
+  // background: gray;
+  // border-radius: 20px;
+  // height: 20px;
+  // width: 20px;
+  line-height: 18px;
+  font-size: 20px;
   text-align: center;
-  // color: gray;
-  color: white;
+  color: gray;
+  // color: white;
 }
 
 .competenceWrapper {

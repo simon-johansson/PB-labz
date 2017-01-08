@@ -404,7 +404,8 @@ export class JobAdvert extends React.Component {
                     <header className={styles.competenceHeader}>
                       <hr/>
                         <span>Matchningskriterier</span>
-                        <span className={styles.infoIcon}>ℹ</span>
+                        {/*<span className={styles.infoIcon}>ℹ</span>*/}
+                        <span className={styles.infoIcon + ' glyphicon glyphicon-info-sign'} />
                       <hr/>
                     </header>
                     {/*<ul className={styles.criteriaTabs}>
