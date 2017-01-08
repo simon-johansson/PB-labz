@@ -1153,7 +1153,7 @@ export class ListPage extends React.Component {
             </div>
             <span
               className={styles.amount}
-              ref={(r) => summaryHeaders.push({ el: r, text: 'Jobb som matchar dina kompetenser' })}
+              ref={(r) => summaryHeaders.push({ el: r, text: 'Jobb som matchar dig' })}
             >
               {this.props.matchingJobs.length} jobb matchar dig
             </span>

@@ -11,7 +11,7 @@
   font-weight: bold;
   font-size: 15px;
   background: white;
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
 
 .circle sup,
@@ -57,6 +57,12 @@
   border: 3px solid #f2e220;
 }
 
+.circleWrapper,
+.circleWrapperSmall {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
 .circleWrapperSmall p {
   font-weight: bold;
 }
@@ -92,4 +98,8 @@
 .circleWrapperSmall .yellowCircle p {
   // background: #f2e220;
   border: 3px solid #f2e220;
+}
+
+.hidden {
+  opacity: 0 !important;
 }

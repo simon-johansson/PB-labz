@@ -29,7 +29,7 @@ function Circle(props) {
 
   if (props.small) {
     content = (
-      <div className={styles.circleWrapperSmall}>
+      <div className={`${styles.circleWrapperSmall} ${!props.isMatch ? styles.hidden : ''}`}>
         <span className={colorClass}>
           <p>m</p>
         </span>
@@ -37,12 +37,12 @@ function Circle(props) {
     );
   } else {
     content = (
-      <div className={styles.circleWrapper}>
+      <div className={`${styles.circleWrapper} ${!props.isMatch ? styles.hidden : ''}`}>
         <span
           style={props.style}
           className={`${styles.circle} ${colorClass}`}
         >
-          <sup>{known}</sup>
+          <sup>{known ? known : 1}</sup>
           <span className={styles.division}>&frasl;</span>
           <sub>{total}</sub>
         </span>
@@ -60,6 +60,7 @@ function Circle(props) {
 Circle.defaultProps = {
   showText: true,
   small: false,
+  isMatch: true,
 };
 
 Circle.propTypes = {

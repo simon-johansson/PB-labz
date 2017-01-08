@@ -333,16 +333,15 @@ export class JobAdvert extends React.Component {
         // }
       }
 
-      if (isMatch) {
-        content.push(
-          <Circle
-            known={knownCriteria.length}
-            total={allCriteria.length}
-            showText={false}
-            style={{top: '56px'}}
-          />
-        );
-      }
+      content.push(
+        <Circle
+          known={knownCriteria.length}
+          total={allCriteria.length}
+          showText={false}
+          style={{top: '56px'}}
+          isMatch={isMatch}
+        />
+      );
 
       return content;
     }
