@@ -1,4 +1,5 @@
-.linkWrapper {
+.linkWrapper,
+.linkWrapperKnown {
   width: 100%;
   // height: 100%;
   height: 40px;
@@ -8,13 +9,22 @@
   // align-items: space-between;
 }
 
+.linkWrapperKnown {
+  background: #B5D8E9;
+  margin-left: -1em;
+  margin-right: -1em;
+  width: calc(100% + 2em);
+  padding: 0 1em;
+  position: relative;
+}
+
 .efterfragat {
   margin-left: 0px;
 }
 
 .competenceOK {
   position: absolute;
-  right: 0px;
+  right: 10px;
   top: 10px;
   color: green;
 }

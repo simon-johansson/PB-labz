@@ -54,7 +54,10 @@ export class DriversLicenseListItem extends React.Component {
   render() {
     const item = this.props.item;
     const content = (
-      <div className={styles.linkWrapper} onClick={this.onCompetenceClick.bind(this)}>
+      <div
+        className={!this.state.isKnown ? styles.linkWrapper : styles.linkWrapperKnown}
+        onClick={this.onCompetenceClick.bind(this)}
+      >
         <span className={styles.efterfragat}>
           {item.efterfragat}
           {item.category &&
