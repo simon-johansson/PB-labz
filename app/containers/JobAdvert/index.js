@@ -191,12 +191,16 @@ export class JobAdvert extends React.Component {
       const allCriteria = [...ad.matchingCriteria, ...ad.notMatchingCriteria];
       const knownCriteria = ad.matchingCriteria;
       const unknownCriteria = ad.notMatchingCriteria;
-      // const competences = _.orderBy(_.filter(allCriteria, { typ: 'KOMPETENS' }), 'efterfragat', 'desc');
-      const competences = _.filter(allCriteria, { typ: 'KOMPETENS' }).sort((a, b) => {
-        return a.efterfragat.length - b.efterfragat.length;
-      });
+      const competences = _.orderBy(_.filter(allCriteria, { typ: 'KOMPETENS' }), 'efterfragat', 'asc');
+      // const competences = _.filter(allCriteria, { typ: 'KOMPETENS' }).sort((a, b) => {
+      //   return a.efterfragat.length - b.efterfragat.length;
+      // });
       const experiences = _.filter(allCriteria, { typ: 'YRKE' });
-      const driversLicenses = _.filter(allCriteria, { typ: 'KORKORT' });
+      const driversLicenses = _.orderBy(_.filter(allCriteria, { typ: 'KORKORT' }), 'efterfragat', 'asc');
+      // const driversLicenses = _.filter(allCriteria, { typ: 'KORKORT' });
+      // const driversLicenses = _.filter(allCriteria, { typ: 'KORKORT' }).sort((a, b) => {
+      //   return a.varde - b.varde;
+      // });
 
       if (competences.length) {
         const known = _.filter(competences, { isKnown: true });
@@ -284,34 +288,49 @@ export class JobAdvert extends React.Component {
         const known = _.filter(driversLicenses, { isKnown: true });
         const unknown = _.filter(driversLicenses, { isKnown: false });
         content.push(<b className={styles.criteriaHeading}>Körkort</b>);
-        if (known.length) {
-          // content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
-          known.forEach((dl) => {
-            content.push(
-              <span
-                className={styles.competenceMatch}
-                onClick={this.onDriversLicenseClick.bind(this, dl)}
-              >
-                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-                {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
-              </span>
-            );
-          });
-        }
-        if (unknown.length) {
-          // content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
-          unknown.forEach((dl) => {
-            content.push(
-              <span
-                className={styles.competence}
-                onClick={this.onDriversLicenseClick.bind(this, dl)}
-              >
-                <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-                {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
-              </span>
-            );
-          });
-        }
+        driversLicenses.forEach((dl) => {
+          content.push(
+            <span
+             className={dl.isKnown ? styles.competenceMatch : styles.competence}
+             onClick={this.onDriversLicenseClick.bind(this, dl)}
+           >
+            {dl.isKnown ?
+              <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+              <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+            }
+             {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
+           </span>
+          );
+        });
+
+        // if (known.length) {
+        //   // content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
+        //   known.forEach((dl) => {
+        //     content.push(
+        //       <span
+        //         className={styles.competenceMatch}
+        //         onClick={this.onDriversLicenseClick.bind(this, dl)}
+        //       >
+        //         <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+        //         {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
+        //       </span>
+        //     );
+        //   });
+        // }
+        // if (unknown.length) {
+        //   // content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
+        //   unknown.forEach((dl) => {
+        //     content.push(
+        //       <span
+        //         className={styles.competence}
+        //         onClick={this.onDriversLicenseClick.bind(this, dl)}
+        //       >
+        //         <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+        //         {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
+        //       </span>
+        //     );
+        //   });
+        // }
       }
 
       if (isMatch) {
