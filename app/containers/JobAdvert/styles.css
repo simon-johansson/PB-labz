@@ -72,9 +72,9 @@
   // height: 20px;
   // width: 20px;
   line-height: 18px;
-  font-size: 20px;
+  font-size: 17px;
   text-align: center;
-  color: gray;
+  color: #b0b0b0;
   // color: white;
 }
 
@@ -113,6 +113,7 @@
 
 .competenceMatch {
   background: #B5D8E9 !important;
+  border: 1px solid rgba(0,0,0,0) !important;
 }
 
 .okIcon {

@@ -219,6 +219,18 @@ label {
   line-height: 57px;
 }
 
+.notifyRow {
+  position: relative;
+}
+
+.rowOverlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  // border: 1px solid #000;
+}
+
 .notifyText {
   vertical-align: super;
   margin-right: 10px;

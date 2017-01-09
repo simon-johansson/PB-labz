@@ -152,24 +152,38 @@ function appReducer(state = initialState, action) {
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), competences, state.get('knownExperiences'), state.get('knownDriversLicenses'),
       );
+      const additionalAds = state.getIn(['additional', 'ads']).map((ads) => {
+        ads.jobs = matching(
+          ads.jobs, competences, state.get('knownExperiences'), state.get('knownDriversLicenses'),
+        )[0];
+        return ads;
+      });
       return state
         .set('knownCompetences', competences)
         .setIn(['afData', 'jobs'], allJobs)
         .setIn(['afData', 'matchingJobs'], matchingJobs)
         .setIn(['afData', 'nonMatchingJobs'], nonMatchingJobs)
-        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length);
+        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length)
+        .setIn(['additional', 'ads'], additionalAds);
     }
     case REMOVE_COMPETENCE: {
       const competences = state.get('knownCompetences').filter((item) => action.id !== item);
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), competences, state.get('knownExperiences'), state.get('knownDriversLicenses'),
       );
+      const additionalAds = state.getIn(['additional', 'ads']).map((ads) => {
+        ads.jobs = matching(
+          ads.jobs, competences, state.get('knownExperiences'), state.get('knownDriversLicenses'),
+        )[0];
+        return ads;
+      });
       return state
         .set('knownCompetences', competences)
         .setIn(['afData', 'jobs'], allJobs)
         .setIn(['afData', 'matchingJobs'], matchingJobs)
         .setIn(['afData', 'nonMatchingJobs'], nonMatchingJobs)
-        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length);
+        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length)
+        .setIn(['additional', 'ads'], additionalAds);
     }
 
     case SET_EXPERIENCE: {
@@ -179,24 +193,38 @@ function appReducer(state = initialState, action) {
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), state.get('knownCompetences'), experiences, state.get('knownDriversLicenses'),
       );
+      const additionalAds = state.getIn(['additional', 'ads']).map((ads) => {
+        ads.jobs = matching(
+          ads.jobs, state.get('knownCompetences'), experiences, state.get('knownDriversLicenses'),
+        )[0];
+        return ads;
+      });
       return state
         .set('knownExperiences', experiences)
         .setIn(['afData', 'jobs'], allJobs)
         .setIn(['afData', 'matchingJobs'], matchingJobs)
         .setIn(['afData', 'nonMatchingJobs'], nonMatchingJobs)
-        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length);
+        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length)
+        .setIn(['additional', 'ads'], additionalAds);
     }
     case REMOVE_EXPERIENCE: {
       const experiences = state.get('knownExperiences').filter((item) => action.id !== item.id);
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), state.get('knownCompetences'), experiences, state.get('knownDriversLicenses'),
       );
+      const additionalAds = state.getIn(['additional', 'ads']).map((ads) => {
+        ads.jobs = matching(
+          ads.jobs, state.get('knownCompetences'), experiences, state.get('knownDriversLicenses'),
+        )[0];
+        return ads;
+      });
       return state
         .set('knownExperiences', experiences)
         .setIn(['afData', 'jobs'], allJobs)
         .setIn(['afData', 'matchingJobs'], matchingJobs)
         .setIn(['afData', 'nonMatchingJobs'], nonMatchingJobs)
-        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length);
+        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length)
+        .setIn(['additional', 'ads'], additionalAds);
     }
 
     case SET_DRIVERS_LICENSE: {
@@ -204,24 +232,38 @@ function appReducer(state = initialState, action) {
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), state.get('knownCompetences'), state.get('knownExperiences'), driversLicenses
       );
+      const additionalAds = state.getIn(['additional', 'ads']).map((ads) => {
+        ads.jobs = matching(
+          ads.jobs, state.get('knownCompetences'), state.get('knownExperiences'), driversLicenses
+        )[0];
+        return ads;
+      });
       return state
         .set('knownDriversLicenses', driversLicenses)
         .setIn(['afData', 'jobs'], allJobs)
         .setIn(['afData', 'matchingJobs'], matchingJobs)
         .setIn(['afData', 'nonMatchingJobs'], nonMatchingJobs)
-        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length);
+        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length)
+        .setIn(['additional', 'ads'], additionalAds);
     }
     case REMOVE_DRIVERS_LICENSE: {
       const driversLicenses = state.get('knownDriversLicenses').filter((item) => action.id !== item);
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), state.get('knownCompetences'), state.get('knownExperiences'), driversLicenses
       );
+      const additionalAds = state.getIn(['additional', 'ads']).map((ads) => {
+        ads.jobs = matching(
+          ads.jobs, state.get('knownCompetences'), state.get('knownExperiences'), driversLicenses
+        )[0];
+        return ads;
+      });
       return state
         .set('knownDriversLicenses', driversLicenses)
         .setIn(['afData', 'jobs'], allJobs)
         .setIn(['afData', 'matchingJobs'], matchingJobs)
         .setIn(['afData', 'nonMatchingJobs'], nonMatchingJobs)
-        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length);
+        .setIn(['afData', 'hasMatchningJobs'], !!matchingJobs.length)
+        .setIn(['additional', 'ads'], additionalAds);
     }
 
     case SAVE_ADVERT: {

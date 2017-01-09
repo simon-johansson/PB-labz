@@ -388,49 +388,41 @@ export class FilterPage extends React.Component {
               <button onClick={this.toggleActive.bind(this)}>Behovsanställning / poolanställning</button>
             </div>*/}
             <div className={styles.switchWrapper}>
-              <div
-                className={styles.switchWrapperRow}
-                onClick={this.setEmployment.bind(this, 0)}
-              >
+              <div className={styles.switchWrapperRow}>
                 <span className={styles.switchTitle}>Tillsvidareanställning</span>
                 <Switch
                   className={styles.rowSwitch}
                   checked={this.state.employment[0]}
                   onChange={() => {}}
                 />
+                <div className={styles.rowOverlay} onClick={this.setEmployment.bind(this, 0)} />
               </div>
-              <div
-                className={styles.switchWrapperRow}
-                onClick={this.setEmployment.bind(this, 1)}
-              >
+              <div className={styles.switchWrapperRow}>
                 <span className={styles.switchWrapperTitle}>Visstidsanställning</span>
                 <Switch
                   className={styles.rowSwitch}
                   checked={this.state.employment[1]}
                   onChange={() => {}}
                 />
+                <div className={styles.rowOverlay} onClick={this.setEmployment.bind(this, 1)} />
               </div>
-              <div
-                className={styles.switchWrapperRow}
-                onClick={this.setEmployment.bind(this, 2)}
-              >
+              <div className={styles.switchWrapperRow}>
                 <span className={styles.switchWrapperTitle}>Sommarjobb / feriejobb</span>
                 <Switch
                   className={styles.rowSwitch}
                   checked={this.state.employment[2]}
                   onChange={() => {}}
                 />
+                <div className={styles.rowOverlay} onClick={this.setEmployment.bind(this, 2)} />
               </div>
-              <div
-                className={styles.switchWrapperRow}
-                onClick={this.setEmployment.bind(this, 3)}
-              >
+              <div className={styles.switchWrapperRow}>
                 <span className={styles.switchWrapperTitle}>Behovsanställning / poolanställning</span>
                 <Switch
                   className={styles.rowSwitch}
                   checked={this.state.employment[3]}
                   onChange={() => {}}
                 />
+                <div className={styles.rowOverlay} onClick={this.setEmployment.bind(this, 3)} />
               </div>
             </div>
 
@@ -442,27 +434,23 @@ export class FilterPage extends React.Component {
               <button onClick={this.toggleActive.bind(this)}>Deltid</button>
             </div>*/}
             <div className={styles.switchWrapper}>
-              <div
-                className={styles.switchWrapperRow}
-                onClick={this.setAmount.bind(this, 0)}
-              >
+              <div className={styles.switchWrapperRow}>
                 <span className={styles.switchTitle}>Heltid</span>
                 <Switch
                   className={styles.rowSwitch}
                   checked={this.state.amount[0]}
                   onChange={() => {}}
                 />
+                <div className={styles.rowOverlay} onClick={this.setAmount.bind(this, 0)} />
               </div>
-              <div
-                className={styles.switchWrapperRow}
-                onClick={this.setAmount.bind(this, 1)}
-              >
+              <div className={styles.switchWrapperRow}>
                 <span className={styles.switchWrapperTitle}>Deltid</span>
                 <Switch
                   className={styles.rowSwitch}
                   checked={this.state.amount[1]}
                   onChange={() => {}}
                 />
+                <div className={styles.rowOverlay} onClick={this.setAmount.bind(this, 1)} />
               </div>
             </div>
 
@@ -505,17 +493,17 @@ export class FilterPage extends React.Component {
               </div>
             </div>
 
-            <hr />
+            {/*<hr />*/}
 
-            {!!this.props.locations.size &&
+            {/*!!this.props.locations.size &&
               <div>
                 <p className={`${styles.subTitle} ${styles.extraPadding}`}>Sökradie</p>
                 {this.createRange()}
                 <hr />
               </div>
-            }
+            */}
 
-            {this.shouldShowAreaFilter() &&
+            {/*this.shouldShowAreaFilter() &&
               <div>
                 <p className={styles.subTitle}>Visa endast annonser inom yrkesområden</p>
                   <div className={styles.buttonWrapper}>
@@ -523,7 +511,7 @@ export class FilterPage extends React.Component {
                   </div>
                 <hr />
               </div>
-            }
+            */}
 
 
             {/*<p>Visa endast annonser med ordet...</p>

@@ -236,12 +236,13 @@ export class HomePage extends React.Component {
             <span>{occupations}</span> <br />
             <span className={styles.small}>{locations}</span>
             {this.state.editSaved &&
-              <div>
+              <div className={styles.notifyRow}>
                 <span className={styles.notifyText}>Notiser för nyinkomna jobb</span>
                 <Switch
                   checked={item.notify}
-                  onChange={this.onChangeNotify.bind(this, index, !item.notify)}
+                  onChange={() => {}}
                 />
+                <div className={styles.rowOverlay} onClick={this.onChangeNotify.bind(this, index, !item.notify)} />
               </div>
             }
           </div>

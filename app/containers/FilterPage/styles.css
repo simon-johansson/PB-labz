@@ -1,6 +1,6 @@
 
 .contentWrapper {
-  margin-bottom:90px;
+  margin-bottom: 120px;
   // background: #E5E5E5;
 }
 
@@ -243,10 +243,19 @@ label {
 .switchWrapperRow {
   height: 40px;
   line-height: 40px;
+  position: relative;
 }
 .switchTitle {}
 .rowSwitch {
   float: right;
+}
+
+.rowOverlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  // border: 1px solid #000;
 }
 
 .radioButtonGroup {
