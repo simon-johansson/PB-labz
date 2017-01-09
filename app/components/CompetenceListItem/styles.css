@@ -10,12 +10,28 @@
 }
 
 .linkWrapperKnown {
+  // background: #B5D8E9;
+  // margin-left: -1em;
+  // margin-right: -1em;
+  // width: calc(100% + 2em);
+  // padding: 0 1em;
+  // position: relative;
+}
+
+.linkWrapperKnown .efterfragat {
+  // display: inline-block;
   background: #B5D8E9;
-  margin-left: -1em;
-  margin-right: -1em;
-  width: calc(100% + 2em);
-  padding: 0 1em;
-  position: relative;
+  margin-left: -8px;
+  // margin: 5px 5px 0 0;
+  // height: 25px;
+  // line-height: 25px;
+  padding: 2px 8px;
+  border-radius: 2px;
+
+  max-width: calc(100% - 30px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .efterfragat {

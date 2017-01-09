@@ -119,11 +119,18 @@ label {
 .tag {
   display: inline-block;
   background: #B5D8E9;
-  margin: 5px 5px 0 0;
+  margin: 1px 5px 0 0;
   height: 25px;
   line-height: 25px;
   padding: 0 8px;
   border-radius: 2px;
+}
+
+.showAll {
+  color: #32749d;
+  font-style: italic;
+  display: block;
+  margin: 5px 0 2px;
 }
 
 .tagText {
@@ -470,8 +477,16 @@ label {
   height: auto;
   display: block;
   margin: auto;
-  padding: 5px 0 10px;
+  padding: 8px 0 5px;
 }
+
+.criteriaSelectionContent .tag {
+  max-width: calc(100%);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 
 .criteriaSelectionView {
   position: fixed;

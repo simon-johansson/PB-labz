@@ -101,6 +101,7 @@ export class ListPage extends React.Component {
       showExperienceCriteriaContent: false,
       showDriversLicenseCriteriaContent: false,
       animationDuration: false,
+      showAllCompetences: false,
     };
 
     this.onAdvertClick = this.onAdvertClick.bind(this);
@@ -383,21 +384,29 @@ export class ListPage extends React.Component {
   criteriaSelection() {
     const renderKnownCompetences = () => {
       const content = [];
+      let counter = 0;
       this.props.competences.forEach((comp, index) => {
         if (this.props.knownCompetences.includes(comp.varde)) {
-          content.push(
-            <div
-              className={styles.tag}
-              key={`competence-${index}`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span className={styles.tagText}>
-                {comp.efterfragat}
-              </span>
-            </div>
-          );
+          if (this.state.showAllCompetences || counter <= 4) {
+            counter += 1;
+            content.push(
+              <div
+                className={styles.tag}
+                key={`competence-${index}`}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className={styles.tagText}>
+                  {comp.efterfragat}
+                </span>
+              </div>
+            );
+          }
         }
       });
+
+      if (!this.state.showAllCompetences && content.length > 4) {
+        content.push(<span className={styles.showAll} onClick={this.onShowAllCompetences.bind(this)}>Visa alla...</span>);
+      }
 
       return content;
     };
@@ -551,6 +560,13 @@ export class ListPage extends React.Component {
     );
   }
 
+  onShowAllCompetences(e) {
+    e.stopPropagation();
+    this.setState({
+      showAllCompetences: true,
+    });
+  }
+
   toggleCompetenceCriteriaContent() {
     this.setState({
       showCompetenceCriteriaContent: !this.state.showCompetenceCriteriaContent,
@@ -562,12 +578,14 @@ export class ListPage extends React.Component {
     this.setState({
       showExperienceCriteriaContent: !showExperienceCriteriaContent,
       animationDuration: (!showExperienceCriteriaContent || animationDuration) ? false : 1,
+      showAllCompetences: false,
     });
   }
 
   toggleDriversLicenseCriteriaContent() {
     this.setState({
       showDriversLicenseCriteriaContent: !this.state.showDriversLicenseCriteriaContent,
+      showAllCompetences: false,
     });
   }
 
@@ -588,6 +606,7 @@ export class ListPage extends React.Component {
       tab,
       showCompetenceCriteriaContent: false,
       showExperienceCriteriaContent: false,
+      showAllCompetences: false,
     });
     this.props.setUiState({
       tab,
@@ -821,6 +840,7 @@ export class ListPage extends React.Component {
       showCompetenceCriteriaContent: false,
       showExperienceCriteriaContent: false,
       showDriversLicenseCriteriaContent: false,
+      showAllCompetences: false,
     });
     this.props.setUiState({
       showMatchingJobs: true,
