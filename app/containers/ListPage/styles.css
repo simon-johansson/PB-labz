@@ -119,7 +119,7 @@ label {
 .tag {
   display: inline-block;
   background: #B5D8E9;
-  margin: 1px 5px 0 0;
+  margin: 5px 5px 0 0;
   height: 25px;
   line-height: 25px;
   padding: 0 8px;
@@ -477,7 +477,7 @@ label {
   height: auto;
   display: block;
   margin: auto;
-  padding: 8px 0 5px;
+  padding: 5px 0 10px;
 }
 
 .criteriaSelectionContent .tag {
