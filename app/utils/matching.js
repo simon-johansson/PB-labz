@@ -10,8 +10,8 @@ const isKnownCompetence = (id, knownComp, callback) => {
 const isKnownExperience = (exp, knownExp, callback) => {
   let isMatch = false;
   knownExp.forEach((item) => {
-    if (item.id === exp.varde) {
-      if ((item.years + 1) >= parseInt(exp.niva.varde)) isMatch = true;
+    if (item.get('id') === exp.varde) {
+      if ((item.get('years') + 1) >= parseInt(exp.niva.varde)) isMatch = true;
     }
   });
   callback(isMatch);

@@ -24,8 +24,8 @@ export class ExperienceSelector extends React.Component {
   componentDidMount() {
     let hasExperience;
     this.props.knownExperiences.forEach((item) => {
-      if (item.id === this.props.item.varde) {
-        this.setState({ hasExperience: item.years });
+      if (item.get('id') === this.props.item.varde) {
+        this.setState({ hasExperience: item.get('years') });
       }
     });
   }
@@ -33,7 +33,7 @@ export class ExperienceSelector extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     let hasExperience = false;
     nextProps.knownExperiences.forEach((item) => {
-      if (item.id === nextProps.item.varde) {
+      if (item.get('id') === nextProps.item.varde) {
         hasExperience = true;
       }
     });
@@ -42,9 +42,9 @@ export class ExperienceSelector extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     nextProps.knownExperiences.forEach((item) => {
-      if (item.id === nextProps.item.varde) {
+      if (item.get('id') === nextProps.item.varde) {
         this.setState({
-          hasExperience: item.years,
+          hasExperience: item.get('years'),
         });
       }
     });

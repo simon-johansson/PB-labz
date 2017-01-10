@@ -48,3 +48,18 @@
   display: block;
   text-align: left;
 }
+
+.gps {
+  position: absolute;
+  right: 0px;
+  top: 6px;
+  border: 2px solid #345468;
+  padding: 2px 5px;
+  border-radius: 5px;
+  color: #345468;
+  background: white;
+  width: 57px;
+}
+
+.gpsIcon {
+}

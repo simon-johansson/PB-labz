@@ -418,7 +418,7 @@ export class ListPage extends React.Component {
         let hasExperience = false;
         let years;
         this.props.knownExperiences.forEach((item) => {
-          switch(item.years) {
+          switch(item.get('years')) {
             case 1:
               years = '0-1 år';
               break;
@@ -432,7 +432,7 @@ export class ListPage extends React.Component {
               years = '+4 år';
               break;
           }
-          if (item.id === exp.varde) {
+          if (item.get('id') === exp.varde) {
             content.push(
               <div
                 className={styles.tag}
@@ -826,7 +826,7 @@ export class ListPage extends React.Component {
               <List items={sortedLicenses} component={DriversLicenseListItem} />
             </div> :
             <div className={styles.matchDescription}>
-              <p>Inga körtkort efterfågas för denna sökning</p>
+              <p>Inga körkort efterfågas för denna sökning</p>
             </div>
           }
         </div>
@@ -1032,7 +1032,7 @@ export class ListPage extends React.Component {
   }
 
   render() {
-    // console.log(this.props.knownDriversLicenses);
+    // console.log(this.props.knownExperiences.toJS());
     // console.log(this.props.driverLicenses);
     // console.log(this.props.additionalAds);
 

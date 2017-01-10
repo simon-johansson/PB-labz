@@ -4,6 +4,9 @@ const BASE_KEY = 'pb-labz';
 const PREVIOUS_SEARCH = 'previous-search';
 const PREVIOUS_LOCATION = 'previous-location';
 const FAVORITE_SEARCH = 'favorite-search';
+const KNOWN_COMPETENCES = 'known-competences';
+const KNOWN_EXPERIENCES = 'known-experiences';
+const KNOWN_DRIVERS_LICENSES = 'known-drivers-licenses';
 
 const getBase = () => ls(BASE_KEY) || {};
 const setBase = (data) => ls(BASE_KEY, data);
@@ -62,3 +65,12 @@ export function getFavoriteSearchs() { return get(FAVORITE_SEARCH) || []; }
 
 export function getPreviousLocation() { return get(PREVIOUS_LOCATION) || []; }
 export function setPreviousLocation(data) { set(PREVIOUS_LOCATION, data); }
+
+export function getKnownCompetences() { return get(KNOWN_COMPETENCES) || []; }
+export function setKnownCompetences(data) { set(KNOWN_COMPETENCES, data); }
+
+export function getKnownExperiences() { return get(KNOWN_EXPERIENCES) || []; }
+export function setKnownExperiences(data) { set(KNOWN_EXPERIENCES, data); }
+
+export function getKnownDriversLicenses() { return get(KNOWN_DRIVERS_LICENSES) || []; }
+export function setKnownDriversLicenses(data) { set(KNOWN_DRIVERS_LICENSES, data); }

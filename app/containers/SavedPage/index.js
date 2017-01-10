@@ -79,7 +79,7 @@ export class SavedPage extends React.Component {
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
             <h1>
-              <span>Sparade annonser</span>
+              <span>Sparade jobb</span>
             </h1>
           </div>
           {!!this.props.savedAdverts.size &&
@@ -98,7 +98,7 @@ export class SavedPage extends React.Component {
             !!this.props.savedAdverts.size ?
             <List items={this.props.savedAdverts} component={JobListItem} click={this.onAdvertClick} />:
             <div className={styles.matchDescription}>
-              <p>Du har inga sparade annonser</p>
+              <p>Du har inga sparade jobb</p>
             </div>
           }
         </div>

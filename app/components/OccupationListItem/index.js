@@ -40,10 +40,20 @@ export class OccupationListItem extends React.Component { // eslint-disable-line
     if (this.showMore(item)) {
       return '';
     } else if (this.showGPS(item)) {
-      return <span className={styles.right + ' glyphicon glyphicon-map-marker'}></span>;
+      return (
+        <span className={styles.gps}>
+          GPS
+          <span className={styles.gpsIcon + ' glyphicon glyphicon-map-marker'} />
+        </span>
+      );
     } else {
-      return <span className={styles.right}>{item.typ ? item.typ.toLowerCase() : antal + ' jobb'}</span>;
+      return <span className={styles.right}>{item.typ ? this.getTypeText(item.typ) : antal + ' jobb'}</span>;
     }
+  }
+
+  getTypeText(type) {
+    if (type === 'LAN') return 'Län';
+    return type.toLowerCase();
   }
 
   render() {

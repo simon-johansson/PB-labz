@@ -37,6 +37,9 @@ import {
 } from 'containers/ListPage/constants';
 import { fromJS } from 'immutable';
 import matching from 'utils/matching';
+import * as ls from 'utils/localstorage';
+
+// console.log(ls.getKnownExperiences());
 
 // The initial state of the App
 const initialState = fromJS({
@@ -44,9 +47,9 @@ const initialState = fromJS({
   error: false,
   currentUser: false,
   totalAmount: false,
-  knownCompetences: [],
-  knownExperiences: [],
-  knownDriversLicenses: [],
+  knownCompetences: ls.getKnownCompetences(),
+  knownExperiences: ls.getKnownExperiences(),
+  knownDriversLicenses: ls.getKnownDriversLicenses(),
   savedAdverts: [],
   userData: fromJS({
     repositories: false,
@@ -149,6 +152,7 @@ function appReducer(state = initialState, action) {
 
     case SET_COMPETENCE: {
       const competences = state.get('knownCompetences').update((arr) => arr.push(action.id));
+      ls.setKnownCompetences(competences);
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), competences, state.get('knownExperiences'), state.get('knownDriversLicenses'),
       );
@@ -168,6 +172,7 @@ function appReducer(state = initialState, action) {
     }
     case REMOVE_COMPETENCE: {
       const competences = state.get('knownCompetences').filter((item) => action.id !== item);
+      ls.setKnownCompetences(competences);
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), competences, state.get('knownExperiences'), state.get('knownDriversLicenses'),
       );
@@ -188,8 +193,9 @@ function appReducer(state = initialState, action) {
 
     case SET_EXPERIENCE: {
       const experiences = state.get('knownExperiences')
-                            .filter((item) => action.id !== item.id)
-                            .update((arr) => arr.push({ id: action.id, years: action.years }));
+                            .filter((item) => action.id !== item.get('id'))
+                            .update((arr) => arr.push(fromJS({ id: action.id, years: action.years })));
+      ls.setKnownExperiences(experiences);
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), state.get('knownCompetences'), experiences, state.get('knownDriversLicenses'),
       );
@@ -208,7 +214,8 @@ function appReducer(state = initialState, action) {
         .setIn(['additional', 'ads'], additionalAds);
     }
     case REMOVE_EXPERIENCE: {
-      const experiences = state.get('knownExperiences').filter((item) => action.id !== item.id);
+      const experiences = state.get('knownExperiences').filter((item) => action.id !== item.get('id'));
+      ls.setKnownExperiences(experiences);
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), state.get('knownCompetences'), experiences, state.get('knownDriversLicenses'),
       );
@@ -229,6 +236,7 @@ function appReducer(state = initialState, action) {
 
     case SET_DRIVERS_LICENSE: {
       const driversLicenses = state.get('knownDriversLicenses').update((arr) => arr.push(action.id));
+      ls.setKnownDriversLicenses(driversLicenses);
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), state.get('knownCompetences'), state.get('knownExperiences'), driversLicenses
       );
@@ -248,6 +256,7 @@ function appReducer(state = initialState, action) {
     }
     case REMOVE_DRIVERS_LICENSE: {
       const driversLicenses = state.get('knownDriversLicenses').filter((item) => action.id !== item);
+      ls.setKnownDriversLicenses(driversLicenses);
       const [allJobs, matchingJobs, nonMatchingJobs] = matching(
         state.getIn(['afData', 'jobs']), state.get('knownCompetences'), state.get('knownExperiences'), driversLicenses
       );

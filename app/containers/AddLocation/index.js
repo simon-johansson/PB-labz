@@ -10,10 +10,15 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 // import Helmet from 'react-helmet';
 import { browserHistory } from 'react-router';
+import _ from 'lodash';
 import * as ls from 'utils/localstorage';
 
 // import messages from './messages';
 import { createStructuredSelector } from 'reselect';
+
+import {
+  selectLocations as selectPickedLocations,
+} from '../ListPage/selectors';
 
 import {
   selectQuery,
@@ -75,11 +80,29 @@ export class AddLocation extends React.Component {
     // Show an error if there is one
     }
     else if (!this.props.query) {
+      const prevLocations = () => {
+        const content = [];
+        const pickedLocations = this.props.pickedLocations.toJS() || [];
+        ls.getPreviousLocation().slice(0, 7).forEach((l) => {
+          if (!_.filter(pickedLocations, ['id', l.id]).length) {
+            content.push(
+              <OccupationListItem
+                item={l}
+                click={this.onListItemClick.bind(this)}
+              />
+            );
+          }
+        });
+        return content;
+      };
       const EmptyComponent = () => (
-        <OccupationListItem
-          item={{namn: 'Aktuell ort', typ: 'GPS'}}
-          click={this.onListItemClick.bind(this)}
-        />
+        <div>
+          <OccupationListItem
+            item={{namn: 'Aktuell ort', typ: 'GPS'}}
+            click={this.onListItemClick.bind(this)}
+          />
+          {prevLocations()}
+        </div>
       );
       mainContent = (<List component={EmptyComponent} />);
     }
@@ -189,6 +212,7 @@ export function mapDispatchToProps(dispatch) {
 const mapStateToProps = createStructuredSelector({
   query: selectQuery(),
   locations: selectLocations(),
+  pickedLocations: selectPickedLocations(),
 });
 
 // Wrap the component to inject dispatch and state into it

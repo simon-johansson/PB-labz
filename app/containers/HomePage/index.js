@@ -163,7 +163,8 @@ export class HomePage extends React.Component {
   }
 
   onSeachButtonClick() {
-    this.props.onSetLocations(ls.getPreviousLocation().locations);
+    // this.props.onSetLocations(ls.getPreviousLocation().locations);
+    this.props.onSetLocations();
     this.props.onSetOccupations();
     this.addFilterPage();
   }
