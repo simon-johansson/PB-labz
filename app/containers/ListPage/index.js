@@ -318,22 +318,21 @@ export class ListPage extends React.Component {
 
     return (
       <div>
+        <div className={styles.searchFormSticky}>
+          <span
+            className={styles.cancel}
+            onClick={this.toggleCompetenceCriteriaContent.bind(this)}
+          >Avbryt</span>
+          <span
+            className={styles.done}
+            onClick={this.toggleCompetenceCriteriaContent.bind(this)}
+          >Klar</span>
+          <h1>Kompetenser</h1>
+        </div>
+
+
         {!!this.props.competences.length &&
           <div>
-            <div className={styles.searchFormSticky}>
-              <span
-                className={styles.cancel}
-                onClick={this.toggleCompetenceCriteriaContent.bind(this)}
-              >Avbryt</span>
-              <span
-                className={styles.done}
-                onClick={this.toggleCompetenceCriteriaContent.bind(this)}
-              >Klar</span>
-              <h1>Kompetenser</h1>
-            </div>
-
-
-
             {(this.props.competences.length > 10) &&
               <div>
                 <span
