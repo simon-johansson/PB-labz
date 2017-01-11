@@ -220,19 +220,26 @@
 .saveAdvert,
 .savedAdvert {
   position: absolute;
-  right: 12px;
-  top: 0px;
+  right: -10px;
+  top: 60px;
   padding-top: 2px;
   height: 50px;
   line-height: 50px;
-  font-size: 25px;
-  color: gold;
+  font-size: 35px;
 }
 
-.saveAdvert {
-  color: white;
+.saveAdvert .saveText,
+.savedAdvert .saveText {
+  font-size: 14px;
+  vertical-align: top;
+  margin-right: 5px;
+  // color: white;
 }
-.savedAdvert {
+
+.saveAdvert .saveIcon {
+  // color: white;
+}
+.savedAdvert .saveIcon {
   color: gold;
 }
 

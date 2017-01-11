@@ -412,21 +412,25 @@ export class JobAdvert extends React.Component {
               onClick={this.goBack}
             />
             <h1>Annons</h1>
-            {
-              adIsSaved ?
-              <span
-                onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}
-                className={styles.savedAdvert + ' glyphicon glyphicon-star'}
-              /> :
-              <span
-                onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}
-                className={styles.saveAdvert + ' glyphicon glyphicon-star-empty'}
-              />
-            }
           </header>
 
           {this.state.ad &&
             <div className={styles.advertWrapper}>
+              {
+                adIsSaved ?
+                <div className={styles.savedAdvert} onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}>
+                  {/*<span className={styles.saveText}>Sparad</span>*/}
+                  <span
+                    className={styles.saveIcon + ' glyphicon glyphicon-star'}
+                  />
+                </div> :
+                <div className={styles.saveAdvert} onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}>
+                  {/*<span className={styles.saveText}>Spara</span>*/}
+                  <span
+                    className={styles.saveIcon + ' glyphicon glyphicon-star-empty'}
+                  />
+                </div>
+              }
               {/*<object
                 style={{maxHeight: '60px'}}
                 data={`http://api.arbetsformedlingen.se/platsannons/${this.state.ad.id}/logotyp`} type="image/gif"
