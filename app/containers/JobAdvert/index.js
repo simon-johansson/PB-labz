@@ -385,6 +385,14 @@ export class JobAdvert extends React.Component {
     }
   }
 
+  adText() {
+    if (this.state.ad.annonstext) {
+      return this.state.ad.annonstext;
+    } else {
+      return `${this.state.ad.beskrivningBehov} \n\n ${this.state.ad.beskrivningKrav}`;
+    }
+  }
+
   render() {
     const { erbjudenArbetsplats } = this.state.ad;
     const adIsSaved = !!this.props.savedAdverts.filter(saved => {
@@ -462,7 +470,7 @@ export class JobAdvert extends React.Component {
               }
               <div className={styles.advertTextWrapper} onClick={this.unFoldText.bind(this)}>
                 <p
-                  dangerouslySetInnerHTML={{__html: this.state.ad.annonstext}}
+                  dangerouslySetInnerHTML={{__html: this.adText()}}
                   className={"annons-text folded"}
                   ref={(p) => this.annonsText = p}
                 />
