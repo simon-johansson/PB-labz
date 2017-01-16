@@ -221,7 +221,7 @@ export class HomePage extends React.Component {
   }
 
   savedSearches() {
-    return this.state.savedSearches.map((item, index) => {
+    const content = this.state.savedSearches.map((item, index) => {
       const occupations = item.occupations.map(i => i.namn).join(', ') || 'Alla yrken';
       const locations = item.locations.map(i => i.namn).join(' & ') || 'Hela Sverige';
 
@@ -262,12 +262,23 @@ export class HomePage extends React.Component {
         </div>
       )
     });
+
+    if (!content.length) {
+      content.push(
+        <div className={styles.leftAlign}>
+          <br />
+          <span>Du har inga sparade sökningar</span>
+          <br />
+          <br />
+        </div>
+      );
+    }
+    return content;
   }
 
   previousSearches() {
     const searches = ls.getPreviousSearchs().slice(0, this.state.amountPrevious);
-
-    return searches.map((item, index) => {
+    const content = searches.map((item, index) => {
       const occupations = item.occupations.map(i => i.namn).join(', ') || 'Alla yrken';
       const locations = item.locations.map(i => i.namn).join(' & ') || 'Hela Sverige';
 
@@ -303,6 +314,18 @@ export class HomePage extends React.Component {
         </div>
       )
     });
+
+    if (!content.length) {
+      content.push(
+        <div className={styles.leftAlign}>
+          <br />
+          <span>Du har inga tidigare sökningar</span>
+          <br />
+          <br />
+        </div>
+      );
+    }
+    return content;
   }
 
   onClickPreviousSearch(search) {

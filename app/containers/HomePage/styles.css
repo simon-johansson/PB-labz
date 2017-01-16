@@ -323,6 +323,14 @@ label {
   border-left: 1px solid lightgray;
 }
 
+.leftAlign {
+  width: 100%;
+}
+
+.leftAlign span {
+  text-align: left;
+}
+
 :global(.glyphicon-remove) {
   cursor: pointer;
   color: #8E8E93;
