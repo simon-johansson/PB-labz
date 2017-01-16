@@ -442,6 +442,9 @@ export class JobAdvert extends React.Component {
               className={styles.back + ' glyphicon glyphicon-chevron-left'}
               onClick={this.goBack}
             />
+            <span
+              className={styles.done}
+            >Nästa</span>
             <h1>Annons</h1>
           </header>
 

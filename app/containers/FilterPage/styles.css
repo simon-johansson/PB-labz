@@ -177,8 +177,8 @@ label {
 }
 
 .searchButton:hover {
-  background: #5E8404 !important;
-  color: white !important;
+  // background: #5E8404 !important;
+  // color: white !important;
 }
 
 .searchIcon {

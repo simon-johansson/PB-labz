@@ -501,7 +501,8 @@ export class ListPage extends React.Component {
         >
           <header className={styles.criteriaSelectionHeader}>
             Kompetenser
-            <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
+            {/*<span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />*/}
+            <span className={styles.pencilIcon + ' glyphicon glyphicon-chevron-right'}></span>
           </header>
           {this.state.showCompetenceCriteriaContent &&
             <section className={styles.criteriaSelectionView}>
@@ -521,7 +522,8 @@ export class ListPage extends React.Component {
         >
           <header className={styles.criteriaSelectionHeader}>
             Arbetslivserfarenheter
-            <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
+            {/*<span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />*/}
+            <span className={styles.pencilIcon + ' glyphicon glyphicon-chevron-right'}></span>
           </header>
           {this.state.showExperienceCriteriaContent &&
             <section className={styles.criteriaSelectionView}>
@@ -541,7 +543,8 @@ export class ListPage extends React.Component {
         >
           <header className={styles.criteriaSelectionHeader}>
             Körkort
-            <span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />
+            {/*<span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />*/}
+            <span className={styles.pencilIcon + ' glyphicon glyphicon-chevron-right'}></span>
           </header>
           {this.state.showDriversLicenseCriteriaContent &&
             <section className={styles.criteriaSelectionView}>
@@ -1282,8 +1285,8 @@ export class ListPage extends React.Component {
           <div className={styles.overlay}>
             <div className={styles.saveSearchPopup}>
               <p className={styles.popupText}>
-                <span className={styles.bell + ' glyphicon glyphicon-bell'} />
-                Vill du få notiser när nya jobb dyker upp {this.createSearchSummary() || 'denna sökning'}?
+                {/*<span className={styles.bell + ' glyphicon glyphicon-bell'} />*/}
+                Din sökning är sparad. Vill du få notiser när nya jobb dyker upp {this.createSearchSummary() || 'denna sökning'}?
               </p>
               <div
                 className={styles.leftConfirmButton}

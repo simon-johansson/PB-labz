@@ -399,14 +399,16 @@ export class HomePage extends React.Component {
               <div>
                 <span className={styles.listHeader}>
                   Sparade sökningar
-                  <span
-                    className={styles.pencil}
-                    onClick={this.onEditSaved.bind(this)}
-                  >
-                    { this.state.editSaved ? 'Klar' : 'Redigera' }
-                    &nbsp;&nbsp;
-                    <span className={'glyphicon glyphicon-pencil'} />
-                  </span>
+                  {!!this.state.savedSearches.length &&
+                    <span
+                      className={styles.pencil}
+                      onClick={this.onEditSaved.bind(this)}
+                    >
+                      { this.state.editSaved ? 'Klar' : 'Redigera' }
+                      &nbsp;&nbsp;
+                      <span className={'glyphicon glyphicon-pencil'} />
+                    </span>
+                  }
                 </span>
                 <List items={this.savedSearches()} component={ListItem} />
               </div>
@@ -414,14 +416,16 @@ export class HomePage extends React.Component {
 
             <span className={styles.listHeader}>
               Tidigare sökningar
-              <span
-                className={styles.pencil}
-                onClick={this.onEditsPrevious.bind(this)}
-              >
-                { this.state.editPrevious ? 'Klar' : 'Redigera' }
-                &nbsp;&nbsp;
-                <span className={'glyphicon glyphicon-pencil'} />
-              </span>
+              {!!this.state.previousSearchs.length &&
+                <span
+                  className={styles.pencil}
+                  onClick={this.onEditsPrevious.bind(this)}
+                >
+                  { this.state.editPrevious ? 'Klar' : 'Redigera' }
+                  &nbsp;&nbsp;
+                  <span className={'glyphicon glyphicon-pencil'} />
+                </span>
+              }
             </span>
             <List items={this.previousSearches()} component={ListItem} />
           </div>
@@ -433,13 +437,16 @@ export class HomePage extends React.Component {
           <div className={styles.overlay}>
             <div className={styles.saveSearchPopup}>
               <p className={styles.popupText}>
-                <span className={styles.bell + ' glyphicon glyphicon-bell'} />
-                Vill du få notiser när nya jobb dyker upp {this.createSearchSummary() || 'denna sökning'}?
+                {/*<span className={styles.bell + ' glyphicon glyphicon-bell'} />*/}
+                Din sökning är sparad. Vill du få notiser när nya jobb dyker upp {this.createSearchSummary() || 'denna sökning'}?
               </p>
               <div
                 className={styles.leftConfirmButton}
                 onClick={this.onSaveConfirm.bind(this, true)}
-              >Ja</div>
+              >
+                <span className={styles.bell + ' glyphicon glyphicon-bell'} />
+                Ja
+              </div>
               <div
                 className={styles.rightConfirmButton}
                 onClick={this.onSaveConfirm.bind(this, false)}

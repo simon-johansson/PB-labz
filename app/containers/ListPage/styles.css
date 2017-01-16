@@ -544,9 +544,10 @@ label {
 .pencilIcon {
   position: absolute;
   right: 0;
-  top: 0px;
-  color: #33749A;
-  font-size: 18px;
+  top: 2px;
+  // color: #33749A;
+  color: gray;
+  font-size: 15px;
 }
 
 .doughnutWrapper {
