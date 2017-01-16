@@ -98,6 +98,7 @@ const cleanJobData = (jobsData) =>  {
   let expArr = [];
   let driveArr = [];
   let obj = {};
+  let expObj = {};
   let areasObj = {};
 
   // console.log(jobsData);
@@ -131,6 +132,15 @@ const cleanJobData = (jobsData) =>  {
     item.timesRequested = obj[item.varde];
     return item;
   });
+
+  expArr.forEach(item => {
+    expObj[item.varde] ? expObj[item.varde]++ : expObj[item.varde] = 1;
+  });
+  expArr = expArr.map(item => {
+    item.timesRequested = expObj[item.varde];
+    return item;
+  });
+
   const competences = _.sortBy(_.uniqBy(compArr, 'varde'), ['efterfragat']);
   const experiences = _.uniqBy(expArr, 'varde');
   const driverLicenses = _.uniqBy(driveArr, 'varde');

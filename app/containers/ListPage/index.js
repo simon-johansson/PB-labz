@@ -241,11 +241,19 @@ export class ListPage extends React.Component {
       '#35AB6E',
       'lightgray',
     ];
+    const top5Arr = [];
+    const competencesFiltered = [];
     const top5Comps = _.orderBy(JSON.parse(JSON.stringify(this.props.competences)), 'timesRequested', 'desc').slice(0, 5);
     const top5 = top5Comps.map((item, index) => {
       requestedTop5 += item.timesRequested;
       item.isTop5 = (index + 1);
+      top5Arr.push(item.varde);
       return item;
+    });
+    this.props.competences.forEach((item, index) => {
+      if (!top5Arr.includes(item.varde)) {
+        competencesFiltered.push(item);
+      }
     });
     this.props.competences.forEach((comp, index) => requestedNotTop5 += comp.timesRequested);
     requestedNotTop5 -= requestedTop5;
@@ -327,7 +335,7 @@ export class ListPage extends React.Component {
             className={styles.done}
             onClick={this.toggleCompetenceCriteriaContent.bind(this)}
           >Klar</span>
-          <h1>Kompetenser</h1>
+          <h1>Välj kompetenser</h1>
         </div>
 
 
@@ -340,7 +348,7 @@ export class ListPage extends React.Component {
                   ref={(r) => summaryHeaders.push({ el: r, text: 'Mest efterfrågade kompetenserna' })}
                 >
                   {/*Mest efterfrågade kompetenserna {this.createSearchSummary()}*/}
-                  Mest efterfrågade för din sökning
+                  Mest efterfrågade
                 </span>
                 {/*<div className={styles.doughnutWrapper}>
                   <div className={styles.chartWrapper}>
@@ -366,9 +374,9 @@ export class ListPage extends React.Component {
               ref={(r) => summaryHeaders.push({ el: r, text: 'Alla efterfrågade kompetenserna' })}
             >
               {/*Alla efterfrågade kompetenser {this.createSearchSummary()}*/}
-              Alla efterfrågade för din sökning
+              Efterfrågas också
             </span>
-            <List items={this.props.competences} component={CompetenceListItem} />
+            <List items={competencesFiltered} component={CompetenceListItem} />
           </div>
         }
         {!this.props.competences.length &&
@@ -658,19 +666,32 @@ export class ListPage extends React.Component {
   experienceSelection() {
     const dataSet = [0, 0, 0, 0];
     const expArr = [];
+    const top5Arr = [];
     const self = this;
     this.props.jobs.forEach(job => {
       job.matchningsresultat.efterfragat.forEach(merit => {
         if (merit.typ === 'YRKE') dataSet[merit.niva.varde - 2] += 1;
       });
     });
-    const experiences = this.props.experiences.map((exp, index) => {
+    const top5Comps = _.orderBy(JSON.parse(JSON.stringify(this.props.experiences)), 'timesRequested', 'desc').slice(0, 3);
+    const top5 = top5Comps.map((exp, index) => {
+      top5Arr.push(exp.varde);
       return (
         <ExperienceSelector
           key={'experience-selector-' + index}
           item={exp}
         />
       );
+    });
+    const experiences = this.props.experiences.map((exp, index) => {
+      if (!top5Arr.includes(exp.varde)) {
+        return (
+          <ExperienceSelector
+            key={'experience-selector-' + index}
+            item={exp}
+          />
+        );
+      }
     });
 
     const data = {
@@ -741,7 +762,7 @@ export class ListPage extends React.Component {
             className={styles.done}
             onClick={this.toggleExperienceCriteriaContent.bind(this)}
           >Klar</span>
-          <h1>Arbetslivserfarenheter</h1>
+          <h1>Välj arbetslivserfarenheter</h1>
         </div>
         <div className={styles.experienceSelectionWrapper}>
         {
@@ -753,10 +774,14 @@ export class ListPage extends React.Component {
                 options={opt}
               />
             </div>*/}
-            <span className={styles.amount}>
-              Efterfrågad arbetslivserfarenhet för din sökning
-            </span>
-            {experiences}
+            <span className={styles.amount}>Mest efterfrågade</span>
+            {top5}
+            {!!experiences.length &&
+              <div>
+                <span className={styles.amount}>Efterfrågas också</span>
+                {experiences}
+              </div>
+            }
           </div> :
           <div className={styles.matchDescription}>
             <p>Inga arbetslivserfarenheter efterfågas för denna sökning</p>
@@ -815,7 +840,7 @@ export class ListPage extends React.Component {
             className={styles.done}
             onClick={this.toggleDriversLicenseCriteriaContent.bind(this)}
           >Klar</span>
-          <h1>Körkort</h1>
+          <h1>Välj körkort</h1>
         </div>
 
         <div>
