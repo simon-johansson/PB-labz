@@ -255,6 +255,7 @@
 .criteriaSubHeading {
   display: block !important;
   margin-left: 5px;
+  font-size: 13px;
 }
 
 .competence + .criteriaSubHeading,

@@ -203,81 +203,93 @@ export class JobAdvert extends React.Component {
       // });
 
       if (competences.length) {
+        // console.log(competences);
         const known = _.filter(competences, { isKnown: true });
         const unknown = _.filter(competences, { isKnown: false });
+        const requirement = _.filter(competences, { efterfragatKravniva: 'SKALLKRAV' });
+        const merit = _.filter(competences, { efterfragatKravniva: 'MERITERANDE' });
         content.push(<b className={styles.criteriaHeading}>Kompetenser</b>);
 
-        competences.forEach((comp) => {
-          const req = comp.efterfragatKravniva.toLowerCase()[0];
-          content.push(
-            <span
-              className={comp.isKnown ? styles.competenceMatch : styles.competence}
-              onClick={this.onCompetenceClick.bind(this, comp)}
-            >
-              {comp.isKnown ?
-                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
-                <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-              }
-              {comp.efterfragat} <span className={styles.small}>({(req === 's') ? 'k' : req})</span>
-            </span>
-          );
-        });
+        // competences.forEach((comp) => {
+        //   const req = comp.efterfragatKravniva.toLowerCase()[0];
+          // content.push(
+          //   <span
+          //     className={comp.isKnown ? styles.competenceMatch : styles.competence}
+          //     onClick={this.onCompetenceClick.bind(this, comp)}
+          //   >
+          //     {comp.isKnown ?
+          //       <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+          //       <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+          //     }
+          //     {comp.efterfragat} <span className={styles.small}>({(req === 's') ? 'k' : req})</span>
+          //   </span>
+          // );
+        // });
 
-        // if (known.length) {
-        //   // content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
-        //   known.forEach((comp) => {
-        //     const req = comp.efterfragatKravniva.toLowerCase()[0];
-        //     content.push(
-        //       <span
-        //         className={styles.competenceMatch}
-        //         onClick={this.onCompetenceClick.bind(this, comp)}
-        //       >
-        //         <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-        //         {comp.efterfragat} <span className={styles.small}>({(req === 's') ? 'k' : req})</span>
-        //       </span>
-        //     );
-        //   });
-        // }
-        // if (unknown.length) {
-        //   // content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
-        //   unknown.forEach((comp) => {
-        //     const req = comp.efterfragatKravniva.toLowerCase()[0];
-        //     content.push(
-        //       <span
-        //         className={styles.competence}
-        //         onClick={this.onCompetenceClick.bind(this, comp)}
-        //       >
-        //         <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-        //         {comp.efterfragat} <span className={styles.small}>({(req === 's') ? 'k' : req})</span>
-        //       </span>
-        //     );
-        //   });
-        // }
+        if (requirement.length) {
+          content.push(<span className={styles.criteriaSubHeading}>Krav</span>);
+          requirement.forEach((comp) => {
+            const req = comp.efterfragatKravniva.toLowerCase()[0];
+            content.push(
+              <span
+                className={comp.isKnown ? styles.competenceMatch : styles.competence}
+                onClick={this.onCompetenceClick.bind(this, comp)}
+              >
+                {comp.isKnown ?
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                  <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+                }
+                {comp.efterfragat} {/*<span className={styles.small}>({(req === 's') ? 'k' : req})</span>*/}
+              </span>
+            );
+          });
+        }
+        if (merit.length) {
+          // content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
+          content.push(<span className={styles.criteriaSubHeading}>Meriterande</span>);
+          merit.forEach((comp) => {
+            const req = comp.efterfragatKravniva.toLowerCase()[0];
+            content.push(
+              <span
+                className={comp.isKnown ? styles.competenceMatch : styles.competence}
+                onClick={this.onCompetenceClick.bind(this, comp)}
+              >
+                {comp.isKnown ?
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                  <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+                }
+                {comp.efterfragat} {/*<span className={styles.small}>({(req === 's') ? 'k' : req})</span>*/}
+              </span>
+            );
+          });
+        }
       }
 
       if (experiences.length) {
         const known = _.filter(experiences, { isKnown: true });
         const unknown = _.filter(experiences, { isKnown: false });
+        const requirement = _.filter(experiences, { efterfragatKravniva: 'SKALLKRAV' });
+        const merit = _.filter(experiences, { efterfragatKravniva: 'MERITERANDE' });
         content.push(<b className={styles.criteriaHeading}>Arbetslivserfarenheter</b>);
-        if (known.length) {
-          // content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
-          known.forEach((exp) => {
+        if (requirement.length) {
+          content.push(<span className={styles.criteriaSubHeading}>Krav</span>);
+          requirement.forEach((exp) => {
             const req = exp.efterfragatKravniva.toLowerCase()[0];
             content.push(
               <span className={styles.competenceMatch}>
                 <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`} <span className={styles.small}>({(req === 's') ? 'k' : req})</span>
+                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`} {/*<span className={styles.small}>({(req === 's') ? 'k' : req})</span>*/}
               </span>
             );
           });
         }
-        if (unknown.length) {
-          // content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
-          unknown.forEach((exp) => {
+        if (merit.length) {
+          content.push(<span className={styles.criteriaSubHeading}>Meriterande</span>);
+          merit.forEach((exp) => {
             const req = exp.efterfragatKravniva.toLowerCase()[0];
             content.push(
               <span className={styles.competence}>
-                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`} <span className={styles.small}>({(req === 's') ? 'k' : req})</span>
+                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`} {/*<span className={styles.small}>({(req === 's') ? 'k' : req})</span>*/}
               </span>
             );
           });
@@ -287,50 +299,61 @@ export class JobAdvert extends React.Component {
       if (driversLicenses.length) {
         const known = _.filter(driversLicenses, { isKnown: true });
         const unknown = _.filter(driversLicenses, { isKnown: false });
+        const requirement = _.filter(driversLicenses, { efterfragatKravniva: 'SKALLKRAV' });
+        const merit = [
+          ..._.filter(driversLicenses, { efterfragatKravniva: 'OKAND' }),
+          ..._.filter(driversLicenses, { efterfragatKravniva: 'MERITERANDE' })
+        ];
         content.push(<b className={styles.criteriaHeading}>Körkort</b>);
-        driversLicenses.forEach((dl) => {
-          content.push(
-            <span
-             className={dl.isKnown ? styles.competenceMatch : styles.competence}
-             onClick={this.onDriversLicenseClick.bind(this, dl)}
-           >
-            {dl.isKnown ?
-              <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
-              <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-            }
-             {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
-           </span>
-          );
-        });
+        // driversLicenses.forEach((dl) => {
+          // content.push(
+          //   <span
+          //    className={dl.isKnown ? styles.competenceMatch : styles.competence}
+          //    onClick={this.onDriversLicenseClick.bind(this, dl)}
+          //  >
+          //   {dl.isKnown ?
+          //     <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+          //     <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+          //   }
+          //    {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
+          //  </span>
+          // );
+        // });
 
-        // if (known.length) {
-        //   // content.push(<span className={styles.criteriaSubHeading}>Du matchar med:</span>);
-        //   known.forEach((dl) => {
-        //     content.push(
-        //       <span
-        //         className={styles.competenceMatch}
-        //         onClick={this.onDriversLicenseClick.bind(this, dl)}
-        //       >
-        //         <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-        //         {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
-        //       </span>
-        //     );
-        //   });
-        // }
-        // if (unknown.length) {
-        //   // content.push(<span className={styles.criteriaSubHeading}>Vi efterfågar{known.length ? ' också' : ''}:</span>);
-        //   unknown.forEach((dl) => {
-        //     content.push(
-        //       <span
-        //         className={styles.competence}
-        //         onClick={this.onDriversLicenseClick.bind(this, dl)}
-        //       >
-        //         <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-        //         {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
-        //       </span>
-        //     );
-        //   });
-        // }
+        if (requirement.length) {
+          content.push(<span className={styles.criteriaSubHeading}>Krav</span>);
+          requirement.forEach((dl) => {
+            content.push(
+              <span
+               className={dl.isKnown ? styles.competenceMatch : styles.competence}
+               onClick={this.onDriversLicenseClick.bind(this, dl)}
+             >
+              {dl.isKnown ?
+                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+              }
+               {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
+             </span>
+            );
+          });
+        }
+        if (merit.length) {
+          content.push(<span className={styles.criteriaSubHeading}>Meriterande</span>);
+          merit.forEach((dl) => {
+            content.push(
+              <span
+               className={dl.isKnown ? styles.competenceMatch : styles.competence}
+               onClick={this.onDriversLicenseClick.bind(this, dl)}
+             >
+              {dl.isKnown ?
+                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+              }
+               {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
+             </span>
+            );
+          });
+        }
       }
 
       content.push(
@@ -465,9 +488,10 @@ export class JobAdvert extends React.Component {
                     </ul>*/}
                     {this.createCompetences()}
                   </div>
-                  <span className={styles.reqDescription}>(k) = krav, (m) = meriterande</span>
+                  {/*<span className={styles.reqDescription}>(k) = krav, (m) = meriterande</span>*/}
                 </div>
               }
+              <br />
               <div className={styles.advertTextWrapper} onClick={this.unFoldText.bind(this)}>
                 <p
                   dangerouslySetInnerHTML={{__html: this.adText()}}
