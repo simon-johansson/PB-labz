@@ -56,6 +56,11 @@
   margin-top: 10px;
 }
 
+.companyName {
+  width: calc(100% - 35px);
+  display: inline-block;
+}
+
 .competenceHeader {
   display: block;
   width: calc(100% + 10px);

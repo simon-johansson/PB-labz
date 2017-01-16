@@ -470,7 +470,7 @@ export class JobAdvert extends React.Component {
                 data={`http://api.arbetsformedlingen.se/platsannons/${this.state.ad.id}/logotyp`} type="image/gif"
               >
               </object> <br />*/}
-              <b>{this.state.ad.arbetsgivarenamn}</b>
+              <b className={styles.companyName}>{this.state.ad.arbetsgivarenamn}</b>
               <h3>{this.state.ad.rubrik}</h3>
               <p>{this.state.ad.yrkesroll.namn}</p>
 
