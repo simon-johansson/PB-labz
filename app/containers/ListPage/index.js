@@ -1311,12 +1311,16 @@ export class ListPage extends React.Component {
             <div className={styles.saveSearchPopup}>
               <p className={styles.popupText}>
                 {/*<span className={styles.bell + ' glyphicon glyphicon-bell'} />*/}
-                Din sökning är sparad. Vill du få notiser när nya jobb dyker upp {this.createSearchSummary() || 'denna sökning'}?
+                {/*Din sökning är sparad. Vill du få notiser när nya jobb dyker upp {this.createSearchSummary() || 'denna sökning'}?*/}
+                Din sökning är sparad. Vill du få notiser när nya jobb dyker upp för denna sökning?
               </p>
               <div
                 className={styles.leftConfirmButton}
                 onClick={this.onSaveConfirm.bind(this, true)}
-              >Ja</div>
+              >
+                <span className={styles.bell + ' glyphicon glyphicon-bell'} />
+                Ja
+              </div>
               <div
                 className={styles.rightConfirmButton}
                 onClick={this.onSaveConfirm.bind(this, false)}

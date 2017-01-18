@@ -1,5 +1,6 @@
 
 import React from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as ls from 'utils/localstorage';
@@ -117,8 +118,7 @@ export class RutTips extends React.Component {
   filterOccupations() {
     if (this.props.related) {
       const isIncluded = (name1, name2) => name1 === name2;
-      return this.props.related
-        .filter(rel => {
+      return _.orderBy(this.props.related.filter(rel => {
           const { namn, typ } = rel.matchningskriterium;
           let included = false;
           this.props.occupations.forEach(o => {
@@ -131,7 +131,7 @@ export class RutTips extends React.Component {
           });
           // console.log(typ);
           if (typ === 'YRKESROLL' && !included) return true;
-        });
+        }), 'antal', 'desc');
     } else {
       return [];
     }

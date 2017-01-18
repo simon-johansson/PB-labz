@@ -438,7 +438,8 @@ export class HomePage extends React.Component {
             <div className={styles.saveSearchPopup}>
               <p className={styles.popupText}>
                 {/*<span className={styles.bell + ' glyphicon glyphicon-bell'} />*/}
-                Din sökning är sparad. Vill du få notiser när nya jobb dyker upp {this.createSearchSummary() || 'denna sökning'}?
+                {/*Din sökning är sparad. Vill du få notiser när nya jobb dyker upp {this.createSearchSummary() || 'denna sökning'}?*/}
+                Din sökning är sparad. Vill du få notiser när nya jobb dyker upp för denna sökning?
               </p>
               <div
                 className={styles.leftConfirmButton}

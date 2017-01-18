@@ -92,7 +92,10 @@ function JobListItem(props) {
           <br />
           <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
           <br />
-          <span className={styles.smallText}>Publicerad: <span className={date === 'Idag' ? styles.today : ''}>{date}</span></span>
+          <span className={styles.smallText}>Publicerad:
+            {/*<span className={date === 'Idag' ? styles.today : ''}>{date}</span>*/}
+            <span> {date}</span>
+          </span>
           {/*
             <br />
             <span className={styles.canApplyToAd}>
