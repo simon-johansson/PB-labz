@@ -242,7 +242,7 @@ export class ListPage extends React.Component {
       'lightgray',
     ];
     const top5Arr = [];
-    const competencesFiltered = [];
+    let competencesFiltered = [];
     const top5Comps = _.orderBy(JSON.parse(JSON.stringify(this.props.competences)), 'timesRequested', 'desc').slice(0, 5);
     const top5 = top5Comps.map((item, index) => {
       requestedTop5 += item.timesRequested;
@@ -250,17 +250,23 @@ export class ListPage extends React.Component {
       top5Arr.push(item.varde);
       return item;
     });
-    this.props.competences.forEach((item, index) => {
-      if (!top5Arr.includes(item.varde)) {
-        competencesFiltered.push(item);
-      }
-    });
+    if (this.props.competences.length > 10) {
+      this.props.competences.forEach((item, index) => {
+        if (!top5Arr.includes(item.varde)) {
+          competencesFiltered.push(item);
+        }
+      });
+    } else {
+      competencesFiltered = this.props.competences.slice();
+    }
     this.props.competences.forEach((comp, index) => requestedNotTop5 += comp.timesRequested);
     requestedNotTop5 -= requestedTop5;
     const dataset = [
       ...top5.map((c) => c.timesRequested),
       requestedNotTop5,
     ];
+
+    // console.log(this.props.competences);
 
     const data = {
       labels: [
@@ -374,7 +380,7 @@ export class ListPage extends React.Component {
               ref={(r) => summaryHeaders.push({ el: r, text: 'Alla efterfrågade kompetenserna' })}
             >
               {/*Alla efterfrågade kompetenser {this.createSearchSummary()}*/}
-              Efterfrågas också
+              {this.props.competences.length > 10 ? 'Efterfrågas också' : 'Efterfrågas för din sökning'}
             </span>
             <List items={competencesFiltered} component={CompetenceListItem} />
           </div>
@@ -675,13 +681,15 @@ export class ListPage extends React.Component {
     });
     const top5Comps = _.orderBy(JSON.parse(JSON.stringify(this.props.experiences)), 'timesRequested', 'desc').slice(0, 3);
     const top5 = top5Comps.map((exp, index) => {
-      top5Arr.push(exp.varde);
-      return (
-        <ExperienceSelector
-          key={'experience-selector-' + index}
-          item={exp}
-        />
-      );
+      if (this.props.experiences.length > 5) {
+        top5Arr.push(exp.varde);
+        return (
+          <ExperienceSelector
+            key={'experience-selector-' + index}
+            item={exp}
+          />
+        );
+      }
     });
     const experiences = this.props.experiences.map((exp, index) => {
       if (!top5Arr.includes(exp.varde)) {
@@ -765,8 +773,7 @@ export class ListPage extends React.Component {
           <h1>Välj arbetslivserfarenheter</h1>
         </div>
         <div className={styles.experienceSelectionWrapper}>
-        {
-          !!this.props.experiences.length ?
+        {!!this.props.experiences.length &&
           <div>
             {/*<div className={styles.barChartWrapper}>
               <Bar
@@ -774,15 +781,19 @@ export class ListPage extends React.Component {
                 options={opt}
               />
             </div>*/}
-            <span className={styles.amount}>Mest efterfrågade</span>
-            {top5}
-            {!!experiences.length &&
+            {(experiences.length > 5) &&
               <div>
-                <span className={styles.amount}>Efterfrågas också</span>
-                {experiences}
+                <span className={styles.amount}>Mest efterfrågade</span>
+                {top5}
               </div>
             }
-          </div> :
+            <span className={styles.amount}>
+              {(experiences.length > 5) ? 'Efterfrågas också' : 'Efterfrågas för din sökning'}
+            </span>
+            {experiences}
+          </div>
+        }
+        {!this.props.experiences.length &&
           <div className={styles.matchDescription}>
             <p>Inga arbetslivserfarenheter efterfågas för denna sökning</p>
           </div>
