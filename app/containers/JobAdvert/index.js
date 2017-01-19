@@ -178,6 +178,8 @@ export class JobAdvert extends React.Component {
         break;
       case 'D': case 'D1': case 'D1E': case 'DE':
         type = 'Buss';
+      default:
+        type = '';
     }
     return type;
   }
@@ -276,11 +278,19 @@ export class JobAdvert extends React.Component {
           requirement.forEach((exp) => {
             const req = exp.efterfragatKravniva.toLowerCase()[0];
             content.push(
-              <span className={styles.competenceMatch}>
-                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
-                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`} {/*<span className={styles.small}>({(req === 's') ? 'k' : req})</span>*/}
+              <span className={exp.isKnown ? styles.competenceMatch : styles.competence}>
+                {exp.isKnown &&
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+                }
+                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`}
               </span>
             );
+            // content.push(
+            //   <span className={styles.competenceMatch}>
+            //     <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+            //     {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`} {/*<span className={styles.small}>({(req === 's') ? 'k' : req})</span>*/}
+            //   </span>
+            // );
           });
         }
         if (merit.length) {
@@ -288,8 +298,11 @@ export class JobAdvert extends React.Component {
           merit.forEach((exp) => {
             const req = exp.efterfragatKravniva.toLowerCase()[0];
             content.push(
-              <span className={styles.competence}>
-                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`} {/*<span className={styles.small}>({(req === 's') ? 'k' : req})</span>*/}
+              <span className={exp.isKnown ? styles.competenceMatch : styles.competence}>
+                {exp.isKnown &&
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+                }
+                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`}
               </span>
             );
           });
@@ -323,6 +336,7 @@ export class JobAdvert extends React.Component {
         if (requirement.length) {
           content.push(<span className={styles.criteriaSubHeading}>Krav</span>);
           requirement.forEach((dl) => {
+            const dlType = this.typeOfLicense(dl.efterfragat).toLowerCase();
             content.push(
               <span
                className={dl.isKnown ? styles.competenceMatch : styles.competence}
@@ -332,7 +346,7 @@ export class JobAdvert extends React.Component {
                 <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
                 <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
               }
-               {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
+               {dl.efterfragat} <span className={styles.small}>{dlType ? ' - ' + dlType : ''}</span>
              </span>
             );
           });
@@ -340,6 +354,7 @@ export class JobAdvert extends React.Component {
         if (merit.length) {
           content.push(<span className={styles.criteriaSubHeading}>Meriterande</span>);
           merit.forEach((dl) => {
+            const dlType = this.typeOfLicense(dl.efterfragat).toLowerCase();
             content.push(
               <span
                className={dl.isKnown ? styles.competenceMatch : styles.competence}
@@ -349,7 +364,7 @@ export class JobAdvert extends React.Component {
                 <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
                 <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
               }
-               {dl.efterfragat} <span className={styles.small}> - {this.typeOfLicense(dl.efterfragat).toLowerCase()}</span>
+               {dl.efterfragat} <span className={styles.small}>{dlType ? ' - ' + dlType : ''}</span>
              </span>
             );
           });

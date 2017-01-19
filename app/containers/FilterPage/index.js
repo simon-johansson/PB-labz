@@ -543,9 +543,6 @@ export class FilterPage extends React.Component {
             </button>
           }
         </div>
-        <IosMenu
-          changeRoute={this.props.changeRoute}
-        />
       </article>
     );
   }

@@ -1247,8 +1247,12 @@ export class ListPage extends React.Component {
         <div className={styles.contentWrapper}>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
-              <Tappable className={styles.cancel + ' glyphicon glyphicon-chevron-left'} onTap={this.openHomePage} />
-              {/*<h1>Mina sökningar</h1>*/}
+              <Tappable onTap={this.openHomePage}>
+                <span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />
+                <span className={styles.cancelText}>Mina sökningar</span>
+              </Tappable>
+
+              {/*<h1>Resultat</h1>*/}
               <h1>&nbsp;</h1>
               <span
                 className={`${styles.saveSearch} ${this.state.searchIsSaved ? styles.isSaved : ''}`}
@@ -1265,7 +1269,8 @@ export class ListPage extends React.Component {
                     </span>
                   </div>
                   <span className={styles.filter}>
-                    Filter
+                    Ändra
+                    {/*<span className={styles.filterIcon + " glyphicon glyphicon-tasks"} />*/}
                   </span>
                 </div>
               </form>

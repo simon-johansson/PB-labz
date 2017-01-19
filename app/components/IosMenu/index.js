@@ -24,6 +24,14 @@ export class IosMenu extends React.Component {
     this.openRoute('/');
   };
 
+  componentDidMount() {
+    window.$('#doorbell-button').show();
+  }
+
+  componentWillUnmount() {
+    window.$('#doorbell-button').hide();
+  }
+
   render() {
     const savedPage = isActive('saved');
 
