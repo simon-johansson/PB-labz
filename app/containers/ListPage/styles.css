@@ -317,11 +317,26 @@ label {
   left: 20px;
   padding-left: 12px;
   top: -2px;
-  width: 115px;
+  width: 135px;
   padding-top: 2px;
   height: 47px;
   line-height: 55px;
   cursor: pointer;
+}
+
+.homeIcon {
+  // margin-right: 5px;
+
+  position: absolute;
+  left: -5px;
+  // padding-left: 12px;
+  // top: -2px;
+  width: 50px;
+  padding-top: 2px;
+  height: 47px;
+  line-height: 55px;
+  cursor: pointer;
+  font-size: 20px;
 }
 
 .done {

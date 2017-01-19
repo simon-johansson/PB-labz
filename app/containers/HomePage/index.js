@@ -372,7 +372,10 @@ export class HomePage extends React.Component {
       <article ref="list" className="noselect">
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
-            <h1>Mina sökningar</h1>
+            <h1>
+              <span className={styles.homeIcon + ' glyphicon glyphicon-home'} />
+              Mina sökningar
+            </h1>
           </div>
 
           <div className={styles.welcome}>

@@ -42,7 +42,7 @@ export class IosMenu extends React.Component {
           className={savedPage ? styles.iconWrapper : styles.iconWrapperActive}
           onClick={this.addHomePage}
         >
-          <span className={styles.icon + ' glyphicon glyphicon-search'} />
+          <span className={styles.icon + ' glyphicon glyphicon-home'} />
           <span className={styles.text}>Mina sökningar</span>
         </div>
         <div

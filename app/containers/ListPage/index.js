@@ -1259,17 +1259,20 @@ export class ListPage extends React.Component {
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
               <Tappable onTap={this.openHomePage}>
-                <span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />
-                <span className={styles.cancelText}>Mina sökningar</span>
+                {/*<span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />*/}
+                <span className={styles.cancelText}>
+                  <span className={styles.homeIcon + ' glyphicon glyphicon-home'} />
+                  {/*Mina sökningar*/}
+                </span>
               </Tappable>
 
-              {/*<h1>Resultat</h1>*/}
-              <h1>&nbsp;</h1>
+              <h1>Sökresultat</h1>
+              {/*<h1>&nbsp;</h1>*/}
               <span
                 className={`${styles.saveSearch} ${this.state.searchIsSaved ? styles.isSaved : ''}`}
                 onClick={this.saveSearch.bind(this)}
               >
-                {this.state.searchIsSaved ? 'Sparad' : 'Spara sökning'}
+                {this.state.searchIsSaved ? 'Sparad' : 'Spara'}
               </span>
               <form onClick={this.addFilterPage}>
                 <div className="form-group">

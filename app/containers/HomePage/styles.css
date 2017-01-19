@@ -331,6 +331,12 @@ label {
   text-align: left;
 }
 
+.homeIcon {
+  color: white;
+  margin-right: 8px;
+  padding: 0;
+}
+
 :global(.glyphicon-remove) {
   cursor: pointer;
   color: #8E8E93;
