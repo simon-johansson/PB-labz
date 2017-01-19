@@ -234,7 +234,7 @@ export class HomePage extends React.Component {
             {item.notify &&
               <span className={styles.bell + ' glyphicon glyphicon-bell'} />
             }
-            <span>{occupations}</span> <br />
+            <span className={styles.occupations}>{occupations}</span> <br />
             <span className={styles.small}>{locations}</span>
             {this.state.editSaved &&
               <div className={styles.notifyRow}>
@@ -267,7 +267,7 @@ export class HomePage extends React.Component {
       content.push(
         <div className={styles.leftAlign}>
           <br />
-          <span>Du har inga sparade sökningar</span>
+          <span className={styles.noSearches}>Du har inga sparade sökningar</span>
           <br />
           <br />
         </div>
@@ -288,7 +288,7 @@ export class HomePage extends React.Component {
           onClick={!this.state.editPrevious ? this.onClickPreviousSearch.bind(this, item) : () => {}}
         >
           <div className={styles.previousSearcheParameters}>
-            <span>{occupations}</span> <br />
+            <span className={styles.occupations}>{occupations}</span> <br />
             <span className={styles.small}>{locations}</span>
           </div>
           {this.state.editPrevious ?
@@ -319,7 +319,7 @@ export class HomePage extends React.Component {
       content.push(
         <div className={styles.leftAlign}>
           <br />
-          <span>Du har inga tidigare sökningar</span>
+          <span className={styles.noSearches}>Du har inga tidigare sökningar</span>
           <br />
           <br />
         </div>

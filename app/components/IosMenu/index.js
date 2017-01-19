@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { browserHistory } from 'react-router';
+
 import styles from './styles.css';
 // import menu from './menu.png';
 
@@ -22,6 +24,15 @@ export class IosMenu extends React.Component {
 
   addHomePage = () => {
     this.openRoute('/');
+
+    // const { pathname } = window.location;
+    // if (pathname.indexOf('saved') !== -1) {
+    //   this.openRoute('/list');
+    //   // browserHistory.goBack();
+    // } else {
+    //   this.openRoute('/');
+    //   // this.openRoute('/list');
+    // }
   };
 
   componentDidMount() {
