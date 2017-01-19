@@ -378,7 +378,7 @@ export class HomePage extends React.Component {
             </h1>
           </div>
 
-          <div className={styles.welcome}>
+          <div className={(!this.state.savedSearches.length && !this.state.previousSearchs.length) ? styles.firstWelcome : styles.welcome}>
             <p>Välkommen till Platsbanken!</p>
             <p>
               { !this.props.totalAmount ?
@@ -398,7 +398,7 @@ export class HomePage extends React.Component {
           </button>
 
           <div className={styles.latestSearches}>
-            {!!this.savedSearches().length &&
+            {!!this.state.savedSearches.length &&
               <div>
                 <span className={styles.listHeader}>
                   Sparade sökningar
@@ -417,20 +417,24 @@ export class HomePage extends React.Component {
               </div>
             }
 
-            <span className={styles.listHeader}>
-              Tidigare sökningar
-              {!!this.state.previousSearchs.length &&
-                <span
-                  className={styles.pencil}
-                  onClick={this.onEditsPrevious.bind(this)}
-                >
-                  { this.state.editPrevious ? 'Klar' : 'Redigera' }
-                  &nbsp;&nbsp;
-                  <span className={'glyphicon glyphicon-pencil'} />
+            {!!this.state.previousSearchs.length &&
+              <div>
+                <span className={styles.listHeader}>
+                  Tidigare sökningar
+                  {!!this.state.previousSearchs.length &&
+                    <span
+                      className={styles.pencil}
+                      onClick={this.onEditsPrevious.bind(this)}
+                    >
+                      { this.state.editPrevious ? 'Klar' : 'Redigera' }
+                      &nbsp;&nbsp;
+                      <span className={'glyphicon glyphicon-pencil'} />
+                    </span>
+                  }
                 </span>
-              }
-            </span>
-            <List items={this.previousSearches()} component={ListItem} />
+                <List items={this.previousSearches()} component={ListItem} />
+              </div>
+            }
           </div>
         </div>
         <IosMenu

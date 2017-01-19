@@ -254,14 +254,20 @@ label {
   font-size: 18px;
 }
 
-.welcome {
+.welcome,
+.firstWelcome {
   width: 100%;
   text-align: center;
   margin-top: 20px;
   font-size: 18px;
 }
 
-.welcome p {
+.firstWelcome {
+  margin-top: 200px;
+}
+
+.welcome p,
+.firstWelcome p{
   margin-bottom: 0;
 }
 
