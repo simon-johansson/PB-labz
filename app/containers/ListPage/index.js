@@ -34,6 +34,7 @@ import {
   selectKnownDriversLicenses,
   selectAdditionalSearchParameters,
   selectAdditionalAds,
+  selectAppState,
   // selectAdditionalJobs,
   // selectLoadingAdditional,
   // selectAdditionalOccupations,
@@ -59,6 +60,7 @@ import {
 import {
   loadJobs,
   removeAdditionalJob,
+  setAppState,
 } from '../App/actions';
 
 import JobListItem from 'components/JobListItem';
@@ -112,6 +114,8 @@ export class ListPage extends React.Component {
    */
   componentDidMount() {
     window.$('body').removeClass('modal-open');
+
+    this.props.setAppState({ searches: '/list' });
 
     if (this.props.shouldLoadNewJobs) {
       this.props.onSubmitForm();
@@ -1070,7 +1074,7 @@ export class ListPage extends React.Component {
   }
 
   render() {
-    // console.log(this.props.knownExperiences.toJS());
+    // console.log(this.props.appState.toJS());
     // console.log(this.props.driverLicenses);
     // console.log(this.props.additionalAds);
 
@@ -1386,6 +1390,7 @@ export function mapDispatchToProps(dispatch) {
     onRemoveAdditionalJob: (index) => dispatch(removeAdditionalJob(index)),
     setUiState: (state) => dispatch(setUiState(state)),
     changeRoute: (url) => dispatch(push(url)),
+    setAppState: (state) => dispatch(setAppState(state)),
     onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       // console.log('load');
@@ -1420,6 +1425,7 @@ const mapStateToProps = createStructuredSelector({
   locations: selectLocations(),
   additionalSearchParameters: selectAdditionalSearchParameters(),
   additionalAds: selectAdditionalAds(),
+  appState: selectAppState(),
   // additionalJobs: selectAdditionalJobs(),
   // loadingAdditional: selectLoadingAdditional(),
   // additionalOccupations: selectAdditionalOccupations(),

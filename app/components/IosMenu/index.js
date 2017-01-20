@@ -1,6 +1,16 @@
 
 import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { browserHistory } from 'react-router';
+
+import {
+  selectAppState,
+} from 'containers/App/selectors';
+
+import {
+  setAppState,
+} from 'containers/App/actions';
 
 import styles from './styles.css';
 // import menu from './menu.png';
@@ -23,16 +33,12 @@ export class IosMenu extends React.Component {
   };
 
   addHomePage = () => {
-    this.openRoute('/');
-
-    // const { pathname } = window.location;
-    // if (pathname.indexOf('saved') !== -1) {
-    //   this.openRoute('/list');
-    //   // browserHistory.goBack();
-    // } else {
-    //   this.openRoute('/');
-    //   // this.openRoute('/list');
-    // }
+    const { pathname } = window.location;
+    if (pathname.indexOf('saved') !== -1) {
+      this.openRoute(this.props.appState.get('searches'));
+    } else {
+      this.openRoute('/');
+    }
   };
 
   componentDidMount() {
@@ -44,6 +50,7 @@ export class IosMenu extends React.Component {
   }
 
   render() {
+    // console.log(this.props.appState);
     const savedPage = isActive('saved');
 
     return (
@@ -71,4 +78,15 @@ export class IosMenu extends React.Component {
   }
 }
 
-export default IosMenu;
+export function mapDispatchToProps(dispatch) {
+  return {
+    setAppState: (state) => dispatch(setAppState(state)),
+  };
+}
+
+const mapStateToProps = createStructuredSelector({
+  appState: selectAppState(),
+});
+
+// Wrap the component to inject dispatch and state into it
+export default connect(mapStateToProps, mapDispatchToProps)(IosMenu);

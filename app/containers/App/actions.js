@@ -37,6 +37,7 @@ import {
   GET_TOTAL_AMOUNT,
   SAVE_ADVERT,
   DELETE_ADVERT,
+  SET_APP_STATE,
 } from './constants';
 
 /**
@@ -255,5 +256,12 @@ export function removeAdvert(id) {
   return {
     type: DELETE_ADVERT,
     id,
+  };
+};
+
+export function setAppState(state) {
+  return {
+    type: SET_APP_STATE,
+    state,
   };
 };

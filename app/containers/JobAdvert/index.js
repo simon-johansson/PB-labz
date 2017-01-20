@@ -32,6 +32,7 @@ import {
   removeDriversLicense,
   saveAdvert,
   removeAdvert,
+  setAppState,
 } from 'containers/App/actions';
 
 import {
@@ -111,6 +112,8 @@ export class JobAdvert extends React.Component {
   }
 
   componentDidMount() {
+    this.props.setAppState({ searches: '/advert/' + this.props.params.id });
+
     window.$('body').removeClass('modal-open');
     this.props.onLoadAdvert(this.props.params.id);
 
@@ -579,6 +582,7 @@ export function mapDispatchToProps(dispatch) {
     onRemoveDriversLicenses: (id) => dispatch(removeDriversLicense(id)),
     onSaveAdvert: (ad) => dispatch(saveAdvert(ad)),
     onRemoveAdvert: (id) => dispatch(removeAdvert(id)),
+    setAppState: (state) => dispatch(setAppState(state)),
   };
 }
 

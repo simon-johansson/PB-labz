@@ -30,6 +30,7 @@ import {
   REMOVE_ADDITIONAL_JOB,
   SAVE_ADVERT,
   DELETE_ADVERT,
+  SET_APP_STATE,
 } from './constants';
 import {
   REMOVE_OCCUPATION,
@@ -51,6 +52,10 @@ const initialState = fromJS({
   knownExperiences: ls.getKnownExperiences(),
   knownDriversLicenses: ls.getKnownDriversLicenses(),
   savedAdverts: [],
+  appState: fromJS({
+    searches: '/',
+    saved: '/saved',
+  }),
   userData: fromJS({
     repositories: false,
   }),
@@ -284,6 +289,12 @@ function appReducer(state = initialState, action) {
       // console.log(action.id);
       const adverts = state.get('savedAdverts').filter((item) => action.id !== item.id);
       return state.set('savedAdverts', adverts);
+    }
+
+    case SET_APP_STATE: {
+      return state
+        .setIn(['appState', 'searches'], action.state.searches || state.getIn(['appState', 'searches']))
+        .setIn(['appState', 'saved'], action.state.saved || state.getIn(['appState', 'saved']));
     }
 
     default:

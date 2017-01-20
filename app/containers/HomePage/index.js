@@ -48,6 +48,7 @@ import {
 import {
   loadJobs,
   getTotalAmount,
+  setAppState,
 } from 'containers/App/actions';
 
 import { FormattedMessage } from 'react-intl';
@@ -87,6 +88,8 @@ export class HomePage extends React.Component {
   }
 
   componentDidMount() {
+    this.props.setAppState({ searches: '/' });
+
     this.props.onSetLocations();
     this.props.onSetOccupations();
     // this.props.onSubmitForm();
@@ -502,6 +505,7 @@ export function mapDispatchToProps(dispatch) {
     setUiState: (state) => dispatch(setUiState(state)),
     changeRoute: (url) => dispatch(push(url)),
     onGetTotalAmount: () => dispatch(getTotalAmount()),
+    setAppState: (state) => dispatch(setAppState(state)),
     // onSubmitForm: (evt) => {
     //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
     //   dispatch(loadRepos());

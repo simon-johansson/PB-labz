@@ -35,3 +35,5 @@ export const TOTAL_AMOUNT_LOADED = 'boilerplate/Home/TOTAL_AMOUNT_LOADED';
 
 export const SAVE_ADVERT = 'boilerplate/Home/SAVE_ADVERT';
 export const DELETE_ADVERT = 'boilerplate/Home/DELETE_ADVERT';
+
+export const SET_APP_STATE = 'boilerplate/Home/SET_APP_STATE';
