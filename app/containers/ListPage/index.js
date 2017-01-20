@@ -340,11 +340,13 @@ export class ListPage extends React.Component {
           <span
             className={styles.cancel}
             onClick={this.toggleCompetenceCriteriaContent.bind(this)}
-          >Avbryt</span>
-          <span
+          >
+            <span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />
+          </span>
+          {/*<span
             className={styles.done}
             onClick={this.toggleCompetenceCriteriaContent.bind(this)}
-          >Klar</span>
+          >Klar</span>*/}
           <h1>Välj kompetenser</h1>
         </div>
 
@@ -497,7 +499,7 @@ export class ListPage extends React.Component {
           <span
             className={styles.cancel}
             onClick={this.cancelMatchCriteriaPopover.bind(this, !!renderKnownCompetences().length)}
-          >Avbryt</span>
+          >Stäng</span>
           {/*<h1>Matchningskriterier</h1>*/}
           <div className={styles.matchCriteriaSearchSummary}>
             <div className={styles.matchCriteriaSearchSummaryText}>
@@ -627,6 +629,7 @@ export class ListPage extends React.Component {
       showCompetenceCriteriaContent: false,
       showExperienceCriteriaContent: false,
       showAllCompetences: false,
+      matchningSelectionOpen: false,
     });
     this.props.setUiState({
       tab,
@@ -638,6 +641,10 @@ export class ListPage extends React.Component {
   }
 
   createCompetencesCloud(matchingJobs) {
+    if (!this.state.matchningSelectionOpen) {
+      this.setState({matchningSelectionOpen: true})
+    }
+
     const {
       occupations: ogOccupations,
       locations: ogLocations,
@@ -769,11 +776,13 @@ export class ListPage extends React.Component {
           <span
             className={styles.cancel}
             onClick={this.toggleExperienceCriteriaContent.bind(this)}
-          >Avbryt</span>
-          <span
+          >
+            <span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />
+          </span>
+          {/*<span
             className={styles.done}
             onClick={this.toggleExperienceCriteriaContent.bind(this)}
-          >Klar</span>
+          >Klar</span>*/}
           <h1>Välj arbetslivserfarenheter</h1>
         </div>
         <div className={styles.experienceSelectionWrapper}>
@@ -850,11 +859,13 @@ export class ListPage extends React.Component {
           <span
             className={styles.cancel}
             onClick={this.toggleDriversLicenseCriteriaContent.bind(this)}
-          >Avbryt</span>
-          <span
+          >
+            <span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />
+          </span>
+          {/*<span
             className={styles.done}
             onClick={this.toggleDriversLicenseCriteriaContent.bind(this)}
-          >Klar</span>
+          >Klar</span>*/}
           <h1>Välj körkort</h1>
         </div>
 
@@ -883,6 +894,7 @@ export class ListPage extends React.Component {
       showExperienceCriteriaContent: false,
       showDriversLicenseCriteriaContent: false,
       showAllCompetences: false,
+      matchningSelectionOpen: false,
     });
     this.props.setUiState({
       showMatchingJobs: true,
@@ -896,7 +908,8 @@ export class ListPage extends React.Component {
   hideMatchingJobs() {
     this.setState({
       showMatchingJobs: false,
-      showCriteriaContent: false
+      showCriteriaContent: false,
+      matchningSelectionOpen: true,
     });
     this.props.setUiState({
      showMatchingJobs: false,
@@ -1210,7 +1223,7 @@ export class ListPage extends React.Component {
         matchingContent = (
           <div className={styles.listWrapperMatchingContent}>
             <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
-              Matchningskriterier {/*({this.props.knownCompetences.size})*/}
+              Dina matchningskriterier {/*({this.props.knownCompetences.size})*/}
               <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
             </div>
             <span
@@ -1326,9 +1339,11 @@ export class ListPage extends React.Component {
             }
           </section>
         </div>
-        <IosMenu
-          changeRoute={this.props.changeRoute}
-        />
+        {!this.state.matchningSelectionOpen &&
+          <IosMenu
+            changeRoute={this.props.changeRoute}
+          />
+        }
         {this.state.showSaveSearchPopup &&
           <div className={styles.overlay}>
             <div className={styles.saveSearchPopup}>

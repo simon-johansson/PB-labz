@@ -229,7 +229,7 @@ label {
   width: 94%;
   left: 3%;
   position: fixed;
-  bottom: 50px;
+  bottom: 0px;
   display: block;
   z-index: 999;
   height: 40px;
@@ -537,7 +537,7 @@ label {
   width: 100%;
   overflow-y: scroll;
   padding-top: 55px;
-  padding-bottom: 115px;
+  padding-bottom: 70px;
   z-index: 999;
 }
 

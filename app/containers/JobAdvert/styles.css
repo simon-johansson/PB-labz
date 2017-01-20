@@ -35,7 +35,7 @@
   right: 0px;
   padding-right: 12px;
   top: -2px;
-  width: 64px;
+  width: 104px;
   padding-top: 2px;
   height: 47px;
   line-height: 55px;
@@ -259,6 +259,16 @@
 }
 .savedAdvert .saveIcon {
   color: gold;
+}
+
+.starAnimate {}
+.starAnimateBouce div {
+  animation: Star-keyframes--bounce .4s ease-in-out
+}
+@keyframes Star-keyframes--bounce{
+  0% { font-size: 35px }
+  50% { font-size: 45px }
+  100% { font-size: 35px }
 }
 
 .criteriaHeading {

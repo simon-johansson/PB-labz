@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
+import AnimateOnChange from 'react-animate-on-change';
 import _ from 'lodash';
 import matching from 'utils/matching';
 
@@ -108,6 +109,7 @@ export class JobAdvert extends React.Component {
       folded: true,
       ad: false,
       isMatch: false,
+      starHasChanged: false,
     };
   }
 
@@ -440,6 +442,7 @@ export class JobAdvert extends React.Component {
       return saved.id === this.state.ad.id;
     }).size;
     let markers;
+    // this.setState({starHasChanged: !!adIsSaved});
 
     // console.log(erbjudenArbetsplats);
     if (this.shouldShowMap(erbjudenArbetsplats)) {
@@ -462,27 +465,24 @@ export class JobAdvert extends React.Component {
             />
             <span
               className={styles.done}
-            >Nästa</span>
+            >Nästa annons</span>
             <h1>Annons</h1>
           </header>
 
           {this.state.ad &&
             <div className={styles.advertWrapper}>
-              {
-                adIsSaved ?
-                <div className={styles.savedAdvert} onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}>
-                  {/*<span className={styles.saveText}>Sparad</span>*/}
-                  <span
-                    className={styles.saveIcon + ' glyphicon glyphicon-star'}
-                  />
-                </div> :
-                <div className={styles.saveAdvert} onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}>
-                  {/*<span className={styles.saveText}>Spara</span>*/}
-                  <span
-                    className={styles.saveIcon + ' glyphicon glyphicon-star-empty'}
-                  />
+              <AnimateOnChange
+                baseClassName={styles.starAnimate}
+                animationClassName={styles.starAnimateBouce}
+                animate={adIsSaved}
+              >
+                <div
+                  className={adIsSaved ? styles.savedAdvert : styles.saveAdvert}
+                  onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}
+                >
+                  <span className={`${styles.saveIcon} glyphicon ${adIsSaved ? 'glyphicon-star' : 'glyphicon-star-empty'}`} />
                 </div>
-              }
+              </AnimateOnChange>
               {/*<object
                 style={{maxHeight: '60px'}}
                 data={`http://api.arbetsformedlingen.se/platsannons/${this.state.ad.id}/logotyp`} type="image/gif"
