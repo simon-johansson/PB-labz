@@ -1205,6 +1205,16 @@ export class ListPage extends React.Component {
             className={styles.amount}
           >
             Hittade {this.props.amount} jobb {/*this.createSearchSummary()*/}
+            <div className="dropdown">
+              <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Sortering&nbsp;
+                <span className="caret"></span>
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#">Publiceringsdatum</a></li>
+                <li><a href="#">Sista ansökningsdagen</a></li>
+              </ul>
+            </div>
           </span>
           <List items={this.props.jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
           {additionalAds}
@@ -1231,6 +1241,17 @@ export class ListPage extends React.Component {
               ref={(r) => summaryHeaders.push({ el: r, text: 'Jobb som matchar dig' })}
             >
               {this.props.matchingJobs.length} jobb matchar dig
+              <div className="dropdown">
+                <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Sortering&nbsp;
+                  <span className="caret"></span>
+                </button>
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#">Matchningsgrad</a></li>
+                  <li><a href="#">Publiceringsdatum</a></li>
+                  <li><a href="#">Sista ansökningsdagen</a></li>
+                </ul>
+              </div>
             </span>
             <List
               items={this.props.matchingJobs.slice(0, 50)}

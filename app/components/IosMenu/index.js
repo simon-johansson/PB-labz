@@ -67,7 +67,7 @@ export class IosMenu extends React.Component {
           className={savedPage ? styles.iconWrapperActive : styles.iconWrapper}
           onClick={this.addSavedPage}
         >
-          <span className={styles.starIcon + ' glyphicon glyphicon-star-empty'} />
+          <span className={styles.starIcon + ' glyphicon glyphicon-star'} />
           <span className={styles.text}>Sparade jobb</span>
         </div>
         <div className={styles.iconWrapper}>

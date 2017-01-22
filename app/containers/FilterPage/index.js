@@ -74,7 +74,7 @@ export class FilterPage extends React.Component {
     this.state = {
       range: 10,
       sorting: 'pub',
-      date: '',
+      date: 'all',
       employment: [true, true, true, true],
       amount: [true, true],
       areaFilter: [],
@@ -338,7 +338,7 @@ export class FilterPage extends React.Component {
             </div>
           </form>
 
-          <p className={styles.sectionHeader}>Sortera</p>
+          {/*<p className={styles.sectionHeader}>Sortera</p>
           <section className={styles.sortingWrapper}>
             <p className={styles.subTitle}>Ordning i lista</p>
             <div className={styles.radioButtonGroup}>
@@ -376,7 +376,7 @@ export class FilterPage extends React.Component {
                 </div>
               </div>
             </div>
-          </section>
+          </section>*/}
 
           <p className={styles.sectionHeader}>Filtrera</p>
           <section className={styles.sortingWrapper}>
@@ -459,11 +459,22 @@ export class FilterPage extends React.Component {
 
             <hr />
 
-            <p className={styles.subTitle}>Visa endast annonser inkommna</p>
+            <p className={styles.subTitle}>Publiceringsdatum</p>
             <div className={styles.radioButtonGroup}>
               <div
                 className={styles.radioWrapperRow}
-                onClick={() => this.setState({date: this.state.date === 'day' ? '' : 'day'})}
+                onClick={() => this.setState({date: 'all'})}
+              >
+                <span className={styles.radioTitle}>När som helst</span>
+                <div className={styles.radioButton}>
+                  <span
+                    className={`${styles.radioOk} ${this.state.date !== 'all' ? styles.inActive : ''} glyphicon glyphicon-ok`}
+                  />
+                </div>
+              </div>
+              <div
+                className={styles.radioWrapperRow}
+                onClick={() => this.setState({date: 'day'})}
               >
                 <span className={styles.radioTitle}>Idag</span>
                 <div className={styles.radioButton}>
@@ -474,7 +485,7 @@ export class FilterPage extends React.Component {
               </div>
               <div
                 className={styles.radioWrapperRow}
-                onClick={() => this.setState({date: this.state.date === 'week' ? '' : 'week'})}
+                onClick={() => this.setState({date: 'week'})}
               >
                 <span className={styles.radioWrapperTitle}>Senaste veckan</span>
                 <div className={styles.radioButton}>
@@ -485,7 +496,7 @@ export class FilterPage extends React.Component {
               </div>
               <div
                 className={styles.radioWrapperRow}
-                onClick={() => this.setState({date: this.state.date === 'month' ? '' : 'month'})}
+                onClick={() => this.setState({date: 'month'})}
               >
                 <span className={styles.radioWrapperTitle}>Senaste månaden</span>
                 <div className={styles.radioButton}>

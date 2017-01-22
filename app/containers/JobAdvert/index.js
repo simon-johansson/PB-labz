@@ -465,7 +465,7 @@ export class JobAdvert extends React.Component {
             />
             <span
               className={styles.done}
-            >Nästa annons</span>
+            >Nästa</span>
             <h1>Annons</h1>
           </header>
 

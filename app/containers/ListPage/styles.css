@@ -673,3 +673,19 @@ label {
 :global(input.form-control) {
   height: 40px;
 }
+
+:global(.dropdown) {
+  display: inline-block;
+  float: right;
+  margin-top: -9px;
+}
+
+:global(.dropdown button) {
+  padding-right: 5px;
+}
+
+:global(.dropdown-menu) {
+  top: 30px !important;
+  left: -105px !important;
+}
+
