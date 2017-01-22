@@ -6,6 +6,7 @@ import { push } from 'react-router-redux';
 import styles from './styles.css';
 import match from './match.png';
 import splash from './splash.png';
+import bg from './bg.jpg';
 
 export class FeaturePage extends React.Component {
   constructor(props) {
@@ -38,7 +39,13 @@ export class FeaturePage extends React.Component {
             className={styles.splashImg}
           />
         </div>
-        <div className={styles.imgWrapper}>
+        <div
+          className={styles.imgWrapper}
+          style={{
+            backgroundImage: `url('${bg}`,
+            backgroundSize: '375%',
+          }}
+        >
           <img
             src={match}
             className={this.state.imgClass}
