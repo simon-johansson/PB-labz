@@ -384,10 +384,12 @@ export class HomePage extends React.Component {
           <div className={(!this.state.savedSearches.length && !this.state.previousSearchs.length) ? styles.firstWelcome : styles.welcome}>
             <p>Välkommen till Platsbanken!</p>
             <p>
-              { !this.props.totalAmount ?
-                <LoadingIndicator options={{size: 'small', color: 'dark'}} /> :
-                `${this.props.totalAmount} `
-              }
+              <span className={styles.totalAmount}>
+                { !this.props.totalAmount ?
+                  <LoadingIndicator options={{size: 'small', color: 'dark'}} /> :
+                  `${this.props.totalAmount} `
+                }
+              </span>
               lediga jobb just nu
             </p>
           </div>
@@ -410,9 +412,9 @@ export class HomePage extends React.Component {
                       className={styles.pencil}
                       onClick={this.onEditSaved.bind(this)}
                     >
-                      { this.state.editSaved ? 'Klar' : 'Redigera' }
-                      &nbsp;&nbsp;
                       <span className={'glyphicon glyphicon-pencil'} />
+                      &nbsp;&nbsp;
+                      { this.state.editSaved ? 'Klar' : 'Redigera' }
                     </span>
                   }
                 </span>
@@ -429,9 +431,9 @@ export class HomePage extends React.Component {
                       className={styles.pencil}
                       onClick={this.onEditsPrevious.bind(this)}
                     >
-                      { this.state.editPrevious ? 'Klar' : 'Redigera' }
-                      &nbsp;&nbsp;
                       <span className={'glyphicon glyphicon-pencil'} />
+                      &nbsp;&nbsp;
+                      { this.state.editPrevious ? 'Klar' : 'Redigera' }
                     </span>
                   }
                 </span>

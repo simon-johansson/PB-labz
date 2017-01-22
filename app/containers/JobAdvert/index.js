@@ -473,7 +473,7 @@ export class JobAdvert extends React.Component {
             <div className={styles.advertWrapper}>
               <AnimateOnChange
                 baseClassName={styles.starAnimate}
-                animationClassName={styles.starAnimateBouce}
+                animationClassName={styles.starAnimateBouceDisable}
                 animate={adIsSaved}
               >
                 <div

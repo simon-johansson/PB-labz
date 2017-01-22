@@ -34,11 +34,14 @@ body.fontLoaded {
 }
 
 :global(#doorbell-button) {
-  right: 5px !important;
+  right: 20px !important;
   bottom: 5px !important;
   border-radius: 5px !important;
   // background: #345468;
-  background:  #bcbcbc;
+  // background: #bcbcbc;
+  background: none;
+  color: #568BAD;
+  font-size: 17px;
 }
 
 :global(#doorbell-powered-by) {

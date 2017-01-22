@@ -73,6 +73,7 @@ import List from 'components/List';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ExperienceSelector from 'components/ExperienceSelector';
+import Actionsheet from 'components/Actionsheet';
 
 import styles from './styles.css';
 
@@ -1091,6 +1092,9 @@ export class ListPage extends React.Component {
     // console.log(this.props.driverLicenses);
     // console.log(this.props.additionalAds);
 
+    const actionsheetMenu = this.props.currentTab === 'match' ?
+      [{content: 'Matchningsgrad'}, {content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdagen'}] :
+      [{content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdagen'}];
     const {
       occupations: ogOccupations,
       locations: ogLocations,
@@ -1198,6 +1202,7 @@ export class ListPage extends React.Component {
       );
 
     } else if (this.props.jobs !== false) {
+
       mainContent = (
         <div>
           <span
@@ -1205,15 +1210,15 @@ export class ListPage extends React.Component {
             className={styles.amount}
           >
             Hittade {this.props.amount} jobb {/*this.createSearchSummary()*/}
-            <div className="dropdown">
+            <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
               <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 Sortering&nbsp;
                 <span className="caret"></span>
               </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+              {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li><a href="#">Publiceringsdatum</a></li>
                 <li><a href="#">Sista ansökningsdagen</a></li>
-              </ul>
+              </ul>*/}
             </div>
           </span>
           <List items={this.props.jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
@@ -1241,16 +1246,16 @@ export class ListPage extends React.Component {
               ref={(r) => summaryHeaders.push({ el: r, text: 'Jobb som matchar dig' })}
             >
               {this.props.matchingJobs.length} jobb matchar dig
-              <div className="dropdown">
+              <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
                 <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   Sortering&nbsp;
                   <span className="caret"></span>
                 </button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+                {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                   <li><a href="#">Matchningsgrad</a></li>
                   <li><a href="#">Publiceringsdatum</a></li>
                   <li><a href="#">Sista ansökningsdagen</a></li>
-                </ul>
+                </ul>*/}
               </div>
             </span>
             <List
@@ -1293,6 +1298,11 @@ export class ListPage extends React.Component {
             <span className={styles.toTopArrow + ' glyphicon glyphicon-arrow-up'} />
           </div>
         }
+        <Actionsheet
+          show={this.state.showActionsheet}
+          menus={actionsheetMenu}
+          onRequestClose={() => this.setState({showActionsheet: false})}
+        />
         <div className={styles.contentWrapper}>
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
