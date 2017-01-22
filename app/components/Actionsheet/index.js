@@ -43,7 +43,7 @@ class Actionsheet extends React.Component {
           </div>
           <div className='react-actionsheet-action'>
             <div className='react-actionsheet-action-item' onClick={onCancel}>
-              Cancel
+              Avbryt
             </div>
           </div>
         </div>

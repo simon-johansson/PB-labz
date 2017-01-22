@@ -1093,8 +1093,8 @@ export class ListPage extends React.Component {
     // console.log(this.props.additionalAds);
 
     const actionsheetMenu = this.props.currentTab === 'match' ?
-      [{content: 'Matchningsgrad'}, {content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdagen'}] :
-      [{content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdagen'}];
+      [{content: 'Matchningsgrad'}, {content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}] :
+      [{content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}];
     const {
       occupations: ogOccupations,
       locations: ogLocations,
@@ -1217,7 +1217,7 @@ export class ListPage extends React.Component {
               </button>
               {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li><a href="#">Publiceringsdatum</a></li>
-                <li><a href="#">Sista ansökningsdagen</a></li>
+                <li><a href="#">Sista ansökningsdatum</a></li>
               </ul>*/}
             </div>
           </span>
@@ -1254,7 +1254,7 @@ export class ListPage extends React.Component {
                 {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                   <li><a href="#">Matchningsgrad</a></li>
                   <li><a href="#">Publiceringsdatum</a></li>
-                  <li><a href="#">Sista ansökningsdagen</a></li>
+                  <li><a href="#">Sista ansökningsdatum</a></li>
                 </ul>*/}
               </div>
             </span>
