@@ -263,7 +263,10 @@ export class AddOccupation extends React.Component {
             <div className={styles.searchForm}>
               <h1>Jag vill jobba som</h1>
               {this.doneOrYrkeslista()}
-              <span className={styles.cancel} onClick={this.goBack}>Avbryt</span>
+              <span className={styles.cancel} onClick={this.goBack}>
+                <span className={'glyphicon glyphicon-remove'} />
+                {/*Avbryt*/}
+              </span>
 
               {!this.props.params.group &&
                 <form onSubmit={this.onSubmitForm.bind(this)} autoComplete="off">

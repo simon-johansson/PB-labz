@@ -1147,7 +1147,7 @@ export class ListPage extends React.Component {
                 Hittade {this.props.additionalAds.get(index) ? this.props.additionalAds.get(index).amount : '...'} jobb {/*searchSummary*/}
                 <div className={styles.addToSearchTag} onClick={this.addToSearch.bind(this)}>
                   <span className='glyphicon glyphicon-plus' />
-                  Lägg till i min sökning
+                  Lägg till i sökningen
                 </div>
               </span>
               {/*<span
@@ -1209,11 +1209,11 @@ export class ListPage extends React.Component {
             ref={(r) => summaryHeaders.push({ el: r, text: this.createSearchInput(ogOccupations, ogLocations) })}
             className={styles.amount}
           >
-            Hittade {this.props.amount} jobb {/*this.createSearchSummary()*/}
+            Hittade <span className={styles.jobsNumber}>{this.props.amount}</span> jobb {/*this.createSearchSummary()*/}
             <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
               <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 Sortering&nbsp;
-                <span className="caret"></span>
+                <span className={styles.caret + " iosIcon"}></span>
               </button>
               {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li><a href="#">Publiceringsdatum</a></li>
@@ -1309,7 +1309,7 @@ export class ListPage extends React.Component {
               <Tappable onTap={this.openHomePage}>
                 {/*<span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />*/}
                 <span className={styles.cancelText}>
-                  <span className={styles.homeIcon + ' glyphicon glyphicon-home'} />
+                  {/*<span className={styles.homeIcon + ' glyphicon glyphicon-home'} />*/}
                   {/*Mina sökningar*/}
                 </span>
               </Tappable>
@@ -1322,21 +1322,40 @@ export class ListPage extends React.Component {
               >
                 {this.state.searchIsSaved ? 'Sparad' : 'Spara'}
               </span>
-              <form onClick={this.addFilterPage}>
-                <div className="form-group">
-                  <div className={styles.searchInputWrapper}>
-                    <span className={styles.inputField}>
-                      {this.createSearchInput()}
-                      <i className={styles.searchIcon + " glyphicon glyphicon-search"} />
-                    </span>
-                  </div>
-                  <span className={styles.filter}>
-                    Ändra
-                    {/*<span className={styles.filterIcon + " glyphicon glyphicon-tasks"} />*/}
+            </div>
+
+            {/*<form onClick={this.addFilterPage}>
+              <div className="form-group">
+                <div className={styles.searchInputWrapper}>
+                  <span className={styles.inputField}>
+                    {this.createSearchInput()}
+                    <i className={styles.searchIcon + " glyphicon glyphicon-search"} />
                   </span>
                 </div>
-              </form>
-            </div>
+                <span className={styles.filter}>
+                  Ändra
+                </span>
+              </div>
+            </form>*/}
+
+            <form
+              className={styles.filterInput}
+              onClick={this.addFilterPage}
+            >
+              <div className="form-group">
+                <div className={styles.searchInputWrapper}>
+                  <span className={styles.inputField}>
+                    <span className={styles.searchIcon + " iosIcon"}></span>
+                    {this.createSearchInput()}
+                    <figure className={styles.verticalBorder} />
+                  </span>
+                </div>
+                <span className={styles.filter}>
+                  Filter
+                  {/*<span className={styles.filterIcon + " glyphicon glyphicon-tasks"} />*/}
+                </span>
+              </div>
+            </form>
 
             <div className={styles.toggleButtons}>
               <button

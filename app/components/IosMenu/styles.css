@@ -3,10 +3,10 @@
   position: fixed;
   bottom: -1px;
   width: 100%;
-  height: 55px;
+  height: 60px;
   // border: 1px solid #000;
-  background: #FFFFFF;
-  border-top: 1px solid rgba(0,0,0,0.1);
+  background: #ffffff;
+  border-top: 1px solid #06769f;
 }
 
 .iosMenu {
@@ -23,28 +23,36 @@
   vertical-align: bottom;
 }
 
+.iconWrapperActive {
+  background: #d2dbe0;
+}
+
 .iconWrapperActive .icon,
 .iconWrapperActive .starIcon,
 .iconWrapperActive .text {
-  color: #06769F;
+  color: #333333;
+  font-weight: normal;
 }
 
 .icon,
 .starIcon {
   font-size: 20px;
-  margin-top: 7px;
+  margin-top: 10px;
+  margin-bottom: 4px;
   height: 27px;
-  color: #979797;
+  color: #6f7578;
 }
 
-.starIcon {
-  // font-weight: bold;
-  font-size: 22px;
+.starIcon,
+.iconWrapperActive .starIcon {
+  font-weight: bold !important;
+  font-size: 25px;
+  line-height: 27px;
 }
 
 .text {
-  font-size: 12px;
+  font-size: 10px;
   display: block;
-  color: #979797;
+  color: #6f7578;
   margin-top: -2px;
 }

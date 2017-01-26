@@ -5,13 +5,16 @@
 
 .searchForm {
   padding: 2px 10px;
-  background: #345468;
-  color: white;
+  // background: #345468;
+  color: #333333;
+  border-bottom: 1px solid #979797;
 }
 
 .searchForm h1 {
-  font-size: 20px;
+  font-size: 17px;
   text-align: center;
+  font-weight: normal;
+  letter-spacing: -0.4px;
 }
 
 .centered {
@@ -83,24 +86,28 @@ label {
   // background: #06769F;
   // background: #5E8404;
   background: #55851C;
-  margin: 25px auto;
+  margin: 25px auto 50px;
   display: block;
   color: white;
   border: none;
-  width: 80%;
+  width: 300px;
   // left: 3%;
   // position: fixed;
   // bottom: 55px;
   display: block;
   z-index: 999;
-  height: 50px;
+  height: 57px;
   border-radius: 100px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: normal;
+  line-height: 4px;
 }
 
 .searchIcon {
-  margin-right: 5px;
+  margin-right: 8px;
+  font-size: 30px;
+  font-weight: normal;
+  vertical-align: inherit;
 }
 
 .latestSearches {
@@ -112,7 +119,7 @@ label {
   margin-top: 20px;
   display: block;
   margin-left: 10px;
-  font-size: 12px;
+  font-size: 14px;
   position: relative;
   margin-bottom: 6px;
 }
@@ -126,20 +133,20 @@ label {
 .previousSearchesWrapper,
 .editSavedSearchesWrapper,
 .editPreviousSearchesWrapper {
-  margin-top: 10px;
+  padding-top: 14px;
   width: 100%;
-  height: 50px;
+  height: 80px;
   align-items: center;
   // display: flex;
   // align-items: space-between;
 }
 
 .editSavedSearchesWrapper {
-  height: 80px;
+  height: 109px;
 }
 
 .editPreviousSearchesWrapper .deleteIcon{
-  line-height: 57px;
+  line-height: 80px;
 }
 
 .previousSearcheParameters {
@@ -193,7 +200,7 @@ label {
   right: 8px;
   color: gray;
   text-transform: none;
-  font-weight: bold;
+  // font-weight: bold;
   // font-size: 15px;
   // top: -5px;
 }
@@ -217,15 +224,16 @@ label {
 
 .deleteIcon {
   color: white;
-  font-size: 20px;
-  line-height: 88px;
+  font-size: 25px;
+  line-height: 109px;
+  font-weight: bold;
 }
 
 .savePreviousIcon {
   color: white;
   font-size: 12px;
   // font-weight: bold;
-  line-height: 57px;
+  line-height: 80px;
 }
 
 .notifyRow {
@@ -243,24 +251,25 @@ label {
 .notifyText {
   vertical-align: super;
   margin-right: 10px;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 .previousSearcheTime {
   position: absolute;
-  right: 30px;
-  top: 22px;
+  right: 25px;
+  top: 30px;
   color: gray;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .historyIcon,
 .chevronIcon {
   position: absolute;
   right: 0;
-  top: 20px;
-  color: gray;
-  font-size: 18px;
+  top: 30px;
+  font-size: 15px;
+  color: #0e6a97;
+  font-weight: bold;
 }
 
 .welcome,
@@ -268,11 +277,12 @@ label {
   width: 100%;
   text-align: center;
   margin-top: 20px;
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: normal;
 }
 
 .firstWelcome {
-  margin-top: 200px;
+  margin-top: 100px;
 }
 
 .welcome p,
@@ -353,8 +363,10 @@ label {
 }
 
 .occupations {
-  color: #32749d;
-  font-weight: bold;
+  color: #06769f;
+  font-size: 20px;
+  // font-weight: bold;
+  font-weight: 600;
 }
 
 .noSearches {
@@ -368,8 +380,10 @@ label {
   top: 2px;
 }
 
-:global(.glyphicon-pencil) {
+.pencilIcon {
   color: #32749d;
+  font-size: 17px;
+  // font-weight: bold;
 }
 
 :global(input.form-control) {

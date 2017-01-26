@@ -23,6 +23,11 @@ import '!file?name=[name].[ext]!./favicon-16x16.png';
 import '!file?name=[name].[ext]!./favicon-32x32.png';
 import '!file?name=[name].[ext]!./manifest.json';
 import 'file?name=[name].[ext]!./.htaccess';
+
+import 'file?name=[name].[ext]!./fonts/ios7-icon.sfd';
+import 'file?name=[name].[ext]!./fonts/ios7-icon.svg';
+import 'file?name=[name].[ext]!./fonts/ios7-icon.ttf';
+import 'file?name=[name].[ext]!./fonts/ios7-icon.woff';
 /* eslint-enable import/no-unresolved */
 
 // Import all the third party stuff

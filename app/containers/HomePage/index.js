@@ -241,7 +241,7 @@ export class HomePage extends React.Component {
             <span className={styles.small}>{locations}</span>
             {this.state.editSaved &&
               <div className={styles.notifyRow}>
-                <span className={styles.notifyText}>Notiser för nyinkomna jobb</span>
+                <span className={styles.notifyText}>Notiser för nya jobb</span>
                 <Switch
                   checked={item.notify}
                   onChange={() => {}}
@@ -255,11 +255,11 @@ export class HomePage extends React.Component {
               className={styles.deleteSaved}
               onClick={this.onDeleteSaved.bind(this, index)}
             >
-              <span className={styles.deleteIcon + ' glyphicon glyphicon-trash'} />
+              <span className={styles.deleteIcon + ' iosIcon'}></span>
             </div> :
             <div>
               {/*<span className={styles.newJobs}>{Math.floor(Math.random() * 15)}</span>*/}
-              <span className={styles.chevronIcon + ' glyphicon glyphicon-chevron-right'} />
+              <span className={styles.chevronIcon + ' iosIcon'}></span>
             </div>
           }
         </div>
@@ -300,7 +300,7 @@ export class HomePage extends React.Component {
                 className={styles.deleteSaved}
                 onClick={this.onDeletePrevious.bind(this, index)}
               >
-                <span className={styles.deleteIcon + ' glyphicon glyphicon-trash'} />
+                <span className={styles.deleteIcon + ' iosIcon'}></span>
               </div>
               <div
                 className={styles.savePrevious}
@@ -311,7 +311,7 @@ export class HomePage extends React.Component {
             </div> :
             <div>
               <span className={styles.previousSearcheTime}>{moment(item.time).calendar(null, momentOptions)}</span>
-              <span className={styles.chevronIcon + ' glyphicon glyphicon-chevron-right'} />
+              <span className={styles.chevronIcon + ' iosIcon'}></span>
             </div>
           }
         </div>
@@ -376,13 +376,15 @@ export class HomePage extends React.Component {
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
             <h1>
-              <span className={styles.homeIcon + ' glyphicon glyphicon-home'} />
+              {/*<span className={styles.homeIcon + ' glyphicon glyphicon-home'} />*/}
               Mina sökningar
             </h1>
           </div>
 
           <div className={(!this.state.savedSearches.length && !this.state.previousSearchs.length) ? styles.firstWelcome : styles.welcome}>
-            <p>Välkommen till Platsbanken!</p>
+            {!this.state.savedSearches.length && !this.state.previousSearchs.length &&
+              <p>Välkommen till Platsbanken!</p>
+            }
             <p>
               <span className={styles.totalAmount}>
                 { !this.props.totalAmount ?
@@ -398,7 +400,7 @@ export class HomePage extends React.Component {
             className={styles.searchButton + ' btn btn-default'}
             onClick={this.onSeachButtonClick}
           >
-            <span className={styles.searchIcon + " glyphicon glyphicon-search"} />
+            <span className={styles.searchIcon + " iosIcon"}></span>
             Ny sökning
           </button>
 
@@ -412,8 +414,8 @@ export class HomePage extends React.Component {
                       className={styles.pencil}
                       onClick={this.onEditSaved.bind(this)}
                     >
-                      <span className={'glyphicon glyphicon-pencil'} />
-                      &nbsp;&nbsp;
+                      <span className={styles.pencilIcon + ' iosIcon'}></span>
+                      &nbsp;
                       { this.state.editSaved ? 'Klar' : 'Redigera' }
                     </span>
                   }
@@ -431,8 +433,8 @@ export class HomePage extends React.Component {
                       className={styles.pencil}
                       onClick={this.onEditsPrevious.bind(this)}
                     >
-                      <span className={'glyphicon glyphicon-pencil'} />
-                      &nbsp;&nbsp;
+                      <span className={styles.pencilIcon + ' iosIcon'}></span>
+                      &nbsp;
                       { this.state.editPrevious ? 'Klar' : 'Redigera' }
                     </span>
                   }

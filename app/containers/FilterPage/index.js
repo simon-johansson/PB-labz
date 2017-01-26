@@ -67,6 +67,7 @@ import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
 
 import styles from './styles.css';
+import gradient from './gradient.png';
 
 export class FilterPage extends React.Component {
   constructor(props) {
@@ -132,7 +133,7 @@ export class FilterPage extends React.Component {
         >
           <span className={styles.tagText}>
             {item.namn}
-            <span className="glyphicon glyphicon-remove" />
+            <span className={styles.removeIcon + ' iosIcon'}></span>
           </span>
         </div>
       );
@@ -149,7 +150,7 @@ export class FilterPage extends React.Component {
         >
           <span className={styles.tagText}>
             {item.namn}
-            <span className="glyphicon glyphicon-remove" />
+            <span className={styles.removeIcon + ' iosIcon'}></span>
           </span>
         </div>
       );
@@ -298,7 +299,11 @@ export class FilterPage extends React.Component {
                 <span>Ändra sökningen</span>
               }
             </h1>
-            <span className={styles.cancel} onClick={this.goBack}>Avbryt</span>
+            {/*<span className={styles.cancel} onClick={this.goBack}>Avbryt</span>*/}
+            <span
+              className={styles.cancel + ' iosIcon'}
+              onClick={this.goBack}
+            ></span>
           </div>
 
           <form className={styles.searchWrapper}>
@@ -308,7 +313,10 @@ export class FilterPage extends React.Component {
                 {this.createOccupationTags()}
                 <span className={styles.inputPlaceholder}>
                   { !this.props.occupations.size ?
-                    'Skriv t.ex "Gymnasielärare"' :
+                    <span>
+                      <span className={styles.placeholderIcon + ' iosIcon'}></span>
+                      Skriv t.ex "Gymnasielärare"
+                    </span> :
                     'Lägg till yrke...'
                   }
                 </span>
@@ -321,7 +329,10 @@ export class FilterPage extends React.Component {
                 {this.createLocationTags()}
                 <span className={styles.inputPlaceholder}>
                 { !this.props.locations.size ?
-                  'Skriv Kommun/Län/Land' :
+                  <span>
+                    <span className={styles.placeholderIcon + ' iosIcon'}></span>
+                    Skriv Kommun/Län/Land
+                  </span> :
                   'Lägg till Kommun/Län/Land...'
                 }
                 </span>
@@ -330,7 +341,7 @@ export class FilterPage extends React.Component {
                     className={styles.gps}
                     onClick={this.onGPS.bind(this)}
                   >
-                    <span className={styles.right + ' glyphicon glyphicon-map-marker'}></span>
+                    <span className={styles.gpsIcon + ' iosIcon'}></span>
                     GPS
                   </span>
                 }
@@ -392,7 +403,7 @@ export class FilterPage extends React.Component {
             </div>*/}
             <div className={styles.switchWrapper}>
               <div className={styles.switchWrapperRow}>
-                <span className={styles.switchTitle}>Tillsvidareanställning</span>
+                <span className={styles.switchWrapperTitle}>Tillsvidareanställning</span>
                 <Switch
                   className={styles.rowSwitch}
                   checked={this.state.employment[0]}
@@ -429,7 +440,7 @@ export class FilterPage extends React.Component {
               </div>
             </div>
 
-            <hr />
+            <br />
 
             <p className={styles.subTitle}>Omfattning</p>
             {/*<div className={styles.buttonWrapper}>
@@ -438,7 +449,7 @@ export class FilterPage extends React.Component {
             </div>*/}
             <div className={styles.switchWrapper}>
               <div className={styles.switchWrapperRow}>
-                <span className={styles.switchTitle}>Heltid</span>
+                <span className={styles.switchWrapperTitle}>Heltid</span>
                 <Switch
                   className={styles.rowSwitch}
                   checked={this.state.amount[0]}
@@ -457,7 +468,7 @@ export class FilterPage extends React.Component {
               </div>
             </div>
 
-            <hr />
+            <br />
 
             <p className={styles.subTitle}>Publiceringsdatum</p>
             <div className={styles.radioButtonGroup}>
@@ -487,7 +498,7 @@ export class FilterPage extends React.Component {
                 className={styles.radioWrapperRow}
                 onClick={() => this.setState({date: 'week'})}
               >
-                <span className={styles.radioWrapperTitle}>Senaste veckan</span>
+                <span className={styles.radioTitle}>Senaste veckan</span>
                 <div className={styles.radioButton}>
                   <span
                     className={`${styles.radioOk} ${this.state.date !== 'week' ? styles.inActive : ''} glyphicon glyphicon-ok`}
@@ -498,7 +509,7 @@ export class FilterPage extends React.Component {
                 className={styles.radioWrapperRow}
                 onClick={() => this.setState({date: 'month'})}
               >
-                <span className={styles.radioWrapperTitle}>Senaste månaden</span>
+                <span className={styles.radioTitle}>Senaste månaden</span>
                 <div className={styles.radioButton}>
                   <span
                     className={`${styles.radioOk} ${this.state.date !== 'month' ? styles.inActive : ''} glyphicon glyphicon-ok`}
@@ -543,15 +554,17 @@ export class FilterPage extends React.Component {
           </section>
 
           {this.shouldShowSearchButton() &&
-            // <buttontrue;
-            <button
-              className={styles.searchButton + ' btn btn-default'}
-              onClick={this.onSeachButtonClick}
-              disabled={this.props.loading && (this.props.occupations.size || this.props.locations.size)}
-            >
-              <span className={styles.searchIcon + " glyphicon glyphicon-search"} />
-              Visa <span>{!!this.buttonAmount() ? this.buttonAmount() : ''}</span> jobb
-            </button>
+            <div>
+              <button
+                className={styles.searchButton + ' btn btn-default'}
+                onClick={this.onSeachButtonClick}
+                disabled={this.props.loading && (this.props.occupations.size || this.props.locations.size)}
+              >
+                <span className={styles.searchIcon + " glyphicon glyphicon-search"} />
+                Visa <span>{!!this.buttonAmount() ? this.buttonAmount() : ''}</span> jobb
+              </button>
+              <img className={styles.gradientImg} src={gradient} />
+            </div>
           }
         </div>
       </article>
