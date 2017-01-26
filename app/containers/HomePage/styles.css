@@ -208,18 +208,34 @@ label {
 .deleteSaved,
 .savePrevious {
   background: #EB5442;
+  color: white;
   display: block;
-  width: 50px;
+  width: 70px;
   position: absolute;
   top: 0;
   right: -1em;
   height: 100%;
   text-align: center;
+  padding-top: 30px;
+}
+
+.updateNotify,
+.savePrevious {
+  background: #C7C7CC;
+  display: block;
+  width: 70px;
+  position: absolute;
+  top: 0;
+  color: white;
+  right: calc(70px - 1em);
+  height: 100%;
+  text-align: center;
+  padding-top: 20px;
 }
 
 .savePrevious {
-  background: #397AA2;
-  right: calc(50px - 1em);
+  padding-top: 30px;
+  right: calc(70px - 1em);
 }
 
 .deleteIcon {
@@ -230,10 +246,10 @@ label {
 }
 
 .savePreviousIcon {
-  color: white;
-  font-size: 12px;
+  // color: white;
+  // font-size: 12px;
   // font-weight: bold;
-  line-height: 80px;
+  // line-height: 80px;
 }
 
 .notifyRow {

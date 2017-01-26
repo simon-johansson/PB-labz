@@ -230,7 +230,7 @@ export class HomePage extends React.Component {
 
       return (
         <div
-          className={this.state.editSaved ? styles.editSavedSearchesWrapper : styles.savedSearchesWrapper}
+          className={styles.savedSearchesWrapper}
           onClick={!this.state.editSaved ? this.onClickPreviousSearch.bind(this, item) : () => {}}
         >
           <div className={styles.previousSearcheParameters}>
@@ -239,7 +239,7 @@ export class HomePage extends React.Component {
             }
             <span className={styles.occupations}>{occupations}</span> <br />
             <span className={styles.small}>{locations}</span>
-            {this.state.editSaved &&
+            {/*this.state.editSaved &&
               <div className={styles.notifyRow}>
                 <span className={styles.notifyText}>Notiser för nya jobb</span>
                 <Switch
@@ -248,14 +248,27 @@ export class HomePage extends React.Component {
                 />
                 <div className={styles.rowOverlay} onClick={this.onChangeNotify.bind(this, index, !item.notify)} />
               </div>
-            }
+            */}
           </div>
           {this.state.editSaved ?
-            <div
-              className={styles.deleteSaved}
-              onClick={this.onDeleteSaved.bind(this, index)}
-            >
-              <span className={styles.deleteIcon + ' iosIcon'}></span>
+            <div>
+              <div
+                className={styles.updateNotify}
+                onClick={this.onChangeNotify.bind(this, index, !item.notify)}
+              >
+                {/*<span className={styles.notifyIcon + ' iosIcon'}></span>*/}
+                {!item.notify ?
+                  'Slå på notiser' :
+                  'Stäng av notiser'
+                }
+              </div>
+              <div
+                className={styles.deleteSaved}
+                onClick={this.onDeleteSaved.bind(this, index)}
+              >
+                {/*<span className={styles.deleteIcon + ' iosIcon'}></span>*/}
+                Ta bort
+              </div>
             </div> :
             <div>
               {/*<span className={styles.newJobs}>{Math.floor(Math.random() * 15)}</span>*/}
@@ -300,13 +313,16 @@ export class HomePage extends React.Component {
                 className={styles.deleteSaved}
                 onClick={this.onDeletePrevious.bind(this, index)}
               >
-                <span className={styles.deleteIcon + ' iosIcon'}></span>
+                {/*<span className={styles.deleteIcon + ' iosIcon'}></span>*/}
+                Ta bort
               </div>
               <div
                 className={styles.savePrevious}
                 onClick={this.onSavePrevious.bind(this, index)}
               >
-                <span className={styles.savePreviousIcon}>Spara</span>
+                <span className={styles.savePreviousIcon}>
+                  Spara
+                </span>
               </div>
             </div> :
             <div>
