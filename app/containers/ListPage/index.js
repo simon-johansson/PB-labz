@@ -249,12 +249,14 @@ export class ListPage extends React.Component {
     const top5Arr = [];
     let competencesFiltered = [];
     const top5Comps = _.orderBy(JSON.parse(JSON.stringify(this.props.competences)), 'timesRequested', 'desc').slice(0, 5);
-    const top5 = top5Comps.map((item, index) => {
+    const requestedComps = _.orderBy(JSON.parse(JSON.stringify(this.props.competences)), 'timesRequested', 'desc');
+    const requested = requestedComps.map((item, index) => {
       requestedTop5 += item.timesRequested;
       item.isTop5 = (index + 1);
       top5Arr.push(item.varde);
       return item;
     });
+    const top5 = requested;
     if (this.props.competences.length > 10) {
       this.props.competences.forEach((item, index) => {
         if (!top5Arr.includes(item.varde)) {
@@ -350,17 +352,18 @@ export class ListPage extends React.Component {
           >Klar</span>*/}
           <h1>Välj kompetenser</h1>
         </div>
-
-
+        {/*<div className={styles.matchDescription}>
+          <p>Kompetenser som arbetsgivare efterfrågar just nu</p>
+        </div>*/}
+        {<h2 className={styles.competenceCriteriaSub}>Kompetenser som arbetsgivare efterfrågar just nu</h2>}
         {!!this.props.competences.length &&
           <div>
-            {(this.props.competences.length > 10) &&
+            {(this.props.competences.length > 10) && false &&
               <div>
                 <span
                   className={styles.amount}
                   ref={(r) => summaryHeaders.push({ el: r, text: 'Mest efterfrågade kompetenserna' })}
                 >
-                  {/*Mest efterfrågade kompetenserna {this.createSearchSummary()}*/}
                   Mest efterfrågade
                 </span>
                 {/*<div className={styles.doughnutWrapper}>
@@ -387,9 +390,19 @@ export class ListPage extends React.Component {
               ref={(r) => summaryHeaders.push({ el: r, text: 'Alla efterfrågade kompetenserna' })}
             >
               {/*Alla efterfrågade kompetenser {this.createSearchSummary()}*/}
-              {this.props.competences.length > 10 ? 'Efterfrågas också' : 'Efterfrågas för din sökning'}
+              {/*this.props.competences.length > 10 ? 'Efterfrågas också' : 'Efterfrågas för din sökning'*/}
+              <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
+                <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Sortering&nbsp;
+                  <span className={styles.caret + " iosIcon"}></span>
+                </button>
+                {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#">Publiceringsdatum</a></li>
+                  <li><a href="#">Sista ansökningsdatum</a></li>
+                </ul>*/}
+              </div>
             </span>
-            <List items={competencesFiltered} component={CompetenceListItem} />
+            <List items={requested} component={CompetenceListItem} />
           </div>
         }
         {!this.props.competences.length &&
@@ -1093,7 +1106,10 @@ export class ListPage extends React.Component {
     // console.log(this.props.additionalAds);
 
     const actionsheetMenu = this.props.currentTab === 'match' ?
-      [{content: 'Matchningsgrad'}, {content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}] :
+      (this.state.matchningSelectionOpen ?
+        [{content: 'Mest efterfrågade'}, {content: 'Alfabetiskt'}] :
+        [{content: 'Matchningsgrad'}, {content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}]
+      ) :
       [{content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}];
     const {
       occupations: ogOccupations,

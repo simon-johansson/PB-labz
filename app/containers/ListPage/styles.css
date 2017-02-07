@@ -593,6 +593,13 @@ label {
   z-index: 999;
 }
 
+.competenceCriteriaSub {
+  font-size: 14px;
+  width: 100%;
+  padding: 0 10px 15px;
+  font-weight: lighter;
+}
+
 .experienceSelectionWrapper {
   width: 100%;
   padding: 0 10px;
