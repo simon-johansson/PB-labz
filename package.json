@@ -53,7 +53,6 @@
     "*.js": "lint:eslint",
     "*.css": "stylelint"
   },
-  "pre-commit": "lint:staged",
   "babel": {
     "presets": [
       [
