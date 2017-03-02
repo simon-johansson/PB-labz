@@ -64,6 +64,26 @@ export class ExperienceSelector extends React.Component {
     }
   }
 
+  readableExperience() {
+    switch (this.state.hasExperience) {
+      case 0:
+        return 'Ingen erfarenhet';
+        break;
+      case 1:
+        return 'Mindre än 1 års erfarenhet';
+        break;
+      case 2:
+        return '1-2 års erfarenhet';
+        break;
+      case 3:
+        return '2-4 års erfarenhet';
+        break;
+      case 4:
+        return '5 års erfarenhet eller mer';
+        break;
+    }
+  }
+
   render() {
     // console.log(this.props.knownExperiences);
     const item = this.props.item;
@@ -71,13 +91,7 @@ export class ExperienceSelector extends React.Component {
     return (
       <div className={styles.experience}>
         <span className={styles.experienceOccupation}>{item.efterfragat}</span>
-        <div className={styles.years}>
-          <span onClick={this.setExperience.bind(this, 0)}>ingen</span>
-          <span onClick={this.setExperience.bind(this, 1)}>0-1 år</span>
-          <span onClick={this.setExperience.bind(this, 2)}>1-2 år</span>
-          <span onClick={this.setExperience.bind(this, 3)}>2-4 år</span>
-          <span onClick={this.setExperience.bind(this, 4)}>+4 år</span>
-        </div>
+        <span className={styles.selectedExperience}>{this.readableExperience()}</span>
         <Slider
           value={this.state.hasExperience}
           min={0}
@@ -86,6 +100,13 @@ export class ExperienceSelector extends React.Component {
           orientation='horizontal'
           onChange={this.setExperience.bind(this)}
         />
+        <div className={styles.years}>
+          <span onClick={this.setExperience.bind(this, 0)}>0<figure>|</figure></span>
+          <span onClick={this.setExperience.bind(this, 1)}>{/*0-1 år*/}<figure>|</figure></span>
+          <span onClick={this.setExperience.bind(this, 2)}>{/*1-2 år*/}<figure>|</figure></span>
+          <span onClick={this.setExperience.bind(this, 3)}>{/*2-4 år*/}<figure>|</figure></span>
+          <span onClick={this.setExperience.bind(this, 4)}>+5 år<figure>|</figure></span>
+        </div>
       </div>
     )
   }

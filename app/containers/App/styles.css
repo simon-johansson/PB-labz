@@ -106,17 +106,18 @@ body.fontLoaded {
 
 :global(.rangeslider-horizontal) {
   height: 5px;
+  z-index: 998;
 }
 
 :global(.rangeslider-horizontal .rangeslider__fill) {
-  background: #BAD7E8;
+  background: #f27b24;
 }
 
 :global(.rangeslider-horizontal .rangeslider__handle) {
   background: #335467;
   width: 30px;
   height: 30px;
-  top: -12px;
+  top: -16px;
 }
 
 :global(.react-ios-switch-Switch-handle) {

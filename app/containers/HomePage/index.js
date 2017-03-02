@@ -59,7 +59,9 @@ import IosMenu from 'components/IosMenu';
 import Button from 'components/Button';
 import H2 from 'components/H2';
 import List from 'components/List';
+import ListSeperated from 'components/ListSeperated';
 import ListItem from 'components/ListItem';
+import ListItemSeperated from 'components/ListItemSeperated';
 import LoadingIndicator from 'components/LoadingIndicator';
 
 import styles from './styles.css';
@@ -230,12 +232,13 @@ export class HomePage extends React.Component {
 
       return (
         <div
-          className={styles.savedSearchesWrapper}
+          className={this.state.editSaved ? styles.editSavedSearchesWrapper : styles.savedSearchesWrapper}
           onClick={!this.state.editSaved ? this.onClickPreviousSearch.bind(this, item) : () => {}}
         >
           <div className={styles.previousSearcheParameters}>
             {item.notify &&
-              <span className={styles.bell + ' glyphicon glyphicon-bell'} />
+              <span className={styles.bell + ' iosIcon'}></span>
+              /*<span className={styles.bell + ' glyphicon glyphicon-bell'} />*/
             }
             <span className={styles.occupations}>{occupations}</span> <br />
             <span className={styles.small}>{locations}</span>
@@ -326,7 +329,7 @@ export class HomePage extends React.Component {
               </div>
             </div> :
             <div>
-              <span className={styles.previousSearcheTime}>{moment(item.time).calendar(null, momentOptions)}</span>
+              {/*<span className={styles.previousSearcheTime}>{moment(item.time).calendar(null, momentOptions)}</span>*/}
               <span className={styles.chevronIcon + ' iosIcon'}></span>
             </div>
           }
@@ -397,28 +400,41 @@ export class HomePage extends React.Component {
             </h1>
           </div>
 
+          {!(!this.state.savedSearches.length && !this.state.previousSearchs.length) &&
+            <button
+              className={styles.searchButton + ' btn btn-default'}
+              onClick={this.onSeachButtonClick}
+            >
+              <span className={styles.searchIcon + " iosIcon"}></span>
+              Ny sökning
+            </button>
+          }
+
           <div className={(!this.state.savedSearches.length && !this.state.previousSearchs.length) ? styles.firstWelcome : styles.welcome}>
             {!this.state.savedSearches.length && !this.state.previousSearchs.length &&
               <p>Välkommen till Platsbanken!</p>
             }
-            <p>
+            <p className={styles.amount}>
+              Just nu,&nbsp;
               <span className={styles.totalAmount}>
                 { !this.props.totalAmount ?
                   <LoadingIndicator options={{size: 'small', color: 'dark'}} /> :
                   `${this.props.totalAmount} `
                 }
               </span>
-              lediga jobb just nu
+              lediga jobb.
             </p>
           </div>
 
-          <button
-            className={styles.searchButton + ' btn btn-default'}
-            onClick={this.onSeachButtonClick}
-          >
-            <span className={styles.searchIcon + " iosIcon"}></span>
-            Ny sökning
-          </button>
+          {(!this.state.savedSearches.length && !this.state.previousSearchs.length) &&
+            <button
+              className={styles.searchButton + ' btn btn-default'}
+              onClick={this.onSeachButtonClick}
+            >
+              <span className={styles.searchIcon + " iosIcon"}></span>
+              Ny sökning
+            </button>
+          }
 
           <div className={styles.latestSearches}>
             {!!this.state.savedSearches.length &&
@@ -432,11 +448,11 @@ export class HomePage extends React.Component {
                     >
                       <span className={styles.pencilIcon + ' iosIcon'}></span>
                       &nbsp;
-                      { this.state.editSaved ? 'Klar' : 'Redigera' }
+                      { this.state.editSaved ? 'Klar' : 'Ändra' }
                     </span>
                   }
                 </span>
-                <List items={this.savedSearches()} component={ListItem} />
+                <ListSeperated items={this.savedSearches()} component={ListItemSeperated} />
               </div>
             }
 
@@ -451,11 +467,11 @@ export class HomePage extends React.Component {
                     >
                       <span className={styles.pencilIcon + ' iosIcon'}></span>
                       &nbsp;
-                      { this.state.editPrevious ? 'Klar' : 'Redigera' }
+                      { this.state.editPrevious ? 'Klar' : 'Ändra' }
                     </span>
                   }
                 </span>
-                <List items={this.previousSearches()} component={ListItem} />
+                <ListSeperated items={this.previousSearches()} component={ListItemSeperated} />
               </div>
             }
           </div>
@@ -475,7 +491,7 @@ export class HomePage extends React.Component {
                 className={styles.leftConfirmButton}
                 onClick={this.onSaveConfirm.bind(this, true)}
               >
-                <span className={styles.bell + ' glyphicon glyphicon-bell'} />
+                <span className={styles.bell + ' iosIcon'}></span>
                 Ja
               </div>
               <div

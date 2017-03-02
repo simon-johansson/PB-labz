@@ -1,6 +1,7 @@
 import React from 'react';
 
 import gubbe from './gubbe.png';
+import searchIcon from './group6@3x.png';
 import styles from './styles.css';
 
 export class SadFace extends React.Component {
@@ -11,8 +12,8 @@ export class SadFace extends React.Component {
   render() {
     return (
       <div className={styles.imageWrapper}>
-        <img className={styles.gubbe} src={gubbe} />
-        <p>Inga jobb hittades {this.props.summary}</p>
+        <img className={styles.searchIcon} src={searchIcon} />
+        <p>Inga jobb hittades för <br/><b><i>"{this.props.summary.split('för ')[1]}"</i></b></p>
       </div>
     );
   }

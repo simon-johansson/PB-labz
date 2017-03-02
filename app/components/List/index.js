@@ -14,6 +14,7 @@ function List(props) {
         item={item}
         click={props.click}
         options={props.options}
+        isTips={props.isTips}
       />
     ));
   } else {
@@ -22,7 +23,7 @@ function List(props) {
   }
 
   return (
-    <div className={styles.listWrapper}>
+    <div className={props.isTips ? styles.tipsListWrapper : styles.listWrapper}>
       <ul className={styles.list}>
         {content}
       </ul>

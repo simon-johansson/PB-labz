@@ -68,6 +68,7 @@ import LoadingIndicator from 'components/LoadingIndicator';
 
 import styles from './styles.css';
 import gradient from './gradient.png';
+import gpsIcon from './group@3x.png';
 
 export class FilterPage extends React.Component {
   constructor(props) {
@@ -333,17 +334,22 @@ export class FilterPage extends React.Component {
                     <span className={styles.placeholderIcon + ' iosIcon'}></span>
                     Skriv Kommun/Län/Land
                   </span> :
-                  'Lägg till Kommun/Län/Land...'
+                  'Lägg till kommun/län/land...'
                 }
                 </span>
                 { !this.props.locations.size &&
-                  <span
+                  <img
+                    onClick={this.onGPS.bind(this)}
+                    className={styles.gpsIcon}
+                    src={gpsIcon}
+                  />
+                  /*<span
                     className={styles.gps}
                     onClick={this.onGPS.bind(this)}
                   >
                     <span className={styles.gpsIcon + ' iosIcon'}></span>
                     GPS
-                  </span>
+                  </span>*/
                 }
               </div>
             </div>
@@ -389,12 +395,12 @@ export class FilterPage extends React.Component {
             </div>
           </section>*/}
 
-          <p className={styles.sectionHeader}>Filtrera</p>
+          {/*<p className={styles.sectionHeader}>Filtrera</p>*/}
+          <p className={styles.subTitle}>Anställningstyp</p>
           <section className={styles.sortingWrapper}>
 
             {/*<hr className={styles.noMarginTop} />*/}
 
-            <p className={styles.subTitle}>Anställningstyp</p>
             {/*<div className={styles.buttonWrapper}>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Tillsvidareanställning</button>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Visstidsanställning</button>
@@ -411,6 +417,7 @@ export class FilterPage extends React.Component {
                 />
                 <div className={styles.rowOverlay} onClick={this.setEmployment.bind(this, 0)} />
               </div>
+              <hr className={styles.filterDivider} />
               <div className={styles.switchWrapperRow}>
                 <span className={styles.switchWrapperTitle}>Visstidsanställning</span>
                 <Switch
@@ -420,6 +427,7 @@ export class FilterPage extends React.Component {
                 />
                 <div className={styles.rowOverlay} onClick={this.setEmployment.bind(this, 1)} />
               </div>
+              <hr className={styles.filterDivider} />
               <div className={styles.switchWrapperRow}>
                 <span className={styles.switchWrapperTitle}>Sommarjobb / feriejobb</span>
                 <Switch
@@ -429,6 +437,7 @@ export class FilterPage extends React.Component {
                 />
                 <div className={styles.rowOverlay} onClick={this.setEmployment.bind(this, 2)} />
               </div>
+              <hr className={styles.filterDivider} />
               <div className={styles.switchWrapperRow}>
                 <span className={styles.switchWrapperTitle}>Behovsanställning / poolanställning</span>
                 <Switch
@@ -439,10 +448,11 @@ export class FilterPage extends React.Component {
                 <div className={styles.rowOverlay} onClick={this.setEmployment.bind(this, 3)} />
               </div>
             </div>
+          </section>
 
-            <br />
+          <p className={styles.subTitle}>Omfattning</p>
+          <section className={styles.sortingWrapper}>
 
-            <p className={styles.subTitle}>Omfattning</p>
             {/*<div className={styles.buttonWrapper}>
               <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Heltid</button>
               <button onClick={this.toggleActive.bind(this)}>Deltid</button>
@@ -457,6 +467,7 @@ export class FilterPage extends React.Component {
                 />
                 <div className={styles.rowOverlay} onClick={this.setAmount.bind(this, 0)} />
               </div>
+              <hr className={styles.filterDivider} />
               <div className={styles.switchWrapperRow}>
                 <span className={styles.switchWrapperTitle}>Deltid</span>
                 <Switch
@@ -467,10 +478,10 @@ export class FilterPage extends React.Component {
                 <div className={styles.rowOverlay} onClick={this.setAmount.bind(this, 1)} />
               </div>
             </div>
+          </section>
 
-            <br />
-
-            <p className={styles.subTitle}>Publiceringsdatum</p>
+          <p className={styles.subTitle}>Publiceringsdatum</p>
+          <section className={styles.sortingWrapper}>
             <div className={styles.radioButtonGroup}>
               <div
                 className={styles.radioWrapperRow}
@@ -483,6 +494,7 @@ export class FilterPage extends React.Component {
                   />
                 </div>
               </div>
+              <hr className={styles.filterDivider} />
               <div
                 className={styles.radioWrapperRow}
                 onClick={() => this.setState({date: 'day'})}
@@ -494,6 +506,7 @@ export class FilterPage extends React.Component {
                   />
                 </div>
               </div>
+              <hr className={styles.filterDivider} />
               <div
                 className={styles.radioWrapperRow}
                 onClick={() => this.setState({date: 'week'})}
@@ -505,6 +518,7 @@ export class FilterPage extends React.Component {
                   />
                 </div>
               </div>
+              <hr className={styles.filterDivider} />
               <div
                 className={styles.radioWrapperRow}
                 onClick={() => this.setState({date: 'month'})}
@@ -552,6 +566,11 @@ export class FilterPage extends React.Component {
               </div>
             </form>*/}
           </section>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
 
           {this.shouldShowSearchButton() &&
             <div>

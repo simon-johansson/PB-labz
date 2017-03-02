@@ -33,11 +33,14 @@
   right: 0;
   top: 10px;
   text-transform: capitalize;
+  font-size: 13px;
+  color: #6f7578;
 }
 
 .showMore {
-  color: #32749d;
-  font-style: italic;
+  color: #06769f;
+  font-weight: 400;
+  // font-style: italic;
 }
 
 .itemName {
@@ -47,6 +50,7 @@
   text-overflow: ellipsis;
   display: block;
   text-align: left;
+  font-size: 13px;
 }
 
 .gps {
@@ -62,4 +66,10 @@
 }
 
 .gpsIcon {
+}
+
+.goToTips {
+  vertical-align: middle;
+  margin-left: 10px;
+  font-weight: bold;
 }

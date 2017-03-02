@@ -8,18 +8,25 @@
 
 .tipsWrapper h2 {
   // color: #82BBFB;
-  color: #32749d;
+  font-size: 36px;
+  color: #478500;
   display: inline-block;
+  font-weight: 300;
   vertical-align: top;
 }
 
-.tipsWrapper p {
+.listHeader {
   // width: 200px;
   display: block;
   margin: auto;
-  font-weight: bold;
+  // font-weight: bold;
   margin: 0 0 5px 10px;
   text-align: left;
+  text-transform: uppercase;
+}
+
+.dynamicText {
+  font-weight: bold;
 }
 
 .relatedTag {
@@ -44,7 +51,10 @@
 .tagWrapper {
   margin-top: 10px;
   margin-bottom: 10px;
-  background: #CAE3EC;
+  display: block;
+  font-size: 13px;
+
+  // background: #CAE3EC;
   padding: 8px 0 0;
   position: relative;
 
@@ -93,4 +103,36 @@
   background: white;
   display: inline-block;
   margin-right: 5px;
+}
+
+.noTipsToShow {
+  text-align: center;
+  width: 280px;
+  margin: auto;
+}
+
+.goToFilter {
+  background: #06769F;
+  // background: #478500;
+  margin: 30px auto;
+  display: block;
+  color: white;
+  border: none;
+  // width: 94%;
+  width: 100%;
+  // left: 10%;
+  // position: fixed;
+  // bottom: 0px;
+  display: block;
+  // z-index: 999;
+  height: 57px;
+  border-radius: 100px;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.searchIcon {
+  font-size: 30px;
+  margin-right: 10px;
+  vertical-align: middle;
 }

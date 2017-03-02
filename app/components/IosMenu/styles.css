@@ -6,7 +6,7 @@
   height: 60px;
   // border: 1px solid #000;
   background: #ffffff;
-  border-top: 1px solid #06769f;
+  border-top: 1px solid #ebeef0;
 }
 
 .iosMenu {
@@ -23,8 +23,18 @@
   vertical-align: bottom;
 }
 
+.iconWrapper:active,
+.iconWrapperActive:active {
+  // background: #2b4455 !important;
+}
+
+.iconWrapper:active .text,
+.iconWrapperActive:active .text {
+  // color: white !important;
+}
+
 .iconWrapperActive {
-  background: #d2dbe0;
+  background: #F2F4F5;
 }
 
 .iconWrapperActive .icon,
@@ -35,12 +45,26 @@
 }
 
 .icon,
-.starIcon {
+.starIcon,
+.afLogo,
+.savedIcon {
   font-size: 20px;
-  margin-top: 10px;
-  margin-bottom: 4px;
   height: 27px;
-  color: #6f7578;
+  color: #06769f;
+}
+
+.afLogo {
+  margin-bottom: 9px;
+  margin-top: 12px;
+  width: 41px;
+  height: auto;
+}
+
+.savedIcon {
+  margin-bottom: 7px;
+  margin-top: 10px;
+  width: 25px;
+  height: auto;
 }
 
 .starIcon,
@@ -53,6 +77,6 @@
 .text {
   font-size: 10px;
   display: block;
-  color: #6f7578;
+  color: #06769f;
   margin-top: -2px;
 }

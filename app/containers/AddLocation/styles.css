@@ -14,8 +14,10 @@
 }
 
 .searchForm h1 {
-  font-size: 20px;
+  font-size: 17px;
   text-align: center;
+  font-weight: normal;
+  letter-spacing: -0.4px;
 }
 
 .centered {
@@ -34,11 +36,35 @@ label {
 
 .input {
   outline: none;
-  border-bottom: 1px dotted #999;
+  // border-bottom: 1px dotted #999;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  width: calc(100% - 27px);
 }
 
 .cancel {
   position: absolute;
   left: 12px;
-  top: 17px;
+  top: 0px;
+  padding-top: 2px;
+  height: 50px;
+  line-height: 48px;
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.formGroup {
+  position: relative;
+}
+
+.gpsIcon {
+  // float: right;
+  // color: #345468;
+  width: 69px;
+  position: absolute;
+  top: 7px;
+  right: 20px;
+  // margin-top: 7px;
+  // margin-right: 2px;
 }

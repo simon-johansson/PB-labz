@@ -1,12 +1,17 @@
 /* Gives the scrollbar rounded edges via overflow: hidden */
-.listWrapper {
+.listWrapper,
+.tipsListWrapper {
   padding: 0;
   margin: 0;
   width: 100%;
   background-color: white;
-  border: 1px solid #e3e3e3;
+  // border: 1px solid #e3e3e3;
   border-radius: 3px;
   overflow: hidden;
+}
+
+.tipsListWrapper {
+  background: #d9edf7;
 }
 
 .list {
@@ -16,4 +21,9 @@
   // max-height: 30em;
   // overflow-y: auto;
   padding: 0 1em;
+  border-bottom: 1px solid #ebeef0;
+}
+
+.list li:last-child hr {
+  display: none !important;
 }

@@ -40,6 +40,7 @@ import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
 
 import styles from './styles.css';
+import gpsIcon from './group@3x.png';
 
 export class AddLocation extends React.Component {
 
@@ -65,6 +66,12 @@ export class AddLocation extends React.Component {
   onListItemClick(item) {
     // console.log(item);
     this.props.onAddLocation(item);
+    this.goBack();
+  }
+
+  onGPS(evt) {
+    evt.stopPropagation();
+    this.props.onAddLocation({ id: '01', namn: 'Stockholms län', typ: 'LAN' });
     this.goBack();
   }
 
@@ -97,11 +104,11 @@ export class AddLocation extends React.Component {
       };
       const EmptyComponent = () => (
         <div>
-          <OccupationListItem
-            item={{namn: 'Aktuell ort', typ: 'GPS'}}
-            click={this.onListItemClick.bind(this)}
-          />
-          {prevLocations()}
+          {/*<OccupationListItem
+                      item={{namn: 'Aktuell ort', typ: 'GPS'}}
+                      click={this.onListItemClick.bind(this)}
+                    />
+                    {prevLocations()}*/}
         </div>
       );
       mainContent = (<List component={EmptyComponent} />);
@@ -130,14 +137,15 @@ export class AddLocation extends React.Component {
           <section className={styles.textSection}>
             <div className={styles.searchForm}>
               <h1>Jag vill jobba i</h1>
-              <span className={styles.cancel} onClick={this.goBack}>
-                Avbryt
-              </span>
+              <span
+                className={styles.cancel + ' iosIcon'}
+                onClick={this.goBack}
+              ></span>
               <form onSubmit={(e) => { e.preventDefault() }} autoComplete="off">
-                <div className="form-group">
+                <div className={styles.formGroup + " form-group"}>
                   <input
                     type="text"
-                    className="form-control"
+                    className={styles.input + " form-control"}
                     id="location"
                     placeholder="Kommun, Län eller Land"
                     value={this.props.query}
@@ -146,6 +154,11 @@ export class AddLocation extends React.Component {
                     autoCorrect="off"
                     onChange={this.props.onChangeQuery}
                     ref="locationInput"
+                  />
+                  <img
+                    onClick={this.onGPS.bind(this)}
+                    className={styles.gpsIcon}
+                    src={gpsIcon}
                   />
                 </div>
               </form>

@@ -4,10 +4,11 @@ import styles from './styles.css';
 
 function ListItem(props) {
   return (
-    <li className={props.className || styles.item}>
+    <li className={props.isTips ? styles.tipsItem : styles.item}>
       <div className={styles.itemContent}>
         {props.item}
       </div>
+      <hr className={styles.divider} />
     </li>
   );
 }

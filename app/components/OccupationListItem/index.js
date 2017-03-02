@@ -47,7 +47,12 @@ export class OccupationListItem extends React.Component { // eslint-disable-line
         </span>
       );
     } else {
-      return <span className={styles.right}>{item.typ ? this.getTypeText(item.typ) : antal + ' jobb'}</span>;
+      return <span className={styles.right}>
+        {item.typ ? this.getTypeText(item.typ) : antal + ' jobb'}
+        {this.props.isTips &&
+          <span className={styles.goToTips + " iosIcon"}></span>
+        }
+      </span>;
     }
   }
 
@@ -72,7 +77,7 @@ export class OccupationListItem extends React.Component { // eslint-disable-line
 
     // Render the content into a list item
     return (
-      <ListItem key={`list-item-${item.id}`} item={content} />
+      <ListItem key={`list-item-${item.id}`} item={content} isTips={this.props.isTips} />
     );
   }
 }

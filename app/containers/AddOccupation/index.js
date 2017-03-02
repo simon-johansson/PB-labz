@@ -202,12 +202,12 @@ export class AddOccupation extends React.Component {
     else if (!this.props.query && this.props.related) {
       mainContent = (
         <div>
-          <p className={styles.suggestions}>Yrkesförslag</p>
-          <List
-            items={this.props.related.slice(0, this.state.related)}
-            component={OccupationListItem}
-            click={this.onListItemClick.bind(this)}
-          />
+          {/*<p className={styles.suggestions}>Yrkesförslag</p>
+            <List
+              items={this.props.related.slice(0, this.state.related)}
+              component={OccupationListItem}
+              click={this.onListItemClick.bind(this)}
+            />*/}
         </div>
       );
     }
@@ -263,19 +263,19 @@ export class AddOccupation extends React.Component {
             <div className={styles.searchForm}>
               <h1>Jag vill jobba som</h1>
               {this.doneOrYrkeslista()}
-              <span className={styles.cancel} onClick={this.goBack}>
-                <span className={'glyphicon glyphicon-remove'} />
-                {/*Avbryt*/}
-              </span>
+              <span
+                className={styles.cancel + ' iosIcon'}
+                onClick={this.goBack}
+              ></span>
 
               {!this.props.params.group &&
                 <form onSubmit={this.onSubmitForm.bind(this)} autoComplete="off">
                   <div className="form-group">
                     <input
                       type="text"
-                      className="form-control"
+                      className={styles.input + " form-control"}
                       id="occupation"
-                      placeholder="Yrke, Yrkesgrupp eller Yrkesområde"
+                      placeholder="Skriv t.ex. “Gymnasielärare”"
                       value={this.props.query}
                       autoComplete="off"
                       autoCapitalize="off"
@@ -303,9 +303,9 @@ export class AddOccupation extends React.Component {
                 </form>
               }
             </div>
-            {!this.props.params.group &&
+            {/*!this.props.params.group &&
               <List items={this.yrkesguideListItem()} component={ListItem} />
-            }
+            */}
             {mainContent}
           </section>
         </div>

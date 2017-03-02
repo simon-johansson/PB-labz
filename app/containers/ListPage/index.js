@@ -70,12 +70,21 @@ import IosMenu from 'components/IosMenu';
 import RutTips from 'components/RutTips';
 import SadFace from 'components/SadFace';
 import List from 'components/List';
+import ListSeperated from 'components/ListSeperated';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ExperienceSelector from 'components/ExperienceSelector';
 import Actionsheet from 'components/Actionsheet';
 
 import styles from './styles.css';
+import afLogo from './page1@3x.png';
+import gripper from './gripper@3x.png';
+import gradient from './gradient.png';
+import okIcon from './check@3x.png';
+import listIcon from './group4@3x.png';
+import kompetensIcon from './kompetenser@3x.png';
+import erfarenhetIcon from './erfarenheter@3x.png';
+import korkortIcon from './korkort@3x.png';
 
 let summaryHeaders = [];
 const isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
@@ -344,7 +353,8 @@ export class ListPage extends React.Component {
             className={styles.cancel}
             onClick={this.toggleCompetenceCriteriaContent.bind(this)}
           >
-            <span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />
+            <span className={styles.cancelChevron + ' iosIcon'}></span>
+            {/*<span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />*/}
           </span>
           {/*<span
             className={styles.done}
@@ -355,13 +365,12 @@ export class ListPage extends React.Component {
         {/*<div className={styles.matchDescription}>
           <p>Kompetenser som arbetsgivare efterfrågar just nu</p>
         </div>*/}
-        {<h2 className={styles.competenceCriteriaSub}>Kompetenser som arbetsgivare efterfrågar just nu</h2>}
         {!!this.props.competences.length &&
           <div>
             {(this.props.competences.length > 10) && false &&
               <div>
                 <span
-                  className={styles.amount}
+                  className={styles.amountBorder}
                   ref={(r) => summaryHeaders.push({ el: r, text: 'Mest efterfrågade kompetenserna' })}
                 >
                   Mest efterfrågade
@@ -386,9 +395,10 @@ export class ListPage extends React.Component {
               </div>
             }
             <span
-              className={styles.amount}
+              className={styles.amountBorder}
               ref={(r) => summaryHeaders.push({ el: r, text: 'Alla efterfrågade kompetenserna' })}
             >
+              <span className={styles.competenceCriteriaSub}>efterfrågas av arbetsgivare just nu</span>
               {/*Alla efterfrågade kompetenser {this.createSearchSummary()}*/}
               {/*this.props.competences.length > 10 ? 'Efterfrågas också' : 'Efterfrågas för din sökning'*/}
               <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
@@ -420,27 +430,33 @@ export class ListPage extends React.Component {
       let counter = 0;
       this.props.competences.forEach((comp, index) => {
         if (this.props.knownCompetences.includes(comp.varde)) {
-          if (this.state.showAllCompetences || counter <= 4) {
+          if (this.state.showAllCompetences || counter <= 400) {
             counter += 1;
-            content.push(
-              <div
-                className={styles.tag}
-                key={`competence-${index}`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <span className={styles.tagText}>
-                  {comp.efterfragat}
-                </span>
-              </div>
-            );
+            // content.push(
+            //   <div
+            //     className={styles.tag}
+            //     key={`competence-${index}`}
+            //     onClick={(e) => e.stopPropagation()}
+            //   >
+            //     <span className={styles.tagText}>
+            //       {comp.efterfragat}
+            //     </span>
+            //   </div>
+            // );
+            content.push(comp.efterfragat + ' & ');
           }
         }
       });
 
-      if (!this.state.showAllCompetences && content.length > 4) {
-        content.push(<span className={styles.showAll} onClick={this.onShowAllCompetences.bind(this)}>Visa alla...</span>);
-      }
+      // if (!this.state.showAllCompetences && content.length > 4) {
+      //   content.push(<span className={styles.showAll} onClick={this.onShowAllCompetences.bind(this)}>Visa alla...</span>);
+      // }
 
+      if (content.length) {
+        let last = content[content.length - 1];
+        const trimmed = last.slice(0, -2);
+        content[content.length - 1] = trimmed;
+      }
       return content;
     };
 
@@ -466,21 +482,26 @@ export class ListPage extends React.Component {
               break;
           }
           if (item.get('id') === exp.varde) {
-            content.push(
-              <div
-                className={styles.tag}
-                key={`experience-${index}`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <span className={styles.tagText}>
-                  {exp.efterfragat} ({years})
-                </span>
-              </div>
-            );
+            // content.push(
+            //   <div
+            //     className={styles.tag}
+            //     key={`experience-${index}`}
+            //     onClick={(e) => e.stopPropagation()}
+            //   >
+            //     <span className={styles.tagText}>
+            //       {exp.efterfragat} ({years})
+            //     </span>
+            //   </div>
+            // );
+            content.push(`${exp.efterfragat} (${years}), `);
           }
         });
       });
-
+      if (content.length) {
+        let last = content[content.length - 1];
+        const trimmed = last.slice(0, -2);
+        content[content.length - 1] = trimmed;
+      }
       return content;
     };
 
@@ -488,19 +509,25 @@ export class ListPage extends React.Component {
       const content = [];
       this.props.driverLicenses.forEach((dl, index) => {
         if (this.props.knownDriversLicenses.includes(dl.varde)) {
-          content.push(
-            <div
-              className={styles.tag}
-              key={`drivers-license-${index}`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span className={styles.tagText}>
-                {dl.efterfragat}
-              </span>
-            </div>
-          );
+          // content.push(
+          //   <div
+          //     className={styles.tag}
+          //     key={`drivers-license-${index}`}
+          //     onClick={(e) => e.stopPropagation()}
+          //   >
+          //     <span className={styles.tagText}>
+          //       {dl.efterfragat}
+          //     </span>
+          //   </div>
+          // );
+          content.push(dl.efterfragat + ', ');
         }
       });
+      if (content.length) {
+        let last = content[content.length - 1];
+        const trimmed = last.slice(0, -2);
+        content[content.length - 1] = trimmed;
+      }
       return content;
     };
 
@@ -511,9 +538,9 @@ export class ListPage extends React.Component {
       <div className={styles.matchCriteriaPopover}>
         <div className={styles.searchFormSticky}>
           <span
-            className={styles.cancel}
+            className={styles.cancelCross + ' iosIcon'}
             onClick={this.cancelMatchCriteriaPopover.bind(this, !!renderKnownCompetences().length)}
-          >Stäng</span>
+          ></span>
           {/*<h1>Matchningskriterier</h1>*/}
           <div className={styles.matchCriteriaSearchSummary}>
             <div className={styles.matchCriteriaSearchSummaryText}>
@@ -526,7 +553,7 @@ export class ListPage extends React.Component {
         </div>
 
         <div className={styles.matchDescription}>
-          <p>Ange vad du kan för att se jobben som passar dig bäst</p>
+          <p>Fyll i det som stämmer in på dig för att se jobben som passar dig bäst.</p>
         </div>
 
         <div
@@ -534,9 +561,10 @@ export class ListPage extends React.Component {
           onClick={!this.state.showCompetenceCriteriaContent && this.toggleCompetenceCriteriaContent.bind(this)}
         >
           <header className={styles.criteriaSelectionHeader}>
+            <img className={styles.kompetensIcon} src={kompetensIcon} />
             Kompetenser
             {/*<span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />*/}
-            <span className={styles.pencilIcon + ' glyphicon glyphicon-chevron-right'}></span>
+            <span className={styles.pencilIcon + ' iosIcon'}></span>
           </header>
           {this.state.showCompetenceCriteriaContent &&
             <section className={styles.criteriaSelectionView}>
@@ -546,7 +574,7 @@ export class ListPage extends React.Component {
 
           {!this.state.showCompetenceCriteriaContent && !!renderKnownCompetences().length &&
             <section className={styles.criteriaSelectionContent}>
-              {renderKnownCompetences()}
+              <span className={styles.compTags}>{renderKnownCompetences()}</span>
             </section>
           }
         </div>
@@ -555,9 +583,10 @@ export class ListPage extends React.Component {
           onClick={!this.state.showExperienceCriteriaContent && this.toggleExperienceCriteriaContent.bind(this)}
         >
           <header className={styles.criteriaSelectionHeader}>
+            <img className={styles.erfarenhetIcon} src={erfarenhetIcon} />
             Arbetslivserfarenheter
             {/*<span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />*/}
-            <span className={styles.pencilIcon + ' glyphicon glyphicon-chevron-right'}></span>
+            <span className={styles.pencilIcon + ' iosIcon'}></span>
           </header>
           {this.state.showExperienceCriteriaContent &&
             <section className={styles.criteriaSelectionView}>
@@ -567,7 +596,7 @@ export class ListPage extends React.Component {
 
           {!this.state.showExperienceCriteriaContent && !!renderKnownExperiences().length &&
             <section className={styles.criteriaSelectionContent}>
-              {renderKnownExperiences()}
+              <span className={styles.expTags}>{renderKnownExperiences()}</span>
             </section>
           }
         </div>
@@ -576,9 +605,10 @@ export class ListPage extends React.Component {
           onClick={!this.state.showDriversLicenseCriteriaContent && this.toggleDriversLicenseCriteriaContent.bind(this)}
         >
           <header className={styles.criteriaSelectionHeader}>
+            <img className={styles.korkortIcon} src={korkortIcon} />
             Körkort
             {/*<span className={styles.pencilIcon + ' glyphicon glyphicon-pencil'} />*/}
-            <span className={styles.pencilIcon + ' glyphicon glyphicon-chevron-right'}></span>
+            <span className={styles.pencilIcon + ' iosIcon'}></span>
           </header>
           {this.state.showDriversLicenseCriteriaContent &&
             <section className={styles.criteriaSelectionView}>
@@ -588,7 +618,7 @@ export class ListPage extends React.Component {
 
           {!this.state.showDriversLicenseCriteriaContent && !!renderKnownDriversLicenses().length &&
             <section className={styles.criteriaSelectionContent}>
-              {renderKnownDriversLicenses()}
+              <span className={styles.dlTags}>{renderKnownDriversLicenses()}</span>
             </section>
           }
         </div>
@@ -679,15 +709,19 @@ export class ListPage extends React.Component {
         <div className={styles.matchWrapper}>
           {this.criteriaSelection()}
           {!!matchingJobs &&
-            <button
-              className={styles.showMatchingButton + ' btn btn-default'}
-              onClick={this.showMatchingJobs.bind(this)}
-            >
-              Visa matchande jobb
-              { !!matchingJobs &&
-                ` (${matchingJobs})`
-              }
-            </button>
+            <div>
+              <button
+                className={styles.showMatchingButton + ' btn btn-default'}
+                onClick={this.showMatchingJobs.bind(this)}
+              >
+                Visa
+                { !!matchingJobs &&
+                  ` ${matchingJobs} `
+                }
+                matchande jobb
+              </button>
+              <img className={styles.gradientImg} src={gradient} />
+            </div>
           }
         </div>
       );
@@ -717,14 +751,14 @@ export class ListPage extends React.Component {
       }
     });
     const experiences = this.props.experiences.map((exp, index) => {
-      if (!top5Arr.includes(exp.varde)) {
+      // if (!top5Arr.includes(exp.varde)) {
         return (
           <ExperienceSelector
             key={'experience-selector-' + index}
             item={exp}
           />
         );
-      }
+      // }
     });
 
     const data = {
@@ -791,7 +825,8 @@ export class ListPage extends React.Component {
             className={styles.cancel}
             onClick={this.toggleExperienceCriteriaContent.bind(this)}
           >
-            <span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />
+            <span className={styles.cancelChevron + ' iosIcon'}></span>
+            {/*<span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />*/}
           </span>
           {/*<span
             className={styles.done}
@@ -808,14 +843,25 @@ export class ListPage extends React.Component {
                 options={opt}
               />
             </div>*/}
-            {(experiences.length > 5) &&
+            {/*(experiences.length > 5) &&
               <div>
                 <span className={styles.amount}>Mest efterfrågade</span>
                 {top5}
               </div>
-            }
+            */}
             <span className={styles.amount}>
-              {(experiences.length > 5) ? 'Efterfrågas också' : 'Efterfrågas för din sökning'}
+              {/*(experiences.length > 5) ? 'Efterfrågas också' : 'Efterfrågas för din sökning'*/}
+              <span className={styles.competenceCriteriaSub}>efterfrågas av arbetsgivare just nu</span>
+              <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
+                <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Sortering&nbsp;
+                  <span className={styles.caret + " iosIcon"}></span>
+                </button>
+                {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#">Publiceringsdatum</a></li>
+                  <li><a href="#">Sista ansökningsdatum</a></li>
+                </ul>*/}
+              </div>
             </span>
             {experiences}
           </div>
@@ -874,7 +920,8 @@ export class ListPage extends React.Component {
             className={styles.cancel}
             onClick={this.toggleDriversLicenseCriteriaContent.bind(this)}
           >
-            <span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />
+            <span className={styles.cancelChevron + ' iosIcon'}></span>
+            {/*<span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />*/}
           </span>
           {/*<span
             className={styles.done}
@@ -887,8 +934,18 @@ export class ListPage extends React.Component {
           {
             !!this.props.driverLicenses.length ?
             <div>
-              <span className={styles.amount}>
-                Efterfrågade körkort för din sökning
+              <span className={styles.amountBorder}>
+                <span className={styles.competenceCriteriaSub}>efterfrågas av arbetsgivare just nu</span>
+                <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
+                  <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Sortering&nbsp;
+                    <span className={styles.caret + " iosIcon"}></span>
+                  </button>
+                  {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="#">Publiceringsdatum</a></li>
+                    <li><a href="#">Sista ansökningsdatum</a></li>
+                  </ul>*/}
+                </div>
               </span>
               <List items={sortedLicenses} component={DriversLicenseListItem} />
             </div> :
@@ -1142,14 +1199,16 @@ export class ListPage extends React.Component {
               <span
                 className={styles.cancel}
                 onClick={this.removeAdditionalSearchParams.bind(this, param, index)}
-              >Avbryt</span>
+              >
+                <span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />
+              </span>
               {/*<span
                 className={styles.done}
                 onClick={this.addToSearch.bind(this)}
               >Lägg till</span>*/}
               <div className={styles.matchCriteriaSearchSummary}>
                 <div className={styles.matchCriteriaSearchSummaryText}>
-                  <span>{occupations}</span>
+                  <span>Tips: {occupations}</span>
                   <span className={styles.small}>{locations}</span>
                 </div>
               </div>
@@ -1160,11 +1219,11 @@ export class ListPage extends React.Component {
                 className={styles.amount}
                 ref={(r) => summaryHeaders.push({ el: r, text: inputSummary })}
               >
-                Hittade {this.props.additionalAds.get(index) ? this.props.additionalAds.get(index).amount : '...'} jobb {/*searchSummary*/}
-                <div className={styles.addToSearchTag} onClick={this.addToSearch.bind(this)}>
+                Hittade <span className={styles.jobsNumber}>{this.props.additionalAds.get(index) ? this.props.additionalAds.get(index).amount : '...'}</span> jobb {/*searchSummary*/}
+                {/*<div className={styles.addToSearchTag} onClick={this.addToSearch.bind(this)}>
                   <span className='glyphicon glyphicon-plus' />
                   Lägg till i sökningen
-                </div>
+                </div>*/}
               </span>
               {/*<span
                 className={styles.rightPart + ' glyphicon glyphicon-remove-circle'}
@@ -1173,15 +1232,17 @@ export class ListPage extends React.Component {
             </div>
             {!this.props.additionalAds.get(index) ?
               <List component={LoadingIndicator} /> :
-              <List items={this.props.additionalAds.get(index).jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
+              <ListSeperated items={this.props.additionalAds.get(index).jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
             }
           </div>
-          {/*<div
+          <button
             className={styles.addToSearchButton + ' btn btn-default'}
             onClick={this.addToSearch.bind(this)}
           >
-            Lägg till {toAdd} i min sökning
-          </div>*/}
+            <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+            Lägg till i sökningen
+          </button>
+          <img className={styles.gradientImg} src={gradient} />
         </div>
       );
     });
@@ -1237,7 +1298,7 @@ export class ListPage extends React.Component {
               </ul>*/}
             </div>
           </span>
-          <List items={this.props.jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
+          <ListSeperated items={this.props.jobs.slice(0, 50)} component={JobListItem} click={this.onAdvertClick} />
           {additionalAds}
           <RutTips
             summary={this.createSearchSummary()}
@@ -1254,18 +1315,20 @@ export class ListPage extends React.Component {
         matchingContent = (
           <div className={styles.listWrapperMatchingContent}>
             <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
-              Dina matchningskriterier {/*({this.props.knownCompetences.size})*/}
-              <span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>
+              <img className={styles.okIcon} src={okIcon} />
+              <img className={styles.listIcon} src={listIcon} />
+              Justera matchningskriterier {/*({this.props.knownCompetences.size})*/}
+              {/*<span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>*/}
             </div>
             <span
               className={styles.amount}
               ref={(r) => summaryHeaders.push({ el: r, text: 'Jobb som matchar dig' })}
             >
-              {this.props.matchingJobs.length} jobb matchar dig
+              <span className={styles.jobsNumber}>{this.props.matchingJobs.length}</span> jobb matchar dig
               <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
                 <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   Sortering&nbsp;
-                  <span className="caret"></span>
+                  <span className={styles.caret + " iosIcon"}></span>
                 </button>
                 {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                   <li><a href="#">Matchningsgrad</a></li>
@@ -1274,7 +1337,7 @@ export class ListPage extends React.Component {
                 </ul>*/}
               </div>
             </span>
-            <List
+            <ListSeperated
               items={this.props.matchingJobs.slice(0, 50)}
               component={JobListItem}
               click={this.onAdvertClick}
@@ -1309,9 +1372,11 @@ export class ListPage extends React.Component {
             className={styles.stickyHeader}
             onClick={this.onStickyHeaderClick.bind(this)}
           >
-            <span className={styles.stickyHeaderText}>{this.state.stickyHeaderText}</span>
+            <span className={styles.stickyHeaderText}>
+              {this.state.stickyHeaderText}
+              <span className={styles.toTopArrow + " iosIcon"}></span>
+            </span>
             {/*<span className={styles.toTopArrow}>⬆</span>*/}
-            <span className={styles.toTopArrow + ' glyphicon glyphicon-arrow-up'} />
           </div>
         }
         <Actionsheet
@@ -1325,6 +1390,9 @@ export class ListPage extends React.Component {
               <Tappable onTap={this.openHomePage}>
                 {/*<span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />*/}
                 <span className={styles.cancelText}>
+                  <div className={styles.afLogoWrapper}>
+                    <img className={styles.afLogo} src={afLogo} />
+                  </div>
                   {/*<span className={styles.homeIcon + ' glyphicon glyphicon-home'} />*/}
                   {/*Mina sökningar*/}
                 </span>
@@ -1367,6 +1435,7 @@ export class ListPage extends React.Component {
                   </span>
                 </div>
                 <span className={styles.filter}>
+                  <img className={styles.gripper} src={gripper} />
                   Filter
                   {/*<span className={styles.filterIcon + " glyphicon glyphicon-tasks"} />*/}
                 </span>

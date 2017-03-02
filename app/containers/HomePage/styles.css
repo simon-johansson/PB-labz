@@ -7,7 +7,7 @@
   padding: 2px 10px;
   // background: #345468;
   color: #333333;
-  border-bottom: 1px solid #979797;
+  border-bottom: 1px solid #d2dbe0;
 }
 
 .searchForm h1 {
@@ -72,21 +72,16 @@ label {
   color: #333333;
 }
 
-.amount {
-  margin: 15px 10px 5px;
-  display: block;
-}
-
 .totalAmount {
-  font-weight: bold;
+  font-weight: 500;
   color: #55851C;
 }
 
 .searchButton {
   // background: #06769F;
   // background: #5E8404;
-  background: #55851C;
-  margin: 25px auto 50px;
+  background: #478500;
+  margin: 25px auto 14px;
   display: block;
   color: white;
   border: none;
@@ -118,8 +113,8 @@ label {
   text-transform: uppercase;
   margin-top: 20px;
   display: block;
-  margin-left: 10px;
-  font-size: 14px;
+  margin-left: 15px;
+  font-size: 13px;
   position: relative;
   margin-bottom: 6px;
 }
@@ -130,19 +125,25 @@ label {
 }
 
 .savedSearchesWrapper,
-.previousSearchesWrapper,
-.editSavedSearchesWrapper,
-.editPreviousSearchesWrapper {
+.editSavedSearchesWrapper {
   padding-top: 14px;
   width: 100%;
-  height: 80px;
+  height: 70px;
   align-items: center;
   // display: flex;
   // align-items: space-between;
 }
 
+.previousSearchesWrapper,
+.editPreviousSearchesWrapper {
+  padding-top: 10px;
+  width: 100%;
+  height: 60px;
+  align-items: center;
+}
+
 .editSavedSearchesWrapper {
-  height: 109px;
+  // height: 109px;
 }
 
 .editPreviousSearchesWrapper .deleteIcon{
@@ -150,16 +151,16 @@ label {
 }
 
 .previousSearcheParameters {
-  width: calc(100% - 100px);
+  width: calc(100% - 17px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
 }
 
-.savedSearchesWrapper .previousSearcheParameters,
+.editPreviousSearchesWrapper .previousSearcheParameters,
 .editSavedSearchesWrapper .previousSearcheParameters {
-  width: calc(100% - 50px);
+  width: calc(100% - 129px);
 }
 
 .small {
@@ -184,8 +185,9 @@ label {
 }
 
 .bell {
-  margin-right: 5px;
+  margin-right: 3px;
   color: gray;
+  font-weight: bold;
 }
 
 .pencil {
@@ -198,7 +200,7 @@ label {
 
   position: absolute;
   right: 8px;
-  color: gray;
+  color: #333333;
   text-transform: none;
   // font-weight: bold;
   // font-size: 15px;
@@ -213,10 +215,15 @@ label {
   width: 70px;
   position: absolute;
   top: 0;
-  right: -1em;
+  right: 0px;
   height: 100%;
   text-align: center;
-  padding-top: 30px;
+  padding-top: 20px;
+}
+
+.savedSearchesWrapper .deleteSaved,
+.editSavedSearchesWrapper .deleteSaved {
+  padding-top: 25px;
 }
 
 .updateNotify,
@@ -227,15 +234,15 @@ label {
   position: absolute;
   top: 0;
   color: white;
-  right: calc(70px - 1em);
+  right: 70px;
   height: 100%;
   text-align: center;
-  padding-top: 20px;
+  padding-top: 15px;
 }
 
 .savePrevious {
-  padding-top: 30px;
-  right: calc(70px - 1em);
+  padding-top: 20px;
+  right: 70px;
 }
 
 .deleteIcon {
@@ -281,29 +288,36 @@ label {
 .historyIcon,
 .chevronIcon {
   position: absolute;
-  right: 0;
-  top: 30px;
+  right: 15px;
+  top: 25px;
   font-size: 15px;
-  color: #0e6a97;
+  color: #6f7578;
   font-weight: bold;
+}
+
+.previousSearchesWrapper .chevronIcon {
+  top: 22px;
 }
 
 .welcome,
 .firstWelcome {
   width: 100%;
   text-align: center;
-  margin-top: 20px;
-  font-size: 20px;
+  margin-bottom: 40px;
+  font-size: 17px;
   font-weight: normal;
 }
 
 .firstWelcome {
   margin-top: 100px;
+  margin-bottom: 60px;
+  font-size: 24px;
 }
 
 .welcome p,
-.firstWelcome p{
+.firstWelcome p {
   margin-bottom: 0;
+  font-weight: 300;
 }
 
 
@@ -335,11 +349,6 @@ label {
 
 .popupText {
   padding: 0 15px;
-}
-
-.bell {
-  margin-right: 5px;
-  color: gray;
 }
 
 .leftConfirmButton,
@@ -380,9 +389,18 @@ label {
 
 .occupations {
   color: #06769f;
-  font-size: 20px;
   // font-weight: bold;
+}
+
+.savedSearchesWrapper .occupations,
+.editSavedSearchesWrapper .occupations {
+  font-size: 18px;
   font-weight: 600;
+}
+.previousSearchesWrapper .occupations,
+.editPreviousSearchesWrapper .occupations {
+  font-size: 17px;
+  font-weight: normal;
 }
 
 .noSearches {

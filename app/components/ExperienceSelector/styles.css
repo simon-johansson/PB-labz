@@ -1,42 +1,76 @@
 .experience {
   width: calc(100%);
-  margin: 10px auto 0;
-  padding: 10px;
+  margin: 15px 0 0 0px;
+  padding: 10px 10px 25px 10px;
+  overflow: hidden;
 
   background-color: white;
-  border: 1px solid #e3e3e3;
-  border-radius: 3px;
+  // border: 1px solid #e3e3e3;
+  // border-radius: 3px;
 }
 
 .experienceOccupation {
   font-weight: normal;
   margin-bottom: 5px;
   display: block;
+  font-size: 14px;
+}
+
+.selectedExperience {
+  width: 100%;
+  text-align: center;
+  color: #6f7578;
+  font-size: 13px;
+  display: block;
+  margin-top: 10px;
+}
+
+.years {
+  margin-top: 15px;
+  position: relative;
+  width: 95%;
+  margin-left: 9px;
 }
 
 .years span {
+  z-index: 10;
   width: 20%;
-  display: inline-block;
+  position: absolute;
+  display: block;
   text-align: center;
-  font-size: 11px;
-  height: 60px;
+  font-size: 13px;
+  // height: 60px;
   margin-bottom: -50px;
+  margin-left: -10%;
+  // border: 1px solid #000;
+}
+
+.years span figure {
+  position: absolute;
+  top: -24px;
+  width: 100%;
+  font-size: 10px;
+  text-align: center;
+  color: #979797;
 }
 
 .years span:first-child {
-  text-align: left;
+  left: 0;
 }
 
 .years span:nth-child(2) {
-  padding-left: 3%;
-  text-align: left;
+  left: 25%;
+}
+
+.years span:nth-child(3) {
+  left: 50%;
 }
 
 .years span:nth-child(4) {
-  padding-left: 9%;
-  text-align: left;
+  left: 75%;
 }
 
 .years span:last-child {
-  text-align: right;
+  left: 100%;
+  padding-right: 10px;
 }

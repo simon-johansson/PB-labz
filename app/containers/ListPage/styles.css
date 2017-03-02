@@ -8,7 +8,7 @@
 }
 
 .contentWrapper {
-  margin-bottom:50px;
+  margin-bottom: 65px;
 }
 
 .searchForm,
@@ -21,7 +21,7 @@
   padding: 2px 10px;
   // background: #345468;
   color: #333333;
-  border-bottom: 1px solid #979797;
+  // border-bottom: 1px solid #979797;
 }
 
 .searchFormSticky {
@@ -30,6 +30,8 @@
   top: 0;
   z-index: 999;
   height: 55px;
+  border-bottom: 1px solid #d2dbe0;
+  background: #F2F4F5;
 }
 
 .searchForm h1,
@@ -69,7 +71,7 @@ label {
 }
 
 .filterInput {
-  margin: 10px;
+  margin: 5px 10px 10px 10px;
   background: #F2F4F5;
 }
 
@@ -85,7 +87,7 @@ label {
 
   background: #06769F;
   padding: 0 0 0 8px;
-  width: 80%;
+  width: 70%;
   height: 40px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -97,7 +99,7 @@ label {
   color: white;
   line-height: 40px;
   height: 30px;
-  width: calc(100% - 30px);
+  width: calc(100% - 34px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -121,12 +123,17 @@ label {
   text-align: center;
   background: #06769F;
   color: white;
-  width: 20%;
+  width: 30%;
   height: 40px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   font-size: 14px;
   font-weight: 400;
+}
+
+.gripper {
+  width: 22px;
+  margin-right: 12px;
 }
 
 .filterIcon {
@@ -158,12 +165,24 @@ label {
 
 .tag {
   display: inline-block;
-  background: #B5D8E9;
-  margin: 5px 5px 0 0;
-  height: 25px;
-  line-height: 25px;
-  padding: 0 8px;
-  border-radius: 2px;
+  // background: #B5D8E9;
+  // margin: 5px 5px 0 0;
+  // height: 25px;
+  // line-height: 25px;
+  // padding: 0 8px;
+  // border-radius: 2px;
+}
+
+.compTags,
+.expTags,
+.dlTags {
+  width: calc(100% - 5px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  font-size: 12px;
+  color: #6f7578;
 }
 
 .showAll {
@@ -174,15 +193,23 @@ label {
 }
 
 .tagText {
-  color: #333333;
+  color: #6f7578;
+  font-weight: 200;
+  font-size: 12px;
 }
 
-.amount {
-  background: white;
-  padding: 0px 10px 5px 12px;
+.amount,
+.amountBorder {
+  // background: white;
+  padding: 5px 10px 10px 12px;
   display: block;
   position: relative;
   font-size: 13px;
+}
+
+.amountBorder {
+  border-bottom: 1px solid #ebeef0;
+  height: 34px;
 }
 
 .jobsNumber {
@@ -204,10 +231,10 @@ label {
 
 .toggleButtons {
   width: 100%;
-  padding: 10px;
+  padding: 5px 10px 10px 10px;
   display: block;
   margin: auto;
-  background: white;
+  // background: white;
 }
 
 .toggleButtons button {
@@ -218,9 +245,9 @@ label {
   height: 24px;
   font-size: 13px;
   line-height: 16px;
-  // background: #345468;
+  background: #ffffff;
   // border: 2px solid #848484;
-  border: 2px solid #345468;
+  border: 1px solid #345468;
 }
 
 .toggleButtons button:first-child {
@@ -247,13 +274,15 @@ label {
 
 .matchDescription {
   display: block;
-  margin: 20px auto 20px;;
+  margin: 60px auto 60px;;
   width: 75%;
-  text-align: center;
+  // text-align: center;
 }
 
 .matchDescription p {
-  font-size: 17px;
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 30px;
 }
 
 .listDescription {
@@ -267,31 +296,27 @@ label {
 
 .showMatchingButton,
 .addToSearchButton {
-  // background: #06769F;
-  background: #55851C;
+  background: #06769F;
+  // background: #478500;
   margin: 15px auto;
   display: block;
   color: white;
   border: none;
+  // width: 94%;
   width: 80%;
   left: 10%;
   position: fixed;
   bottom: 0px;
   display: block;
   z-index: 999;
-
-  height: 50px;
+  height: 57px;
   border-radius: 100px;
   font-size: 18px;
   font-weight: normal;
 }
 
-.addToSearchButton {
-  height: auto !important;
-  min-height: 40px;
-  bottom: -5px;
-  white-space: normal;
-  line-height: 25px;
+.showMatchingButton {
+  background: #478500;
 }
 
 .addToSearchTag {
@@ -304,22 +329,46 @@ label {
   margin-right: -17px;
 }
 
+.gradientImg {
+  position: fixed;
+  bottom: 0;
+  z-index: 998;
+  width: 100%;
+  height: 55px;
+}
+
+
 .addToSearchTag span {
   margin-right: 2px;
 }
 
-:global(.glyphicon-plus) {
-  cursor: pointer;
-  color: #8E8E93;
+.plusIcon {
+  color: white !important;
+  margin-right: 10px !important;
+  font-size: 15px !important;
 }
 
 .myCompetences {
-  background: #B5D8E9;
+  background: #ffffff;
   width: 95%;
-  margin: 10px auto;
+  margin: 5px auto;
   padding: 10px;
-  border-radius: 2px;
+  border-radius: 5.5px;
+  border: 1px solid #c5c9cc;
+  font-size: 14px;
+  text-align: center;
   // color: white;
+}
+
+.okIcon {
+  width: 13px;
+  margin-right: 3px;
+  vertical-align: baseline;
+}
+.listIcon {
+  width: 18px;
+  margin-right: 8px;
+  vertical-align: baseline;
 }
 
 .showNonMatchningJobs {
@@ -361,6 +410,23 @@ label {
   height: 47px;
   line-height: 55px;
   cursor: pointer;
+  color: #333333;
+}
+
+.cancelCross,
+.cancelChevron {
+  position: absolute;
+  left: 12px;
+  top: 2px;
+  padding-top: 2px;
+  height: 50px;
+  line-height: 48px;
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.cancelChevron {
+  font-size: 25px;
 }
 
 .cancelText {
@@ -390,6 +456,23 @@ label {
   font-size: 20px;
 }
 
+.afLogoWrapper {
+  position: absolute;
+  left: -5px;
+  width: 50px;
+  padding-top: 2px;
+  height: 47px;
+  line-height: 55px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.afLogoWrapper .afLogo {
+  width: 40px;
+  // height: 21px;
+  margin-bottom: 21px;
+}
+
 .done {
   position: absolute;
   right: 0px;
@@ -417,12 +500,12 @@ label {
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background: #FAFAFA;
+  background: #F2F4F5;
   height: 100%;
   width: 100%;
   overflow-y: scroll;
   padding-top: 55px;
-  // padding-bottom: 80px;
+  padding-bottom: 90px;
   z-index: 999;
 }
 
@@ -430,6 +513,7 @@ label {
   position: relative;
   width: calc(100% - 10px);
   padding-right: 4px;
+  padding-top: 2px;
 }
 
 .stickyHeader {
@@ -440,7 +524,10 @@ label {
   background: white;
   padding: 3px 5px 0px;
   z-index: 999;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+  // box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+  border-top: 1px solid #06769f;
+  border-bottom: 1px solid #06769f;
+  text-align: center;
 }
 
 .stickyHeaderText {
@@ -450,13 +537,18 @@ label {
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 20px;
+  color: #06769f;
+  font-size: 13px;
 }
 
 .toTopArrow {
   display: inline-block;
-  float: right;
-  color: #848484;
+  font-size: 17px;
+  color: #06769f;
   line-height: 18px;
+  font-weight: bold;
+  vertical-align: middle;
+  margin-left: 5px;
 }
 
 .saveSearch {
@@ -536,7 +628,7 @@ label {
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background: #FAFAFA;
+  background: #F2F4F5;
   height: 100%;
   width: 100%;
   overflow-y: scroll;
@@ -545,36 +637,48 @@ label {
 }
 
 .criteraWrappper {
-  width: calc(100% - 20px);
+  width: calc(100%);
   background: white;
-  border: 1px solid #CCC;
-  border-radius: 2px;
-  margin: 0 auto 20px;
+  border-bottom: 1px solid #f0f2f4;
+  padding: 2px 0;
+  min-height: 60px;
+  // border-radius: 2px;
+  // margin: 0 auto 20px;
 }
 
 .criteriaSelectionHeader {
   width: calc(100% - 20px);
   display: block;
-  margin: 10px auto;
+  margin: 12px auto 0;
   position: relative;
-  font-weight: bold;
-  text-transform: uppercase;
+  font-weight: normal;
+  // text-transform: uppercase;
+  color: #0e6a97;
+  font-size: 20px;
+}
+
+.kompetensIcon,
+.erfarenhetIcon,
+.korkortIcon {
+  width: 30px;
+  margin-right: 20px;
+  vertical-align: sub;
 }
 
 .criteriaSelectionContent {
-  border-top: 1px solid #EEE;
-  width: calc(100% - 20px);
+  // border-top: 1px solid #EEE;
+  width: calc(100% - 90px);
   height: auto;
   display: block;
-  margin: auto;
-  padding: 5px 0 10px;
+  margin: 0 0 0 60px;
+  padding: 2px 0 10px;
 }
 
 .criteriaSelectionContent .tag {
-  max-width: calc(100%);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  // max-width: calc(100%);
+  // overflow: hidden;
+  // white-space: nowrap;
+  // text-overflow: ellipsis;
 }
 
 
@@ -584,25 +688,32 @@ label {
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background: #FAFAFA;
+  background: #F2F4F5;
   height: 100%;
   width: 100%;
   overflow-y: scroll;
-  padding-top: 55px;
-  padding-bottom: 80px;
+  padding-top: 65px;
+  padding-bottom: 85px;
   z-index: 999;
 }
 
 .competenceCriteriaSub {
-  font-size: 14px;
-  width: 100%;
-  padding: 0 10px 15px;
+  // font-size: 14px;
+  // width: 100%;
+  // padding: 0 10px 15px;
   font-weight: lighter;
+  text-transform: uppercase;
+  // margin-top: 20px;
+  display: block;
+  // margin-left: 10px;
+  font-size: 12px;
+  float: left;
+  // display: inline-block;
 }
 
 .experienceSelectionWrapper {
   width: 100%;
-  padding: 0 10px;
+  // padding: 0 10px;
 }
 
 .matchCriteriaSearchSummary {
@@ -630,20 +741,24 @@ label {
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
+  font-size: 17px;
+  font-weight: normal;
 }
 
 .small {
-  font-size: 12px;
+  font-size: 12px !important;
   font-weight: normal;
+  font-weight: 300 !important;
 }
 
 .pencilIcon {
   position: absolute;
   right: 0;
-  top: 2px;
+  top: 13px;
   // color: #33749A;
   color: gray;
   font-size: 15px;
+  font-weight: bold;
 }
 
 .doughnutWrapper {

@@ -13,7 +13,10 @@ import {
 } from 'containers/App/actions';
 
 import styles from './styles.css';
-// import menu from './menu.png';
+import afLogo from './page1@3x.png';
+import afLogoBlue from './page1_blue@3x.png';
+import savedLogo from './group7_black@3x.png';
+import savedLogoBlue from './group2@3x.png';
 
 const isActive = (page) => {
   const { pathname } = window.location;
@@ -60,14 +63,22 @@ export class IosMenu extends React.Component {
           className={savedPage ? styles.iconWrapper : styles.iconWrapperActive}
           onClick={this.addHomePage}
         >
-          <span className={styles.icon + ' glyphicon glyphicon-home'} />
+          {savedPage ?
+            <img className={styles.afLogo} src={afLogoBlue}/> :
+            <img className={styles.afLogo} src={afLogo}/>
+          }
+          {/*<span className={styles.icon + ' glyphicon glyphicon-home'} />*/}
           <span className={styles.text}>Mina sökningar</span>
         </div>
         <div
           className={savedPage ? styles.iconWrapperActive : styles.iconWrapper}
           onClick={this.addSavedPage}
         >
-          <span className={styles.starIcon + ' iosIcon'}></span>
+          {savedPage ?
+            <img className={styles.savedIcon} src={savedLogo}/> :
+            <img className={styles.savedIcon} src={savedLogoBlue}/>
+          }
+          {/*<span className={styles.starIcon + ' iosIcon'}></span>*/}
           <span className={styles.text}>Sparade jobb</span>
         </div>
         <div className={styles.iconWrapper}>

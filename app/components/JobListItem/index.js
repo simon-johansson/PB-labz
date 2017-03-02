@@ -8,7 +8,7 @@ import React from 'react';
 import Tappable from 'react-tappable';
 import _ from 'lodash';
 
-import ListItem from 'components/ListItem';
+import ListItemSeperated from 'components/ListItemSeperated';
 import Circle from 'components/Circle';
 
 import styles from './styles.css';
@@ -82,16 +82,16 @@ function JobListItem(props) {
   const isMatchingView = props.options.view == 'matching';
   const isMaching = !!item.matchingCriteria.length;
   // console.log(isMaching);
-  const wrapperClass = (/*isMatchingView &&*/ isMaching) ? styles.bigLinkWrapper : styles.linkWrapper;
+  // const wrapperClass = (/*isMatchingView &&*/ isMaching) ? styles.bigLinkWrapper : styles.linkWrapper;
+  const wrapperClass = styles.bigLinkWrapper;
   const content = (
     <Tappable className={wrapperClass} onTap={clickHandler.bind(this, item, props.click)}>
-        <div>
-          <span className={styles.employer}>{item.arbetsgivarenamn}, {item.erbjudenArbetsplats.kommun && item.erbjudenArbetsplats.kommun.namn}</span>
-          <br />
+        <div className={styles.jobListContent}>
           <b className={styles.title}>{item.rubrik}</b>
-          <br />
+          <span className={styles.goToAd + " iosIcon"}></span>
+          <span className={styles.employer}>{item.arbetsgivarenamn}, {item.erbjudenArbetsplats.kommun && item.erbjudenArbetsplats.kommun.namn}</span>
+          <hr className={styles.divider} />
           <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
-          <br />
           <span className={styles.smallText}>Publicerad:
             {/*<span className={date === 'Idag' ? styles.today : ''}>{date}</span>*/}
             <span> {date}</span>
@@ -108,7 +108,7 @@ function JobListItem(props) {
               <div className={styles.knownCompetences}>
                 <Circle
                   item={item}
-                  style={{top: '35px'}}
+                  style={{bottom: '-1px'}}
                 />
               </div>
             </div>
@@ -128,7 +128,7 @@ function JobListItem(props) {
   );
 
   return (
-    <ListItem key={`job-list-item-${item.id}`} item={content} />
+    <ListItemSeperated key={`job-list-item-${item.id}`} item={content} />
   );
 }
 
