@@ -97,6 +97,7 @@ export class ExperienceSelector extends React.Component {
           min={0}
           max={4}
           step={1}
+          tooltip={false}
           orientation='horizontal'
           onChange={this.setExperience.bind(this)}
         />
