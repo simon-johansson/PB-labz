@@ -48,7 +48,12 @@
   width: 100%;
   z-index: 9999;
   height: 350px;
-  background: #FFFFFF;
+
+  // background: #FFFFFF;
+}
+
+.textWrapper {
+  border: 1px dotted white;
 }
 
 .welcome h1 {

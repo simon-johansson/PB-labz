@@ -6,7 +6,7 @@ import { push } from 'react-router-redux';
 import styles from './styles.css';
 import match from './match.png';
 import splash from './splash.png';
-import bg from './bg.jpg';
+import bg from './Welcome_man_headphones_white.jpg';
 
 export class FeaturePage extends React.Component {
   constructor(props) {
@@ -26,8 +26,8 @@ export class FeaturePage extends React.Component {
       this.setState({ splash: false });
       setTimeout(() => {
         this.setState({ imgClass: styles.animate });
-      }, 500);
-    }, 3000);
+      }, 5);
+    }, 30);
   }
 
   render() {
@@ -43,17 +43,15 @@ export class FeaturePage extends React.Component {
           className={styles.imgWrapper}
           style={{
             backgroundImage: `url('${bg}`,
-            backgroundSize: '375%',
+            backgroundSize: '100%',
           }}
         >
-          <img
-            src={match}
-            className={this.state.imgClass}
-          />
         </div>
         <div className={styles.welcome}>
-          <h1>Välkommen till nya Platsbanken</h1>
-          <p>Här kan du söka bland tusentals lediga jobb och hitta de som matchar dig bäst</p>
+          <div className={styles.textWrapper}>
+            <h1>Välkommen till nya Platsbanken</h1>
+            <p>Här kan du söka bland tusentals lediga jobb och hitta de som matchar dig bäst</p>
+          </div>
           <button
             className={styles.startButton + ' btn btn-default'}
             onClick={this.openHomePage}
