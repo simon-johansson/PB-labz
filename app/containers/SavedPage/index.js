@@ -78,7 +78,9 @@ export class SavedPage extends React.Component {
       <article className="noselect">
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
-            <span className={styles.edit}>Ändra</span>
+            {!!this.props.savedAdverts.size &&
+              <span className={styles.edit}>Ändra</span>
+            }
             <h1>
               <span>Sparade jobb</span>
             </h1>

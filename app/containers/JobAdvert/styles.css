@@ -1,6 +1,6 @@
 
 .contentWrapper {
-  margin-bottom: 70px;
+  // margin-bottom: 70px;
 }
 
 .header {
@@ -60,9 +60,9 @@
 .advertWrapper {
   padding-top: 10px;
   display: block;
-  width: calc(100% - 40px);
+  width: calc(100% - 30px);
   margin: auto;
-  padding-top: 75px;
+  padding-top: 60px;
   position: relative;
 }
 
@@ -73,6 +73,48 @@
 .companyName {
   width: calc(100% - 35px);
   display: inline-block;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.adTitle {
+  font-size: 36px;
+  line-height: 38px;
+  font-weight: 200;
+  margin-bottom: 20px;
+}
+
+.adInfo {
+  background: white;
+  width: calc(100% + 30px);
+  margin-left: -15px;
+  padding: 15px;
+  font-size: 13px;
+  border-bottom: 2px solid #fbc6aa;
+}
+
+.adInfo b {
+  text-transform: uppercase;
+}
+
+.adInfo p:last-child {
+  margin-bottom: 0;
+}
+
+.adInfo .adOccupation {
+  text-transform: uppercase;
+}
+
+.matchCriteria {
+  width: calc(100% + 30px);
+  margin-left: -15px;
+  padding-left: 15px;
+  font-size: 24px;
+  line-height: 86px;
+  background: white;
+  font-weight: 200;
+  height: 86px;
+  border-bottom: 2px solid #fbc6aa;
 }
 
 .competenceHeader {
@@ -114,13 +156,12 @@
   // background: #F2F2F2;
   background: white;
   height: auto;
-  width: calc(100% + 40px);
+  width: calc(100% + 30px);
   // margin-bottom: 10px;
-  margin-top: 10px;
-  margin-left: -20px;
-  border-radius: 2px;
-  padding: 10px 12px;
+  margin-left: -15px;
+  padding: 15px;
   position: relative;
+  border-bottom: 2px solid #fbc6aa;
 }
 
 .competenceWrapper b {
@@ -150,9 +191,14 @@
 }
 
 .okIcon {
-  color: green;
+  color: #f27b24;
   margin-right: 5px;
-  margin-left: 0;
+  margin-left: 15px;
+}
+
+.dotIcon {
+  margin-right: 5px;
+  margin-left: 15px;
 }
 
 .plusIcon {
@@ -170,8 +216,12 @@
 }
 
 .advertTextWrapper {
+  width: calc(100% + 30px);
+  margin-left: -15px;
+  padding: 15px;
   position: relative;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
+  background: white;
 }
 
 :global(.annons-text) {
@@ -226,24 +276,97 @@
 
 .map {
   pointer-events: none;
+  width: calc(100% + 30px);
+  margin-left: -15px;
+  padding: 0 15px;
+  background: white;
+}
+
+.mapTitle {
+  font-weight: 200;
+  font-size: 18px;
+  border-bottom: 1px dashed #c4c9cc;
+  margin-bottom: 5px;
+}
+.mapLocation {
+  color: #6f7578;
+  font-size: 13px;
+}
+
+.mapAddress {
+  width: calc(100% + 30px);
+  margin-left: -15px;
+  padding: 0 15px;
+  line-height: 40px;
+  background: #f2f4f5;
+  display: block;
+  height: 40px;
+  font-size: 13px;
+}
+
+.mapAddress b {
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-right: 30px;
+}
+
+.adFooter {
+  width: calc(100% + 30px);
+  margin-left: -15px;
+  padding: 20px 15px;
+  background: white;
+  height: 190px;
+  text-align: center;
+  position: relative;
+}
+
+.applyDescription,
+.applyDate {
+  font-size: 24px;
+  font-weight: 200;
+}
+.applyDescription {
+  margin-bottom: 0;
+}
+.applyDate {
+  color: #397502;
+  font-weight: 500;
+}
+.adId {
+  text-transform: uppercase;
+  font-size: 13px;
+  color: #6f7578;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }
 
 .applyButton {
   // background: #06769F;
-  background: #55851C;
-  margin: 15px auto 10px;
+  background: #478500;
+  margin: 15px auto;
   display: block;
   color: white;
   border: none;
-  width: 90%;
-  // left: 10%;
-  bottom: 50px;
+  width: 80%;
+  left: 10%;
+  position: fixed;
+  bottom: 0;
+  display: block;
   z-index: 999;
-
-  height: 50px;
+  height: 57px;
   border-radius: 100px;
   font-size: 18px;
   font-weight: normal;
+}
+
+.gradientImg {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 998;
+  width: 100%;
+  height: 55px;
 }
 
 .applyButton[disabled],
@@ -289,18 +412,27 @@
 }
 
 .criteriaHeading {
+  font-weight: 200;
+  font-size: 18px;
   display: block !important;
+  border-bottom: 1px dashed #f27b24;
+  padding-bottom: 3px;
 }
 
 .competence + .criteriaHeading,
-.competenceMatch + .criteriaHeading {
-  margin-top: 15px;
+.competenceMatch + .criteriaHeading,
+.comp + .criteriaHeading {
+  margin-top: 20px;
 }
 
 .criteriaSubHeading {
   display: block !important;
-  margin-left: 5px;
+  // margin-left: 5px;
   font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .competence + .criteriaSubHeading,

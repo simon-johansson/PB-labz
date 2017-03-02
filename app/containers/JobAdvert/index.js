@@ -53,13 +53,16 @@ import Circle from 'components/Circle';
 // import LoadingIndicator from 'components/LoadingIndicator';
 
 import styles from './styles.css';
+import gradient from './gradient.png';
 
 function SimpleMap (props) {
   return (
     <section
       style={{
-        height: '200px',
-        width: '100%',
+        height: '270px',
+        width: 'calc(100% + 31px)',
+        marginLeft: '-15px',
+        marginTop: '20px',
       }}
     >
       <GoogleMapLoader
@@ -106,7 +109,7 @@ export class JobAdvert extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      folded: true,
+      folded: false,
       ad: false,
       isMatch: false,
       starHasChanged: false,
@@ -239,12 +242,17 @@ export class JobAdvert extends React.Component {
             const req = comp.efterfragatKravniva.toLowerCase()[0];
             content.push(
               <span
-                className={comp.isKnown ? styles.competenceMatch : styles.competence}
-                onClick={this.onCompetenceClick.bind(this, comp)}
+                className={styles.comp}
+                // className={comp.isKnown ? styles.competenceMatch : styles.competence}
+                // onClick={this.onCompetenceClick.bind(this, comp)}
               >
-                {comp.isKnown ?
+                {/*comp.isKnown ?
                   <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
                   <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+                */}
+                {comp.isKnown ?
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                  <span className={styles.dotIcon}>•</span>
                 }
                 {comp.efterfragat} {/*<span className={styles.small}>({(req === 's') ? 'k' : req})</span>*/}
               </span>
@@ -258,12 +266,17 @@ export class JobAdvert extends React.Component {
             const req = comp.efterfragatKravniva.toLowerCase()[0];
             content.push(
               <span
-                className={comp.isKnown ? styles.competenceMatch : styles.competence}
-                onClick={this.onCompetenceClick.bind(this, comp)}
+                className={styles.comp}
+                // className={comp.isKnown ? styles.competenceMatch : styles.competence}
+                // onClick={this.onCompetenceClick.bind(this, comp)}
               >
-                {comp.isKnown ?
+                {/*comp.isKnown ?
                   <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
                   <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+                */}
+                {comp.isKnown ?
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                  <span className={styles.dotIcon}>•</span>
                 }
                 {comp.efterfragat} {/*<span className={styles.small}>({(req === 's') ? 'k' : req})</span>*/}
               </span>
@@ -283,9 +296,12 @@ export class JobAdvert extends React.Component {
           requirement.forEach((exp) => {
             const req = exp.efterfragatKravniva.toLowerCase()[0];
             content.push(
-              <span className={exp.isKnown ? styles.competenceMatch : styles.competence}>
-                {exp.isKnown &&
-                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+              // <span className={exp.isKnown ? styles.competenceMatch : styles.competence}>
+              <span className={styles.comp}>
+                {exp.isKnown ?
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                  <span className={styles.dotIcon}>•</span>
+
                 }
                 {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`}
               </span>
@@ -303,9 +319,12 @@ export class JobAdvert extends React.Component {
           merit.forEach((exp) => {
             const req = exp.efterfragatKravniva.toLowerCase()[0];
             content.push(
-              <span className={exp.isKnown ? styles.competenceMatch : styles.competence}>
-                {exp.isKnown &&
-                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} />
+              // <span className={exp.isKnown ? styles.competenceMatch : styles.competence}>
+              <span className={styles.comp}>
+                {exp.isKnown ?
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                  <span className={styles.dotIcon}>•</span>
+
                 }
                 {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`}
               </span>
@@ -344,15 +363,20 @@ export class JobAdvert extends React.Component {
             const dlType = this.typeOfLicense(dl.efterfragat).toLowerCase();
             content.push(
               <span
-               className={dl.isKnown ? styles.competenceMatch : styles.competence}
-               onClick={this.onDriversLicenseClick.bind(this, dl)}
-             >
-              {dl.isKnown ?
-                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
-                <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-              }
-               {dl.efterfragat} <span className={styles.small}>{dlType ? ' - ' + dlType : ''}</span>
-             </span>
+                className={styles.comp}
+                // className={comp.isKnown ? styles.competenceMatch : styles.competence}
+                // onClick={this.onDriversLicenseClick.bind(this, comp)}
+              >
+                {/*comp.isKnown ?
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                  <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+                */}
+                {dl.isKnown ?
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                  <span className={styles.dotIcon}>•</span>
+                }
+                {dl.efterfragat} <span className={styles.small}>{dlType ? ' - ' + dlType : ''}</span>
+              </span>
             );
           });
         }
@@ -362,29 +386,34 @@ export class JobAdvert extends React.Component {
             const dlType = this.typeOfLicense(dl.efterfragat).toLowerCase();
             content.push(
               <span
-               className={dl.isKnown ? styles.competenceMatch : styles.competence}
-               onClick={this.onDriversLicenseClick.bind(this, dl)}
-             >
-              {dl.isKnown ?
-                <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
-                <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
-              }
-               {dl.efterfragat} <span className={styles.small}>{dlType ? ' - ' + dlType : ''}</span>
-             </span>
+                className={styles.comp}
+                // className={comp.isKnown ? styles.competenceMatch : styles.competence}
+                // onClick={this.onDriversLicenseClick.bind(this, comp)}
+              >
+                {/*comp.isKnown ?
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                  <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
+                */}
+                {dl.isKnown ?
+                  <span className={styles.okIcon + ' glyphicon glyphicon-ok'} /> :
+                  <span className={styles.dotIcon}>•</span>
+                }
+                {dl.efterfragat} <span className={styles.small}>{dlType ? ' - ' + dlType : ''}</span>
+              </span>
             );
           });
         }
       }
 
-      content.push(
-        <Circle
-          known={knownCriteria.length}
-          total={allCriteria.length}
-          showText={false}
-          style={{top: '56px'}}
-          isMatch={isMatch}
-        />
-      );
+      // content.push(
+      //   <Circle
+      //     known={knownCriteria.length}
+      //     total={allCriteria.length}
+      //     showText={false}
+      //     style={{top: '56px'}}
+      //     isMatch={isMatch}
+      //   />
+      // );
 
       return content;
     }
@@ -454,6 +483,10 @@ export class JobAdvert extends React.Component {
         }
       }];
     }
+    let kommun = '';
+    if (this.state.ad) {
+      kommun = this.state.ad.erbjudenArbetsplats.kommun.namn;
+    }
 
     return (
       <article>
@@ -465,43 +498,48 @@ export class JobAdvert extends React.Component {
             ></span>
             <span
               className={styles.done}
-            >Spara</span>
+              onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}
+            >
+              {adIsSaved ? 'Sparad' : 'Spara'}
+            </span>
             <h1>Annons</h1>
           </header>
 
           {this.state.ad &&
             <div className={styles.advertWrapper}>
-              <AnimateOnChange
-                baseClassName={styles.starAnimate}
-                animationClassName={styles.starAnimateBouceDisable}
-                animate={adIsSaved}
-              >
-                <div
-                  className={adIsSaved ? styles.savedAdvert : styles.saveAdvert}
-                  onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}
+              {/*<AnimateOnChange
+                  baseClassName={styles.starAnimate}
+                  animationClassName={styles.starAnimateBouceDisable}
+                  animate={adIsSaved}
                 >
-                  <span className={`${styles.saveIcon} glyphicon ${adIsSaved ? 'glyphicon-star' : 'glyphicon-star-empty'}`} />
-                </div>
-              </AnimateOnChange>
+                  <div
+                    className={adIsSaved ? styles.savedAdvert : styles.saveAdvert}
+                    onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}
+                  >
+                    <span className={`${styles.saveIcon} glyphicon ${adIsSaved ? 'glyphicon-star' : 'glyphicon-star-empty'}`} />
+                  </div>
+                </AnimateOnChange>*/}
               {/*<object
                 style={{maxHeight: '60px'}}
                 data={`http://api.arbetsformedlingen.se/platsannons/${this.state.ad.id}/logotyp`} type="image/gif"
               >
               </object> <br />*/}
-              <b className={styles.companyName}>{this.state.ad.arbetsgivarenamn}</b>
-              <h3>{this.state.ad.rubrik}</h3>
-              <p>{this.state.ad.yrkesroll.namn}</p>
-
+              <b className={styles.companyName}>{this.state.ad.arbetsgivarenamn}, {kommun}</b>
+              <h3 className={styles.adTitle}>{this.state.ad.rubrik}</h3>
+              <div className={styles.adInfo}>
+                <p className={styles.adOccupation}><b>Yrkesroll:</b> {this.state.ad.yrkesroll.namn}</p>
+                <p className={styles.adPublicated}><b>Publicerad:</b> {this.state.ad.sistaPubliceringsdatum}</p>
+                <p className={styles.adForm}><b>Anställningsform:</b> {this.state.ad.varaktighet.namn}</p>
+                <p className={styles.adSalary}><b>Lön:</b> {this.state.ad.lonetyp}</p>
+                <p className={styles.adPositions}><b>Antal platser:</b> {'...'}</p>
+              </div>
               {(!!this.state.ad.matchingCriteria.length || !!this.state.ad.notMatchingCriteria.length) &&
                 <div>
+                  <div className={styles.matchCriteria}>
+                    <span>Matchningskriterier</span>
+                  </div>
+
                   <div className={styles.competenceWrapper}>
-                    <header className={styles.competenceHeader}>
-                      <hr/>
-                        <span>Matchningskriterier</span>
-                        {/*<span className={styles.infoIcon}>ℹ</span>*/}
-                        <span className={styles.infoIcon + ' glyphicon glyphicon-info-sign'} />
-                      <hr/>
-                    </header>
                     {/*<ul className={styles.criteriaTabs}>
                       <li className={styles.criteriaTab}>Allt efterfrågat</li>
                       <li className={styles.criteriaTab}>Krav</li>
@@ -512,36 +550,43 @@ export class JobAdvert extends React.Component {
                   {/*<span className={styles.reqDescription}>(k) = krav, (m) = meriterande</span>*/}
                 </div>
               }
-              <br />
               <div className={styles.advertTextWrapper} onClick={this.unFoldText.bind(this)}>
                 <p
                   dangerouslySetInnerHTML={{__html: this.adText()}}
-                  className={"annons-text folded"}
+                  className={"annons-text unfolded"}
                   ref={(p) => this.annonsText = p}
                 />
-                <span
+                {/*<span
                   className={styles.showmore}
                   ref={(span) => this.showMore = span}
                 >
                   Visa hela annonsen
-                </span>
+                </span>*/}
               </div>
 
 
               {!!this.shouldShowMap(erbjudenArbetsplats) &&
                 <div className={styles.map}>
-                  <p><b>Arbetsplats:</b> {this.state.ad.besoksadressGatuadress}</p>
+                  <p className={styles.mapTitle}>Arbetsplats</p>
+                  {/*<span className={styles.mapLocation}>{kommun}</span>*/}
                   <SimpleMap
                     markers={markers}
                   />
+                  <span className={styles.mapAddress}><b>Adress:</b>{this.state.ad.besoksadressGatuadress}, {this.state.ad.postadressPostnummer} {this.state.ad.postadressPostort}</span>
                 </div>
               }
+              <div className={styles.adFooter}>
+                <p className={styles.applyDescription}>Sök jobber senast</p>
+                <p className={styles.applyDate}>{this.state.ad.sistaPubliceringsdatum}</p>
+                {/*<span className={styles.adId}>ANNONS-ID: {this.state.ad.id}</span>*/}
+              </div>
               <button
                 className={styles.applyButton + ' btn btn-default'}
                 onClick={() => alert('Går ej att ansöka i prototypen')}
               >
                 Ansök
               </button>
+              <img className={styles.gradientImg} src={gradient} />
             </div>
           }
           {!this.state.ad &&
