@@ -8,16 +8,18 @@
 }
 
 .contentWrapper {
-  margin-bottom:50px;
+  margin-bottom: 65px;
 }
 
 .searchForm,
 .searchFormSticky {
   padding: 2px 10px;
-  background: #345468;
-  color: white;
+  // background: #345468;
+  color: #333333;
+  // color: white;
   cursor: pointer;
   // min-height: 55px;
+  border-bottom: 1px solid #d2dbe0
 }
 
 .searchFormSticky {
@@ -29,9 +31,26 @@
 
 .searchForm h1,
 .searchFormSticky h1 {
-  font-size: 20px;
+  font-size: 17px;
   text-align: center;
+  font-weight: normal;
+  letter-spacing: -0.4px;
 }
+
+.edit {
+  position: absolute;
+  right: 0px;
+  padding-right: 12px;
+  top: -2px;
+  width: 104px;
+  padding-top: 2px;
+  height: 45px;
+  line-height: 45px;
+  cursor: pointer;
+  text-align: right;
+  font-size: 17px;
+}
+
 
 .centered {
   text-align: center;
@@ -494,11 +513,8 @@ label {
 }
 
 .pencilIcon {
-  position: absolute;
-  right: 0;
-  top: 0px;
-  color: #33749A;
-  font-size: 18px;
+  color: #32749d;
+  font-size: 17px;
 }
 
 .listHeader {
@@ -515,9 +531,9 @@ label {
 .pencil {
   position: absolute;
   right: 8px;
-  color: gray;
-  text-transform: uppercase;
-  font-weight: bold;
+  color: #333333;
+  text-transform: none;
+  font-size: 13px;
 }
 
 :global(.glyphicon-remove) {

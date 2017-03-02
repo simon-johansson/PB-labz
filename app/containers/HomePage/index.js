@@ -356,6 +356,11 @@ export class HomePage extends React.Component {
     this.addListPage();
   }
 
+  editAll() {
+    this.onEditSaved();
+    this.onEditsPrevious();
+  }
+
   onEditSaved() {
     this.setState({ editSaved: !this.state.editSaved });
   }
@@ -394,6 +399,12 @@ export class HomePage extends React.Component {
       <article ref="list" className="noselect">
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
+            <span
+              className={styles.edit}
+              onClick={this.editAll.bind(this)}
+            >
+              { (this.state.editSaved || this.state.editPrevious) ? 'Klar' : 'Ändra' }
+            </span>
             <h1>
               {/*<span className={styles.homeIcon + ' glyphicon glyphicon-home'} />*/}
               Mina sökningar
@@ -441,7 +452,7 @@ export class HomePage extends React.Component {
               <div>
                 <span className={styles.listHeader}>
                   Sparade sökningar
-                  {!!this.state.savedSearches.length &&
+                  {!!this.state.savedSearches.length && false &&
                     <span
                       className={styles.pencil}
                       onClick={this.onEditSaved.bind(this)}
@@ -460,7 +471,7 @@ export class HomePage extends React.Component {
               <div>
                 <span className={styles.listHeader}>
                   Tidigare sökningar
-                  {!!this.state.previousSearchs.length &&
+                  {!!this.state.previousSearchs.length && false &&
                     <span
                       className={styles.pencil}
                       onClick={this.onEditsPrevious.bind(this)}

@@ -26,7 +26,7 @@ import {
 
 import JobListItem from 'components/JobListItem';
 import IosMenu from 'components/IosMenu';
-import List from 'components/List';
+import ListSeperated from 'components/ListSeperated';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
 
@@ -78,25 +78,26 @@ export class SavedPage extends React.Component {
       <article className="noselect">
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
+            <span className={styles.edit}>Ändra</span>
             <h1>
               <span>Sparade jobb</span>
             </h1>
           </div>
-          {!!this.props.savedAdverts.size &&
+          {!!this.props.savedAdverts.size && false &&
             <span className={styles.listHeader}>
               <span
                 className={styles.pencil}
                 onClick={() => {}}
               >
-                { this.state.editSaved ? 'Klar' : 'Redigera' }
-                &nbsp;&nbsp;
-                <span className={'glyphicon glyphicon-pencil'} />
+                <span className={styles.pencilIcon + ' iosIcon'}></span>
+                &nbsp;
+                { this.state.editSaved ? 'Klar' : 'Ändra' }
               </span>
             </span>
           }
           {
             !!this.props.savedAdverts.size ?
-            <List items={this.props.savedAdverts} component={JobListItem} click={this.onAdvertClick} />:
+            <ListSeperated items={this.props.savedAdverts} component={JobListItem} click={this.onAdvertClick} />:
             <div className={styles.matchDescription}>
               <p>Du har inga sparade jobb</p>
             </div>

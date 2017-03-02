@@ -26,8 +26,8 @@ export class FeaturePage extends React.Component {
       this.setState({ splash: false });
       setTimeout(() => {
         this.setState({ imgClass: styles.animate });
-      }, 5);
-    }, 30);
+      }, 500);
+    }, 3000);
   }
 
   render() {
@@ -43,7 +43,8 @@ export class FeaturePage extends React.Component {
           className={styles.imgWrapper}
           style={{
             backgroundImage: `url('${bg}`,
-            backgroundSize: '100%',
+            backgroundSize: 'cover',
+            backgroundPosition: '-70px',
           }}
         >
         </div>

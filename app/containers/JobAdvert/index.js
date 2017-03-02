@@ -460,12 +460,12 @@ export class JobAdvert extends React.Component {
         <div className={styles.contentWrapper}>
           <header className={styles.header}>
             <span
-              className={styles.back + ' glyphicon glyphicon-chevron-left'}
+              className={styles.cancelChevron + ' iosIcon'}
               onClick={this.goBack}
-            />
+            ></span>
             <span
               className={styles.done}
-            >Nästa</span>
+            >Spara</span>
             <h1>Annons</h1>
           </header>
 
@@ -550,9 +550,9 @@ export class JobAdvert extends React.Component {
             </div>
           }
         </div>
-        <IosMenu
+        {/*<IosMenu
           changeRoute={this.props.changeRoute}
-        />
+        />*/}
       </article>
     );
   }
