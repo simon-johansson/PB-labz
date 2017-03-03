@@ -26,6 +26,7 @@
 .sortingWrapper {
   padding: 0px 15px;
   background: white;
+  overflow: hidden;
 }
 
 .searchWrapper {
