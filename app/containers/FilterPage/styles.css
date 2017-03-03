@@ -208,6 +208,13 @@ label {
   font-weight: normal;
 }
 
+.searchIcon {
+  margin-right: 8px;
+  font-size: 30px;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
 .gradientImg {
   position: fixed;
   bottom: 0;

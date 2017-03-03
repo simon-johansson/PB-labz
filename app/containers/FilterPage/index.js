@@ -575,11 +575,11 @@ export class FilterPage extends React.Component {
           {this.shouldShowSearchButton() &&
             <div>
               <button
-                className={styles.searchButton + ' btn btn-default'}
+                className={styles.searchButton}
                 onClick={this.onSeachButtonClick}
                 disabled={this.props.loading && (this.props.occupations.size || this.props.locations.size)}
               >
-                <span className={styles.searchIcon + " glyphicon glyphicon-search"} />
+                <span className={styles.searchIcon + " iosIcon"}></span>
                 Visa <span>{!!this.buttonAmount() ? this.buttonAmount() : ''}</span> jobb
               </button>
               <img className={styles.gradientImg} src={gradient} />

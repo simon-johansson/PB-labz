@@ -91,7 +91,9 @@ label {
   color: #55851C;
 }
 
-.searchButton {
+.searchButton,
+.searchButton:hover,
+.searchButton:active {
   // background: #06769F;
   // background: #5E8404;
   background: #478500;
@@ -116,7 +118,7 @@ label {
   margin-right: 8px;
   font-size: 30px;
   font-weight: normal;
-  vertical-align: inherit;
+  vertical-align: middle;
 }
 
 .latestSearches {

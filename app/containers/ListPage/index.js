@@ -711,7 +711,7 @@ export class ListPage extends React.Component {
           {!!matchingJobs &&
             <div>
               <button
-                className={styles.showMatchingButton + ' btn btn-default'}
+                className={styles.showMatchingButton}
                 onClick={this.showMatchingJobs.bind(this)}
               >
                 Visa
