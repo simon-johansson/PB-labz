@@ -81,7 +81,7 @@
   font-size: 36px;
   line-height: 38px;
   font-weight: 200;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .adInfo {
@@ -423,6 +423,11 @@
 .competenceMatch + .criteriaHeading,
 .comp + .criteriaHeading {
   margin-top: 20px;
+}
+
+.comp {
+  display: block;
+  line-height: 26px;
 }
 
 .criteriaSubHeading {

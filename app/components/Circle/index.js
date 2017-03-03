@@ -37,7 +37,7 @@ function Circle(props) {
     );
   } else {
     content = (
-      <div className={`${styles.circleWrapper} ${!props.isMatch ? styles.hidden : ''}`}>
+      <div className={`${props.big ? styles.circleWrapperBig : styles.circleWrapper} ${!props.isMatch ? styles.hidden : ''}`}>
         <span
           style={props.style}
           className={`${styles.circle} ${colorClass}`}
@@ -61,6 +61,7 @@ Circle.defaultProps = {
   showText: true,
   small: false,
   isMatch: true,
+  big: false,
 };
 
 Circle.propTypes = {

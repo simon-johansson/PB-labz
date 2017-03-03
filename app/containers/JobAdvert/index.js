@@ -405,15 +405,16 @@ export class JobAdvert extends React.Component {
         }
       }
 
-      // content.push(
-      //   <Circle
-      //     known={knownCriteria.length}
-      //     total={allCriteria.length}
-      //     showText={false}
-      //     style={{top: '56px'}}
-      //     isMatch={isMatch}
-      //   />
-      // );
+      content.push(
+        <Circle
+          known={knownCriteria.length}
+          total={allCriteria.length}
+          showText={false}
+          big={true}
+          style={{top: '-75px'}}
+          isMatch={isMatch}
+        />
+      );
 
       return content;
     }
@@ -466,6 +467,14 @@ export class JobAdvert extends React.Component {
   }
 
   render() {
+      const momentOptions = {
+        sameDay: '[Idag]',
+        nextDay: '[Imorgon]',
+        lastDay: '[Igår]',
+        nextWeek: '[På] dddd LT',
+        lastWeek: 'DD MMM',
+        sameElse: 'DD MMM',
+      };
     const { erbjudenArbetsplats } = this.state.ad;
     const adIsSaved = !!this.props.savedAdverts.filter(saved => {
       return saved.id === this.state.ad.id;
@@ -528,10 +537,10 @@ export class JobAdvert extends React.Component {
               <h3 className={styles.adTitle}>{this.state.ad.rubrik}</h3>
               <div className={styles.adInfo}>
                 <p className={styles.adOccupation}><b>Yrkesroll:</b> {this.state.ad.yrkesroll.namn}</p>
-                <p className={styles.adPublicated}><b>Publicerad:</b> {this.state.ad.sistaPubliceringsdatum}</p>
+                <p className={styles.adPublicated}><b>Publicerad:</b> {moment(this.state.ad.publiceringsdatum).calendar(null, momentOptions)}</p>
                 <p className={styles.adForm}><b>Anställningsform:</b> {this.state.ad.varaktighet.namn}</p>
                 <p className={styles.adSalary}><b>Lön:</b> {this.state.ad.lonetyp}</p>
-                <p className={styles.adPositions}><b>Antal platser:</b> {'...'}</p>
+                <p className={styles.adPositions}><b>Antal platser:</b> {this.state.ad.antalPlatser}</p>
               </div>
               {(!!this.state.ad.matchingCriteria.length || !!this.state.ad.notMatchingCriteria.length) &&
                 <div>
@@ -552,7 +561,8 @@ export class JobAdvert extends React.Component {
               }
               <div className={styles.advertTextWrapper} onClick={this.unFoldText.bind(this)}>
                 <p
-                  dangerouslySetInnerHTML={{__html: this.adText()}}
+                  dangerouslySetInnerHTML={{__html: this.adText().trim()
+                  }}
                   className={"annons-text unfolded"}
                   ref={(p) => this.annonsText = p}
                 />
@@ -577,14 +587,14 @@ export class JobAdvert extends React.Component {
               }
               <div className={styles.adFooter}>
                 <p className={styles.applyDescription}>Sök jobber senast</p>
-                <p className={styles.applyDate}>{this.state.ad.sistaPubliceringsdatum}</p>
+                <p className={styles.applyDate}>{moment(this.state.ad.sistaPubliceringsdatum).calendar(null, momentOptions)}</p>
                 {/*<span className={styles.adId}>ANNONS-ID: {this.state.ad.id}</span>*/}
               </div>
               <button
                 className={styles.applyButton + ' btn btn-default'}
                 onClick={() => alert('Går ej att ansöka i prototypen')}
               >
-                Ansök
+                Sök jobbet
               </button>
               <img className={styles.gradientImg} src={gradient} />
             </div>

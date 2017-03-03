@@ -29,6 +29,15 @@
   right: -2px;
 }
 
+.circleWrapperBig .circle {
+  width: 62px;
+  height: 62px;
+  right: 15px;
+  border-radius: 62px;
+  line-height: 43px;
+  border: 1px solid black;
+}
+
 .division {
   width: 25px;
   height: 1px;
