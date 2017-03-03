@@ -223,7 +223,7 @@ label {
 
 .deleteSaved,
 .savePrevious {
-  background: #EB5442;
+  background: #cc0022;
   color: white;
   display: block;
   width: 70px;
@@ -242,12 +242,12 @@ label {
 
 .updateNotify,
 .savePrevious {
-  background: #C7C7CC;
+  background: #d9edf7;
   display: block;
   width: 70px;
   position: absolute;
   top: 0;
-  color: white;
+  color: #333;
   right: 70px;
   height: 100%;
   text-align: center;

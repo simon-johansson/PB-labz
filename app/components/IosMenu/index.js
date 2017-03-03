@@ -17,6 +17,7 @@ import afLogo from './page1@3x.png';
 import afLogoBlue from './page1_blue@3x.png';
 import savedLogo from './group7_black@3x.png';
 import savedLogoBlue from './group2@3x.png';
+import dotsLogo from './dots@3x.png';
 
 const isActive = (page) => {
   const { pathname } = window.location;
@@ -82,7 +83,9 @@ export class IosMenu extends React.Component {
           <span className={styles.text}>Sparade jobb</span>
         </div>
         <div className={styles.iconWrapper}>
-          <span className={styles.icon}></span>
+          {/*<span className={styles.icon}></span>*/}
+          <img className={styles.dotsIcon} src={dotsLogo}/>
+          <span className={styles.text}>Mer</span>
         </div>
       </footer>
     );
