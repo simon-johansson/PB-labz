@@ -36,6 +36,7 @@
 
 .efterfragat {
   margin-left: 30px;
+  font-size: 14px;
 }
 
 .competenceOK {
@@ -46,5 +47,5 @@
 }
 
 .category {
-  font-size: 12px;
+  // font-size: 12px;
 }
