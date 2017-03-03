@@ -41,6 +41,7 @@
 :global(.react-actionsheet-menu) {
   border-radius: 12px;
   background: rgba(246, 246, 246, 0.9);
+  font-weight: normal;
 }
 
 :global(.react-actionsheet-menu-item) {
@@ -51,6 +52,8 @@
   text-align: center;
   font-size: 20px;
   color: #2B72FA;
+  letter-spacing: 0.5px;
+  font-weight: 300;
 }
 
 :global(.react-actionsheet-menu-item:first-child) {

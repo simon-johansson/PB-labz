@@ -43,8 +43,8 @@ export class FeaturePage extends React.Component {
           className={styles.imgWrapper}
           style={{
             backgroundImage: `url(${bg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: '-70px',
+            backgroundSize: '125%',
+            backgroundPosition: '-70px -5px',
           }}
         >
         </div>

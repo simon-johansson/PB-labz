@@ -209,7 +209,7 @@ label {
 
 .amountBorder {
   border-bottom: 1px solid #ebeef0;
-  height: 34px;
+  height: 30px;
 }
 
 .jobsNumber {
@@ -702,7 +702,8 @@ label {
   z-index: 999;
 }
 
-.competenceCriteriaSub {
+.competenceCriteriaSub,
+.competenceCriteriaSubSmall {
   // font-size: 14px;
   // width: 100%;
   // padding: 0 10px 15px;
@@ -714,6 +715,10 @@ label {
   font-size: 12px;
   float: left;
   // display: inline-block;
+}
+
+.competenceCriteriaSubSmall {
+  // width: 200px;
 }
 
 .experienceSelectionWrapper {
@@ -840,6 +845,10 @@ label {
 .barChartWrapper {
   width: 100%;
   margin: 20px 0;
+}
+
+.loading {
+  margin-top: 100px;
 }
 
 :global(.glyphicon-remove) {
