@@ -13,11 +13,11 @@ import {
 } from 'containers/App/actions';
 
 import styles from './styles.css';
-import afLogo from './page1@3x.png';
+import afLogo from './page1@2x.png';
 import afLogoBlue from './page1_blue@3x.png';
-import savedLogo from './group7_black@3x.png';
-import savedLogoBlue from './group2@3x.png';
-import dotsLogo from './dots@3x.png';
+import savedLogo from './group7_black@2x.png';
+import savedLogoBlue from './group2@2x.png';
+import dotsLogo from './group6@2x.png';
 
 const isActive = (page) => {
   const { pathname } = window.location;

@@ -472,8 +472,8 @@ export class JobAdvert extends React.Component {
         nextDay: '[Imorgon]',
         lastDay: '[Igår]',
         nextWeek: '[På] dddd LT',
-        lastWeek: 'DD MMM',
-        sameElse: 'DD MMM',
+        lastWeek: 'DD MMMM',
+        sameElse: 'DD MMMM',
       };
     const { erbjudenArbetsplats } = this.state.ad;
     const adIsSaved = !!this.props.savedAdverts.filter(saved => {

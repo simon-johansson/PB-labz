@@ -77,14 +77,14 @@ import ExperienceSelector from 'components/ExperienceSelector';
 import Actionsheet from 'components/Actionsheet';
 
 import styles from './styles.css';
-import afLogo from './page1@3x.png';
-import gripper from './gripper@3x.png';
+import afLogo from './page1@2x.png';
+import gripper from './gripper@2x.png';
 import gradient from './gradient.png';
-import okIcon from './check@3x.png';
-import listIcon from './group4@3x.png';
-import kompetensIcon from './kompetenser@3x.png';
-import erfarenhetIcon from './erfarenheter@3x.png';
-import korkortIcon from './korkort@3x.png';
+import okIcon from './check@2x.png';
+import listIcon from './group4@2x.png';
+import kompetensIcon from './kompetenser@2x.png';
+import erfarenhetIcon from './erfarenheter@2x.png';
+import korkortIcon from './korkort@2x.png';
 
 let summaryHeaders = [];
 const isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
