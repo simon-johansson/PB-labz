@@ -44,7 +44,8 @@
   cursor: pointer;
 }
 
-.done {
+.done,
+.doneSaved {
   position: absolute;
   right: 0px;
   padding-right: 12px;
@@ -56,6 +57,11 @@
   cursor: pointer;
   text-align: right;
   font-size: 17px;
+}
+
+.doneSaved {
+  font-weight: bold;
+  color: gray;
 }
 
 .advertWrapper {

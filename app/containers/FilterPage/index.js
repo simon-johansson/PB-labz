@@ -254,7 +254,7 @@ export class FilterPage extends React.Component {
 
   onGPS(evt) {
     evt.stopPropagation();
-    this.props.onAddLocation({ id: '01', namn: 'Stockholms län', typ: 'LAN' });
+    this.props.onAddLocation({id: "0180", namn: "Stockholm", typ: "KOMMUN"});
     this.props.onSubmitForm();
   }
 

@@ -117,7 +117,7 @@ export class JobAdvert extends React.Component {
   }
 
   componentDidMount() {
-    this.props.setAppState({ searches: '/advert/' + this.props.params.id });
+    // this.props.setAppState({ searches: '/advert/' + this.props.params.id });
 
     window.$('body').removeClass('modal-open');
     this.props.onLoadAdvert(this.props.params.id);
@@ -471,7 +471,7 @@ export class JobAdvert extends React.Component {
         sameDay: '[Idag]',
         nextDay: '[Imorgon]',
         lastDay: '[Igår]',
-        nextWeek: '[På] dddd LT',
+        nextWeek: '[På] dddd',
         lastWeek: 'DD MMMM',
         sameElse: 'DD MMMM',
       };
@@ -506,7 +506,7 @@ export class JobAdvert extends React.Component {
               onClick={this.goBack}
             ></span>
             <span
-              className={styles.done}
+              className={adIsSaved ? styles.doneSaved : styles.done}
               onClick={this.toggleSaveAd.bind(this, this.state.ad, adIsSaved)}
             >
               {adIsSaved ? 'Sparad' : 'Spara'}
@@ -538,7 +538,9 @@ export class JobAdvert extends React.Component {
               <div className={styles.adInfo}>
                 <p className={styles.adOccupation}><b>Yrkesroll:</b> {this.state.ad.yrkesroll.namn}</p>
                 <p className={styles.adPublicated}><b>Publicerad:</b> {moment(this.state.ad.publiceringsdatum).calendar(null, momentOptions)}</p>
-                <p className={styles.adForm}><b>Anställningsform:</b> {this.state.ad.varaktighet.namn}</p>
+                {this.state.ad.varaktighet &&
+                  <p className={styles.adForm}><b>Anställningsform:</b> {this.state.ad.varaktighet.namn}</p>
+                }
                 <p className={styles.adSalary}><b>Lön:</b> {this.state.ad.lonetyp}</p>
                 <p className={styles.adPositions}><b>Antal platser:</b> {this.state.ad.antalPlatser}</p>
               </div>
@@ -586,7 +588,7 @@ export class JobAdvert extends React.Component {
                 </div>
               }
               <div className={styles.adFooter}>
-                <p className={styles.applyDescription}>Sök jobber senast</p>
+                <p className={styles.applyDescription}>Sök jobbet senast</p>
                 <p className={styles.applyDate}>{moment(this.state.ad.sistaPubliceringsdatum).calendar(null, momentOptions)}</p>
                 {/*<span className={styles.adId}>ANNONS-ID: {this.state.ad.id}</span>*/}
               </div>

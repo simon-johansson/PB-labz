@@ -99,7 +99,12 @@ export class SavedPage extends React.Component {
           }
           {
             !!this.props.savedAdverts.size ?
-            <ListSeperated items={this.props.savedAdverts} component={JobListItem} click={this.onAdvertClick} />:
+            <ListSeperated
+              items={this.props.savedAdverts}
+              component={JobListItem}
+              click={this.onAdvertClick}
+              isSaved={true}
+            />:
             <div className={styles.matchDescription}>
               <p>Du har inga sparade jobb</p>
             </div>

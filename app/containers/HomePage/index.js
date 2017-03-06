@@ -205,6 +205,7 @@ export class HomePage extends React.Component {
       showSaveSearchPopup: true,
       indexToSave: index,
       editPrevious: false,
+      editSaved: false,
     });
   }
 
@@ -399,12 +400,14 @@ export class HomePage extends React.Component {
       <article ref="list" className="noselect">
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
-            <span
-              className={styles.edit}
-              onClick={this.editAll.bind(this)}
-            >
-              { (this.state.editSaved || this.state.editPrevious) ? 'Klar' : 'Ändra' }
-            </span>
+            {(!!this.state.savedSearches.length || !!this.state.previousSearchs.length) &&
+              <span
+                className={styles.edit}
+                onClick={this.editAll.bind(this)}
+              >
+                { (this.state.editSaved || this.state.editPrevious) ? 'Klar' : 'Ändra' }
+              </span>
+            }
             <h1>
               {/*<span className={styles.homeIcon + ' glyphicon glyphicon-home'} />*/}
               Mina sökningar

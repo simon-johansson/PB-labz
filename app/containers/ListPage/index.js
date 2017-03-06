@@ -395,10 +395,10 @@ export class ListPage extends React.Component {
               </div>
             }
             <span
-              className={styles.amountBorder}
+              className={styles.amountBorderTwoRows}
               ref={(r) => summaryHeaders.push({ el: r, text: 'Alla efterfrågade kompetenserna' })}
             >
-              <span className={styles.competenceCriteriaSub}>efterfrågas just nu</span>
+              <span className={styles.competenceCriteriaSub}>efterfrågas av arbetsgivare just nu</span>
               {/*Alla efterfrågade kompetenser {this.createSearchSummary()}*/}
               {/*this.props.competences.length > 10 ? 'Efterfrågas också' : 'Efterfrågas för din sökning'*/}
               <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
@@ -720,6 +720,11 @@ export class ListPage extends React.Component {
                 }
                 matchande jobb
               </button>
+              {/*<button
+                className={styles.nextCriteriaButton}
+              >
+                Nästa
+              </button>*/}
               <img className={styles.gradientImg} src={gradient} />
             </div>
           }
@@ -849,9 +854,9 @@ export class ListPage extends React.Component {
                 {top5}
               </div>
             */}
-            <span className={styles.amount}>
+            <span className={styles.amountTwoRows}>
               {/*(experiences.length > 5) ? 'Efterfrågas också' : 'Efterfrågas för din sökning'*/}
-              <span className={styles.competenceCriteriaSub}>efterfrågas just nu</span>
+              <span className={styles.competenceCriteriaSub}>efterfrågas av arbetsgivare just nu</span>
               <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
                 <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   Mest efterfrågat&nbsp;
@@ -1154,7 +1159,7 @@ export class ListPage extends React.Component {
 
     const actionsheetMenu = this.props.currentTab === 'match' ?
       (this.state.matchningSelectionOpen ?
-        [{content: 'Mest efterfrågade'}, {content: 'Alfabetiskt'}] :
+        [{content: 'Mest efterfrågat'}, {content: 'Alfabetiskt'}, {content: 'Mina valda'}] :
         [{content: 'Matchningsgrad'}, {content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}]
       ) :
       [{content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}];
@@ -1227,7 +1232,7 @@ export class ListPage extends React.Component {
             }
           </div>
           <button
-            className={styles.addToSearchButton + ' btn btn-default'}
+            className={styles.addToSearchButton}
             onClick={this.addToSearch.bind(this)}
           >
             <span className={styles.plusIcon + ' glyphicon glyphicon-plus'} />
@@ -1485,7 +1490,8 @@ export class ListPage extends React.Component {
                 className={styles.leftConfirmButton}
                 onClick={this.onSaveConfirm.bind(this, true)}
               >
-                <span className={styles.bell + ' glyphicon glyphicon-bell'} />
+                {/*<span className={styles.bell + ' glyphicon glyphicon-bell'} />*/}
+                <span className={styles.bell + ' iosIcon'}></span>
                 Ja
               </div>
               <div

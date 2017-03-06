@@ -72,13 +72,14 @@ function JobListItem(props) {
     nextDay: '[Imorgon]',
     lastDay: '[Igår]',
     nextWeek: '[På] dddd LT',
-    lastWeek: 'DD MMM',
-    sameElse: 'DD MMM',
+    lastWeek: 'DD MMMM',
+    sameElse: 'DD MMMM',
   };
   const item = props.item;
   // console.log(item);
   // console.log(window.moment().diff(item.sistaAnsokningsdatum, 'days'));
-  const date = moment(item.publiceringsdatum).calendar(null, momentOptions);
+  const publiceringsdatum = moment(item.publiceringsdatum).calendar(null, momentOptions);
+  const sistaAnsokningsdatum = moment(item.sistaAnsokningsdatum).calendar(null, momentOptions);
   const isMatchingView = props.options.view == 'matching';
   const isMaching = !!item.matchingCriteria.length;
   // console.log(isMaching);
@@ -94,8 +95,11 @@ function JobListItem(props) {
           <span className={styles.smallText}>Yrkesroll: {item.yrkesroll.namn}</span>
           <span className={styles.smallText}>Publicerad:
             {/*<span className={date === 'Idag' ? styles.today : ''}>{date}</span>*/}
-            <span> {date}</span>
+            <span> {publiceringsdatum}</span>
           </span>
+          {props.isSaved &&
+            <span className={styles.smallTextItalic}>Sista ansökningsdag: {sistaAnsokningsdatum}</span>
+          }
           {/*
             <br />
             <span className={styles.canApplyToAd}>
@@ -140,6 +144,7 @@ JobListItem.defaultProps = {
   options: {
     view: 'all',
   },
+  isSaved: false,
 };
 
 

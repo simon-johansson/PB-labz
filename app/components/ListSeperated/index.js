@@ -14,6 +14,7 @@ function List(props) {
         item={item}
         click={props.click}
         options={props.options}
+        isSaved={props.isSaved}
       />
     ));
   } else {

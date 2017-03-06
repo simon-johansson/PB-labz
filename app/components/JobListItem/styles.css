@@ -21,7 +21,8 @@
 
 .title,
 .employer,
-.smallText {
+.smallText,
+.smallTextItalic {
   width: 80%;
   display: block;
 }
@@ -31,10 +32,19 @@
 }
 
 .smallText,
+.smallTextItalic,
 .employer {
   color: #6f7578;
   font-size: 13px;
   line-height: 18px;
+}
+
+.smallTextItalic {
+  font-style: italic;
+  background: #d9edf7;
+  width: auto;
+  display: inline-block;
+  padding: 0 5px;
 }
 
 .employer {

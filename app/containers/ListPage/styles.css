@@ -199,7 +199,9 @@ label {
 }
 
 .amount,
-.amountBorder {
+.amountBorder,
+.amountTwoRows,
+.amountBorderTwoRows {
   // background: white;
   padding: 5px 10px 10px 12px;
   display: block;
@@ -207,9 +209,19 @@ label {
   font-size: 13px;
 }
 
-.amountBorder {
+.amountBorder,
+.amountBorderTwoRows {
   border-bottom: 1px solid #ebeef0;
   height: 30px;
+}
+
+.amountBorderTwoRows {
+  height: 50px;
+}
+
+.amountBorderTwoRows .competenceCriteriaSub,
+.amountTwoRows .competenceCriteriaSub {
+  margin-bottom: 5px;
 }
 
 .jobsNumber {
@@ -300,6 +312,8 @@ label {
 }
 
 .showMatchingButton,
+.showMatchingButtonLeft,
+.nextCriteriaButton,
 .addToSearchButton {
   background: #06769F;
   // background: #478500;
@@ -320,8 +334,19 @@ label {
   font-weight: normal;
 }
 
-.showMatchingButton {
+.showMatchingButton,
+.showMatchingButtonLeft {
   background: #478500;
+}
+
+.showMatchingButtonLeft {
+  width: 70%;
+  left: 10px;
+}
+
+.nextCriteriaButton {
+  width: 85px;
+  left: 280px;
 }
 
 .addToSearchTag {
@@ -568,6 +593,7 @@ label {
 
 .isSaved {
   color: gray;
+  font-weight: bold;
 }
 
 .overlay {
