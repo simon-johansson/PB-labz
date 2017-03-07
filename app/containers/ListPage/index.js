@@ -1390,7 +1390,8 @@ export class ListPage extends React.Component {
                 {/*<span className={styles.cancel + ' glyphicon glyphicon-chevron-left'} />*/}
                 <span className={styles.cancelText}>
                   <div className={styles.afLogoWrapper}>
-                    <img className={styles.afLogo} src={afLogo} />
+                    {/*<img className={styles.afLogo} src={afLogo} />*/}
+                    <span className={styles.cancelChevron + ' iosIcon'}></span>
                   </div>
                   {/*<span className={styles.homeIcon + ' glyphicon glyphicon-home'} />*/}
                   {/*Mina sökningar*/}

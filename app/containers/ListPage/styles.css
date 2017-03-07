@@ -503,6 +503,12 @@ label {
   margin-bottom: 21px;
 }
 
+.afLogoWrapper .cancelChevron {
+  left: 0;
+  top: -1px;
+  font-size: 20px;
+}
+
 .done {
   position: absolute;
   right: 0px;
