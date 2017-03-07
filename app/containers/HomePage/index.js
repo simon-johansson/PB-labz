@@ -400,7 +400,7 @@ export class HomePage extends React.Component {
       <article ref="list" className="noselect">
         <div className={styles.contentWrapper}>
           <div className={styles.searchForm}>
-            {(!!this.state.savedSearches.length || !!this.state.previousSearchs.length) &&
+            {(!!this.state.savedSearches.length || !!this.state.previousSearchs.length) && false &&
               <span
                 className={styles.edit}
                 onClick={this.editAll.bind(this)}
@@ -455,7 +455,7 @@ export class HomePage extends React.Component {
               <div>
                 <span className={styles.listHeader}>
                   Sparade sökningar
-                  {!!this.state.savedSearches.length && false &&
+                  {!!this.state.savedSearches.length &&
                     <span
                       className={styles.pencil}
                       onClick={this.onEditSaved.bind(this)}
@@ -474,7 +474,7 @@ export class HomePage extends React.Component {
               <div>
                 <span className={styles.listHeader}>
                   Tidigare sökningar
-                  {!!this.state.previousSearchs.length && false &&
+                  {!!this.state.previousSearchs.length &&
                     <span
                       className={styles.pencil}
                       onClick={this.onEditsPrevious.bind(this)}
