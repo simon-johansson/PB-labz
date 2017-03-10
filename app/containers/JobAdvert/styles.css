@@ -23,7 +23,9 @@
 
 .cancelChevron {
   position: absolute;
-  left: 12px;
+  width: 70px;
+  padding-left: 10px;
+  left: 0px;
   top: -2px;
   padding-top: 2px;
   height: 50px;
@@ -69,7 +71,7 @@
   display: block;
   width: calc(100% - 30px);
   margin: auto;
-  padding-top: 60px;
+  padding-top: 45px;
   position: relative;
 }
 

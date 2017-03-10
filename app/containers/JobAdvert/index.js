@@ -493,7 +493,7 @@ export class JobAdvert extends React.Component {
       }];
     }
     let kommun = '';
-    if (this.state.ad) {
+    if (this.state.ad && this.state.ad.erbjudenArbetsplats.kommun) {
       kommun = this.state.ad.erbjudenArbetsplats.kommun.namn;
     }
 
