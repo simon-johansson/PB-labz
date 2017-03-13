@@ -66,6 +66,11 @@
   color: gray;
 }
 
+.criteriaDivider {
+  height: 4px;
+  background: #F2F4F5;
+}
+
 .advertWrapper {
   padding-top: 10px;
   display: block;
@@ -76,7 +81,7 @@
 }
 
 .advertWrapper h3 {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .companyName {
@@ -84,6 +89,8 @@
   display: inline-block;
   font-size: 12px;
   text-transform: uppercase;
+  color: #6f7578;
+  margin-top: 15px;
 }
 
 .adTitle {
@@ -99,7 +106,7 @@
   margin-left: -15px;
   padding: 15px;
   font-size: 13px;
-  border-bottom: 2px solid #fbc6aa;
+  // border-bottom: 2px solid #fbc6aa;
 }
 
 .adInfo b {
@@ -119,11 +126,12 @@
   margin-left: -15px;
   padding-left: 15px;
   font-size: 24px;
-  line-height: 86px;
+  line-height: 80px;
   background: white;
   font-weight: 200;
-  height: 86px;
-  border-bottom: 2px solid #fbc6aa;
+  height: 80px;
+  // border-bottom: 2px solid #fbc6aa;
+  background: #F2F4F5;
 }
 
 .competenceHeader {
@@ -170,12 +178,17 @@
   margin-left: -15px;
   padding: 15px;
   position: relative;
-  border-bottom: 2px solid #fbc6aa;
+  // border-bottom: 2px solid #fbc6aa;
+  background: #F2F4F5;
 }
 
 .competenceWrapper b {
   margin-bottom: 5px;
   display: inline-block;
+}
+
+.expFat {
+  margin-bottom: 0 !important;
 }
 
 .competence,
@@ -202,12 +215,17 @@
 .okIcon {
   color: #f27b24;
   margin-right: 5px;
-  margin-left: 15px;
+  margin-left: -20px;
 }
 
 .dotIcon {
+  font-size: 30px;
+  height: 10px;
+  display: inline-block;
+  vertical-align: sub;
   margin-right: 5px;
-  margin-left: 15px;
+  margin-left: -20px;
+  margin-top: -15px;
 }
 
 .plusIcon {
@@ -422,9 +440,9 @@
 
 .criteriaHeading {
   font-weight: 200;
-  font-size: 18px;
+  font-size: 20px;
   display: block !important;
-  border-bottom: 1px dashed #f27b24;
+  border-bottom: 1px dashed #6f7578;
   padding-bottom: 3px;
 }
 
@@ -436,7 +454,12 @@
 
 .comp {
   display: block;
-  line-height: 26px;
+  // line-height: 26px;
+  margin-left: 30px;
+}
+
+.comp + .comp {
+  margin-top: 10px;
 }
 
 .criteriaSubHeading {
@@ -445,7 +468,7 @@
   font-size: 13px;
   text-transform: uppercase;
   font-weight: 500;
-  margin-top: 10px;
+  margin-top: 12px;
   margin-bottom: 10px;
 }
 

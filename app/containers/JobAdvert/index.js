@@ -161,12 +161,13 @@ export class JobAdvert extends React.Component {
 
   cleanLevel(level) {
     if (level) {
-      // console.log(level);
-      return level.efterfragat
-        .replace('Mindre än 1 års erfarenhet', '0-1 år')
-        .replace('1-2 års erfarenhet', '1-2 år')
-        .replace('2-4 års erfarenhet', '2-4 år')
-        .replace('5 års erfarenhet eller mer', '+5 år');
+      // return level.efterfragat
+      //   .replace('Mindre än 1 års erfarenhet', '0-1 år')
+      //   .replace('1-2 års erfarenhet', '1-2 år')
+      //   .replace('2-4 års erfarenhet', '2-4 år')
+      //   .replace('5 års erfarenhet eller mer', '+5 år');
+
+      return level.efterfragat;
     } else {
       return '';
     }
@@ -303,7 +304,7 @@ export class JobAdvert extends React.Component {
                   <span className={styles.dotIcon}>•</span>
 
                 }
-                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`}
+                <b className={styles.expFat}>{exp.efterfragat}</b> {this.cleanLevel(exp.niva)}
               </span>
             );
             // content.push(
@@ -326,7 +327,7 @@ export class JobAdvert extends React.Component {
                   <span className={styles.dotIcon}>•</span>
 
                 }
-                {`${this.cleanLevel(exp.niva)} ${exp.efterfragat}`}
+                <b className={styles.expFat}>{exp.efterfragat}</b> {this.cleanLevel(exp.niva)}
               </span>
             );
           });
@@ -411,7 +412,7 @@ export class JobAdvert extends React.Component {
           total={allCriteria.length}
           showText={false}
           big={true}
-          style={{top: '-75px'}}
+          style={{top: '-69px'}}
           isMatch={isMatch}
         />
       );
@@ -546,10 +547,11 @@ export class JobAdvert extends React.Component {
               </div>
               {(!!this.state.ad.matchingCriteria.length || !!this.state.ad.notMatchingCriteria.length) &&
                 <div>
-                  <div className={styles.matchCriteria}>
-                    <span>Matchningskriterier</span>
-                  </div>
-
+                  { this.state.ad.isMatch &&
+                    <div className={styles.matchCriteria}>
+                      <span>Matchningskriterier</span>
+                    </div>
+                  }
                   <div className={styles.competenceWrapper}>
                     {/*<ul className={styles.criteriaTabs}>
                       <li className={styles.criteriaTab}>Allt efterfrågat</li>
@@ -560,6 +562,9 @@ export class JobAdvert extends React.Component {
                   </div>
                   {/*<span className={styles.reqDescription}>(k) = krav, (m) = meriterande</span>*/}
                 </div>
+              }
+              {!(!!this.state.ad.matchingCriteria.length || !!this.state.ad.notMatchingCriteria.length) &&
+                <div className={styles.criteriaDivider} />
               }
               <div className={styles.advertTextWrapper} onClick={this.unFoldText.bind(this)}>
                 <p
