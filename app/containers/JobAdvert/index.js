@@ -412,7 +412,7 @@ export class JobAdvert extends React.Component {
           total={allCriteria.length}
           showText={false}
           big={true}
-          style={{top: '-69px'}}
+          style={{top: '-65px'}}
           isMatch={isMatch}
         />
       );
