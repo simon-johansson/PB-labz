@@ -442,7 +442,7 @@ export class HomePage extends React.Component {
 
           {(!this.state.savedSearches.length && !this.state.previousSearchs.length) &&
             <button
-              className={styles.searchButton + ' btn btn-default'}
+              className={styles.searchButton}
               onClick={this.onSeachButtonClick}
             >
               <span className={styles.searchIcon + " iosIcon"}></span>

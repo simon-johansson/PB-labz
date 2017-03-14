@@ -598,7 +598,7 @@ export class JobAdvert extends React.Component {
                 {/*<span className={styles.adId}>ANNONS-ID: {this.state.ad.id}</span>*/}
               </div>
               <button
-                className={styles.applyButton + ' btn btn-default'}
+                className={styles.applyButton}
                 onClick={() => alert('Går ej att ansöka i prototypen')}
               >
                 Sök jobbet
