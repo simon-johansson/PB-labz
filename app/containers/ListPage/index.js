@@ -1316,7 +1316,7 @@ export class ListPage extends React.Component {
             <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
               <img className={styles.okIcon} src={okIcon} />
               <img className={styles.listIcon} src={listIcon} />
-              Mina matchningskriterier {/*({this.props.knownCompetences.size})*/}
+              Ändra matchningskriterier {/*({this.props.knownCompetences.size})*/}
               {/*<span className={styles.right + ' glyphicon glyphicon-chevron-right'}></span>*/}
             </div>
             <span
@@ -1457,7 +1457,7 @@ export class ListPage extends React.Component {
                 className={this.props.currentTab === 'match' ? styles.activeButton : ''}
                 onClick={this.setTabState.bind(this, 'match')}
               >
-                Kompetensmatchning
+                Mina matchningar
                 { this.props.hasMatchningJobs && !this.props.loading &&
                   ` (${this.props.matchingJobs.length})`
                 }
