@@ -287,7 +287,7 @@ export class HomePage extends React.Component {
       content.push(
         <div className={styles.leftAlign}>
           <br />
-          <span className={styles.noSearches}>Du har inga sparade sökningar</span>
+          <span className={styles.noSearches}>Du har inga bevakade sökningar</span>
           <br />
           <br />
         </div>
@@ -325,7 +325,7 @@ export class HomePage extends React.Component {
                 onClick={this.onSavePrevious.bind(this, index)}
               >
                 <span className={styles.savePreviousIcon}>
-                  Spara
+                  Bevaka
                 </span>
               </div>
             </div> :
@@ -454,7 +454,7 @@ export class HomePage extends React.Component {
             {!!this.state.savedSearches.length &&
               <div>
                 <span className={styles.listHeader}>
-                  Sparade sökningar
+                  Bevakade sökningar
                   {!!this.state.savedSearches.length &&
                     <span
                       className={styles.pencil}
@@ -499,7 +499,7 @@ export class HomePage extends React.Component {
               <p className={styles.popupText}>
                 {/*<span className={styles.bell + ' glyphicon glyphicon-bell'} />*/}
                 {/*Din sökning är sparad. Vill du få notiser när nya jobb dyker upp {this.createSearchSummary() || 'denna sökning'}?*/}
-                Din sökning är sparad. Vill du få notiser när nya jobb dyker upp för denna sökning?
+                Din sökning är bevakad. Vill du få notiser när nya jobb dyker upp för denna sökning?
               </p>
               <div
                 className={styles.leftConfirmButton}

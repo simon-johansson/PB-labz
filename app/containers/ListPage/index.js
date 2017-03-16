@@ -395,7 +395,7 @@ export class ListPage extends React.Component {
               </div>
             }
             <span
-              className={styles.amountBorderTwoRows}
+              className={styles.amountBorder}
               ref={(r) => summaryHeaders.push({ el: r, text: 'Alla efterfrågade kompetenserna' })}
             >
               <span className={styles.competenceCriteriaSub}>efterfrågas av arbetsgivare just nu</span>
@@ -403,7 +403,7 @@ export class ListPage extends React.Component {
               {/*this.props.competences.length > 10 ? 'Efterfrågas också' : 'Efterfrågas för din sökning'*/}
               <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
                 <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Mest efterfrågat&nbsp;
+                  Sortering&nbsp;
                   <span className={styles.caret + " iosIcon"}></span>
                 </button>
                 {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -854,12 +854,12 @@ export class ListPage extends React.Component {
                 {top5}
               </div>
             */}
-            <span className={styles.amountTwoRows}>
+            <span className={styles.amount}>
               {/*(experiences.length > 5) ? 'Efterfrågas också' : 'Efterfrågas för din sökning'*/}
               <span className={styles.competenceCriteriaSub}>efterfrågas av arbetsgivare just nu</span>
               <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
                 <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Mest efterfrågat&nbsp;
+                  Sortering&nbsp;
                   <span className={styles.caret + " iosIcon"}></span>
                 </button>
                 {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -1159,10 +1159,10 @@ export class ListPage extends React.Component {
 
     const actionsheetMenu = this.props.currentTab === 'match' ?
       (this.state.matchningSelectionOpen ?
-        [{content: 'Mest efterfrågat'}, {content: 'Alfabetiskt'}, {content: 'Mina valda'}] :
-        [{content: 'Matchningsgrad'}, {content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}]
+        [{content: '✔ Mest efterfrågat'}, {content: 'Alfabetiskt'}, {content: 'Mina valda'}] :
+        [{content: '✔ Matchningsgrad'}, {content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}]
       ) :
-      [{content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}];
+      [{content: '✔ Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}];
     const {
       occupations: ogOccupations,
       locations: ogLocations,
@@ -1288,7 +1288,7 @@ export class ListPage extends React.Component {
             Hittade <span className={styles.jobsNumber}>{this.props.amount}</span> jobb {/*this.createSearchSummary()*/}
             <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
               <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Publiceringsdatum&nbsp;
+                Sortering&nbsp;
                 <span className={styles.caret + " iosIcon"}></span>
               </button>
               {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -1326,7 +1326,7 @@ export class ListPage extends React.Component {
               <span className={styles.jobsNumber}>{this.props.matchingJobs.length}</span> jobb matchar dig
               <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
                 <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Matchningsgrad&nbsp;
+                  Sortering&nbsp;
                   <span className={styles.caret + " iosIcon"}></span>
                 </button>
                 {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -1404,7 +1404,7 @@ export class ListPage extends React.Component {
                 className={`${styles.saveSearch} ${this.state.searchIsSaved ? styles.isSaved : ''}`}
                 onClick={this.saveSearch.bind(this)}
               >
-                {this.state.searchIsSaved ? 'Sparad' : 'Spara'}
+                {this.state.searchIsSaved ? 'Bevakad' : 'Bevaka'}
               </span>
             </div>
 
@@ -1485,7 +1485,7 @@ export class ListPage extends React.Component {
               <p className={styles.popupText}>
                 {/*<span className={styles.bell + ' glyphicon glyphicon-bell'} />*/}
                 {/*Din sökning är sparad. Vill du få notiser när nya jobb dyker upp {this.createSearchSummary() || 'denna sökning'}?*/}
-                Din sökning är sparad. Vill du få notiser när nya jobb dyker upp för denna sökning?
+                Din sökning är bevakad. Vill du få notiser när nya jobb dyker upp för denna sökning?
               </p>
               <div
                 className={styles.leftConfirmButton}
