@@ -87,7 +87,7 @@ label {
 
   background: #06769F;
   padding: 0 0 0 8px;
-  width: 70%;
+  width: 74%;
   height: 40px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -112,8 +112,8 @@ label {
   position: absolute;
   right: 0;
   border-right: 1px solid white;
-  top: 5px;
-  height: 30px;
+  top: 8px;
+  height: 25px;
 }
 
 .filter {
@@ -123,7 +123,7 @@ label {
   text-align: center;
   background: #06769F;
   color: white;
-  width: 30%;
+  width: 26%;
   height: 40px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -133,7 +133,7 @@ label {
 
 .gripper {
   width: 22px;
-  margin-right: 12px;
+  margin-right: 8px;
 }
 
 .filterIcon {
@@ -457,6 +457,16 @@ label {
 
 .cancelChevron {
   font-size: 25px;
+}
+
+.backText {
+  position: absolute;
+  left: 22px;
+  top: 3px;
+  // padding-top: 2px;
+  // height: 50px;
+  line-height: 40px;
+  font-size: 17px;
 }
 
 .cancelText {

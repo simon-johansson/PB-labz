@@ -1159,7 +1159,7 @@ export class ListPage extends React.Component {
 
     const actionsheetMenu = this.props.currentTab === 'match' ?
       (this.state.matchningSelectionOpen ?
-        [{content: '✔ Mest efterfrågat'}, {content: 'Alfabetiskt'}, {content: 'Mina valda'}] :
+        [{content: '✔ Mest efterfrågat'}, {content: 'Alfabetiskt'}/*, {content: 'Mina valda'}*/] :
         [{content: '✔ Matchningsgrad'}, {content: 'Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}]
       ) :
       [{content: '✔ Publiceringsdatum'}, {content: 'Sista ansökningsdatum'}];
@@ -1392,6 +1392,7 @@ export class ListPage extends React.Component {
                   <div className={styles.afLogoWrapper}>
                     {/*<img className={styles.afLogo} src={afLogo} />*/}
                     <span className={styles.cancelChevron + ' iosIcon'}></span>
+                    {/*<span className={styles.backText}>Mina sökningar</span>*/}
                   </div>
                   {/*<span className={styles.homeIcon + ' glyphicon glyphicon-home'} />*/}
                   {/*Mina sökningar*/}

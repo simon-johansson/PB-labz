@@ -381,6 +381,15 @@ export class HomePage extends React.Component {
     return str;
   }
 
+  cleanThousands(amount) {
+    const a = amount.toString();
+    if (a.length >= 5) {
+      return a.slice(0, 2) + ' ' + a.slice(2);
+    } else {
+      return a;
+    }
+  }
+
   render() {
     let mainContent = null;
     let matchingContent = null;
@@ -429,11 +438,11 @@ export class HomePage extends React.Component {
               <p>Välkommen till Platsbanken!</p>
             }
             <p className={styles.amount}>
-              Just nu,&nbsp;
+              Just nu&nbsp;
               <span className={styles.totalAmount}>
                 { !this.props.totalAmount ?
                   <LoadingIndicator options={{size: 'small', color: 'dark'}} /> :
-                  `${this.props.totalAmount} `
+                  `${this.cleanThousands(this.props.totalAmount)} `
                 }
               </span>
               lediga jobb.
