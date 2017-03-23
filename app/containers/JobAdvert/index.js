@@ -529,11 +529,11 @@ export class JobAdvert extends React.Component {
                     <span className={`${styles.saveIcon} glyphicon ${adIsSaved ? 'glyphicon-star' : 'glyphicon-star-empty'}`} />
                   </div>
                 </AnimateOnChange>*/}
-              {/*<object
-                style={{maxHeight: '60px'}}
-                data={`http://api.arbetsformedlingen.se/platsannons/${this.state.ad.id}/logotyp`} type="image/gif"
-              >
-              </object> <br />*/}
+              <object
+                className={styles.orgLogo}
+                data={`https://www.arbetsformedlingen.se/rest/arbetsgivare/rest/af/v2/organisation/${this.state.ad.organisationsnummer}/logotyper/logo.png`}
+                type="image/png"
+              />
               <b className={styles.companyName}>{this.state.ad.arbetsgivarenamn}, {kommun}</b>
               <h3 className={styles.adTitle}>{this.state.ad.rubrik}</h3>
               <div className={styles.adInfo}>
