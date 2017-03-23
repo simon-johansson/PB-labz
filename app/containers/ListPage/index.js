@@ -553,7 +553,7 @@ export class ListPage extends React.Component {
         </div>
 
         <div className={styles.matchDescription}>
-          <p>Fyll i det som stämmer in på dig för att se jobben som passar dig bäst.</p>
+          <p>Välj det som stämmer in på dig för att se jobben som passar dig bäst.</p>
         </div>
 
         <div

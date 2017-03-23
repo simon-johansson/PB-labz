@@ -94,7 +94,7 @@
 }
 
 .adTitle {
-  font-size: 36px;
+  font-size: 34px;
   line-height: 38px;
   font-weight: 200;
   margin-bottom: 15px;
@@ -119,6 +119,10 @@
 
 .adInfo .adOccupation {
   text-transform: uppercase;
+}
+
+.adInfo p {
+  margin-bottom: 5px;
 }
 
 .matchCriteria {

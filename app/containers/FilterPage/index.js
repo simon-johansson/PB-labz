@@ -78,7 +78,7 @@ export class FilterPage extends React.Component {
       sorting: 'pub',
       date: 'all',
       employment: [true, true, true, true],
-      amount: [true, true],
+      amount: [true, false, false],
       areaFilter: [],
     };
 
@@ -268,7 +268,8 @@ export class FilterPage extends React.Component {
 
   setAmount(indexToChange) {
     const arr = this.state.amount.map((state, index) => {
-      if (index === indexToChange) return !state;
+      if (index === indexToChange) return true;
+      if (state && index !== indexToChange) return false;
       else return state;
     });
     this.setState({ amount: arr });
@@ -451,31 +452,66 @@ export class FilterPage extends React.Component {
           </section>
 
           <p className={styles.subTitle}>Omfattning</p>
-          <section className={styles.sortingWrapper}>
+          {/*<section className={styles.sortingWrapper}>
+              <div className={styles.switchWrapper}>
+                <div className={styles.switchWrapperRow}>
+                  <span className={styles.switchWrapperTitle}>Heltid</span>
+                  <Switch
+                    className={styles.rowSwitch}
+                    checked={this.state.amount[0]}
+                    onChange={() => {}}
+                  />
+                  <div className={styles.rowOverlay} onClick={this.setAmount.bind(this, 0)} />
+                </div>
+                <hr className={styles.filterDivider} />
+                <div className={styles.switchWrapperRow}>
+                  <span className={styles.switchWrapperTitle}>Deltid</span>
+                  <Switch
+                    className={styles.rowSwitch}
+                    checked={this.state.amount[1]}
+                    onChange={() => {}}
+                  />
+                  <div className={styles.rowOverlay} onClick={this.setAmount.bind(this, 1)} />
+                </div>
+              </div>
+            </section>*/}
 
-            {/*<div className={styles.buttonWrapper}>
-              <button className='activeFilterButton' onClick={this.toggleActive.bind(this)}>Heltid</button>
-              <button onClick={this.toggleActive.bind(this)}>Deltid</button>
-            </div>*/}
-            <div className={styles.switchWrapper}>
-              <div className={styles.switchWrapperRow}>
-                <span className={styles.switchWrapperTitle}>Heltid</span>
-                <Switch
-                  className={styles.rowSwitch}
-                  checked={this.state.amount[0]}
-                  onChange={() => {}}
-                />
-                <div className={styles.rowOverlay} onClick={this.setAmount.bind(this, 0)} />
+          <section className={styles.sortingWrapper}>
+            <div className={styles.radioButtonGroup}>
+              <div
+                className={styles.radioWrapperRow}
+                onClick={this.setAmount.bind(this, 0)}
+              >
+                <span className={styles.radioTitle}>Alla</span>
+                <div className={styles.radioButton}>
+                  <span
+                    className={`${styles.radioOk} ${!this.state.amount[0] ? styles.inActive : ''} glyphicon glyphicon-ok`}
+                  />
+                </div>
               </div>
               <hr className={styles.filterDivider} />
-              <div className={styles.switchWrapperRow}>
-                <span className={styles.switchWrapperTitle}>Deltid</span>
-                <Switch
-                  className={styles.rowSwitch}
-                  checked={this.state.amount[1]}
-                  onChange={() => {}}
-                />
-                <div className={styles.rowOverlay} onClick={this.setAmount.bind(this, 1)} />
+              <div
+                className={styles.radioWrapperRow}
+                onClick={this.setAmount.bind(this, 1)}
+              >
+                <span className={styles.radioTitle}>Heltid</span>
+                <div className={styles.radioButton}>
+                  <span
+                    className={`${styles.radioOk} ${!this.state.amount[1] ? styles.inActive : ''} glyphicon glyphicon-ok`}
+                  />
+                </div>
+              </div>
+              <hr className={styles.filterDivider} />
+              <div
+                className={styles.radioWrapperRow}
+                onClick={this.setAmount.bind(this, 2)}
+              >
+                <span className={styles.radioTitle}>Deltid</span>
+                <div className={styles.radioButton}>
+                  <span
+                    className={`${styles.radioOk} ${!this.state.amount[2] ? styles.inActive : ''} glyphicon glyphicon-ok`}
+                  />
+                </div>
               </div>
             </div>
           </section>
