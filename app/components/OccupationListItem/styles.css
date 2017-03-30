@@ -37,6 +37,14 @@
   color: #6f7578;
 }
 
+.rightFreetext {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  font-size: 15px;
+  color: #2B72FA !important;
+}
+
 .showMore {
   color: #06769f;
   font-weight: 400;

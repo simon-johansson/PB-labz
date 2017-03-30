@@ -40,8 +40,8 @@ export function* getOccupations() {
 
   const query = yield select(selectQuery());
 
-  // const requestURL = `https://www.arbetsformedlingen.se/rest/matchning/rest/af/v1/matchning/matchningskriterier?namnfilter=${query}&typer=yrken&typer=yrkesgrupper&typer=yrkesomraden`;
-  const requestURL = `/matchningskriterier?namnfilter=${query}`;
+  const requestURL = `https://www.arbetsformedlingen.se/rest/matchning/rest/af/v1/matchning/matchningskriterier?namnfilter=${query}&typer=yrken&typer=yrkesgrupper&typer=yrkesomraden`;
+  // const requestURL = `/matchningskriterier?namnfilter=${query}`;
   const occupations = yield call(request, requestURL);
 
   if (!occupations.err) {

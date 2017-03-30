@@ -37,7 +37,7 @@ function addOccupationReducer(state = initialState, action) {
         .set('occupationListQuery', action.occupationListQuery);
     case LOAD_OCCUPATION_SUCCESS:
       return state
-        .set('occupations', action.occupations.splice(0, 10));
+        .set('occupations', action.occupations.splice(0, 100));
     case LOAD_OCCUPATION_LIST_SUCCESS:
       return state
         .set('occupationList', state.get('occupationList').clear())
