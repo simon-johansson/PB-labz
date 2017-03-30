@@ -41,6 +41,7 @@
   position: absolute;
   right: 0;
   top: 10px;
+  font-weight: normal;
   font-size: 15px;
   color: #2B72FA !important;
 }
