@@ -36,10 +36,6 @@ export class OccupationListItem extends React.Component { // eslint-disable-line
     return item.typ === 'GPS';
   }
 
-  showFreetext(item) {
-    return item.typ === 'FRITEXT';
-  }
-
   rightPart(item, antal) {
     if (this.showMore(item)) {
       return '';
@@ -48,12 +44,6 @@ export class OccupationListItem extends React.Component { // eslint-disable-line
         <span className={styles.gps}>
           GPS
           <span className={styles.gpsIcon + ' glyphicon glyphicon-map-marker'} />
-        </span>
-      );
-    } else if (this.showFreetext(item)) {
-      return (
-        <span className={styles.rightFreetext}>
-          Fritext
         </span>
       );
     } else {

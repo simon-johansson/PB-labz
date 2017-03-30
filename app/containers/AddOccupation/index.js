@@ -217,17 +217,10 @@ export class AddOccupation extends React.Component {
       mainContent = (
         <div className={styles.autoCompleteList}>
           <List
-            items={[...this.props.occupations]}
+            items={[...this.props.occupations, freetext]}
             component={OccupationListItem}
             click={this.onListItemClick.bind(this)}
           />
-          <div className={styles.stickyFreetext}>
-            <List
-              items={[freetext]}
-              component={OccupationListItem}
-              click={this.onListItemClick.bind(this)}
-            />
-          </div>
         </div>
       );
     }
