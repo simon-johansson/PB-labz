@@ -403,7 +403,7 @@ export class ListPage extends React.Component {
               {/*this.props.competences.length > 10 ? 'Efterfrågas också' : 'Efterfrågas för din sökning'*/}
               <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
                 <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Sortering&nbsp;
+                  Sortera&nbsp;
                   <span className={styles.caret + " iosIcon"}></span>
                 </button>
                 {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -859,7 +859,7 @@ export class ListPage extends React.Component {
               <span className={styles.competenceCriteriaSub}>efterfrågas av arbetsgivare just nu</span>
               <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
                 <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Sortering&nbsp;
+                  Sortera&nbsp;
                   <span className={styles.caret + " iosIcon"}></span>
                 </button>
                 {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -1288,7 +1288,7 @@ export class ListPage extends React.Component {
             Hittade <span className={styles.jobsNumber}>{this.props.amount}</span> jobb {/*this.createSearchSummary()*/}
             <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
               <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Sortering&nbsp;
+                Sortera&nbsp;
                 <span className={styles.caret + " iosIcon"}></span>
               </button>
               {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -1311,6 +1311,15 @@ export class ListPage extends React.Component {
       );
 
       if (this.props.hasMatchningJobs) {
+        const tipsElement = (
+          <div className={styles.tipsBubbleCircle}>
+            <figure className={styles.tipsArrow} />
+            <p>Cirkeln visar hur många kriterier du uppfyller av det som efterfrågas av arbetsgivaren.</p>
+            <figure className={styles.closeTipsCircle}>
+              <span className={styles.closeTipsCross + ' iosIcon'}></span>
+            </figure>
+          </div>
+        );
         matchingContent = (
           <div className={styles.listWrapperMatchingContent}>
             <div className={styles.myCompetences} onClick={this.hideMatchingJobs.bind(this)}>
@@ -1326,7 +1335,7 @@ export class ListPage extends React.Component {
               <span className={styles.jobsNumber}>{this.props.matchingJobs.length}</span> jobb matchar dig
               <div className="dropdown" onClick={() => this.setState({showActionsheet: true})}>
                 <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Sortering&nbsp;
+                  Sortera&nbsp;
                   <span className={styles.caret + " iosIcon"}></span>
                 </button>
                 {/*<ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -1337,7 +1346,14 @@ export class ListPage extends React.Component {
               </div>
             </span>
             <ListSeperated
-              items={this.props.matchingJobs.slice(0, 50)}
+              items={this.props.matchingJobs.slice(0, 1)}
+              component={JobListItem}
+              click={this.onAdvertClick}
+              options={{view: 'matching'}}
+            />
+            {tipsElement}
+            <ListSeperated
+              items={this.props.matchingJobs.slice(1, 50)}
               component={JobListItem}
               click={this.onAdvertClick}
               options={{view: 'matching'}}
@@ -1399,8 +1415,20 @@ export class ListPage extends React.Component {
                 </span>
               </Tappable>
 
-              <h1>Sökresultat</h1>
-              {/*<h1>&nbsp;</h1>*/}
+              <form
+                className={styles.filterInput}
+                onClick={this.addFilterPage}
+              >
+                <div className="form-group">
+                  <div className={styles.searchInputWrapper}>
+                    <span className={styles.inputField}>
+                      <span className={styles.searchIcon + " iosIcon"}></span>
+                      {this.createSearchInput()}
+                    </span>
+                  </div>
+                </div>
+              </form>
+
               <span
                 className={`${styles.saveSearch} ${this.state.searchIsSaved ? styles.isSaved : ''}`}
                 onClick={this.saveSearch.bind(this)}
@@ -1422,26 +1450,6 @@ export class ListPage extends React.Component {
                 </span>
               </div>
             </form>*/}
-
-            <form
-              className={styles.filterInput}
-              onClick={this.addFilterPage}
-            >
-              <div className="form-group">
-                <div className={styles.searchInputWrapper}>
-                  <span className={styles.inputField}>
-                    <span className={styles.searchIcon + " iosIcon"}></span>
-                    {this.createSearchInput()}
-                    <figure className={styles.verticalBorder} />
-                  </span>
-                </div>
-                <span className={styles.filter}>
-                  <img className={styles.gripper} src={gripper} />
-                  Filter
-                  {/*<span className={styles.filterIcon + " glyphicon glyphicon-tasks"} />*/}
-                </span>
-              </div>
-            </form>
 
             <div className={styles.toggleButtons}>
               <button
@@ -1465,7 +1473,16 @@ export class ListPage extends React.Component {
               </button>
             </div>
             { this.props.currentTab === 'all' &&
-                mainContent
+                <div>
+                  <div className={styles.tipsBubble}>
+                    <figure className={styles.tipsArrow} />
+                    <p><b>Nytt!</b> Välj dina kompetenser och erfarenheter för att se jobben som passar dig bäst.</p>
+                    <figure className={styles.closeTipsCircle}>
+                      <span className={styles.closeTipsCross + ' iosIcon'}></span>
+                    </figure>
+                  </div>
+                  {mainContent}
+                </div>
             }
             { this.props.currentTab === 'match' &&
               (this.state.showMatchingJobs ?

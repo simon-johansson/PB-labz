@@ -15,8 +15,8 @@ import {
 import styles from './styles.css';
 import afLogo from './page1@2x.png';
 import afLogoBlue from './page1_blue@3x.png';
-import savedLogo from './group7_black@2x.png';
-import savedLogoBlue from './group2@2x.png';
+import savedLogo from './star-black@2x.png';
+import savedLogoBlue from './star-blue@2x.png';
 import dotsLogo from './group6@2x.png';
 
 const isActive = (page) => {

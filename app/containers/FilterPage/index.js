@@ -319,7 +319,8 @@ export class FilterPage extends React.Component {
                       <span className={styles.placeholderIcon + ' iosIcon'}></span>
                       Skriv t.ex "Gymnasielärare"
                     </span> :
-                    'Lägg till yrke...'
+                    /*'Lägg till yrke...'*/
+                    'Lägg till fler...'
                   }
                 </span>
               </div>
@@ -335,7 +336,8 @@ export class FilterPage extends React.Component {
                     <span className={styles.placeholderIcon + ' iosIcon'}></span>
                     Skriv Kommun/Län/Land
                   </span> :
-                  'Lägg till kommun/län/land...'
+                  /*'Lägg till kommun/län/land...'*/
+                  'Lägg till fler...'
                 }
                 </span>
                 { !this.props.locations.size &&
