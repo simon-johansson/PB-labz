@@ -1346,18 +1346,18 @@ export class ListPage extends React.Component {
               </div>
             </span>
             <ListSeperated
-              items={this.props.matchingJobs.slice(0, 1)}
+              items={this.props.matchingJobs.slice(0, 50)}
               component={JobListItem}
               click={this.onAdvertClick}
               options={{view: 'matching'}}
             />
-            {tipsElement}
-            <ListSeperated
+            {/*tipsElement*/}
+            {/*<ListSeperated
               items={this.props.matchingJobs.slice(1, 50)}
               component={JobListItem}
               click={this.onAdvertClick}
               options={{view: 'matching'}}
-            />
+            />*/}
             { /*!this.props.showNonMatchningJobs ?
               <button
                 className={styles.showNonMatchningJobs}
@@ -1407,7 +1407,7 @@ export class ListPage extends React.Component {
                 <span className={styles.cancelText}>
                   <div className={styles.afLogoWrapper}>
                     {/*<img className={styles.afLogo} src={afLogo} />*/}
-                    <span className={styles.cancelChevron + ' iosIcon'}></span>
+                    <span className={styles.cancelChevronHeader + ' iosIcon'}></span>
                     {/*<span className={styles.backText}>Mina sökningar</span>*/}
                   </div>
                   {/*<span className={styles.homeIcon + ' glyphicon glyphicon-home'} />*/}
@@ -1474,13 +1474,13 @@ export class ListPage extends React.Component {
             </div>
             { this.props.currentTab === 'all' &&
                 <div>
-                  <div className={styles.tipsBubble}>
+                  {/*<div className={styles.tipsBubble}>
                     <figure className={styles.tipsArrow} />
                     <p><b>Nytt!</b> Välj dina kompetenser och erfarenheter för att se jobben som passar dig bäst.</p>
                     <figure className={styles.closeTipsCircle}>
                       <span className={styles.closeTipsCross + ' iosIcon'}></span>
                     </figure>
-                  </div>
+                  </div>*/}
                   {mainContent}
                 </div>
             }
